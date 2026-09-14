@@ -21,3 +21,6 @@ media/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+
+# Documento de referência de design, mantido apenas localmente
+DESIGN_SPEC.md
