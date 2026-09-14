@@ -1,0 +1,132 @@
+{
+  "app": { "name": "Monitor Integra", "tagline": "Painel do gestor de repositórios" },
+  "auth": {
+    "signIn": "Entrar",
+    "signingIn": "Entrando…",
+    "logout": "Sair",
+    "username": "Usuário",
+    "password": "Senha",
+    "currentPassword": "Senha atual",
+    "newPassword": "Nova senha",
+    "confirmPassword": "Confirmar nova senha",
+    "changePassword": "Trocar senha",
+    "mustChangePassword": "É necessário definir uma nova senha antes de continuar.",
+    "invalidCredentials": "Usuário ou senha inválidos.",
+    "validation": {
+      "usernameRequired": "Informe o usuário.",
+      "passwordRequired": "Informe a senha.",
+      "tooShort": "A senha precisa ter ao menos 8 caracteres.",
+      "mismatch": "As senhas não conferem."
+    }
+  },
+  "common": {
+    "loading": "Carregando…",
+    "error": "Não foi possível carregar os dados.",
+    "harvesterDown": "O Harvester está inacessível no momento. Tente novamente.",
+    "harvesterBad": "O Harvester respondeu de forma inesperada.",
+    "forbidden": "Você não tem acesso a este recurso.",
+    "notFound": "Recurso não encontrado.",
+    "retry": "Tentar novamente",
+    "noResults": "Nenhum resultado.",
+    "save": "Salvar",
+    "saving": "Salvando…",
+    "language": "Idioma",
+    "yes": "Sim",
+    "no": "Não"
+  },
+  "pagination": {
+    "page": "Página {{page}} de {{total}}",
+    "previous": "Anterior",
+    "next": "Próxima"
+  },
+  "repositories": {
+    "title": "Meus repositórios",
+    "subtitle": "{{count}} repositório(s) sob sua gestão",
+    "none": "Nenhum repositório associado à sua conta.",
+    "unnamed": "(sem nome na origem)",
+    "grantedAt": "Associado em {{date}}"
+  },
+  "repository": {
+    "acronym": "Sigla",
+    "metadataPrefix": "Prefixo de metadados",
+    "storeSchema": "Esquema de armazenamento",
+    "published": "Publicado"
+  },
+  "harvests": {
+    "title": "Histórico de coletas",
+    "none": "Nenhuma coleta registrada.",
+    "records": "Registros",
+    "valid": "Válidos",
+    "columns": {
+      "snapshot": "Coleta",
+      "status": "Situação",
+      "end": "Encerrada em",
+      "size": "Registros",
+      "valid": "Válidos"
+    }
+  },
+  "harvest": {
+    "title": "Coleta {{id}}",
+    "breadcrumb": "Coleta {{id}}",
+    "endedAt": "encerrada em",
+    "tabs": { "diagnosis": "Diagnóstico", "records": "Registros" }
+  },
+  "diagnosis": {
+    "size": "Registros",
+    "valid": "Válidos",
+    "invalid": "Inválidos",
+    "transformed": "Transformados",
+    "clickToFilter": "clique para filtrar os registros",
+    "topInvalidRules": "Regras com mais violações",
+    "rules": "Regras de validação ({{count}})",
+    "columns": {
+      "rule": "Regra",
+      "name": "Descrição",
+      "mandatory": "Obrigatória",
+      "validCount": "Atendem",
+      "invalidCount": "Violam"
+    }
+  },
+  "records": {
+    "title": "Registros",
+    "total": "{{count}} registro(s)",
+    "none": "Nenhum registro para este recorte.",
+    "valid": "Válido",
+    "invalid": "Inválido",
+    "transformed": "Transformado",
+    "notTransformed": "Não transformado",
+    "anyValidity": "Qualquer validade",
+    "anyTransformed": "Qualquer transformação",
+    "filterValidity": "Filtrar por validade",
+    "filterTransformed": "Filtrar por transformação",
+    "ruleViolated": "Viola a regra {{rule}}",
+    "ruleMet": "Atende a regra {{rule}}",
+    "removeFilter": "Remover filtro",
+    "clearFilters": "Limpar filtros",
+    "export": "Exportar CSV",
+    "exporting": "Exportando…",
+    "columns": {
+      "identifier": "Identificador",
+      "valid": "Validade",
+      "transformed": "Transformado",
+      "set": "Conjunto"
+    }
+  },
+  "record": {
+    "title": "Registro",
+    "identifier": "Identificador",
+    "internalId": "ID interno",
+    "set": "Conjunto",
+    "prefix": "Prefixo de metadados",
+    "origin": "Origem",
+    "repository": "Repositório",
+    "institution": "Instituição",
+    "xml": "XML transformado",
+    "xmlUnavailable": "O Harvester não devolveu o XML deste registro. O relatório de diagnóstico está desatualizado na origem."
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "description": "O endereço acessado não existe.",
+    "back": "Voltar ao início"
+  }
+}

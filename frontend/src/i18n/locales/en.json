@@ -1,0 +1,138 @@
+{
+  "app": {
+    "name": "Monitor Integra",
+    "tagline": "Repository manager dashboard"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "logout": "Sign out",
+    "username": "Username",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "changePassword": "Change password",
+    "mustChangePassword": "You must set a new password before continuing.",
+    "invalidCredentials": "Invalid username or password.",
+    "validation": {
+      "usernameRequired": "Enter your username.",
+      "passwordRequired": "Enter your password.",
+      "tooShort": "Password must be at least 8 characters.",
+      "mismatch": "Passwords do not match."
+    }
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Could not load the data.",
+    "harvesterDown": "The Harvester is unreachable right now. Try again.",
+    "harvesterBad": "The Harvester responded unexpectedly.",
+    "forbidden": "You do not have access to this resource.",
+    "notFound": "Resource not found.",
+    "retry": "Try again",
+    "noResults": "No results.",
+    "save": "Save",
+    "saving": "Saving…",
+    "language": "Language",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "pagination": {
+    "page": "Page {{page}} of {{total}}",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "repositories": {
+    "title": "My repositories",
+    "subtitle": "{{count}} repository(ies) you manage",
+    "none": "No repository is linked to your account.",
+    "unnamed": "(unnamed at source)",
+    "grantedAt": "Linked on {{date}}"
+  },
+  "repository": {
+    "acronym": "Acronym",
+    "metadataPrefix": "Metadata prefix",
+    "storeSchema": "Store schema",
+    "published": "Published"
+  },
+  "harvests": {
+    "title": "Harvest history",
+    "none": "No harvests recorded.",
+    "records": "Records",
+    "valid": "Valid",
+    "columns": {
+      "snapshot": "Harvest",
+      "status": "Status",
+      "end": "Finished at",
+      "size": "Records",
+      "valid": "Valid"
+    }
+  },
+  "harvest": {
+    "title": "Harvest {{id}}",
+    "breadcrumb": "Harvest {{id}}",
+    "endedAt": "finished at",
+    "tabs": {
+      "diagnosis": "Diagnosis",
+      "records": "Records"
+    }
+  },
+  "diagnosis": {
+    "size": "Records",
+    "valid": "Valid",
+    "invalid": "Invalid",
+    "transformed": "Transformed",
+    "clickToFilter": "click to filter records",
+    "topInvalidRules": "Most violated rules",
+    "rules": "Validation rules ({{count}})",
+    "columns": {
+      "rule": "Rule",
+      "name": "Description",
+      "mandatory": "Mandatory",
+      "validCount": "Pass",
+      "invalidCount": "Fail"
+    }
+  },
+  "records": {
+    "title": "Records",
+    "total": "{{count}} record(s)",
+    "none": "No records for this selection.",
+    "valid": "Valid",
+    "invalid": "Invalid",
+    "transformed": "Transformed",
+    "notTransformed": "Not transformed",
+    "anyValidity": "Any validity",
+    "anyTransformed": "Any transformation",
+    "filterValidity": "Filter by validity",
+    "filterTransformed": "Filter by transformation",
+    "ruleViolated": "Violates rule {{rule}}",
+    "ruleMet": "Meets rule {{rule}}",
+    "removeFilter": "Remove filter",
+    "clearFilters": "Clear filters",
+    "export": "Export CSV",
+    "exporting": "Exporting…",
+    "columns": {
+      "identifier": "Identifier",
+      "valid": "Validity",
+      "transformed": "Transformed",
+      "set": "Set"
+    }
+  },
+  "record": {
+    "title": "Record",
+    "identifier": "Identifier",
+    "internalId": "Internal ID",
+    "set": "Set",
+    "prefix": "Metadata prefix",
+    "origin": "Origin",
+    "repository": "Repository",
+    "institution": "Institution",
+    "xml": "Transformed XML",
+    "xmlUnavailable": "The Harvester did not return the XML for this record. The diagnosis report is outdated at the source."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The address you tried does not exist.",
+    "back": "Back to start"
+  }
+}
