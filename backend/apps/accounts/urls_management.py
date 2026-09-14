@@ -7,10 +7,10 @@ Separadas de `urls.py` de propósito: aquele módulo cuida de autenticação
 
 from django.urls import path
 
-from .views import UserListView
+from .views import UserListCreateView
 
 app_name = "accounts-management"
 
 urlpatterns = [
-    path("users/", UserListView.as_view(), name="user-list"),
+    path("users/", UserListCreateView.as_view(), name="user-list"),
 ]

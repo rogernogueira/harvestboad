@@ -39,7 +39,9 @@
     "yes": "Sí",
     "no": "No",
     "forbiddenLabel": "Acceso restringido",
-    "adminOnly": "Esta área es exclusiva del perfil administrador."
+    "adminOnly": "Esta área es exclusiva del perfil administrador.",
+    "close": "Cerrar",
+    "cancel": "Cancelar"
   },
   "pagination": {
     "page": "Página {{page}} de {{total}}",
@@ -57,8 +59,8 @@
     "violatedRules": "Reglas infringidas",
     "topViolations": "Reglas con más infracciones",
     "seeRecords": "Ver los registros que infringen esta regla",
-    "harvestCount": "{{count}} recolección(es) en el historial",
-    "statsUnavailable": "Estadísticas no disponibles: el Harvester no respondió para este repositorio."
+    "statsUnavailable": "Estadísticas no disponibles: el Harvester no respondió para este repositorio.",
+    "seeHistory": "Ver historial de recolecciones"
   },
   "repository": {
     "acronym": "Sigla",
@@ -157,31 +159,57 @@
     "eyebrow": "Administración",
     "title": "Accesos a repositorios",
     "subtitle": "Asocie gestores a los repositorios que cada uno puede seguir.",
-    "newLink": "Nueva asociación",
     "manager": "Gestor",
     "searchManager": "Buscar por usuario, nombre o correo",
     "chooseManager": "Seleccione un gestor",
     "repository": "Repositorio",
     "searchRepository": "Buscar por sigla, nombre o institución",
-    "chooseRepository": "Seleccione un repositorio",
-    "repositoryId": "Identificador del repositorio en el Harvester",
-    "repositoryIdPlaceholder": "Identificador en el Harvester (p. ej.: 1)",
-    "acronym": "Sigla del repositorio",
-    "acronymPlaceholder": "Sigla del repositorio",
-    "sourceDownFallback": "El Harvester está inaccesible: indique el identificador y la sigla manualmente.",
-    "showing": "Mostrando {{shown}} de {{total}} repositorios",
-    "link": "Asociar",
     "linking": "Asociando…",
-    "linked": "Asociación creada.",
-    "existing": "Asociaciones existentes",
-    "noLinks": "Ninguna asociación registrada.",
     "remove": "Quitar",
     "confirmRemove": "¿Quitar el acceso de {{user}} a este repositorio?",
-    "staleAcronym": "sigla desactualizada",
-    "columns": {
-      "manager": "Gestor",
-      "repository": "Repositorio",
-      "grantedAt": "Asociado el"
+    "findRepository": "Encontrar repositorio",
+    "noRepositories": "Ningún repositorio encontrado.",
+    "foundBy": "{{total}} repositorio(s) — encontrados por {{field}}",
+    "fields": {
+      "acronym": "sigla",
+      "name": "nombre",
+      "institution": "institución",
+      "all": "listado completo"
+    },
+    "noSelection": "Ningún repositorio seleccionado",
+    "selectHint": "Busque y elija un repositorio a la izquierda para registrar sus gestores.",
+    "selectedRepository": "Repositorio seleccionado",
+    "managersWithAccess": "Gestores con acceso ({{count}})",
+    "noManagers": "Ningún gestor registrado en este repositorio.",
+    "addManager": "Registrar gestor",
+    "allManagersLinked": "Todos los gestores encontrados ya tienen acceso a este repositorio.",
+    "since": "desde {{date}}"
+  },
+  "managers": {
+    "title": "Usuarios vinculados",
+    "open": "Ver usuarios vinculados a este repositorio",
+    "none": "Ningún usuario vinculado a este repositorio.",
+    "inactive": "inactivo"
+  },
+  "newUser": {
+    "open": "+ Nueva cuenta",
+    "title": "Nueva cuenta de gestor",
+    "subtitle": "La cuenta se crea con perfil de gestor y contraseña provisional.",
+    "username": "Usuario",
+    "email": "Correo",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "password": "Contraseña provisional",
+    "confirmPassword": "Confirmar contraseña",
+    "provisionalPassword": "En el primer acceso, la persona deberá definir una nueva contraseña.",
+    "create": "Crear cuenta",
+    "creating": "Creando…",
+    "validation": {
+      "usernameRequired": "Indique el usuario.",
+      "emailInvalid": "Indique un correo válido.",
+      "passwordRequired": "Indique la contraseña.",
+      "tooShort": "La contraseña debe tener al menos 8 caracteres.",
+      "mismatch": "Las contraseñas no coinciden."
     }
   }
 }

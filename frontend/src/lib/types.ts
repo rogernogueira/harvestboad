@@ -38,6 +38,24 @@ export interface RepositoryAccess {
   grantedAt: string
 }
 
+/** Gestor vinculado a um repositório. `email` só vem para o perfil ADMIN. */
+export interface RepositoryManager {
+  id: number
+  user: number
+  username: string
+  fullName: string
+  email: string | null
+  profile: Profile
+  profileDisplay: string
+  isActive: boolean
+  grantedAt: string
+}
+
+export interface RepositoryManagerList {
+  count: number
+  results: RepositoryManager[]
+}
+
 export interface RuleViolation {
   ruleId: number
   name: string
@@ -53,7 +71,6 @@ export interface LastHarvestSummary {
   validSize: number | null
   invalidSize: number | null
   transformedSize: number | null
-  harvestCount: number
   violatedRuleCount: number | null
   topViolations: RuleViolation[]
 }
@@ -82,6 +99,31 @@ export interface AvailableRepository {
   name: string | null
   institutionName: string | null
   published: boolean | null
+}
+
+/** Linha da busca de repositórios: cadastro + resumo da última coleta. */
+export interface RepositoryHit {
+  harvesterRepositoryId: string
+  acronym: string | null
+  name: string | null
+  institutionName: string | null
+  institutionAcronym: string | null
+  lastSnapshotId: string | null
+  lastSnapshotDate: string | null
+  lastSnapshotStatus: string | null
+  lastSize: number | null
+  lastValidSize: number | null
+}
+
+export interface RepositorySearchResult {
+  query: string
+  /** Campo em que a origem encontrou: sigla, nome ou instituição. */
+  field: 'acronym' | 'name' | 'institution' | null
+  page: number
+  count: number
+  totalElements: number
+  totalPages: number
+  results: RepositoryHit[]
 }
 
 export interface AvailableRepositoryPage {

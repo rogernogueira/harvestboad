@@ -496,15 +496,44 @@ DIAGNOSE_COM_REGRAS = {
 }
 
 
-def fake_summary_client():
+PRIVATE_ROW = {
+    "networkID": 1,
+    "acronym": "VERACRUZ-0",
+    "name": "Revista Veras",
+    "institution": "Instituto Superior de Educação Vera Cruz",
+    "lstSnapshotID": 98768,
+    "lstSnapshotDate": "2024-06-25 12:10:33",
+    "lstSnapshotStatus": "VALID",
+    "lstSize": 26103,
+    "lstValidSize": 26091,
+    "lstTransformedSize": 26103,
+}
+
+
+def fake_summary_client(registro=None, private_rows=None):
+    """Duplo do Harvester para o painel, registrando as chamadas feitas."""
+
     class _Fake:
+        def list_networks(self, page=1, count=25, filter_field=None, filter_value=None, **kw):
+            if registro is not None:
+                registro.append(f"private:{filter_value}")
+            redes = PRIVATE_ROW if private_rows is None else private_rows
+            linhas = [redes] if isinstance(redes, dict) else list(redes)
+            return {"networks": linhas, "totalElements": len(linhas)}
+
         def get_network(self, repository_id):
+            if registro is not None:
+                registro.append(f"network:{repository_id}")
             return NETWORK_PAYLOAD
 
         def list_snapshots(self, repository_id):
+            if registro is not None:
+                registro.append(f"snapshots:{repository_id}")
             return SNAPSHOTS_COM_HISTORICO
 
         def get_diagnose(self, snapshot_id):
+            if registro is not None:
+                registro.append(f"diagnose:{snapshot_id}")
             return DIAGNOSE_COM_REGRAS
 
     return _Fake()
@@ -566,7 +595,6 @@ class RepositorySummaryTests(TestCase):
         self.assertEqual(coleta["size"], 26103)
         self.assertEqual(coleta["validSize"], 26091)
         self.assertEqual(coleta["invalidSize"], 12)
-        self.assertEqual(coleta["harvestCount"], 2)
 
     def test_ignora_coleta_em_andamento_sem_registros(self) -> None:
         """A mais recente está coletando e tem 0 registros: o resumo usa a anterior."""
@@ -588,6 +616,9 @@ class RepositorySummaryTests(TestCase):
 
     def test_repositorio_sem_coletas(self) -> None:
         class _SemColetas:
+            def list_networks(self, **kw):
+                return {"networks": [], "totalElements": 0}
+
             def get_network(self, repository_id):
                 return NETWORK_PAYLOAD
 
@@ -604,6 +635,9 @@ class RepositorySummaryTests(TestCase):
         """Uma origem fora do ar não pode zerar o painel inteiro."""
 
         class _Fora:
+            def list_networks(self, **kw):
+                raise HarvesterError("sem rota")
+
             def get_network(self, repository_id):
                 raise HarvesterError("sem rota")
 
@@ -621,6 +655,9 @@ class RepositorySummaryTests(TestCase):
         """Sem o diagnóstico, os totais da coleta ainda valem."""
 
         class _SemDiagnostico:
+            def list_networks(self, **kw):
+                return {"networks": [], "totalElements": 0}
+
             def get_network(self, repository_id):
                 return NETWORK_PAYLOAD
 
@@ -637,3 +674,320 @@ class RepositorySummaryTests(TestCase):
         self.assertEqual(coleta["size"], 26103)
         self.assertIsNone(coleta["violatedRuleCount"])
         self.assertEqual(coleta["topViolations"], [])
+
+
+class RepositorySearchTests(TestCase):
+    """Busca de repositórios sobre /private/networks."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="ad", email="ad@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="ge", email="ge@ibict.br", password="x", profile=Profile.GESTOR
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    @staticmethod
+    def rede(nid, acronym, name="Nome", institution="Inst"):
+        return {
+            "networkID": nid,
+            "acronym": acronym,
+            "name": name,
+            "institution": institution,
+            "institutionAcronym": "I",
+            "lstSnapshotID": 900 + nid,
+            "lstSnapshotDate": "2024-06-25 12:10:33",
+            "lstSnapshotStatus": "VALID",
+            "lstSize": 100,
+            "lstValidSize": 98,
+        }
+
+    def cliente(self, por_campo: dict, registro=None):
+        """Duplo que responde conforme o campo filtrado."""
+        caso = self
+
+        class _Fake:
+            def list_networks(
+                self, page=1, count=25, filter_field=None, filter_value=None, **kw
+            ):
+                if registro is not None:
+                    registro.append((filter_field, filter_value, page, count))
+                redes = por_campo.get(filter_field, [])
+                return {"networks": redes, "totalElements": len(redes)}
+
+        return _Fake()
+
+    def test_gestor_nao_busca(self) -> None:
+        self.assertEqual(
+            self.api(self.gestor).get(f"{BASE}/search/?search=uft").status_code, 403
+        )
+
+    def test_encontra_por_sigla_na_primeira_tentativa(self) -> None:
+        chamadas = []
+        duplo = self.cliente({"acronym": [self.rede(1, "UFT")]}, chamadas)
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            response = self.api(self.admin).get(f"{BASE}/search/?search=UFT")
+
+        self.assertEqual(response.data["field"], "acronym")
+        self.assertEqual(response.data["totalElements"], 1)
+        # Achou na sigla: não precisa tentar nome nem instituição.
+        self.assertEqual(len(chamadas), 1)
+
+    def test_cai_para_nome_quando_a_sigla_nao_acha(self) -> None:
+        chamadas = []
+        duplo = self.cliente({"name": [self.rede(43, "USP-29", name="Cerâmica")]}, chamadas)
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            response = self.api(self.admin).get(f"{BASE}/search/?search=Cerâmica")
+
+        self.assertEqual(response.data["field"], "name")
+        self.assertEqual([c[0] for c in chamadas], ["acronym", "name"])
+
+    def test_cai_para_instituicao_por_ultimo(self) -> None:
+        chamadas = []
+        duplo = self.cliente({"institution": [self.rede(7, "UFT-4")]}, chamadas)
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            response = self.api(self.admin).get(f"{BASE}/search/?search=tocantins")
+
+        self.assertEqual(response.data["field"], "institution")
+        self.assertEqual([c[0] for c in chamadas], ["acronym", "name", "institution"])
+
+    def test_sem_resultado_em_campo_nenhum(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente({})):
+            response = self.api(self.admin).get(f"{BASE}/search/?search=zzzz")
+        self.assertEqual(response.data["totalElements"], 0)
+        self.assertEqual(response.data["results"], [])
+        self.assertIsNone(response.data["field"])
+
+    def test_sem_termo_lista_tudo_sem_filtrar(self) -> None:
+        chamadas = []
+        duplo = self.cliente({None: [self.rede(1, "A"), self.rede(2, "B")]}, chamadas)
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            response = self.api(self.admin).get(f"{BASE}/search/")
+
+        self.assertEqual(response.data["totalElements"], 2)
+        self.assertEqual(chamadas[0][0], None)
+
+    def test_traz_o_resumo_da_ultima_coleta_de_cada_linha(self) -> None:
+        """A rota da origem já devolve os dados da última coleta."""
+        duplo = self.cliente({"acronym": [self.rede(1, "UFT")]})
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            linha = self.api(self.admin).get(f"{BASE}/search/?search=UFT").data["results"][0]
+
+        self.assertEqual(linha["harvesterRepositoryId"], "1")
+        self.assertEqual(linha["lastSnapshotId"], "901")
+        self.assertEqual(linha["lastSnapshotStatus"], "VALID")
+        self.assertEqual(linha["lastSize"], 100)
+
+    def test_pagina_repassa_page_e_count(self) -> None:
+        chamadas = []
+        duplo = self.cliente({"acronym": [self.rede(1, "A")]}, chamadas)
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            self.api(self.admin).get(f"{BASE}/search/?search=a&page=3&count=50")
+        self.assertEqual(chamadas[0][2:], (3, 50))
+
+    def test_harvester_fora_do_ar_responde_503(self) -> None:
+        class _Fora:
+            def list_networks(self, **kw):
+                raise HarvesterError("sem rota")
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _Fora()):
+            response = self.api(self.admin).get(f"{BASE}/search/?search=uft")
+        self.assertEqual(response.status_code, 503)
+
+
+class AccessesByRepositoryTests(TestCase):
+    """Listagem de vínculos filtrada por repositório."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="adm2", email="adm2@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.g1 = User.objects.create_user(
+            username="g1", email="g1@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        cls.g2 = User.objects.create_user(
+            username="g2", email="g2@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        RepositoryAccess.objects.create(user=cls.g1, harvester_repository_id="1", acronym="A")
+        RepositoryAccess.objects.create(user=cls.g2, harvester_repository_id="1", acronym="A")
+        RepositoryAccess.objects.create(user=cls.g1, harvester_repository_id="9", acronym="B")
+
+    def setUp(self) -> None:
+        patcher = patch(SERVICES_CLIENT, lambda *a, **k: fake_services_client())
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def test_filtra_pelos_gestores_de_um_repositorio(self) -> None:
+        response = self.api(self.admin).get(f"{BASE}/?repository=1")
+        self.assertEqual(response.data["count"], 2)
+        self.assertEqual(
+            sorted(r["username"] for r in response.data["results"]), ["g1", "g2"]
+        )
+
+    def test_sem_filtro_traz_todos(self) -> None:
+        self.assertEqual(self.api(self.admin).get(f"{BASE}/").data["count"], 3)
+
+    def test_filtro_respeita_o_escopo_do_gestor(self) -> None:
+        """O filtro é conveniência, não pode ampliar o que o gestor enxerga."""
+        response = self.api(self.g2).get(f"{BASE}/?repository=9")
+        self.assertEqual(response.data["count"], 0)
+
+
+class SummaryFastPathTests(TestCase):
+    """O painel deve usar /private/networks, caindo no caminho antigo só quando preciso."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.gestor = User.objects.create_user(
+            username="gg", email="gg@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        cls.acesso = RepositoryAccess.objects.create(
+            user=cls.gestor, harvester_repository_id="1", acronym="VERACRUZ-0"
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self):
+        client = APIClient()
+        client.force_authenticate(user=self.gestor)
+        return client
+
+    def test_caminho_rapido_usa_uma_consulta_de_cadastro(self) -> None:
+        """Sigla correta: /private/networks resolve cadastro e última coleta juntos."""
+        chamadas = []
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client(chamadas)):
+            response = self.api().get(f"{REPOS}/summary/")
+
+        self.assertEqual(response.status_code, 200)
+        coleta = response.data["results"][0]["lastHarvest"]
+        self.assertEqual(coleta["snapshotId"], "98768")
+        self.assertEqual(coleta["size"], 26103)
+        self.assertEqual(coleta["invalidSize"], 12)
+        self.assertEqual(coleta["violatedRuleCount"], 2)
+
+        # Uma consulta de cadastro + uma de diagnóstico. Sem /rest/network nem histórico.
+        self.assertEqual(chamadas, ["private:VERACRUZ-0", "diagnose:98768"])
+
+    def test_sigla_defasada_cai_no_caminho_antigo(self) -> None:
+        """O filtro é por sigla, mas a conferência é pelo networkID."""
+        self.acesso.acronym = "SIGLA-ANTIGA"
+        self.acesso.save(update_fields=["acronym"])
+
+        chamadas = []
+        # A busca pela sigla velha devolve outro repositório: networkID não bate.
+        outro = dict(PRIVATE_ROW, networkID=999, acronym="SIGLA-ANTIGA-X")
+        with patch(
+            SERVICES_CLIENT,
+            lambda *a, **k: fake_summary_client(chamadas, private_rows=[outro]),
+        ):
+            response = self.api().get(f"{REPOS}/summary/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["results"][0]["name"], "Revista Veras")
+        # Depois da tentativa rápida, usa cadastro por id e histórico.
+        self.assertEqual(
+            chamadas, ["private:SIGLA-ANTIGA", "network:1", "snapshots:1", "diagnose:98768"]
+        )
+
+    def test_repositorio_sem_sigla_gravada_usa_o_caminho_antigo(self) -> None:
+        self.acesso.acronym = ""
+        self.acesso.save(update_fields=["acronym"])
+
+        chamadas = []
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client(chamadas)):
+            self.api().get(f"{REPOS}/summary/")
+
+        # Sem sigla não há como filtrar: vai direto ao caminho por identificador.
+        self.assertNotIn("private:", chamadas[0])
+        self.assertEqual(chamadas[0], "network:1")
+
+
+class RepositoryManagersTests(TestCase):
+    """Gestores vinculados a um repositório, vistos de dentro do repositório."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="admin3", email="admin3@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.ana = User.objects.create_user(
+            username="ana", email="ana@ibict.br", password="x", profile=Profile.GESTOR,
+            first_name="Ana", last_name="Souza",
+        )
+        cls.bruno = User.objects.create_user(
+            username="bruno", email="bruno@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        cls.alheio = User.objects.create_user(
+            username="alheio3", email="al3@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        # Ana e Bruno cuidam do repositório 1; o alheio cuida do 9.
+        RepositoryAccess.objects.create(user=cls.ana, harvester_repository_id="1", acronym="A")
+        RepositoryAccess.objects.create(user=cls.bruno, harvester_repository_id="1", acronym="A")
+        RepositoryAccess.objects.create(user=cls.alheio, harvester_repository_id="9", acronym="B")
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().get(f"{REPOS}/1/managers").status_code, 401)
+
+    def test_gestor_ve_os_colegas_do_proprio_repositorio(self) -> None:
+        """É a diferença para /accesses/, que só devolveria o próprio vínculo."""
+        response = self.api(self.ana).get(f"{REPOS}/1/managers")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["count"], 2)
+        self.assertEqual(
+            [m["username"] for m in response.data["results"]], ["ana", "bruno"]
+        )
+
+    def test_gestor_nao_ve_gestores_de_repositorio_alheio(self) -> None:
+        self.assertEqual(self.api(self.ana).get(f"{REPOS}/9/managers").status_code, 403)
+
+    def test_admin_ve_de_qualquer_repositorio(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/9/managers")
+        self.assertEqual(response.data["count"], 1)
+
+    def test_email_do_colega_nao_vaza_para_gestor(self) -> None:
+        """Saber quem cuida do repositório não é o mesmo que ter o e-mail."""
+        response = self.api(self.ana).get(f"{REPOS}/1/managers")
+        for gestor in response.data["results"]:
+            self.assertIsNone(gestor["email"])
+
+    def test_admin_recebe_o_email(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/1/managers")
+        emails = {m["email"] for m in response.data["results"]}
+        self.assertEqual(emails, {"ana@ibict.br", "bruno@ibict.br"})
+
+    def test_traz_nome_completo_e_perfil(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/1/managers")
+        ana = next(m for m in response.data["results"] if m["username"] == "ana")
+        self.assertEqual(ana["fullName"], "Ana Souza")
+        self.assertEqual(ana["profile"], "GESTOR")
+        self.assertTrue(ana["isActive"])
+
+    def test_repositorio_sem_gestores(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/12345/managers")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["count"], 0)

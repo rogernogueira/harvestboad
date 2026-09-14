@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
+import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
+import { UsersIcon } from '@/components/UsersIcon'
 import { repositoriesSummaryQuery } from '@/lib/queries'
 import type { LastHarvestSummary, RepositoryAccessSummary } from '@/lib/types'
 
@@ -49,12 +51,25 @@ export function RepositoriesPage() {
 /** Uma linha do painel: identificação + estatísticas lado a lado. */
 function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
   const { t } = useTranslation()
+  const [gestoresAbertos, setGestoresAbertos] = useState(false)
+  const nomeRepositorio = acesso.name ?? acesso.acronym
 
   return (
     <article className="panel grid gap-px overflow-hidden bg-border-subtle lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
       {/* Identificação */}
       <div className="flex flex-col gap-1 bg-surface p-5">
-        <span className="eyebrow !text-brand-strong">{acesso.acronym}</span>
+        <span className="flex items-center justify-between gap-2">
+          <span className="eyebrow !text-brand-strong">{acesso.acronym}</span>
+          <button
+            type="button"
+            onClick={() => setGestoresAbertos(true)}
+            title={t('managers.open')}
+            aria-label={t('managers.open')}
+            className="-mt-1 -mr-1 p-1.5 text-content-muted transition-colors duration-150 hover:text-brand-strong"
+          >
+            <UsersIcon />
+          </button>
+        </span>
         <Link
           to={`/repositorios/${acesso.harvesterRepositoryId}`}
           className="font-heading text-lg font-bold tracking-tight hover:text-brand-strong hover:underline"
@@ -69,6 +84,13 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
             date: new Date(acesso.grantedAt).toLocaleDateString(),
           })}
         </span>
+
+        <RepositoryManagersModal
+          aberto={gestoresAbertos}
+          onFechar={() => setGestoresAbertos(false)}
+          repositoryId={acesso.harvesterRepositoryId}
+          repositorio={`${acesso.acronym} · ${nomeRepositorio}`}
+        />
       </div>
 
       {/* Estatísticas da última coleta */}
@@ -174,7 +196,7 @@ function HarvestStats({
 
       <p className="text-xs text-content-muted">
         <Link to={`/repositorios/${repositoryId}`} className="hover:underline">
-          {t('repositories.harvestCount', { count: coleta.harvestCount })}
+          {t('repositories.seeHistory')}
         </Link>
       </p>
     </div>

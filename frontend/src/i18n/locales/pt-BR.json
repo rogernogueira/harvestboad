@@ -39,7 +39,9 @@
     "yes": "Sim",
     "no": "Não",
     "forbiddenLabel": "Acesso restrito",
-    "adminOnly": "Esta área é exclusiva do perfil administrador."
+    "adminOnly": "Esta área é exclusiva do perfil administrador.",
+    "close": "Fechar",
+    "cancel": "Cancelar"
   },
   "pagination": {
     "page": "Página {{page}} de {{total}}",
@@ -57,8 +59,8 @@
     "violatedRules": "Regras violadas",
     "topViolations": "Regras com mais violações",
     "seeRecords": "Ver os registros que violam esta regra",
-    "harvestCount": "{{count}} coleta(s) no histórico",
-    "statsUnavailable": "Estatísticas indisponíveis: o Harvester não respondeu para este repositório."
+    "statsUnavailable": "Estatísticas indisponíveis: o Harvester não respondeu para este repositório.",
+    "seeHistory": "Ver histórico de coletas"
   },
   "repository": {
     "acronym": "Sigla",
@@ -157,31 +159,57 @@
     "eyebrow": "Administração",
     "title": "Acessos a repositórios",
     "subtitle": "Associe gestores aos repositórios que cada um pode acompanhar.",
-    "newLink": "Nova associação",
     "manager": "Gestor",
     "searchManager": "Buscar por usuário, nome ou e-mail",
     "chooseManager": "Selecione um gestor",
     "repository": "Repositório",
     "searchRepository": "Buscar por sigla, nome ou instituição",
-    "chooseRepository": "Selecione um repositório",
-    "repositoryId": "Identificador do repositório no Harvester",
-    "repositoryIdPlaceholder": "Identificador no Harvester (ex.: 1)",
-    "acronym": "Sigla do repositório",
-    "acronymPlaceholder": "Sigla do repositório",
-    "sourceDownFallback": "O Harvester está inacessível: informe o identificador e a sigla manualmente.",
-    "showing": "Exibindo {{shown}} de {{total}} repositórios",
-    "link": "Associar",
     "linking": "Associando…",
-    "linked": "Associação criada.",
-    "existing": "Associações existentes",
-    "noLinks": "Nenhuma associação cadastrada.",
     "remove": "Remover",
     "confirmRemove": "Remover o acesso de {{user}} a este repositório?",
-    "staleAcronym": "sigla defasada",
-    "columns": {
-      "manager": "Gestor",
-      "repository": "Repositório",
-      "grantedAt": "Associado em"
+    "findRepository": "Encontrar repositório",
+    "noRepositories": "Nenhum repositório encontrado.",
+    "foundBy": "{{total}} repositório(s) — encontrados por {{field}}",
+    "fields": {
+      "acronym": "sigla",
+      "name": "nome",
+      "institution": "instituição",
+      "all": "listagem completa"
+    },
+    "noSelection": "Nenhum repositório selecionado",
+    "selectHint": "Busque e escolha um repositório à esquerda para cadastrar os gestores dele.",
+    "selectedRepository": "Repositório selecionado",
+    "managersWithAccess": "Gestores com acesso ({{count}})",
+    "noManagers": "Nenhum gestor cadastrado neste repositório.",
+    "addManager": "Cadastrar gestor",
+    "allManagersLinked": "Todos os gestores encontrados já têm acesso a este repositório.",
+    "since": "desde {{date}}"
+  },
+  "managers": {
+    "title": "Usuários vinculados",
+    "open": "Ver usuários vinculados a este repositório",
+    "none": "Nenhum usuário vinculado a este repositório.",
+    "inactive": "inativo"
+  },
+  "newUser": {
+    "open": "+ Nova conta",
+    "title": "Nova conta de gestor",
+    "subtitle": "A conta é criada com perfil de gestor e senha provisória.",
+    "username": "Usuário",
+    "email": "E-mail",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "password": "Senha provisória",
+    "confirmPassword": "Confirmar senha",
+    "provisionalPassword": "No primeiro acesso, a pessoa será obrigada a definir uma nova senha.",
+    "create": "Criar conta",
+    "creating": "Criando…",
+    "validation": {
+      "usernameRequired": "Informe o usuário.",
+      "emailInvalid": "Informe um e-mail válido.",
+      "passwordRequired": "Informe a senha.",
+      "tooShort": "A senha precisa ter ao menos 8 caracteres.",
+      "mismatch": "As senhas não conferem."
     }
   }
 }

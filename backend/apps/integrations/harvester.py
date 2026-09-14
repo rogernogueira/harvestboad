@@ -96,14 +96,34 @@ class HarvesterClient:
 
     # --- Endpoints do Harvester ---------------------------------------------
 
-    def list_networks(self) -> Any:
+    def list_networks(
+        self,
+        page: int = 1,
+        count: int = 25,
+        filter_field: str | None = None,
+        filter_value: str | None = None,
+        sort_field: str | None = None,
+        sort_direction: str = "asc",
+    ) -> Any:
         """Lista de repositórios. GET /private/networks
 
-        Atenção: em http://harvester.ibict.br:8090 esta rota responde 500 de
-        forma consistente (erro interno do Harvester, autenticação OK).
-        Use `list_networks_rest()` enquanto isso não for corrigido na origem.
+        É a mesma rota que a interface do próprio Harvester usa, e devolve por
+        repositório os dados da última coleta (`lstSnapshot*`) além do cadastro.
+
+        `page` e `count` são **obrigatórios**: sem eles a rota responde 500 —
+        não é indisponibilidade, é parâmetro faltando.
+
+        Filtros e ordenação seguem a convenção do ng-table usada na origem:
+        `filter[acronym]`, `filter[name]`, `filter[institution]`,
+        `filter[status]` e `sorting[campo]=asc|desc`. O filtro de nome ignora
+        maiúsculas mas **não** ignora acentos.
         """
-        return self.get_json("/private/networks")
+        params: dict[str, Any] = {"page": page, "count": count}
+        if filter_field and filter_value:
+            params[f"filter[{filter_field}]"] = filter_value
+        if sort_field:
+            params[f"sorting[{sort_field}]"] = sort_direction
+        return self.get_json("/private/networks", params=params)
 
     def list_networks_rest(self, page: int = 0, size: int = 20) -> Any:
         """Alternativa funcional à rota acima. GET /rest/network
@@ -111,6 +131,38 @@ class HarvesterClient:
         Devolve o envelope HAL do Spring Data REST (`_embedded.network`).
         """
         return self.get_json("/rest/network", params={"page": page, "size": size})
+
+    def search_networks_by_name(self, term: str, page: int = 0, size: int = 20) -> Any:
+        """Busca por nome. GET /rest/network/search/findByNameIgnoreCaseContaining
+
+        Ignora maiúsculas, mas **não** ignora acentos: "ceramica" não encontra
+        "Cerâmica". Limitação da origem.
+        """
+        return self.get_json(
+            "/rest/network/search/findByNameIgnoreCaseContaining",
+            params={"name": term, "page": page, "size": size},
+        )
+
+    def search_networks_by_acronym(self, term: str, page: int = 0, size: int = 20) -> Any:
+        """Busca por sigla. GET /rest/network/search/findByAcronymIgnoreCaseContaining
+
+        O parâmetro se chama `filterExpression`, não `acronym`: passar `acronym`
+        faz a origem responder 500.
+        """
+        return self.get_json(
+            "/rest/network/search/findByAcronymIgnoreCaseContaining",
+            params={"filterExpression": term, "page": page, "size": size},
+        )
+
+    def search_networks_by_institution(self, term: str, page: int = 0, size: int = 20) -> Any:
+        """Busca por instituição.
+
+        GET /rest/network/search/findByInstitutionNameIgnoreCaseContaining
+        """
+        return self.get_json(
+            "/rest/network/search/findByInstitutionNameIgnoreCaseContaining",
+            params={"institution": term, "page": page, "size": size},
+        )
 
     def get_network(self, network_id: str | int) -> Any:
         """Dados cadastrais do repositório. GET /rest/network/{networkID}"""

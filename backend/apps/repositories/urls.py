@@ -6,6 +6,7 @@ from .views import (
     RepositoryAccessViewSet,
     RepositoryDetailView,
     RepositoryHarvestsView,
+    RepositoryManagersView,
 )
 
 app_name = "repositories"
@@ -20,4 +21,5 @@ urlpatterns = [
     path("summary/", MyRepositoriesSummaryView.as_view(), name="summary"),
     path("<int:repository_id>", RepositoryDetailView.as_view(), name="detail"),
     path("<int:repository_id>/harvests", RepositoryHarvestsView.as_view(), name="harvests"),
+    path("<int:repository_id>/managers", RepositoryManagersView.as_view(), name="managers"),
 ]

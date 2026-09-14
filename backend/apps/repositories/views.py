@@ -12,7 +12,11 @@ from apps.integrations.views import HarvesterBackedAPIView
 from . import services
 from .models import RepositoryAccess
 from .permissions import IsAdminProfile, assert_can_read_repository
-from .serializers import RepositoryAccessSerializer, RepositoryAccessWriteSerializer
+from .serializers import (
+    RepositoryAccessSerializer,
+    RepositoryAccessWriteSerializer,
+    RepositoryManagerSerializer,
+)
 
 RESOURCE = "repository_access"
 
@@ -51,9 +55,14 @@ class RepositoryAccessViewSet(
     def get_queryset(self):
         queryset = RepositoryAccess.objects.select_related("user")
         user = self.request.user
-        if user.is_admin:
-            return queryset
-        return queryset.filter(user=user)
+        if not user.is_admin:
+            queryset = queryset.filter(user=user)
+
+        repositorio = self.request.query_params.get("repository")
+        if repositorio:
+            queryset = queryset.filter(harvester_repository_id=repositorio)
+
+        return queryset
 
     def perform_create(self, serializer) -> None:
         access = serializer.save()
@@ -73,6 +82,45 @@ class RepositoryAccessViewSet(
             resource_id=resource_id,
             request=self.request,
         )
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "search",
+                str,
+                description="Busca por sigla, nome ou instituição. Sem acento não encontra nomes acentuados.",
+            ),
+            OpenApiParameter("page", int, description="Página, começando em 1."),
+            OpenApiParameter("count", int, description="Resultados por página (máx. 100)."),
+        ],
+        description=(
+            "Busca repositórios no Harvester por sigla, nome ou instituição, com "
+            "paginação da própria origem. Sem termo, lista todos. Responde 503 "
+            "quando o Harvester está inacessível."
+        ),
+        responses={200: None, 503: None},
+    )
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="search",
+        permission_classes=[permissions.IsAuthenticated, IsAdminProfile],
+    )
+    def search(self, request: Request) -> Response:
+        try:
+            page = max(1, int(request.query_params.get("page", 1)))
+            count = min(100, max(1, int(request.query_params.get("count", 20))))
+        except ValueError:
+            page, count = 1, 20
+
+        try:
+            resultado = services.search_repositories(
+                request.query_params.get("search", ""), page=page, count=count
+            )
+        except HarvesterError as exc:
+            return Response({"detail": str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        return Response(resultado)
 
     @extend_schema(
         description=(
@@ -151,6 +199,35 @@ class RepositoryDetailView(HarvesterBackedAPIView):
     def get(self, request: Request, repository_id: int) -> Response:
         assert_can_read_repository(request.user, repository_id)
         return Response(services.repository_detail(str(repository_id)))
+
+
+class RepositoryManagersView(HarvesterBackedAPIView):
+    """Gestores vinculados a um repositório.
+
+    Diferente de `/accesses/?repository=`, que devolve ao gestor apenas o próprio
+    vínculo: aqui quem tem acesso ao repositório vê **todos** os que cuidam dele.
+    A regra de entrada é a mesma das outras rotas do repositório.
+    """
+
+    @extend_schema(
+        parameters=[REPOSITORY_PARAM],
+        description=(
+            "Gestores vinculados ao repositório. Exige acesso ao próprio "
+            "repositório; o e-mail só é devolvido ao perfil ADMIN."
+        ),
+    )
+    def get(self, request: Request, repository_id: int) -> Response:
+        assert_can_read_repository(request.user, repository_id)
+
+        vinculos = (
+            RepositoryAccess.objects.select_related("user")
+            .filter(harvester_repository_id=str(repository_id))
+            .order_by("user__username")
+        )
+        serializer = RepositoryManagerSerializer(
+            vinculos, many=True, context={"request": request}
+        )
+        return Response({"count": vinculos.count(), "results": serializer.data})
 
 
 class RepositoryHarvestsView(HarvesterBackedAPIView):

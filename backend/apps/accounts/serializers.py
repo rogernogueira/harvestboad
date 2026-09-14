@@ -42,6 +42,48 @@ class MonitorTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
 
+class UserCreateSerializer(serializers.ModelSerializer):
+    """Criação de conta pelo ADMIN.
+
+    A senha é definida por quem cria e validada pelos validadores do Django. A
+    conta nasce com `must_change_password=True`: quem entrar pela primeira vez é
+    obrigado a trocar, então a senha provisória não continua valendo.
+    """
+
+    password = serializers.CharField(write_only=True, style={"input_type": "password"})
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "profile",
+            "password",
+        ]
+
+    def validate_email(self, value: str) -> str:
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError("Já existe uma conta com este e-mail.")
+        return value
+
+    def validate_password(self, value: str) -> str:
+        try:
+            validate_password(value)
+        except DjangoValidationError as exc:
+            raise serializers.ValidationError(list(exc.messages)) from exc
+        return value
+
+    def create(self, validated_data: dict) -> User:
+        senha = validated_data.pop("password")
+        user = User(**validated_data, must_change_password=True)
+        user.set_password(senha)
+        user.save()
+        return user
+
+
 class ChangePasswordSerializer(serializers.Serializer):
     currentPassword = serializers.CharField(write_only=True)
     newPassword = serializers.CharField(write_only=True)

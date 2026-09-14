@@ -71,6 +71,47 @@ class RepositoryAccessSerializer(serializers.ModelSerializer):
         return self._summary(obj).get("institutionName")
 
 
+class RepositoryManagerSerializer(serializers.ModelSerializer):
+    """Gestor vinculado a um repositório, para quem já tem acesso a ele.
+
+    Expõe menos que `RepositoryAccessSerializer`: um gestor pode ver **quem** mais
+    cuida do repositório, mas o e-mail dos colegas é dado pessoal e só vai para o
+    ADMIN — ver `to_representation`.
+    """
+
+    username = serializers.CharField(source="user.username", read_only=True)
+    fullName = serializers.SerializerMethodField()
+    profile = serializers.CharField(source="user.profile", read_only=True)
+    profileDisplay = serializers.CharField(
+        source="user.get_profile_display", read_only=True
+    )
+    isActive = serializers.BooleanField(source="user.is_active", read_only=True)
+    grantedAt = serializers.DateTimeField(source="granted_at", read_only=True)
+    email = serializers.SerializerMethodField()
+
+    class Meta:
+        model = RepositoryAccess
+        fields = [
+            "id",
+            "user",
+            "username",
+            "fullName",
+            "email",
+            "profile",
+            "profileDisplay",
+            "isActive",
+            "grantedAt",
+        ]
+        read_only_fields = fields
+
+    def get_fullName(self, obj: RepositoryAccess) -> str:
+        return obj.user.get_full_name()
+
+    def get_email(self, obj: RepositoryAccess) -> str | None:
+        solicitante = self.context["request"].user
+        return obj.user.email if solicitante.is_admin else None
+
+
 class RepositoryAccessWriteSerializer(serializers.ModelSerializer):
     """Criação do vínculo.
 

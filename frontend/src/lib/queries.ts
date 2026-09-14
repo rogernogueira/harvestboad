@@ -13,6 +13,8 @@ import type {
   Repository,
   RepositoryAccess,
   RepositoryAccessSummaryList,
+  RepositoryManagerList,
+  RepositorySearchResult,
   RuleList,
   RuleOccurrences,
   User,
@@ -51,6 +53,46 @@ export const gestoresQuery = (search: string) =>
       if (search) params.set('search', search)
       return apiGet<Paginated<User>>(`/accounts/users/?${params}`)
     },
+  })
+
+/**
+ * Busca de repositórios no Harvester. Exclusivo do ADMIN.
+ *
+ * Sem termo, lista todos paginados — é a tela inicial da administração, e uma
+ * lista vazia esperando digitação seria pior que mostrar o acervo.
+ */
+export const repositorySearchQuery = (term: string, page: number, count = 10) =>
+  queryOptions({
+    queryKey: ['repositories', 'search', term, page, count],
+    queryFn: () =>
+      apiGet<RepositorySearchResult>(
+        `/repositories/accesses/search/?search=${encodeURIComponent(term)}&page=${page}&count=${count}`,
+      ),
+    staleTime: 5 * 60_000,
+  })
+
+/**
+ * Gestores vinculados a um repositório, para quem já tem acesso a ele.
+ *
+ * Diferente de `accessesByRepositoryQuery`, que ao gestor devolve só o próprio
+ * vínculo: esta lista todos os que cuidam do repositório.
+ */
+export const repositoryManagersQuery = (repositoryId: string) =>
+  queryOptions({
+    queryKey: ['repository', repositoryId, 'managers'],
+    queryFn: () => apiGet<RepositoryManagerList>(`/repositories/${repositoryId}/managers`),
+    enabled: repositoryId.length > 0,
+  })
+
+/** Gestores com acesso a um repositório (rota de administração). */
+export const accessesByRepositoryQuery = (repositoryId: string) =>
+  queryOptions({
+    queryKey: ['accesses', 'repository', repositoryId],
+    queryFn: () =>
+      apiGet<Paginated<RepositoryAccess>>(
+        `/repositories/accesses/?repository=${encodeURIComponent(repositoryId)}`,
+      ),
+    enabled: repositoryId.length > 0,
   })
 
 /** Repositórios do Harvester disponíveis para vínculo. Exclusivo do ADMIN. */

@@ -116,17 +116,41 @@ def _latest_finished(snapshots: list[dict]) -> dict | None:
     return snapshots[0] if snapshots else None
 
 
-def last_harvest_summary(repository_id: str, client: HarvesterClient | None = None) -> dict | None:
-    """Estatísticas da última coleta do repositório.
+def _network_row_by_id(
+    repository_id: str, acronym: str | None, client: HarvesterClient
+) -> dict | None:
+    """Linha de /private/networks correspondente ao repositório, se houver.
 
-    Compõe três leituras já cacheadas individualmente (histórico, diagnóstico e
-    regras), de modo que o painel não precise fazer três viagens por linha.
+    Essa rota traz cadastro e resumo da última coleta juntos, mas só filtra por
+    sigla — e a sigla gravada envelhece. Por isso o resultado é conferido pelo
+    `networkID`, que é autoritativo: se não bater, o chamador usa o caminho
+    lento por identificador.
+    """
+    if not acronym:
+        return None
+
+    payload = cached(
+        f"{CACHE_PREFIX}:private:{acronym}",
+        _ttl("SNAPSHOT"),
+        lambda: client.list_networks(
+            page=1, count=20, filter_field="acronym", filter_value=acronym
+        )
+        or {},
+    )
+
+    for rede in payload.get("networks") or []:
+        if str(rede.get("networkID", "")) == str(repository_id):
+            return rede
+    return None
+
+
+def last_harvest_summary(repository_id: str, client: HarvesterClient | None = None) -> dict | None:
+    """Estatísticas da última coleta, pelo histórico do repositório.
+
+    Caminho de contingência do painel: usado quando a sigla gravada não localiza
+    o repositório em `/private/networks`. Custa duas consultas em vez de uma.
     Devolve None quando o repositório nunca foi coletado.
     """
-    # Import local: `harvests` importa de `integrations`, e importar no topo
-    # criaria um ciclo entre as duas apps de domínio.
-    from apps.harvests import services as harvests
-
     client = client or HarvesterClient()
 
     historico = repository_harvests(repository_id, client)
@@ -143,31 +167,58 @@ def last_harvest_summary(repository_id: str, client: HarvesterClient | None = No
         "validSize": ultima.get("validSize"),
         "transformedSize": ultima.get("transformedSize"),
         "invalidSize": (ultima.get("size") or 0) - (ultima.get("validSize") or 0),
-        "harvestCount": historico["count"],
         "violatedRuleCount": None,
         "topViolations": [],
     }
 
     # O diagnóstico é a parte mais cara e a que mais falha; sem ele o resumo
     # ainda vale pelos números da própria coleta.
+    return _com_regras(resumo, snapshot_id, client)
+
+
+def _harvest_from_network_row(rede: dict, client: HarvesterClient) -> dict | None:
+    """Resumo da última coleta a partir de uma linha de /private/networks.
+
+    Os campos `lst*` já vêm na listagem; só as regras violadas exigem consultar
+    o diagnóstico.
+    """
+    snapshot_id = rede.get("lstSnapshotID")
+    if not snapshot_id:
+        return None
+
+    tamanho = rede.get("lstSize") or 0
+    validos = rede.get("lstValidSize") or 0
+    resumo = {
+        "snapshotId": str(snapshot_id),
+        "status": rede.get("lstSnapshotStatus"),
+        "endTime": rede.get("lstSnapshotDate"),
+        "size": rede.get("lstSize"),
+        "validSize": rede.get("lstValidSize"),
+        "transformedSize": rede.get("lstTransformedSize"),
+        "invalidSize": tamanho - validos,
+        "violatedRuleCount": None,
+        "topViolations": [],
+    }
+    return _com_regras(resumo, str(snapshot_id), client)
+
+
+def _com_regras(resumo: dict, snapshot_id: str, client: HarvesterClient) -> dict:
+    """Acrescenta as regras violadas ao resumo, se o diagnóstico responder."""
+    # Import local: `harvests` importa de `integrations`, e importar no topo
+    # criaria um ciclo entre as duas apps de domínio.
+    from apps.harvests import services as harvests
+
     try:
         regras = harvests.rules(snapshot_id, client)
     except HarvesterError:
         return resumo
 
-    violadas = [
-        regra for regra in regras["results"] if (regra.get("invalidCount") or 0) > 0
-    ]
+    violadas = [r for r in regras["results"] if (r.get("invalidCount") or 0) > 0]
     violadas.sort(key=lambda regra: regra["invalidCount"], reverse=True)
-
     resumo["violatedRuleCount"] = len(violadas)
     resumo["topViolations"] = [
-        {
-            "ruleId": regra["ruleId"],
-            "name": regra["name"],
-            "invalidCount": regra["invalidCount"],
-        }
-        for regra in violadas[:3]
+        {"ruleId": r["ruleId"], "name": r["name"], "invalidCount": r["invalidCount"]}
+        for r in violadas[:3]
     ]
     return resumo
 
@@ -196,14 +247,112 @@ def access_summaries(accesses) -> list[dict]:
         }
 
         try:
-            detalhe = repository_detail(repository_id, client)
-            linha["acronym"] = detalhe.get("acronym") or acesso.acronym
-            linha["name"] = detalhe.get("name")
-            linha["institutionName"] = detalhe.get("institutionName")
-            linha["lastHarvest"] = last_harvest_summary(repository_id, client)
+            # Caminho rápido: uma consulta a /private/networks devolve cadastro e
+            # resumo da última coleta de uma vez. O caminho lento (dois pedidos)
+            # só entra quando a sigla gravada não localiza o repositório.
+            rede = _network_row_by_id(repository_id, acesso.acronym, client)
+
+            if rede is not None:
+                linha["acronym"] = rede.get("acronym") or acesso.acronym
+                linha["name"] = rede.get("name")
+                linha["institutionName"] = rede.get("institution")
+                linha["lastHarvest"] = _harvest_from_network_row(rede, client)
+            else:
+                detalhe = repository_detail(repository_id, client)
+                linha["acronym"] = detalhe.get("acronym") or acesso.acronym
+                linha["name"] = detalhe.get("name")
+                linha["institutionName"] = detalhe.get("institutionName")
+                linha["lastHarvest"] = last_harvest_summary(repository_id, client)
         except HarvesterError:
             linha["unavailable"] = True
 
         resumos.append(linha)
 
     return resumos
+
+
+def _network_to_row(network: dict) -> dict:
+    """Normaliza um repositório do envelope HAL para o formato da nossa API."""
+    return {
+        "harvesterRepositoryId": _id_from_href(network),
+        "acronym": network.get("acronym"),
+        "name": network.get("name"),
+        "institutionName": network.get("institutionName"),
+        "published": network.get("published"),
+    }
+
+
+SEARCH_FIELDS = ("acronym", "name", "institution")
+
+
+def _private_network_to_row(network: dict) -> dict:
+    """Normaliza uma linha de /private/networks.
+
+    Essa rota já traz o resumo da última coleta (`lst*`), então a linha serve
+    tanto para escolher um repositório quanto para exibir seu estado.
+    """
+    return {
+        "harvesterRepositoryId": str(network.get("networkID", "")),
+        "acronym": network.get("acronym"),
+        "name": network.get("name"),
+        "institutionName": network.get("institution"),
+        "institutionAcronym": network.get("institutionAcronym"),
+        "lastSnapshotId": (
+            str(network["lstSnapshotID"]) if network.get("lstSnapshotID") else None
+        ),
+        "lastSnapshotDate": network.get("lstSnapshotDate"),
+        "lastSnapshotStatus": network.get("lstSnapshotStatus"),
+        "lastSize": network.get("lstSize"),
+        "lastValidSize": network.get("lstValidSize"),
+    }
+
+
+def search_repositories(
+    term: str,
+    page: int = 1,
+    count: int = 20,
+    client: HarvesterClient | None = None,
+) -> dict:
+    """Busca repositórios por sigla, nome ou instituição.
+
+    Usa `/private/networks`, a mesma rota da interface do Harvester: ela pagina
+    de verdade e filtra no servidor, ao contrário de mesclar consultas soltas.
+
+    A origem filtra um campo por vez, então o termo é tentado em sequência —
+    sigla, nome, instituição — parando no primeiro que encontrar algo. Buscas
+    por sigla, o caso comum, resolvem na primeira tentativa.
+
+    Sem termo, devolve a lista completa paginada.
+    """
+    client = client or HarvesterClient()
+    termo = (term or "").strip()
+
+    def montar(payload: dict, campo: str | None) -> dict:
+        total = payload.get("totalElements") or 0
+        return {
+            "query": termo,
+            "field": campo,
+            "page": page,
+            "count": count,
+            "totalElements": total,
+            "totalPages": max(1, -(-total // count)) if total else 0,
+            "results": [
+                _private_network_to_row(rede) for rede in payload.get("networks") or []
+            ],
+        }
+
+    if not termo:
+        payload = client.list_networks(page=page, count=count, sort_field="acronym") or {}
+        return montar(payload, None)
+
+    for campo in SEARCH_FIELDS:
+        payload = (
+            client.list_networks(
+                page=page, count=count, filter_field=campo, filter_value=termo
+            )
+            or {}
+        )
+        if (payload.get("totalElements") or 0) > 0:
+            return montar(payload, campo)
+
+    return montar({}, None)

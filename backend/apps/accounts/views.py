@@ -14,6 +14,7 @@ from .models import Profile, User
 from .serializers import (
     ChangePasswordSerializer,
     MonitorTokenObtainPairSerializer,
+    UserCreateSerializer,
     UserSerializer,
 )
 
@@ -47,15 +48,39 @@ class MeView(APIView):
         return Response(UserSerializer(request.user).data)
 
 
-class UserListView(generics.ListAPIView):
-    """Contas da aplicação, para o ADMIN escolher a quem conceder acesso.
+class UserListCreateView(generics.ListCreateAPIView):
+    """Contas da aplicação: listagem e criação, ambas restritas ao ADMIN.
 
-    Restrita ao perfil ADMIN: a lista de usuários não interessa ao gestor e
-    expor quem mais usa o sistema seria vazamento desnecessário.
+    A lista de usuários não interessa ao gestor, e expor quem mais usa o sistema
+    seria vazamento desnecessário.
     """
 
-    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated, IsAdminProfile]
+
+    def get_serializer_class(self):
+        return UserCreateSerializer if self.request.method == "POST" else UserSerializer
+
+    @extend_schema(
+        request=UserCreateSerializer,
+        responses={201: UserSerializer},
+        description=(
+            "Cria uma conta. Nasce com troca de senha obrigatória, então a senha "
+            "informada aqui é provisória. Exclusivo do perfil ADMIN."
+        ),
+    )
+    def post(self, request: Request, *args, **kwargs) -> Response:
+        serializer = UserCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        record(
+            action=AuditLog.Action.CREATE,
+            resource="user",
+            resource_id=user.pk,
+            request=request,
+        )
+        # Devolve no formato de leitura: a senha não volta nem uma vez.
+        return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
 
     @extend_schema(
         parameters=[

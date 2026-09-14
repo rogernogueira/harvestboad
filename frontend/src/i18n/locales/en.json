@@ -39,7 +39,9 @@
     "yes": "Yes",
     "no": "No",
     "forbiddenLabel": "Restricted area",
-    "adminOnly": "This area is available to administrators only."
+    "adminOnly": "This area is available to administrators only.",
+    "close": "Close",
+    "cancel": "Cancel"
   },
   "pagination": {
     "page": "Page {{page}} of {{total}}",
@@ -57,8 +59,8 @@
     "violatedRules": "Violated rules",
     "topViolations": "Most violated rules",
     "seeRecords": "See the records violating this rule",
-    "harvestCount": "{{count}} harvest(s) in history",
-    "statsUnavailable": "Statistics unavailable: the Harvester did not respond for this repository."
+    "statsUnavailable": "Statistics unavailable: the Harvester did not respond for this repository.",
+    "seeHistory": "See harvest history"
   },
   "repository": {
     "acronym": "Acronym",
@@ -157,31 +159,57 @@
     "eyebrow": "Administration",
     "title": "Repository access",
     "subtitle": "Link managers to the repositories each one may follow.",
-    "newLink": "New link",
     "manager": "Manager",
     "searchManager": "Search by username, name or e-mail",
     "chooseManager": "Select a manager",
     "repository": "Repository",
     "searchRepository": "Search by acronym, name or institution",
-    "chooseRepository": "Select a repository",
-    "repositoryId": "Harvester repository identifier",
-    "repositoryIdPlaceholder": "Harvester identifier (e.g. 1)",
-    "acronym": "Repository acronym",
-    "acronymPlaceholder": "Repository acronym",
-    "sourceDownFallback": "The Harvester is unreachable: enter the identifier and acronym manually.",
-    "showing": "Showing {{shown}} of {{total}} repositories",
-    "link": "Link",
     "linking": "Linking…",
-    "linked": "Link created.",
-    "existing": "Existing links",
-    "noLinks": "No links registered.",
     "remove": "Remove",
     "confirmRemove": "Remove {{user}} access to this repository?",
-    "staleAcronym": "stale acronym",
-    "columns": {
-      "manager": "Manager",
-      "repository": "Repository",
-      "grantedAt": "Linked on"
+    "findRepository": "Find repository",
+    "noRepositories": "No repository found.",
+    "foundBy": "{{total}} repository(ies) — matched by {{field}}",
+    "fields": {
+      "acronym": "acronym",
+      "name": "name",
+      "institution": "institution",
+      "all": "full listing"
+    },
+    "noSelection": "No repository selected",
+    "selectHint": "Search and pick a repository on the left to register its managers.",
+    "selectedRepository": "Selected repository",
+    "managersWithAccess": "Managers with access ({{count}})",
+    "noManagers": "No manager registered for this repository.",
+    "addManager": "Add manager",
+    "allManagersLinked": "All matching managers already have access to this repository.",
+    "since": "since {{date}}"
+  },
+  "managers": {
+    "title": "Linked users",
+    "open": "See users linked to this repository",
+    "none": "No user linked to this repository.",
+    "inactive": "inactive"
+  },
+  "newUser": {
+    "open": "+ New account",
+    "title": "New manager account",
+    "subtitle": "The account is created with the manager profile and a temporary password.",
+    "username": "Username",
+    "email": "E-mail",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "password": "Temporary password",
+    "confirmPassword": "Confirm password",
+    "provisionalPassword": "On first sign-in, the person must set a new password.",
+    "create": "Create account",
+    "creating": "Creating…",
+    "validation": {
+      "usernameRequired": "Enter the username.",
+      "emailInvalid": "Enter a valid e-mail.",
+      "passwordRequired": "Enter the password.",
+      "tooShort": "Password must be at least 8 characters.",
+      "mismatch": "Passwords do not match."
     }
   }
 }
