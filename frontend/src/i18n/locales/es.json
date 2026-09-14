@@ -1,0 +1,187 @@
+{
+  "app": {
+    "name": "Interfaz del gestor",
+    "tagline": "Repositorios y recolecciones",
+    "institution": "IBICT — Instituto Brasileño de Información en Ciencia y Tecnología",
+    "footer": "Monitor Integra · seguimiento de repositorios y recolecciones"
+  },
+  "auth": {
+    "signIn": "Entrar",
+    "signingIn": "Entrando…",
+    "logout": "Salir",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar nueva contraseña",
+    "changePassword": "Cambiar contraseña",
+    "mustChangePassword": "Es necesario definir una nueva contraseña antes de continuar.",
+    "invalidCredentials": "Usuario o contraseña inválidos.",
+    "validation": {
+      "usernameRequired": "Indique el usuario.",
+      "passwordRequired": "Indique la contraseña.",
+      "tooShort": "La contraseña debe tener al menos 8 caracteres.",
+      "mismatch": "Las contraseñas no coinciden."
+    }
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "No fue posible cargar los datos.",
+    "harvesterDown": "El Harvester está inaccesible en este momento. Inténtelo de nuevo.",
+    "harvesterBad": "El Harvester respondió de forma inesperada.",
+    "forbidden": "Usted no tiene acceso a este recurso.",
+    "notFound": "Recurso no encontrado.",
+    "retry": "Intentar de nuevo",
+    "noResults": "Ningún resultado.",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "language": "Idioma",
+    "yes": "Sí",
+    "no": "No",
+    "forbiddenLabel": "Acceso restringido",
+    "adminOnly": "Esta área es exclusiva del perfil administrador."
+  },
+  "pagination": {
+    "page": "Página {{page}} de {{total}}",
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "repositories": {
+    "title": "Mis repositorios",
+    "subtitle": "{{count}} repositorio(s) bajo su gestión",
+    "none": "Ningún repositorio asociado a su cuenta.",
+    "unnamed": "(sin nombre en el origen)",
+    "grantedAt": "Asociado el {{date}}",
+    "loadingStats": "Cargando repositorios y estadísticas…",
+    "lastHarvest": "Última recolección",
+    "violatedRules": "Reglas infringidas",
+    "topViolations": "Reglas con más infracciones",
+    "seeRecords": "Ver los registros que infringen esta regla",
+    "harvestCount": "{{count}} recolección(es) en el historial",
+    "statsUnavailable": "Estadísticas no disponibles: el Harvester no respondió para este repositorio."
+  },
+  "repository": {
+    "acronym": "Sigla",
+    "metadataPrefix": "Prefijo de metadatos",
+    "storeSchema": "Esquema de almacenamiento",
+    "published": "Publicado"
+  },
+  "harvests": {
+    "title": "Historial de recolecciones",
+    "none": "Ninguna recolección registrada.",
+    "records": "Registros",
+    "valid": "Válidos",
+    "columns": {
+      "snapshot": "Recolección",
+      "status": "Situación",
+      "end": "Finalizada el",
+      "size": "Registros",
+      "valid": "Válidos"
+    }
+  },
+  "harvest": {
+    "title": "Recolección {{id}}",
+    "breadcrumb": "Recolección {{id}}",
+    "endedAt": "finalizada el",
+    "tabs": {
+      "diagnosis": "Diagnóstico",
+      "records": "Registros"
+    }
+  },
+  "diagnosis": {
+    "size": "Registros",
+    "valid": "Válidos",
+    "invalid": "Inválidos",
+    "transformed": "Transformados",
+    "clickToFilter": "haga clic para filtrar los registros",
+    "topInvalidRules": "Reglas con más infracciones",
+    "rules": "Reglas de validación ({{count}})",
+    "columns": {
+      "rule": "Regla",
+      "name": "Descripción",
+      "mandatory": "Obligatoria",
+      "validCount": "Cumplen",
+      "invalidCount": "Infringen"
+    }
+  },
+  "records": {
+    "title": "Registros",
+    "total": "{{count}} registro(s)",
+    "none": "Ningún registro para esta selección.",
+    "valid": "Válido",
+    "invalid": "Inválido",
+    "transformed": "Transformado",
+    "notTransformed": "No transformado",
+    "anyValidity": "Cualquier validez",
+    "anyTransformed": "Cualquier transformación",
+    "filterValidity": "Filtrar por validez",
+    "filterTransformed": "Filtrar por transformación",
+    "ruleViolated": "Infringe la regla {{rule}}",
+    "ruleMet": "Cumple la regla {{rule}}",
+    "removeFilter": "Quitar filtro",
+    "clearFilters": "Limpiar filtros",
+    "export": "Exportar CSV",
+    "exporting": "Exportando…",
+    "columns": {
+      "identifier": "Identificador",
+      "valid": "Validez",
+      "transformed": "Transformado",
+      "set": "Conjunto"
+    }
+  },
+  "record": {
+    "title": "Registro",
+    "identifier": "Identificador",
+    "internalId": "ID interno",
+    "set": "Conjunto",
+    "prefix": "Prefijo de metadatos",
+    "origin": "Origen",
+    "repository": "Repositorio",
+    "institution": "Institución",
+    "xml": "XML transformado",
+    "xmlUnavailable": "El Harvester no devolvió el XML de este registro. El informe de diagnóstico está desactualizado en el origen."
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La dirección solicitada no existe.",
+    "back": "Volver al inicio"
+  },
+  "nav": {
+    "main": "Navegación principal",
+    "sections": "Secciones",
+    "repositories": "Repositorios",
+    "access": "Accesos",
+    "toggleMenu": "Abrir o cerrar el menú"
+  },
+  "access": {
+    "eyebrow": "Administración",
+    "title": "Accesos a repositorios",
+    "subtitle": "Asocie gestores a los repositorios que cada uno puede seguir.",
+    "newLink": "Nueva asociación",
+    "manager": "Gestor",
+    "searchManager": "Buscar por usuario, nombre o correo",
+    "chooseManager": "Seleccione un gestor",
+    "repository": "Repositorio",
+    "searchRepository": "Buscar por sigla, nombre o institución",
+    "chooseRepository": "Seleccione un repositorio",
+    "repositoryId": "Identificador del repositorio en el Harvester",
+    "repositoryIdPlaceholder": "Identificador en el Harvester (p. ej.: 1)",
+    "acronym": "Sigla del repositorio",
+    "acronymPlaceholder": "Sigla del repositorio",
+    "sourceDownFallback": "El Harvester está inaccesible: indique el identificador y la sigla manualmente.",
+    "showing": "Mostrando {{shown}} de {{total}} repositorios",
+    "link": "Asociar",
+    "linking": "Asociando…",
+    "linked": "Asociación creada.",
+    "existing": "Asociaciones existentes",
+    "noLinks": "Ninguna asociación registrada.",
+    "remove": "Quitar",
+    "confirmRemove": "¿Quitar el acceso de {{user}} a este repositorio?",
+    "staleAcronym": "sigla desactualizada",
+    "columns": {
+      "manager": "Gestor",
+      "repository": "Repositorio",
+      "grantedAt": "Asociado el"
+    }
+  }
+}

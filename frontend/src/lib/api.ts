@@ -121,6 +121,11 @@ export async function apiPost<T>(
   return (await response.json()) as T
 }
 
+export async function apiDelete(path: string): Promise<void> {
+  const response = await send(path, { method: 'DELETE' })
+  if (!response.ok) await parseError(response)
+}
+
 /** Busca texto bruto — usado pelo XML transformado. */
 export async function apiGetText(path: string): Promise<string> {
   const response = await send(path, { method: 'GET', raw: true })

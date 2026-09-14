@@ -118,6 +118,29 @@ REPOSITORY_PARAM = OpenApiParameter(
 )
 
 
+class MyRepositoriesSummaryView(HarvesterBackedAPIView):
+    """Painel de repositórios do usuário, com estatísticas da última coleta.
+
+    Existe para que o painel faça **uma** requisição em vez de três por
+    repositório: histórico, diagnóstico e regras são compostos aqui, sobre o
+    mesmo cache das telas de coleta.
+    """
+
+    @extend_schema(
+        description=(
+            "Repositórios do usuário com o resumo da última coleta: totais, data, "
+            "quantidade de regras violadas e as três com mais violações."
+        ),
+    )
+    def get(self, request: Request) -> Response:
+        queryset = RepositoryAccess.objects.select_related("user")
+        if not request.user.is_admin:
+            queryset = queryset.filter(user=request.user)
+
+        resumos = services.access_summaries(queryset)
+        return Response({"count": len(resumos), "results": resumos})
+
+
 class RepositoryDetailView(HarvesterBackedAPIView):
     """Visão geral do repositório: dados cadastrais vindos do Harvester."""
 

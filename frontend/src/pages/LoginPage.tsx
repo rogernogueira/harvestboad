@@ -50,74 +50,85 @@ export function LoginPage() {
   })
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-4 py-12">
-      <div className="w-full max-w-sm">
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <div>
-            <h1 className="text-lg font-semibold">{t('app.name')}</h1>
-            <p className="text-sm text-content-muted">{t('app.tagline')}</p>
-          </div>
+    <div className="flex min-h-dvh flex-col bg-surface-muted">
+      {/*
+        A faixa institucional também aqui: além de manter a identidade desde a
+        primeira tela, é onde vive o seletor de idioma, cujo texto é claro e
+        precisa do fundo escuro para ter contraste.
+      */}
+      <div className="bg-brand-strong text-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5">
+          <p className="eyebrow !text-white/85">{t('app.institution')}</p>
           <LanguageSwitcher />
         </div>
+      </div>
 
-        <form
-          onSubmit={(event) => void onSubmit(event)}
-          noValidate
-          className="flex flex-col gap-4 rounded-xl border border-border-subtle bg-surface-raised p-6"
-        >
-          <h2 className="text-sm font-medium">{t('auth.signIn')}</h2>
+      <div className="flex flex-1 items-center justify-center px-4 py-12">
+        <div className="w-full max-w-sm">
+          <div className="mb-6">
+            <h1 className="font-heading text-xl font-extrabold tracking-tight">{t('app.name')}</h1>
+            <p className="eyebrow mt-1">{t('app.tagline')}</p>
+          </div>
 
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm">{t('auth.username')}</span>
-            <input
-              type="text"
-              autoComplete="username"
-              autoFocus
-              aria-invalid={errors.username ? true : undefined}
-              {...register('username')}
-              className={`rounded-md border bg-surface px-3 py-2 text-sm ${
-                errors.username ? 'border-down' : 'border-border-subtle'
-              }`}
-            />
-            {errors.username?.message ? (
-              <span role="alert" className="text-xs text-down">
-                {t(errors.username.message)}
-              </span>
-            ) : null}
-          </label>
-
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm">{t('auth.password')}</span>
-            <input
-              type="password"
-              autoComplete="current-password"
-              aria-invalid={errors.password ? true : undefined}
-              {...register('password')}
-              className={`rounded-md border bg-surface px-3 py-2 text-sm ${
-                errors.password ? 'border-down' : 'border-border-subtle'
-              }`}
-            />
-            {errors.password?.message ? (
-              <span role="alert" className="text-xs text-down">
-                {t(errors.password.message)}
-              </span>
-            ) : null}
-          </label>
-
-          {erro ? (
-            <p role="alert" className="text-sm text-down">
-              {erro}
-            </p>
-          ) : null}
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"
+          <form
+            onSubmit={(event) => void onSubmit(event)}
+            noValidate
+            className="flex flex-col gap-4 panel p-6"
           >
-            {isSubmitting ? t('auth.signingIn') : t('auth.signIn')}
-          </button>
-        </form>
+            <h2 className="font-heading text-sm font-bold">{t('auth.signIn')}</h2>
+
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm">{t('auth.username')}</span>
+              <input
+                type="text"
+                autoComplete="username"
+                autoFocus
+                aria-invalid={errors.username ? true : undefined}
+                {...register('username')}
+                className={`border bg-surface px-3 py-2 text-sm ${
+                  errors.username ? 'border-down' : 'border-border-subtle'
+                }`}
+              />
+              {errors.username?.message ? (
+                <span role="alert" className="text-xs text-down">
+                  {t(errors.username.message)}
+                </span>
+              ) : null}
+            </label>
+
+            <label className="flex flex-col gap-1.5">
+              <span className="text-sm">{t('auth.password')}</span>
+              <input
+                type="password"
+                autoComplete="current-password"
+                aria-invalid={errors.password ? true : undefined}
+                {...register('password')}
+                className={`border bg-surface px-3 py-2 text-sm ${
+                  errors.password ? 'border-down' : 'border-border-subtle'
+                }`}
+              />
+              {errors.password?.message ? (
+                <span role="alert" className="text-xs text-down">
+                  {t(errors.password.message)}
+                </span>
+              ) : null}
+            </label>
+
+            {erro ? (
+              <p role="alert" className="text-sm text-down">
+                {erro}
+              </p>
+            ) : null}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"
+            >
+              {isSubmitting ? t('auth.signingIn') : t('auth.signIn')}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   )

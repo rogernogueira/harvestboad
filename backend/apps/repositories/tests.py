@@ -461,3 +461,179 @@ class SyncAcronymsCommandTests(TestCase):
         vinculo.refresh_from_db()
         self.assertEqual(vinculo.acronym, "BDTD")
         self.assertIn("não consultado", erro.getvalue())
+
+
+SNAPSHOTS_COM_HISTORICO = {
+    "_embedded": {
+        "snapshot": [
+            {
+                "status": "HARVESTING",
+                "endTime": None,
+                "size": 0,
+                "_links": {"self": {"href": "http://h:8090/rest/snapshot/99999"}},
+            },
+            {
+                "status": "VALID",
+                "endTime": "2024-06-25 12:10:33",
+                "size": 26103,
+                "validSize": 26091,
+                "transformedSize": 26103,
+                "_links": {"self": {"href": "http://h:8090/rest/snapshot/98768"}},
+            },
+        ]
+    }
+}
+
+DIAGNOSE_COM_REGRAS = {
+    "size": 26103,
+    "validSize": 26091,
+    "rulesByID": {
+        "110": {"ruleID": 110, "name": "Abstract", "invalidCount": 26103, "validCount": None},
+        "117": {"ruleID": 117, "name": "Idioma", "invalidCount": 49, "validCount": None},
+        "104": {"ruleID": 104, "name": "Título", "invalidCount": None, "validCount": 26103},
+    },
+    "facets": {},
+}
+
+
+def fake_summary_client():
+    class _Fake:
+        def get_network(self, repository_id):
+            return NETWORK_PAYLOAD
+
+        def list_snapshots(self, repository_id):
+            return SNAPSHOTS_COM_HISTORICO
+
+        def get_diagnose(self, snapshot_id):
+            return DIAGNOSE_COM_REGRAS
+
+    return _Fake()
+
+
+class RepositorySummaryTests(TestCase):
+    """Painel de repositórios com estatísticas da última coleta."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="a", email="a@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="g", email="g@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        cls.outro = User.objects.create_user(
+            username="o", email="o@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        RepositoryAccess.objects.create(
+            user=cls.gestor, harvester_repository_id="1", acronym="VERACRUZ-0"
+        )
+        RepositoryAccess.objects.create(
+            user=cls.outro, harvester_repository_id="5", acronym="OUTRO"
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().get(f"{REPOS}/summary/").status_code, 401)
+
+    def test_gestor_ve_somente_os_proprios(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client()):
+            response = self.api(self.gestor).get(f"{REPOS}/summary/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["count"], 1)
+        self.assertEqual(response.data["results"][0]["harvesterRepositoryId"], "1")
+
+    def test_admin_ve_todos(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client()):
+            response = self.api(self.admin).get(f"{REPOS}/summary/")
+        self.assertEqual(response.data["count"], 2)
+
+    def test_traz_estatisticas_da_ultima_coleta(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client()):
+            response = self.api(self.gestor).get(f"{REPOS}/summary/")
+
+        linha = response.data["results"][0]
+        self.assertEqual(linha["name"], "Revista Veras")
+        coleta = linha["lastHarvest"]
+        self.assertEqual(coleta["snapshotId"], "98768")
+        self.assertEqual(coleta["endTime"], "2024-06-25 12:10:33")
+        self.assertEqual(coleta["size"], 26103)
+        self.assertEqual(coleta["validSize"], 26091)
+        self.assertEqual(coleta["invalidSize"], 12)
+        self.assertEqual(coleta["harvestCount"], 2)
+
+    def test_ignora_coleta_em_andamento_sem_registros(self) -> None:
+        """A mais recente está coletando e tem 0 registros: o resumo usa a anterior."""
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client()):
+            response = self.api(self.gestor).get(f"{REPOS}/summary/")
+        self.assertEqual(response.data["results"][0]["lastHarvest"]["snapshotId"], "98768")
+
+    def test_conta_e_ordena_regras_violadas(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: fake_summary_client()):
+            response = self.api(self.gestor).get(f"{REPOS}/summary/")
+
+        coleta = response.data["results"][0]["lastHarvest"]
+        # Só 110 e 117 têm invalidCount; a 104 não conta.
+        self.assertEqual(coleta["violatedRuleCount"], 2)
+        self.assertEqual(
+            [v["ruleId"] for v in coleta["topViolations"]], [110, 117]
+        )
+        self.assertEqual(coleta["topViolations"][0]["invalidCount"], 26103)
+
+    def test_repositorio_sem_coletas(self) -> None:
+        class _SemColetas:
+            def get_network(self, repository_id):
+                return NETWORK_PAYLOAD
+
+            def list_snapshots(self, repository_id):
+                return {"_embedded": {"snapshot": []}}
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _SemColetas()):
+            response = self.api(self.gestor).get(f"{REPOS}/summary/")
+
+        self.assertIsNone(response.data["results"][0]["lastHarvest"])
+        self.assertFalse(response.data["results"][0]["unavailable"])
+
+    def test_falha_do_harvester_marca_a_linha_sem_derrubar_o_painel(self) -> None:
+        """Uma origem fora do ar não pode zerar o painel inteiro."""
+
+        class _Fora:
+            def get_network(self, repository_id):
+                raise HarvesterError("sem rota")
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _Fora()):
+            response = self.api(self.admin).get(f"{REPOS}/summary/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["count"], 2)
+        for linha in response.data["results"]:
+            self.assertTrue(linha["unavailable"])
+            # A sigla gravada localmente sobrevive e identifica a linha.
+            self.assertIn(linha["acronym"], {"VERACRUZ-0", "OUTRO"})
+
+    def test_diagnostico_indisponivel_preserva_os_numeros_da_coleta(self) -> None:
+        """Sem o diagnóstico, os totais da coleta ainda valem."""
+
+        class _SemDiagnostico:
+            def get_network(self, repository_id):
+                return NETWORK_PAYLOAD
+
+            def list_snapshots(self, repository_id):
+                return SNAPSHOTS_COM_HISTORICO
+
+            def get_diagnose(self, snapshot_id):
+                raise HarvesterError("sem rota")
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _SemDiagnostico()):
+            response = self.api(self.gestor).get(f"{REPOS}/summary/")
+
+        coleta = response.data["results"][0]["lastHarvest"]
+        self.assertEqual(coleta["size"], 26103)
+        self.assertIsNone(coleta["violatedRuleCount"])
+        self.assertEqual(coleta["topViolations"], [])

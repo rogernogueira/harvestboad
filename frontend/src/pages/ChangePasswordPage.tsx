@@ -83,7 +83,7 @@ export function ChangePasswordPage() {
                 autoComplete={campo.autoComplete}
                 aria-invalid={erro ? true : undefined}
                 {...register(campo.name)}
-                className={`rounded-md border bg-surface-raised px-3 py-2 text-sm ${
+                className={`border bg-surface px-3 py-2 text-sm ${
                   erro ? 'border-down' : 'border-border-subtle'
                 }`}
               />
@@ -107,7 +107,7 @@ export function ChangePasswordPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"
+          className="bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"
         >
           {isSubmitting ? t('common.saving') : t('common.save')}
         </button>

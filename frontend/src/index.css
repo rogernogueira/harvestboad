@@ -1,30 +1,56 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
+/*
+ * Tokens visuais da especificação de design.
+ *
+ * A paleta institucional é azul/dourado/verde sobre fundo branco, com texto em
+ * cinza escuro. As cores de estado (ok/atenção/erro) derivam do verde, do
+ * dourado e de um vermelho institucional, escurecidas o suficiente para manter
+ * contraste de texto sobre fundo claro — os valores originais da paleta são
+ * claros demais para texto.
+ */
 @theme {
-  --color-surface: oklch(0.99 0.002 250);
-  --color-surface-raised: oklch(1 0 0);
-  --color-border-subtle: oklch(0.92 0.004 250);
-  --color-content: oklch(0.22 0.01 250);
-  --color-content-muted: oklch(0.55 0.012 250);
+  /* Marca */
+  --color-brand: #5b84b1;
+  --color-brand-strong: #40648c;
+  --color-brand-soft: #eef3f9;
+  --color-gold: #d6c68b;
+  --color-gold-strong: #8a7524;
+  --color-green: #9cb994;
+  --color-green-strong: #3f7a4f;
 
-  --color-brand: oklch(0.58 0.15 250);
-  --color-brand-strong: oklch(0.48 0.16 250);
+  /* Superfícies e texto */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-border-subtle: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-content: #333333;
+  --color-content-muted: #5a5b5d;
 
-  --color-ok: oklch(0.68 0.15 150);
-  --color-warn: oklch(0.78 0.15 80);
-  --color-down: oklch(0.62 0.2 25);
+  /* Estados */
+  --color-ok: #3f7a4f;
+  --color-ok-soft: #eef4ef;
+  --color-warn: #8a7524;
+  --color-warn-soft: #f9f5e8;
+  --color-down: #b3261e;
+  --color-down-soft: #fbeeed;
 
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* Tipografia: Montserrat nos títulos, Open Sans no corpo */
+  --font-heading: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  --font-sans: 'Open Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /*
+   * A linguagem visual é angular: blocos bem definidos e linhas retas. O raio
+   * existe, mas discreto — nada de cantos muito arredondados.
+   */
+  --radius-card: 0.25rem;
 }
 
 @layer base {
-  :root {
-    color-scheme: light dark;
-  }
-
   html {
-    background-color: var(--color-surface);
+    background-color: var(--color-surface-muted);
     color: var(--color-content);
   }
 
@@ -34,8 +60,79 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
+  }
+
+  /* Foco sempre visível, em anel azul institucional. */
   :focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /*
+   * Rótulo de seção: mono, caixa alta e tracking alto. É a assinatura
+   * tipográfica que separa hierarquia sem depender de tamanho de fonte.
+   */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-content-muted);
+  }
+
+  /*
+   * Underline animado da navegação: cresce da esquerda em 2px.
+   * O estado ativo mantém a barra inteira.
+   */
+  .nav-underline {
+    position: relative;
+  }
+
+  .nav-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 150ms ease-out;
+  }
+
+  .nav-underline:hover::after,
+  .nav-underline[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  /* Bloco de conteúdo padrão: borda sutil, sem sombra pesada. */
+  .panel {
+    background-color: var(--color-surface-raised);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-card);
+  }
+}
+
+/*
+ * Redução de movimento: quem pede menos animação recebe transições
+ * praticamente instantâneas, sem perder o feedback visual.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

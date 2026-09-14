@@ -56,20 +56,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener(SESSION_EXPIRED, encerrar)
   }, [logout])
 
-  const login = useCallback(
-    async (username: string, password: string) => {
-      const data = await apiPost<TokenPair>(
-        '/auth/token/',
-        { username, password },
-        { skipAuth: true },
-      )
-      tokens.set(data.access, data.refresh)
-      setUser(data.user)
-      setStatus('autenticado')
-      return data.user
-    },
-    [],
-  )
+  const login = useCallback(async (username: string, password: string) => {
+    const data = await apiPost<TokenPair>(
+      '/auth/token/',
+      { username, password },
+      { skipAuth: true },
+    )
+    tokens.set(data.access, data.refresh)
+    setUser(data.user)
+    setStatus('autenticado')
+    return data.user
+  }, [])
 
   const value = useMemo<AuthValue>(
     () => ({ user, status, login, logout, refreshUser }),

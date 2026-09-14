@@ -20,7 +20,7 @@ export function Pagination({
           type="button"
           onClick={() => onChange(page - 1)}
           disabled={page <= 1}
-          className="rounded-md border border-border-subtle px-3 py-1.5 disabled:opacity-40"
+          className="border border-border-subtle px-3 py-1.5 disabled:opacity-40"
         >
           {t('pagination.previous')}
         </button>
@@ -28,7 +28,7 @@ export function Pagination({
           type="button"
           onClick={() => onChange(page + 1)}
           disabled={page >= total}
-          className="rounded-md border border-border-subtle px-3 py-1.5 disabled:opacity-40"
+          className="border border-border-subtle px-3 py-1.5 disabled:opacity-40"
         >
           {t('pagination.next')}
         </button>

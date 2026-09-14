@@ -55,7 +55,7 @@ export function RecordPage() {
         </div>
       </div>
 
-      <section className="rounded-xl border border-border-subtle bg-surface-raised">
+      <section className="panel">
         <dl className="divide-y divide-border-subtle text-sm">
           {campos.map(([rotulo, valor]) => (
             <div key={rotulo} className="flex flex-wrap gap-2 px-4 py-3">
@@ -67,7 +67,7 @@ export function RecordPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-medium">{t('record.xml')}</h2>
+        <h2 className="font-heading text-sm font-bold">{t('record.xml')}</h2>
 
         {xml.isPending ? <Loading /> : null}
 
@@ -76,16 +76,14 @@ export function RecordPage() {
             // O Harvester responde 200 com uma mensagem de texto quando o
             // relatório de diagnóstico está desatualizado; o backend traduz
             // isso em 404. Não é erro do usuário nem falha de rede.
-            <p className="rounded-xl border border-border-subtle bg-surface-raised p-4 text-sm text-content-muted">
-              {t('record.xmlUnavailable')}
-            </p>
+            <p className="panel p-4 text-sm text-content-muted">{t('record.xmlUnavailable')}</p>
           ) : (
             <ErrorState error={xml.error} onRetry={() => void xml.refetch()} />
           )
         ) : null}
 
         {xml.data ? (
-          <pre className="overflow-x-auto rounded-xl border border-border-subtle bg-surface-raised p-4 font-mono text-xs">
+          <pre className="overflow-x-auto panel p-4 font-mono text-xs">
             <code>{xml.data}</code>
           </pre>
         ) : null}

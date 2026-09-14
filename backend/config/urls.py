@@ -9,6 +9,7 @@ from drf_spectacular.views import (
 # Toda a API vive sob /api/v1/. Uma futura v2 entra ao lado, sem quebrar a v1.
 api_v1 = [
     path("auth/", include("apps.accounts.urls")),
+    path("accounts/", include("apps.accounts.urls_management")),
     path("repositories/", include("apps.repositories.urls")),
     path("harvests/", include("apps.harvests.urls")),
     path("reports/", include("apps.reports.urls")),

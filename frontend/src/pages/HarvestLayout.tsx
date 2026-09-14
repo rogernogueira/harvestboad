@@ -51,7 +51,9 @@ export function HarvestLayout() {
           ]}
         />
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-xl font-semibold">{t('harvest.title', { id: snapshotId })}</h1>
+          <h1 className="font-heading text-2xl font-extrabold tracking-tight">
+            {t('harvest.title', { id: snapshotId })}
+          </h1>
           <HarvestStatusBadge status={data.status} />
         </div>
         <p className="text-sm text-content-muted">

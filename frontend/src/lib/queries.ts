@@ -3,6 +3,7 @@ import { queryOptions } from '@tanstack/react-query'
 import { apiGet, apiGetText } from './api'
 import { filtersToParams, type RecordFilters } from './filters'
 import type {
+  AvailableRepositoryPage,
   Diagnosis,
   HarvestDetail,
   HarvestList,
@@ -11,14 +12,56 @@ import type {
   RecordPage,
   Repository,
   RepositoryAccess,
+  RepositoryAccessSummaryList,
   RuleList,
   RuleOccurrences,
+  User,
 } from './types'
 
 export const myRepositoriesQuery = queryOptions({
   queryKey: ['repositories', 'mine'],
   queryFn: () => apiGet<Paginated<RepositoryAccess>>('/repositories/accesses/'),
 })
+
+/**
+ * Painel de repositórios com estatísticas da última coleta.
+ *
+ * O backend compõe histórico, diagnóstico e regras numa resposta só; montar
+ * isso no cliente seriam três requisições por repositório contra uma origem
+ * instável. Em compensação, a primeira carga é lenta — daí o staleTime longo.
+ */
+export const repositoriesSummaryQuery = queryOptions({
+  queryKey: ['repositories', 'summary'],
+  queryFn: () => apiGet<RepositoryAccessSummaryList>('/repositories/summary/'),
+  staleTime: 5 * 60_000,
+})
+
+/** Todos os vínculos (ADMIN) — a mesma rota devolve só os próprios ao gestor. */
+export const allAccessesQuery = queryOptions({
+  queryKey: ['accesses', 'all'],
+  queryFn: () => apiGet<Paginated<RepositoryAccess>>('/repositories/accesses/'),
+})
+
+/** Contas de gestor, para escolher a quem conceder acesso. Exclusivo do ADMIN. */
+export const gestoresQuery = (search: string) =>
+  queryOptions({
+    queryKey: ['users', 'gestores', search],
+    queryFn: () => {
+      const params = new URLSearchParams({ profile: 'GESTOR', active: 'true' })
+      if (search) params.set('search', search)
+      return apiGet<Paginated<User>>(`/accounts/users/?${params}`)
+    },
+  })
+
+/** Repositórios do Harvester disponíveis para vínculo. Exclusivo do ADMIN. */
+export const availableRepositoriesQuery = (page: number, size: number) =>
+  queryOptions({
+    queryKey: ['repositories', 'available', page, size],
+    queryFn: () =>
+      apiGet<AvailableRepositoryPage>(
+        `/repositories/accesses/available/?page=${page}&size=${size}`,
+      ),
+  })
 
 export const repositoryQuery = (id: string) =>
   queryOptions({
@@ -53,8 +96,7 @@ export const rulesQuery = (snapshotId: string) =>
 export const occurrencesQuery = (snapshotId: string, ruleId: string) =>
   queryOptions({
     queryKey: ['harvest', snapshotId, 'rules', ruleId, 'occurrences'],
-    queryFn: () =>
-      apiGet<RuleOccurrences>(`/harvests/${snapshotId}/rules/${ruleId}/occurrences`),
+    queryFn: () => apiGet<RuleOccurrences>(`/harvests/${snapshotId}/rules/${ruleId}/occurrences`),
   })
 
 export const recordsQuery = (

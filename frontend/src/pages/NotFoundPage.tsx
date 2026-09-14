@@ -10,7 +10,7 @@ export function NotFoundPage() {
       <p className="mt-2 text-content-muted">{t('notFound.description')}</p>
       <Link
         to="/"
-        className="mt-6 inline-block rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong"
+        className="mt-6 inline-block bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong"
       >
         {t('notFound.back')}
       </Link>

@@ -32,9 +32,7 @@ export function FilterBar({
     chips.push({
       key: 'transformed',
       label:
-        filters.transformed === 'true'
-          ? t('records.transformed')
-          : t('records.notTransformed'),
+        filters.transformed === 'true' ? t('records.transformed') : t('records.notTransformed'),
       remove: () => onChange({ ...filters, transformed: undefined }),
     })
   }
@@ -70,7 +68,7 @@ export function FilterBar({
             })
           }
           aria-label={t('records.filterValidity')}
-          className="rounded-md border border-border-subtle bg-surface-raised px-3 py-1.5 text-sm"
+          className="border border-border-subtle bg-surface px-3 py-1.5 text-sm"
         >
           <option value="">{t('records.anyValidity')}</option>
           <option value="true">{t('records.valid')}</option>
@@ -86,7 +84,7 @@ export function FilterBar({
             })
           }
           aria-label={t('records.filterTransformed')}
-          className="rounded-md border border-border-subtle bg-surface-raised px-3 py-1.5 text-sm"
+          className="border border-border-subtle bg-surface px-3 py-1.5 text-sm"
         >
           <option value="">{t('records.anyTransformed')}</option>
           <option value="true">{t('records.transformed')}</option>
@@ -99,7 +97,7 @@ export function FilterBar({
           key={chip.key}
           type="button"
           onClick={chip.remove}
-          className="inline-flex items-center gap-1.5 rounded-full bg-brand/10 px-2.5 py-1 text-xs text-brand-strong hover:bg-brand/20"
+          className="inline-flex items-center gap-1.5 bg-brand/10 px-2.5 py-1 text-xs text-brand-strong hover:bg-brand/20"
         >
           {chip.label}
           <span aria-hidden="true">×</span>

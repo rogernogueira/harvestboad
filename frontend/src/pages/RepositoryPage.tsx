@@ -15,6 +15,7 @@ import {
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
+import { PageHeader } from '@/components/PageHeader'
 import { StatCard } from '@/components/StatCard'
 import { repositoryHarvestsQuery, repositoryQuery } from '@/lib/queries'
 
@@ -27,7 +28,8 @@ export function RepositoryPage() {
   const coletas = useQuery(repositoryHarvestsQuery(repositoryId))
 
   const dataFormat = useMemo(
-    () => new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'short', timeStyle: 'short' }),
+    () =>
+      new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'short', timeStyle: 'short' }),
     [i18n.resolvedLanguage],
   )
   const numero = useMemo(
@@ -63,8 +65,11 @@ export function RepositoryPage() {
             { label: repo.acronym ?? repositoryId },
           ]}
         />
-        <h1 className="text-xl font-semibold">{repo.name ?? t('repositories.unnamed')}</h1>
-        <p className="text-sm text-content-muted">{repo.institutionName}</p>
+        <PageHeader
+          eyebrow={repo.acronym ?? repositoryId}
+          title={repo.name ?? t('repositories.unnamed')}
+          description={repo.institutionName}
+        />
       </div>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -78,7 +83,7 @@ export function RepositoryPage() {
       </section>
 
       <section className="flex flex-col gap-4">
-        <h2 className="text-sm font-medium">{t('harvests.title')}</h2>
+        <h2 className="font-heading text-sm font-bold">{t('harvests.title')}</h2>
 
         {coletas.isPending ? <Loading /> : null}
         {coletas.isError ? (
@@ -91,7 +96,7 @@ export function RepositoryPage() {
           ) : (
             <>
               {serie.length > 1 ? (
-                <div className="h-56 w-full rounded-xl border border-border-subtle bg-surface-raised p-4">
+                <div className="h-56 w-full panel p-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={serie} margin={{ top: 8, right: 12, bottom: 0, left: -12 }}>
                       <CartesianGrid stroke="var(--color-border-subtle)" vertical={false} />
@@ -136,20 +141,33 @@ export function RepositoryPage() {
                 </div>
               ) : null}
 
-              <div className="overflow-x-auto rounded-xl border border-border-subtle bg-surface-raised">
+              <div className="overflow-x-auto panel">
                 <table className="w-full min-w-2xl border-collapse text-sm">
                   <thead>
-                    <tr className="border-b border-border-subtle text-left">
-                      <th className="px-4 py-3 font-medium">{t('harvests.columns.snapshot')}</th>
-                      <th className="px-4 py-3 font-medium">{t('harvests.columns.status')}</th>
-                      <th className="px-4 py-3 font-medium">{t('harvests.columns.end')}</th>
-                      <th className="px-4 py-3 font-medium">{t('harvests.columns.size')}</th>
-                      <th className="px-4 py-3 font-medium">{t('harvests.columns.valid')}</th>
+                    <tr className="border-b border-border-subtle bg-surface-muted text-left">
+                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                        {t('harvests.columns.snapshot')}
+                      </th>
+                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                        {t('harvests.columns.status')}
+                      </th>
+                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                        {t('harvests.columns.end')}
+                      </th>
+                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                        {t('harvests.columns.size')}
+                      </th>
+                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                        {t('harvests.columns.valid')}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {coletas.data.results.map((coleta) => (
-                      <tr key={coleta.snapshotId} className="border-b border-border-subtle last:border-0">
+                      <tr
+                        key={coleta.snapshotId}
+                        className="border-b border-border-subtle last:border-0"
+                      >
                         <td className="px-4 py-3">
                           <Link
                             to={`/coletas/${coleta.snapshotId}`}
@@ -164,7 +182,9 @@ export function RepositoryPage() {
                         <td className="px-4 py-3 text-content-muted">
                           {coleta.endTime ? dataFormat.format(new Date(coleta.endTime)) : '—'}
                         </td>
-                        <td className="px-4 py-3 tabular-nums">{numero.format(coleta.size ?? 0)}</td>
+                        <td className="px-4 py-3 tabular-nums">
+                          {numero.format(coleta.size ?? 0)}
+                        </td>
                         <td className="px-4 py-3 tabular-nums">
                           {numero.format(coleta.validSize ?? 0)}
                         </td>

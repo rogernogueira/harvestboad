@@ -83,12 +83,15 @@ export function DiagnosisPage() {
           tone="down"
           hint={t('diagnosis.clickToFilter')}
         />
-        <StatCard label={t('diagnosis.transformed')} value={numero.format(d.transformedSize ?? 0)} />
+        <StatCard
+          label={t('diagnosis.transformed')}
+          value={numero.format(d.transformedSize ?? 0)}
+        />
       </section>
 
       {grafico.length > 0 ? (
-        <section className="rounded-xl border border-border-subtle bg-surface-raised p-4">
-          <h2 className="mb-4 text-sm font-medium">{t('diagnosis.topInvalidRules')}</h2>
+        <section className="panel p-4">
+          <h2 className="mb-4 font-heading text-sm font-bold">{t('diagnosis.topInvalidRules')}</h2>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={grafico} margin={{ top: 8, right: 12, bottom: 0, left: -12 }}>
@@ -124,7 +127,7 @@ export function DiagnosisPage() {
       ) : null}
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-sm font-medium">
+        <h2 className="font-heading text-sm font-bold">
           {t('diagnosis.rules', { count: regras.data?.count ?? d.ruleCount })}
         </h2>
 
@@ -134,17 +137,23 @@ export function DiagnosisPage() {
         ) : null}
 
         {regras.data ? (
-          <div className="overflow-x-auto rounded-xl border border-border-subtle bg-surface-raised">
+          <div className="overflow-x-auto panel">
             <table className="w-full min-w-3xl border-collapse text-sm">
               <thead>
-                <tr className="border-b border-border-subtle text-left">
-                  <th className="px-4 py-3 font-medium">{t('diagnosis.columns.rule')}</th>
-                  <th className="px-4 py-3 font-medium">{t('diagnosis.columns.name')}</th>
-                  <th className="px-4 py-3 font-medium">{t('diagnosis.columns.mandatory')}</th>
-                  <th className="px-4 py-3 text-right font-medium">
+                <tr className="border-b border-border-subtle bg-surface-muted text-left">
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('diagnosis.columns.rule')}
+                  </th>
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('diagnosis.columns.name')}
+                  </th>
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('diagnosis.columns.mandatory')}
+                  </th>
+                  <th className="px-4 py-3 text-right font-heading text-xs font-bold">
                     {t('diagnosis.columns.validCount')}
                   </th>
-                  <th className="px-4 py-3 text-right font-medium">
+                  <th className="px-4 py-3 text-right font-heading text-xs font-bold">
                     {t('diagnosis.columns.invalidCount')}
                   </th>
                 </tr>

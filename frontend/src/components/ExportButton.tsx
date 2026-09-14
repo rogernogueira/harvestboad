@@ -44,7 +44,7 @@ export function ExportButton({
         type="button"
         onClick={() => void exportar()}
         disabled={baixando}
-        className="rounded-md border border-border-subtle px-3 py-1.5 text-sm hover:bg-border-subtle disabled:opacity-60"
+        className="border border-border-subtle px-3 py-1.5 text-sm hover:bg-border-subtle disabled:opacity-60"
       >
         {baixando ? t('records.exporting') : t('records.export')}
       </button>

@@ -1,7 +1,9 @@
 {
   "app": {
-    "name": "Monitor Integra",
-    "tagline": "Repository manager dashboard"
+    "name": "Manager interface",
+    "tagline": "Repositories and harvests",
+    "institution": "IBICT — Brazilian Institute of Information in Science and Technology",
+    "footer": "Monitor Integra · repository and harvest monitoring"
   },
   "auth": {
     "signIn": "Sign in",
@@ -35,7 +37,9 @@
     "saving": "Saving…",
     "language": "Language",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "forbiddenLabel": "Restricted area",
+    "adminOnly": "This area is available to administrators only."
   },
   "pagination": {
     "page": "Page {{page}} of {{total}}",
@@ -47,7 +51,14 @@
     "subtitle": "{{count}} repository(ies) you manage",
     "none": "No repository is linked to your account.",
     "unnamed": "(unnamed at source)",
-    "grantedAt": "Linked on {{date}}"
+    "grantedAt": "Linked on {{date}}",
+    "loadingStats": "Loading repositories and statistics…",
+    "lastHarvest": "Last harvest",
+    "violatedRules": "Violated rules",
+    "topViolations": "Most violated rules",
+    "seeRecords": "See the records violating this rule",
+    "harvestCount": "{{count}} harvest(s) in history",
+    "statsUnavailable": "Statistics unavailable: the Harvester did not respond for this repository."
   },
   "repository": {
     "acronym": "Acronym",
@@ -134,5 +145,43 @@
     "title": "Page not found",
     "description": "The address you tried does not exist.",
     "back": "Back to start"
+  },
+  "nav": {
+    "main": "Main navigation",
+    "sections": "Sections",
+    "repositories": "Repositories",
+    "access": "Access",
+    "toggleMenu": "Open or close the menu"
+  },
+  "access": {
+    "eyebrow": "Administration",
+    "title": "Repository access",
+    "subtitle": "Link managers to the repositories each one may follow.",
+    "newLink": "New link",
+    "manager": "Manager",
+    "searchManager": "Search by username, name or e-mail",
+    "chooseManager": "Select a manager",
+    "repository": "Repository",
+    "searchRepository": "Search by acronym, name or institution",
+    "chooseRepository": "Select a repository",
+    "repositoryId": "Harvester repository identifier",
+    "repositoryIdPlaceholder": "Harvester identifier (e.g. 1)",
+    "acronym": "Repository acronym",
+    "acronymPlaceholder": "Repository acronym",
+    "sourceDownFallback": "The Harvester is unreachable: enter the identifier and acronym manually.",
+    "showing": "Showing {{shown}} of {{total}} repositories",
+    "link": "Link",
+    "linking": "Linking…",
+    "linked": "Link created.",
+    "existing": "Existing links",
+    "noLinks": "No links registered.",
+    "remove": "Remove",
+    "confirmRemove": "Remove {{user}} access to this repository?",
+    "staleAcronym": "stale acronym",
+    "columns": {
+      "manager": "Manager",
+      "repository": "Repository",
+      "grantedAt": "Linked on"
+    }
   }
 }

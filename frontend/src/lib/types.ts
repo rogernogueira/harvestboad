@@ -38,6 +38,57 @@ export interface RepositoryAccess {
   grantedAt: string
 }
 
+export interface RuleViolation {
+  ruleId: number
+  name: string
+  invalidCount: number
+}
+
+/** Estatísticas da última coleta, usadas no painel de repositórios. */
+export interface LastHarvestSummary {
+  snapshotId: string
+  status: string | null
+  endTime: string | null
+  size: number | null
+  validSize: number | null
+  invalidSize: number | null
+  transformedSize: number | null
+  harvestCount: number
+  violatedRuleCount: number | null
+  topViolations: RuleViolation[]
+}
+
+export interface RepositoryAccessSummary {
+  id: number
+  harvesterRepositoryId: string
+  acronym: string
+  name: string | null
+  institutionName: string | null
+  grantedAt: string
+  lastHarvest: LastHarvestSummary | null
+  /** O Harvester não respondeu por este repositório nesta requisição. */
+  unavailable: boolean
+}
+
+export interface RepositoryAccessSummaryList {
+  count: number
+  results: RepositoryAccessSummary[]
+}
+
+/** Repositório disponível no Harvester, para o ADMIN escolher ao vincular. */
+export interface AvailableRepository {
+  harvesterRepositoryId: string
+  acronym: string | null
+  name: string | null
+  institutionName: string | null
+  published: boolean | null
+}
+
+export interface AvailableRepositoryPage {
+  page: { totalElements?: number; totalPages?: number; number?: number; size?: number }
+  results: AvailableRepository[]
+}
+
 export interface Repository {
   harvesterRepositoryId: string
   acronym: string | null

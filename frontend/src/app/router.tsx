@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router'
 
+import { AdminRoute } from '@/auth/AdminRoute'
 import { ProtectedRoute } from '@/auth/ProtectedRoute'
-import { RootLayout } from '@/layouts/RootLayout'
+import { AppShell } from '@/layouts/AppShell'
 import { LoginPage } from '@/pages/LoginPage'
 
-const lazyPage = <T extends Record<string, unknown>>(
-  load: () => Promise<T>,
-  name: keyof T & string,
-) => async () => ({ Component: (await load())[name] as React.ComponentType })
+const lazyPage =
+  <T extends Record<string, unknown>>(load: () => Promise<T>, name: keyof T & string) =>
+  async () => ({ Component: (await load())[name] as React.ComponentType })
 
 export const router = createBrowserRouter([
   { path: '/entrar', Component: LoginPage },
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        Component: RootLayout,
+        Component: AppShell,
         children: [
           {
             index: true,
@@ -25,6 +25,17 @@ export const router = createBrowserRouter([
           {
             path: 'trocar-senha',
             lazy: lazyPage(() => import('@/pages/ChangePasswordPage'), 'ChangePasswordPage'),
+          },
+          {
+            // Administração: o guarda é conveniência de navegação; quem barra
+            // de fato é o backend, com 403.
+            Component: AdminRoute,
+            children: [
+              {
+                path: 'acessos',
+                lazy: lazyPage(() => import('@/pages/AccessPage'), 'AccessPage'),
+              },
+            ],
           },
           {
             path: 'repositorios/:repositoryId',

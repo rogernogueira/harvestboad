@@ -112,9 +112,7 @@ export function RecordsPage() {
         }),
         columnHelper.accessor('setSpec', {
           header: t('records.columns.set'),
-          cell: (info) => (
-            <span className="text-content-muted">{info.getValue() ?? '—'}</span>
-          ),
+          cell: (info) => <span className="text-content-muted">{info.getValue() ?? '—'}</span>,
         }),
       ]),
     [t, snapshotId, sufixoFiltros],
@@ -143,13 +141,19 @@ export function RecordsPage() {
         <Empty label={t('records.none')} />
       ) : (
         <>
-          <div className="overflow-x-auto rounded-xl border border-border-subtle bg-surface-raised">
+          <div className="overflow-x-auto panel">
             <table className="w-full min-w-3xl border-collapse text-sm">
               <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id} className="border-b border-border-subtle">
+                  <tr
+                    key={headerGroup.id}
+                    className="border-b border-border-subtle bg-surface-muted"
+                  >
                     {headerGroup.headers.map((header) => (
-                      <th key={header.id} className="px-4 py-3 text-left font-medium">
+                      <th
+                        key={header.id}
+                        className="px-4 py-3 text-left font-heading text-xs font-bold"
+                      >
                         <table.FlexRender header={header} />
                       </th>
                     ))}
@@ -170,11 +174,7 @@ export function RecordsPage() {
             </table>
           </div>
 
-          <Pagination
-            page={data.page}
-            totalPages={data.totalPages ?? 1}
-            onChange={irParaPagina}
-          />
+          <Pagination page={data.page} totalPages={data.totalPages ?? 1} onChange={irParaPagina} />
         </>
       )}
     </div>

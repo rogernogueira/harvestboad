@@ -101,3 +101,109 @@ def repository_harvests(repository_id: str, client: HarvesterClient | None = Non
         "count": len(results),
         "results": results,
     }
+
+
+def _latest_finished(snapshots: list[dict]) -> dict | None:
+    """Coleta mais recente que efetivamente terminou.
+
+    A lista vem ordenada da mais nova para a mais antiga, mas a primeira pode
+    ser uma coleta em andamento ou abortada sem registros — para um resumo
+    estatístico, interessa a última que produziu dados.
+    """
+    for snapshot in snapshots:
+        if snapshot.get("endTime") and (snapshot.get("size") or 0) > 0:
+            return snapshot
+    return snapshots[0] if snapshots else None
+
+
+def last_harvest_summary(repository_id: str, client: HarvesterClient | None = None) -> dict | None:
+    """Estatísticas da última coleta do repositório.
+
+    Compõe três leituras já cacheadas individualmente (histórico, diagnóstico e
+    regras), de modo que o painel não precise fazer três viagens por linha.
+    Devolve None quando o repositório nunca foi coletado.
+    """
+    # Import local: `harvests` importa de `integrations`, e importar no topo
+    # criaria um ciclo entre as duas apps de domínio.
+    from apps.harvests import services as harvests
+
+    client = client or HarvesterClient()
+
+    historico = repository_harvests(repository_id, client)
+    ultima = _latest_finished(historico["results"])
+    if not ultima or not ultima.get("snapshotId"):
+        return None
+
+    snapshot_id = ultima["snapshotId"]
+    resumo = {
+        "snapshotId": snapshot_id,
+        "status": ultima.get("status"),
+        "endTime": ultima.get("endTime"),
+        "size": ultima.get("size"),
+        "validSize": ultima.get("validSize"),
+        "transformedSize": ultima.get("transformedSize"),
+        "invalidSize": (ultima.get("size") or 0) - (ultima.get("validSize") or 0),
+        "harvestCount": historico["count"],
+        "violatedRuleCount": None,
+        "topViolations": [],
+    }
+
+    # O diagnóstico é a parte mais cara e a que mais falha; sem ele o resumo
+    # ainda vale pelos números da própria coleta.
+    try:
+        regras = harvests.rules(snapshot_id, client)
+    except HarvesterError:
+        return resumo
+
+    violadas = [
+        regra for regra in regras["results"] if (regra.get("invalidCount") or 0) > 0
+    ]
+    violadas.sort(key=lambda regra: regra["invalidCount"], reverse=True)
+
+    resumo["violatedRuleCount"] = len(violadas)
+    resumo["topViolations"] = [
+        {
+            "ruleId": regra["ruleId"],
+            "name": regra["name"],
+            "invalidCount": regra["invalidCount"],
+        }
+        for regra in violadas[:3]
+    ]
+    return resumo
+
+
+def access_summaries(accesses) -> list[dict]:
+    """Vínculos do usuário enriquecidos com as estatísticas da última coleta.
+
+    Cada repositório é independente: se o Harvester falhar para um, os demais
+    continuam sendo devolvidos e a linha correspondente é marcada como
+    indisponível, em vez de derrubar o painel inteiro.
+    """
+    client = HarvesterClient()
+    resumos = []
+
+    for acesso in accesses:
+        repository_id = acesso.harvester_repository_id
+        linha = {
+            "id": acesso.pk,
+            "harvesterRepositoryId": repository_id,
+            "acronym": acesso.acronym,
+            "name": None,
+            "institutionName": None,
+            "grantedAt": acesso.granted_at,
+            "lastHarvest": None,
+            "unavailable": False,
+        }
+
+        try:
+            detalhe = repository_detail(repository_id, client)
+            linha["acronym"] = detalhe.get("acronym") or acesso.acronym
+            linha["name"] = detalhe.get("name")
+            linha["institutionName"] = detalhe.get("institutionName")
+            linha["lastHarvest"] = last_harvest_summary(repository_id, client)
+        except HarvesterError:
+            linha["unavailable"] = True
+
+        resumos.append(linha)
+
+    return resumos
