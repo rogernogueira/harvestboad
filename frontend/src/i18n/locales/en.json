@@ -60,7 +60,12 @@
     "topViolations": "Most violated rules",
     "seeRecords": "See the records violating this rule",
     "statsUnavailable": "Statistics unavailable: the Harvester did not respond for this repository.",
-    "seeHistory": "See harvest history"
+    "seeHistory": "See harvest history",
+    "notEvaluated": "not evaluated",
+    "openRecords": "See this harvest's records",
+    "openValidRecords": "See this harvest's valid records",
+    "openInvalidRecords": "See this harvest's invalid records",
+    "openDiagnosis": "See this harvest's diagnosis"
   },
   "repository": {
     "acronym": "Acronym",
@@ -104,6 +109,10 @@
       "mandatory": "Mandatory",
       "validCount": "Pass",
       "invalidCount": "Fail"
+    },
+    "chart": {
+      "xAxis": "Violated rules",
+      "yAxis": "Count"
     }
   },
   "records": {
@@ -257,7 +266,10 @@
       "with": "With manager",
       "without": "Without manager"
     },
-    "openRepository": "Open the repository page"
+    "openRepository": "Open the repository page",
+    "openRecords": "See the records of this harvest",
+    "openInvalidRecords": "See the invalid records of this harvest",
+    "notEvaluated": "not evaluated"
   },
   "harvestStatus": {
     "valid": "Valid",

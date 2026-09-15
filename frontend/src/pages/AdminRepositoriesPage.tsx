@@ -380,7 +380,25 @@ function HarvestCell({ repo, numero }: { repo: RepositoryHit; numero: Intl.Numbe
         {/* A origem manda "2024-06-25 12:10:33"; só a data basta na tabela. */}
         {repo.lastSnapshotDate?.slice(0, 10) ?? '—'}
         {repo.lastSize !== null ? (
-          <> · {t('adminRepositories.records', { count: numero.format(repo.lastSize) })}</>
+          <>
+            {' · '}
+            {/*
+              Só há registros listáveis quando a coleta foi indexada: com
+              `UNKNOWN` ou `FAILED` o índice de diagnóstico vem vazio, e o link
+              levaria a uma lista de zero itens.
+            */}
+            {repo.lastIndexStatus === 'INDEXED' ? (
+              <Link
+                to={`/coletas/${repo.lastSnapshotId}/registros`}
+                title={t('adminRepositories.openRecords')}
+                className="text-brand-strong hover:underline"
+              >
+                {t('adminRepositories.records', { count: numero.format(repo.lastSize) })}
+              </Link>
+            ) : (
+              t('adminRepositories.records', { count: numero.format(repo.lastSize) })
+            )}
+          </>
         ) : null}
       </span>
     </span>
@@ -405,23 +423,43 @@ function InvalidCell({
   const { t } = useTranslation()
 
   if (repo.invalidRatio === null || repo.invalidRatio === undefined) {
-    return <span className="text-content-muted">—</span>
+    // "Não avaliado" e "0% inválidos" são conclusões diferentes: a coleta que
+    // falhou tem registros, mas nenhum passou por validação.
+    const naoAvaliado = repo.lastSnapshotId && repo.lastIndexStatus !== 'INDEXED'
+    return (
+      <span className="text-xs text-content-muted" title={repo.lastIndexStatus ?? ''}>
+        {naoAvaliado ? t('adminRepositories.notEvaluated') : '—'}
+      </span>
+    )
   }
 
   const tom =
     repo.invalidRatio >= 0.5 ? 'text-down' : repo.invalidRatio > 0 ? 'text-warn' : 'text-ok'
 
+  // Zero inválidos não tem o que listar: vira texto, não link.
+  if (!repo.invalidSize || !repo.lastSnapshotId) {
+    return (
+      <span className="flex flex-col items-end">
+        <span className={`font-heading font-bold tabular-nums ${tom}`}>
+          {percentual.format(repo.invalidRatio)}
+        </span>
+      </span>
+    )
+  }
+
   return (
-    <span className="flex flex-col items-end">
+    <Link
+      to={`/coletas/${repo.lastSnapshotId}/registros?valid=false`}
+      title={t('adminRepositories.openInvalidRecords')}
+      className="flex flex-col items-end hover:underline"
+    >
       <span className={`font-heading font-bold tabular-nums ${tom}`}>
         {percentual.format(repo.invalidRatio)}
       </span>
-      {repo.invalidSize ? (
-        <span className="text-xs text-content-muted">
-          {t('adminRepositories.invalidRecords', { count: numero.format(repo.invalidSize) })}
-        </span>
-      ) : null}
-    </span>
+      <span className="text-xs text-content-muted">
+        {t('adminRepositories.invalidRecords', { count: numero.format(repo.invalidSize) })}
+      </span>
+    </Link>
   )
 }
 

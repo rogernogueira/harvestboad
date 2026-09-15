@@ -162,17 +162,15 @@ def last_harvest_summary(repository_id: str, client: HarvesterClient | None = No
         return None
 
     snapshot_id = ultima["snapshotId"]
-    resumo = {
-        "snapshotId": snapshot_id,
-        "status": ultima.get("status"),
-        "endTime": ultima.get("endTime"),
-        "size": ultima.get("size"),
-        "validSize": ultima.get("validSize"),
-        "transformedSize": ultima.get("transformedSize"),
-        "invalidSize": (ultima.get("size") or 0) - (ultima.get("validSize") or 0),
-        "violatedRuleCount": None,
-        "topViolations": [],
-    }
+    resumo = _resumo_base(
+        snapshot_id=snapshot_id,
+        status=ultima.get("status"),
+        index_status=ultima.get("indexStatus"),
+        end_time=ultima.get("endTime"),
+        size=ultima.get("size"),
+        valid_size=ultima.get("validSize"),
+        transformed_size=ultima.get("transformedSize"),
+    )
 
     # O diagnóstico é a parte mais cara e a que mais falha; sem ele o resumo
     # ainda vale pelos números da própria coleta.
@@ -189,24 +187,65 @@ def _harvest_from_network_row(rede: dict, client: HarvesterClient) -> dict | Non
     if not snapshot_id:
         return None
 
-    tamanho = rede.get("lstSize") or 0
-    validos = rede.get("lstValidSize") or 0
-    resumo = {
-        "snapshotId": str(snapshot_id),
-        "status": rede.get("lstSnapshotStatus"),
-        "endTime": rede.get("lstSnapshotDate"),
-        "size": rede.get("lstSize"),
-        "validSize": rede.get("lstValidSize"),
-        "transformedSize": rede.get("lstTransformedSize"),
-        "invalidSize": tamanho - validos,
+    return _com_regras(
+        _resumo_base(
+            snapshot_id=str(snapshot_id),
+            status=rede.get("lstSnapshotStatus"),
+            index_status=rede.get("lstIndexStatus"),
+            end_time=rede.get("lstSnapshotDate"),
+            size=rede.get("lstSize"),
+            valid_size=rede.get("lstValidSize"),
+            transformed_size=rede.get("lstTransformedSize"),
+        ),
+        str(snapshot_id),
+        client,
+    )
+
+
+def _resumo_base(
+    *,
+    snapshot_id: str,
+    status: str | None,
+    index_status: str | None,
+    end_time: str | None,
+    size,
+    valid_size,
+    transformed_size,
+) -> dict:
+    """Monta o resumo de uma coleta, decidindo se dá para falar em inválidos.
+
+    Coleta não indexada não tem diagnóstico: `size` vem preenchido e `validSize`
+    zerado, e subtrair um do outro daria "todos inválidos" quando a verdade é
+    "nada foi avaliado". Ver `invalid_ratio` para a evidência.
+    """
+    avaliada = (index_status or "").upper() == "INDEXED"
+    total = size or 0
+    validos = valid_size or 0
+
+    return {
+        "snapshotId": snapshot_id,
+        "status": status,
+        "indexStatus": index_status,
+        "evaluated": avaliada,
+        "endTime": end_time,
+        "size": size,
+        "validSize": valid_size if avaliada else None,
+        "transformedSize": transformed_size,
+        "invalidSize": (total - validos) if avaliada else None,
         "violatedRuleCount": None,
         "topViolations": [],
     }
-    return _com_regras(resumo, str(snapshot_id), client)
 
 
 def _com_regras(resumo: dict, snapshot_id: str, client: HarvesterClient) -> dict:
-    """Acrescenta as regras violadas ao resumo, se o diagnóstico responder."""
+    """Acrescenta as regras violadas ao resumo, se o diagnóstico responder.
+
+    Coleta não avaliada nem chega a consultar: não há diagnóstico para ela, e a
+    chamada seria desperdício contra uma origem instável.
+    """
+    if not resumo.get("evaluated"):
+        return resumo
+
     # Import local: `harvests` importa de `integrations`, e importar no topo
     # criaria um ciclo entre as duas apps de domínio.
     from apps.harvests import services as harvests
@@ -365,10 +404,24 @@ def full_network_index(client: HarvesterClient | None = None) -> list[dict]:
 def invalid_ratio(row: dict) -> float:
     """Fração de registros inválidos da última coleta, entre 0 e 1.
 
-    Sem coleta ou sem registros não há o que comparar: devolve -1 para que essas
-    linhas fiquem no fim da ordenação em vez de se misturarem às de 0% inválidos,
-    que são um resultado bem diferente.
+    Devolve -1 quando **não há como saber**, e isso cobre dois casos distintos
+    de "0% inválidos":
+
+    1. coleta sem registros;
+    2. coleta que não foi indexada (`lstIndexStatus` diferente de `INDEXED`).
+
+    O segundo caso importa mais do que parece. Uma coleta que terminou em erro
+    tem `lstSize` preenchido e `lstValidSize` zerado, e a conta ingênua daria
+    **100% de inválidos** — quando a verdade é que nada foi avaliado. Verificado
+    contra a origem: com `INDEXED`, diagnóstico e registros batem exatamente com
+    `lstSize`; com `UNKNOWN` ou `FAILED`, ambos vêm zerados.
+
+    Sem isso, 44 repositórios não avaliados ocupavam o topo da ordenação à
+    frente de 755 com problemas reais de validação.
     """
+    if (row.get("lastIndexStatus") or "").upper() != "INDEXED":
+        return -1.0
+
     total = row.get("lastSize") or 0
     if total <= 0:
         return -1.0

@@ -474,6 +474,7 @@ SNAPSHOTS_COM_HISTORICO = {
             },
             {
                 "status": "VALID",
+                "indexStatus": "INDEXED",
                 "endTime": "2024-06-25 12:10:33",
                 "size": 26103,
                 "validSize": 26091,
@@ -504,6 +505,7 @@ PRIVATE_ROW = {
     "lstSnapshotID": 98768,
     "lstSnapshotDate": "2024-06-25 12:10:33",
     "lstSnapshotStatus": "VALID",
+    "lstIndexStatus": "INDEXED",
     "lstSize": 26103,
     "lstValidSize": 26091,
     "lstTransformedSize": 26103,
@@ -707,6 +709,7 @@ class RepositorySearchTests(TestCase):
             "lstSnapshotID": 900 + nid,
             "lstSnapshotDate": "2024-06-25 12:10:33",
             "lstSnapshotStatus": "VALID",
+            "lstIndexStatus": "INDEXED",
             "lstSize": 100,
             "lstValidSize": 98,
         }
@@ -903,6 +906,36 @@ class SummaryFastPathTests(TestCase):
 
         # Uma consulta de cadastro + uma de diagnóstico. Sem /rest/network nem histórico.
         self.assertEqual(chamadas, ["private:VERACRUZ-0", "diagnose:98768"])
+
+    def test_coleta_nao_indexada_nao_conta_invalidos(self) -> None:
+        """Coleta que não foi indexada não tem diagnóstico — e nem 100% de inválidos.
+
+        A origem devolve `lstSize` preenchido e `lstValidSize` zerado nesse caso;
+        subtrair um do outro afirmaria que tudo é inválido, quando nada chegou a
+        ser avaliado. Sem avaliação também não há diagnóstico a consultar.
+        """
+        chamadas = []
+        falhou = dict(
+            PRIVATE_ROW,
+            lstIndexStatus="UNKNOWN",
+            lstSnapshotStatus="HARVESTING_FINISHED_ERROR",
+            lstValidSize=0,
+        )
+        with patch(
+            SERVICES_CLIENT,
+            lambda *a, **k: fake_summary_client(chamadas, private_rows=[falhou]),
+        ):
+            response = self.api().get(f"{REPOS}/summary/")
+
+        self.assertEqual(response.status_code, 200)
+        coleta = response.data["results"][0]["lastHarvest"]
+        self.assertFalse(coleta["evaluated"])
+        self.assertEqual(coleta["indexStatus"], "UNKNOWN")
+        self.assertEqual(coleta["size"], 26103)
+        self.assertIsNone(coleta["invalidSize"])
+        self.assertIsNone(coleta["validSize"])
+        self.assertIsNone(coleta["violatedRuleCount"])
+        self.assertEqual(chamadas, ["private:VERACRUZ-0"])
 
     def test_sigla_defasada_cai_no_caminho_antigo(self) -> None:
         """O filtro é por sigla, mas a conferência é pelo networkID."""
@@ -1147,7 +1180,7 @@ class InvalidRatioOrderingTests(TestCase):
         return client
 
     @staticmethod
-    def rede(nid, acronym, size, valid):
+    def rede(nid, acronym, size, valid, index_status="INDEXED"):
         return {
             "networkID": nid,
             "acronym": acronym,
@@ -1156,6 +1189,7 @@ class InvalidRatioOrderingTests(TestCase):
             "lstSnapshotID": 900 + nid,
             "lstSnapshotDate": "2025-06-02 10:00:00",
             "lstSnapshotStatus": "VALID",
+            "lstIndexStatus": index_status,
             "lstSize": size,
             "lstValidSize": valid,
         }
@@ -1267,7 +1301,7 @@ class RepositoryIndexTests(TestCase):
         return client
 
     @staticmethod
-    def rede(nid, acronym, size, valid):
+    def rede(nid, acronym, size, valid, index_status="INDEXED"):
         return {
             "networkID": nid,
             "acronym": acronym,
@@ -1276,6 +1310,7 @@ class RepositoryIndexTests(TestCase):
             "lstSnapshotID": 900 + nid,
             "lstSnapshotDate": "2025-06-02 10:00:00",
             "lstSnapshotStatus": "VALID",
+            "lstIndexStatus": index_status,
             "lstSize": size,
             "lstValidSize": valid,
         }
@@ -1340,3 +1375,97 @@ class RepositoryIndexTests(TestCase):
 
         with patch(SERVICES_CLIENT, lambda *a, **k: _Fora()):
             self.assertEqual(self.api(self.admin).get(f"{BASE}/index/").status_code, 503)
+
+
+class InvalidRatioIndexStatusTests(TestCase):
+    """Coleta não indexada não tem percentual de inválidos — tem 'não avaliado'."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="adm7", email="adm7@ibict.br", password="x", profile=Profile.ADMIN
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self):
+        client = APIClient()
+        client.force_authenticate(user=self.admin)
+        return client
+
+    @staticmethod
+    def rede(nid, acronym, size, valid, index_status):
+        return {
+            "networkID": nid,
+            "acronym": acronym,
+            "name": f"Repo {acronym}",
+            "institution": "Inst",
+            "lstSnapshotID": 900 + nid,
+            "lstSnapshotDate": "2025-06-02 10:00:00",
+            "lstSnapshotStatus": "HARVESTING_FINISHED_ERROR",
+            "lstIndexStatus": index_status,
+            "lstSize": size,
+            "lstValidSize": valid,
+        }
+
+    def cliente(self, redes):
+        class _Fake:
+            def list_networks(self, page=1, count=25, **kw):
+                return {"networks": redes, "totalElements": len(redes)}
+
+        return _Fake()
+
+    def acervo(self):
+        return [
+            # Coleta que falhou: size preenchido, válidos zerados. A conta ingênua
+            # daria 100% de inválidos, mas nada foi avaliado.
+            self.rede(1, "FALHOU", 100, 0, "UNKNOWN"),
+            self.rede(2, "FALHOU2", 279, 0, "FAILED"),
+            # Indexadas: aí o percentual vale.
+            self.rede(3, "RUIM", 100, 40, "INDEXED"),
+            self.rede(4, "BOA", 100, 100, "INDEXED"),
+        ]
+
+    def test_nao_indexada_nao_vira_cem_por_cento(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            por_sigla = {
+                r["acronym"]: r
+                for r in self.api().get(f"{BASE}/index/").data["results"]
+            }
+
+        self.assertIsNone(por_sigla["FALHOU"]["invalidRatio"])
+        self.assertIsNone(por_sigla["FALHOU2"]["invalidRatio"])
+        self.assertEqual(por_sigla["RUIM"]["invalidRatio"], 0.6)
+        self.assertEqual(por_sigla["BOA"]["invalidRatio"], 0.0)
+
+    def test_nao_avaliada_nao_ocupa_o_topo_da_ordenacao(self) -> None:
+        """Era o efeito prático do bug: 44 não avaliados na frente de 755 com
+        problemas reais."""
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            ordem = [
+                r["acronym"]
+                for r in self.api().get(f"{BASE}/search/?count=10").data["results"]
+            ]
+
+        self.assertEqual(ordem[0], "RUIM")
+        self.assertEqual(set(ordem[2:]), {"FALHOU", "FALHOU2"})
+
+    def test_sem_percentual_nao_ha_total_de_invalidos(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            por_sigla = {
+                r["acronym"]: r
+                for r in self.api().get(f"{BASE}/index/").data["results"]
+            }
+        self.assertIsNone(por_sigla["FALHOU"]["invalidSize"])
+        self.assertEqual(por_sigla["RUIM"]["invalidSize"], 60)
+
+    def test_estado_do_indice_chega_ao_cliente(self) -> None:
+        """A tela precisa distinguir 'não avaliado' de '0% inválidos'."""
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            por_sigla = {
+                r["acronym"]: r
+                for r in self.api().get(f"{BASE}/index/").data["results"]
+            }
+        self.assertEqual(por_sigla["FALHOU"]["lastIndexStatus"], "UNKNOWN")
+        self.assertEqual(por_sigla["RUIM"]["lastIndexStatus"], "INDEXED")

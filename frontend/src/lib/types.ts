@@ -66,6 +66,10 @@ export interface RuleViolation {
 export interface LastHarvestSummary {
   snapshotId: string
   status: string | null
+  /** Estado da indexação; só `INDEXED` tem diagnóstico e, portanto, inválidos. */
+  indexStatus: string | null
+  /** Falso quando a coleta não foi indexada: não há o que contar como inválido. */
+  evaluated: boolean
   endTime: string | null
   size: number | null
   validSize: number | null
@@ -114,6 +118,7 @@ export interface RepositoryHit {
   lastSize: number | null
   lastValidSize: number | null
   lastTransformedSize: number | null
+  /** `INDEXED` é a condição para haver diagnóstico e registros. */
   lastIndexStatus: string | null
   /** Quantos gestores estão vinculados — dado nosso, não da origem. */
   managerCount: number

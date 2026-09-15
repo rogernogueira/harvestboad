@@ -161,14 +161,42 @@ function HarvestStats({
   const fim = coleta.endTime ? new Date(coleta.endTime.replace(' ', 'T')) : null
   const fimValido = fim && !Number.isNaN(fim.getTime())
 
+  const registros = `/coletas/${coleta.snapshotId}/registros`
+
+  /*
+    Cada número leva à lista que ele resume — mas só quando essa lista existe.
+    Registros e regras vêm do índice de diagnóstico, que só é escrito quando a
+    coleta é indexada: com `UNKNOWN` ou `FAILED` o link abriria uma tela vazia.
+    E zero inválidos não tem o que listar.
+  */
   const indicadores = [
-    { rotulo: t('diagnosis.size'), valor: coleta.size, cor: '' },
-    { rotulo: t('diagnosis.valid'), valor: coleta.validSize, cor: 'text-ok' },
-    { rotulo: t('diagnosis.invalid'), valor: coleta.invalidSize, cor: 'text-down' },
+    {
+      rotulo: t('diagnosis.size'),
+      valor: coleta.size,
+      cor: '',
+      para: coleta.evaluated ? registros : null,
+      titulo: t('repositories.openRecords'),
+    },
+    {
+      rotulo: t('diagnosis.valid'),
+      valor: coleta.validSize,
+      cor: 'text-ok',
+      para: coleta.validSize ? `${registros}?valid=true` : null,
+      titulo: t('repositories.openValidRecords'),
+    },
+    {
+      rotulo: t('diagnosis.invalid'),
+      valor: coleta.invalidSize,
+      cor: 'text-down',
+      para: coleta.invalidSize ? `${registros}?valid=false` : null,
+      titulo: t('repositories.openInvalidRecords'),
+    },
     {
       rotulo: t('repositories.violatedRules'),
       valor: coleta.violatedRuleCount,
       cor: 'text-warn',
+      para: coleta.violatedRuleCount ? `/coletas/${coleta.snapshotId}` : null,
+      titulo: t('repositories.openDiagnosis'),
     },
   ]
 
@@ -184,6 +212,16 @@ function HarvestStats({
         </Link>
         {coleta.status ? <HarvestStatusBadge status={coleta.status} /> : null}
         <span className="text-xs text-content-muted">{fimValido ? dataHora.format(fim) : '—'}</span>
+        {/*
+          Coleta sem indexação não passou por validação: os campos de válidos,
+          inválidos e regras vêm vazios, e o aviso explica o porquê uma vez só,
+          em vez de repetir "não avaliado" em cada indicador.
+        */}
+        {coleta.evaluated ? null : (
+          <span className="text-xs text-content-muted italic" title={coleta.indexStatus ?? ''}>
+            {t('repositories.notEvaluated')}
+          </span>
+        )}
       </div>
 
       <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
@@ -191,7 +229,15 @@ function HarvestStats({
           <div key={item.rotulo}>
             <dt className="eyebrow">{item.rotulo}</dt>
             <dd className={`font-heading text-xl font-extrabold tabular-nums ${item.cor}`}>
-              {item.valor === null || item.valor === undefined ? '—' : numero.format(item.valor)}
+              {item.valor === null || item.valor === undefined ? (
+                '—'
+              ) : item.para ? (
+                <Link to={item.para} title={item.titulo} className="hover:underline">
+                  {numero.format(item.valor)}
+                </Link>
+              ) : (
+                numero.format(item.valor)
+              )}
             </dd>
           </div>
         ))}

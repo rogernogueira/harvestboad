@@ -60,7 +60,12 @@
     "topViolations": "Reglas con más infracciones",
     "seeRecords": "Ver los registros que infringen esta regla",
     "statsUnavailable": "Estadísticas no disponibles: el Harvester no respondió para este repositorio.",
-    "seeHistory": "Ver historial de recolecciones"
+    "seeHistory": "Ver historial de recolecciones",
+    "notEvaluated": "no evaluado",
+    "openRecords": "Ver los registros de esta recolección",
+    "openValidRecords": "Ver los registros válidos de esta recolección",
+    "openInvalidRecords": "Ver los registros inválidos de esta recolección",
+    "openDiagnosis": "Ver el diagnóstico de esta recolección"
   },
   "repository": {
     "acronym": "Sigla",
@@ -104,6 +109,10 @@
       "mandatory": "Obligatoria",
       "validCount": "Cumplen",
       "invalidCount": "Infringen"
+    },
+    "chart": {
+      "xAxis": "Reglas infringidas",
+      "yAxis": "Cantidad"
     }
   },
   "records": {
@@ -257,7 +266,10 @@
       "with": "Con gestor",
       "without": "Sin gestor"
     },
-    "openRepository": "Abrir la página del repositorio"
+    "openRepository": "Abrir la página del repositorio",
+    "openRecords": "Ver los registros de esta recolección",
+    "openInvalidRecords": "Ver los registros inválidos de esta recolección",
+    "notEvaluated": "no evaluado"
   },
   "harvestStatus": {
     "valid": "Válida",

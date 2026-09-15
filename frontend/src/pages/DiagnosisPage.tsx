@@ -2,7 +2,16 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams, useSearchParams } from 'react-router'
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Label,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts'
 
 import { ErrorState, Loading } from '@/components/Feedback'
 import { StatCard } from '@/components/StatCard'
@@ -94,20 +103,42 @@ export function DiagnosisPage() {
           <h2 className="mb-4 font-heading text-sm font-bold">{t('diagnosis.topInvalidRules')}</h2>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={grafico} margin={{ top: 8, right: 12, bottom: 0, left: -12 }}>
+              <BarChart data={grafico} margin={{ top: 8, right: 12, bottom: 16, left: 0 }}>
                 <CartesianGrid stroke="var(--color-border-subtle)" vertical={false} />
+                {/*
+                  As marcas do eixo X são os identificadores das regras (110, 117…),
+                  que não dizem nada sozinhos — daí o rótulo. O nome de cada regra
+                  aparece no tooltip.
+                */}
                 <XAxis
                   dataKey="regra"
                   stroke="var(--color-content-muted)"
                   tickLine={false}
                   fontSize={11}
-                />
+                >
+                  <Label
+                    value={t('diagnosis.chart.xAxis')}
+                    position="insideBottom"
+                    offset={-12}
+                    fill="var(--color-content-muted)"
+                    fontSize={11}
+                  />
+                </XAxis>
                 <YAxis
                   stroke="var(--color-content-muted)"
                   tickLine={false}
                   fontSize={11}
-                  width={56}
-                />
+                  width={68}
+                >
+                  <Label
+                    value={t('diagnosis.chart.yAxis')}
+                    angle={-90}
+                    position="insideLeft"
+                    style={{ textAnchor: 'middle' }}
+                    fill="var(--color-content-muted)"
+                    fontSize={11}
+                  />
+                </YAxis>
                 <Tooltip
                   contentStyle={{
                     borderRadius: '0.5rem',
