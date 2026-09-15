@@ -222,5 +222,22 @@
       "tooShort": "La contraseña debe tener al menos 8 caracteres.",
       "mismatch": "Las contraseñas no coinciden."
     }
+  },
+  "adminRepositories": {
+    "eyebrow": "Administración",
+    "title": "Repositorios",
+    "subtitle": "{{total}} repositorios en el Harvester",
+    "subtitleLoading": "Todos los repositorios del Harvester",
+    "records": "{{count}} registros",
+    "seeManagers": "Ver los {{count}} gestor(es) de este repositorio",
+    "assignManager": "Sin gestor — haga clic para asociar uno",
+    "none": "sin gestor",
+    "columns": {
+      "acronym": "Sigla",
+      "repository": "Repositorio",
+      "institution": "Institución",
+      "harvest": "Última recolección",
+      "managers": "Gestores"
+    }
   }
 }

@@ -1,16 +1,4 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import {
-  columnFilteringFeature,
-  columnVisibilityFeature,
-  createColumnHelper,
-  createFilteredRowModel,
-  createSortedRowModel,
-  filterFns,
-  rowSortingFeature,
-  sortFns,
-  tableFeatures,
-  useTable,
-} from '@tanstack/react-table'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams, useSearchParams } from 'react-router'
@@ -22,19 +10,6 @@ import { FilterBar } from '@/components/FilterBar'
 import { Pagination } from '@/components/Pagination'
 import { filtersFromSearch, filtersToParams, type RecordFilters } from '@/lib/filters'
 import { recordsQuery } from '@/lib/queries'
-import type { RecordItem } from '@/lib/types'
-
-const features = tableFeatures({
-  columnFilteringFeature,
-  columnVisibilityFeature,
-  rowSortingFeature,
-  filterFns,
-  sortFns,
-  filteredRowModel: createFilteredRowModel(),
-  sortedRowModel: createSortedRowModel(),
-})
-
-const columnHelper = createColumnHelper<typeof features, RecordItem>()
 
 const PAGE_SIZE = 20
 
@@ -42,8 +17,9 @@ const PAGE_SIZE = 20
  * Registros da coleta.
  *
  * Paginação e filtros são resolvidos no servidor: a coleta tem dezenas de
- * milhares de registros e trazer tudo para ordenar no cliente não é opção. A
- * tabela cuida apenas da apresentação da página corrente.
+ * milhares de registros e trazer tudo para o navegador não é opção. A tabela
+ * apenas apresenta a página corrente — daí ser HTML puro, como as demais do
+ * projeto. Ordenar só os 20 visíveis daria a ilusão de ordenar o conjunto.
  */
 export function RecordsPage() {
   const { t } = useTranslation()
@@ -78,49 +54,13 @@ export function RecordsPage() {
     [filtros, setSearchParams],
   )
 
+  // Os filtros seguem no link do registro para que voltar preserve o recorte.
   const sufixoFiltros = useMemo(() => {
     const query = filtersToParams(filtros).toString()
     return query ? `?${query}` : ''
   }, [filtros])
 
-  const columns = useMemo(
-    () =>
-      columnHelper.columns([
-        columnHelper.accessor('identifier', {
-          header: t('records.columns.identifier'),
-          cell: (info) => (
-            <Link
-              to={`/coletas/${snapshotId}/registros/${info.getValue()}${sufixoFiltros}`}
-              className="font-mono text-xs break-all text-brand-strong hover:underline"
-            >
-              {info.getValue()}
-            </Link>
-          ),
-        }),
-        columnHelper.accessor('isValid', {
-          header: t('records.columns.valid'),
-          cell: (info) => <ValidityBadge valid={info.getValue()} />,
-        }),
-        columnHelper.accessor('isTransformed', {
-          header: t('records.columns.transformed'),
-          cell: (info) =>
-            info.getValue() === null || info.getValue() === undefined
-              ? '—'
-              : info.getValue()
-                ? t('common.yes')
-                : t('common.no'),
-        }),
-        columnHelper.accessor('setSpec', {
-          header: t('records.columns.set'),
-          cell: (info) => <span className="text-content-muted">{info.getValue() ?? '—'}</span>,
-        }),
-      ]),
-    [t, snapshotId, sufixoFiltros],
-  )
-
-  const rows = useMemo(() => data?.results ?? [], [data])
-
-  const table = useTable({ features, columns, data: rows })
+  const registros = data?.results ?? []
 
   if (isPending) return <Loading />
   if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />
@@ -137,37 +77,52 @@ export function RecordsPage() {
         {isFetching ? ` · ${t('common.loading')}` : ''}
       </p>
 
-      {rows.length === 0 ? (
+      {registros.length === 0 ? (
         <Empty label={t('records.none')} />
       ) : (
         <>
-          <div className="overflow-x-auto panel">
+          <div className="panel overflow-x-auto">
             <table className="w-full min-w-3xl border-collapse text-sm">
               <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr
-                    key={headerGroup.id}
-                    className="border-b border-border-subtle bg-surface-muted"
-                  >
-                    {headerGroup.headers.map((header) => (
-                      <th
-                        key={header.id}
-                        className="px-4 py-3 text-left font-heading text-xs font-bold"
-                      >
-                        <table.FlexRender header={header} />
-                      </th>
-                    ))}
-                  </tr>
-                ))}
+                <tr className="border-b border-border-subtle bg-surface-muted text-left">
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('records.columns.identifier')}
+                  </th>
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('records.columns.valid')}
+                  </th>
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('records.columns.transformed')}
+                  </th>
+                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                    {t('records.columns.set')}
+                  </th>
+                </tr>
               </thead>
               <tbody>
-                {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id} className="border-b border-border-subtle last:border-0">
-                    {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id} className="px-4 py-3 align-top">
-                        <table.FlexRender cell={cell} />
-                      </td>
-                    ))}
+                {registros.map((registro) => (
+                  <tr key={registro.id} className="border-b border-border-subtle last:border-0">
+                    <td className="px-4 py-3 align-top">
+                      <Link
+                        to={`/coletas/${snapshotId}/registros/${registro.identifier}${sufixoFiltros}`}
+                        className="font-mono text-xs break-all text-brand-strong hover:underline"
+                      >
+                        {registro.identifier}
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      <ValidityBadge valid={registro.isValid} />
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      {registro.isTransformed === null || registro.isTransformed === undefined
+                        ? '—'
+                        : registro.isTransformed
+                          ? t('common.yes')
+                          : t('common.no')}
+                    </td>
+                    <td className="px-4 py-3 align-top text-content-muted">
+                      {registro.setSpec ?? '—'}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -113,6 +113,10 @@ export interface RepositoryHit {
   lastSnapshotStatus: string | null
   lastSize: number | null
   lastValidSize: number | null
+  lastTransformedSize: number | null
+  lastIndexStatus: string | null
+  /** Quantos gestores estão vinculados — dado nosso, não da origem. */
+  managerCount: number
 }
 
 export interface BulkLinkResult {

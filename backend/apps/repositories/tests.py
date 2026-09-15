@@ -776,6 +776,25 @@ class RepositorySearchTests(TestCase):
         self.assertEqual(response.data["totalElements"], 2)
         self.assertEqual(chamadas[0][0], None)
 
+    def test_conta_os_gestores_de_cada_repositorio(self) -> None:
+        """A contagem é nossa, não da origem: sai do banco local."""
+        gestor = User.objects.create_user(
+            username="g-conta", email="gc@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        outro = User.objects.create_user(
+            username="o-conta", email="oc@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        RepositoryAccess.objects.create(user=gestor, harvester_repository_id="1", acronym="A")
+        RepositoryAccess.objects.create(user=outro, harvester_repository_id="1", acronym="A")
+
+        duplo = self.cliente({"acronym": [self.rede(1, "A"), self.rede(2, "B")]})
+        with patch(SERVICES_CLIENT, lambda *a, **k: duplo):
+            linhas = self.api(self.admin).get(f"{BASE}/search/?search=a").data["results"]
+
+        por_id = {linha["harvesterRepositoryId"]: linha["managerCount"] for linha in linhas}
+        self.assertEqual(por_id["1"], 2)
+        self.assertEqual(por_id["2"], 0)
+
     def test_traz_o_resumo_da_ultima_coleta_de_cada_linha(self) -> None:
         """A rota da origem já devolve os dados da última coleta."""
         duplo = self.cliente({"acronym": [self.rede(1, "UFT")]})

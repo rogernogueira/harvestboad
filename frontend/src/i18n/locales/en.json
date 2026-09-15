@@ -222,5 +222,22 @@
       "tooShort": "Password must be at least 8 characters.",
       "mismatch": "Passwords do not match."
     }
+  },
+  "adminRepositories": {
+    "eyebrow": "Administration",
+    "title": "Repositories",
+    "subtitle": "{{total}} repositories in the Harvester",
+    "subtitleLoading": "All Harvester repositories",
+    "records": "{{count}} records",
+    "seeManagers": "See the {{count}} manager(s) of this repository",
+    "assignManager": "No manager — click to link one",
+    "none": "no manager",
+    "columns": {
+      "acronym": "Acronym",
+      "repository": "Repository",
+      "institution": "Institution",
+      "harvest": "Last harvest",
+      "managers": "Managers"
+    }
   }
 }

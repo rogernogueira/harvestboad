@@ -45,6 +45,32 @@ export function AccessPage() {
   const busca = useQuery(repositorySearchQuery(termoAtrasado, pagina, POR_PAGINA))
   const temTermo = termoAtrasado.trim().length > 0
 
+  // Chegada com repositório indicado na URL, vinda do painel de administração:
+  // assim que ele aparecer no resultado da busca, entra na seleção uma vez só.
+  //
+  // Ajuste durante a renderização em vez de efeito — é o padrão que o React
+  // recomenda para estado que acompanha um valor derivado: ele re-renderiza
+  // antes de pintar, sem o ciclo extra que um efeito provocaria.
+  const aSelecionar = searchParams.get('selecionar')
+  const [jaTratado, setJaTratado] = useState<string | null>(null)
+
+  if (aSelecionar && aSelecionar !== jaTratado) {
+    const achado = busca.data?.results.find((r) => r.harvesterRepositoryId === aSelecionar)
+    if (achado) {
+      setJaTratado(aSelecionar)
+      if (!selecionados.some((item) => item.id === aSelecionar)) {
+        setSelecionados([
+          ...selecionados,
+          {
+            id: aSelecionar,
+            acronym: achado.acronym ?? aSelecionar,
+            name: achado.name ?? '',
+          },
+        ])
+      }
+    }
+  }
+
   const atualizarUrl = (mudancas: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams)
     for (const [chave, valor] of Object.entries(mudancas)) {

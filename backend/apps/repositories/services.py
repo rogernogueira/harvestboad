@@ -8,9 +8,12 @@ lidos aqui — sempre com cache, porque a origem é lenta e instável.
 from typing import Any
 
 from django.conf import settings
+from django.db.models import Count
 
 from apps.integrations.cache import cached
 from apps.integrations.harvester import HarvesterClient, HarvesterError
+
+from .models import RepositoryAccess
 
 CACHE_PREFIX = "repositories:v1"
 
@@ -304,7 +307,32 @@ def _private_network_to_row(network: dict) -> dict:
         "lastSnapshotStatus": network.get("lstSnapshotStatus"),
         "lastSize": network.get("lstSize"),
         "lastValidSize": network.get("lstValidSize"),
+        "lastTransformedSize": network.get("lstTransformedSize"),
+        "lastIndexStatus": network.get("lstIndexStatus"),
+        # Preenchido por `_annotate_manager_counts`; a origem não sabe disso.
+        "managerCount": 0,
     }
+
+
+def _annotate_manager_counts(rows: list[dict]) -> list[dict]:
+    """Conta os gestores de cada repositório da página.
+
+    É informação nossa, não da origem: uma agregação local sobre os
+    identificadores da página, em uma consulta só.
+    """
+    if not rows:
+        return rows
+
+    identificadores = [linha["harvesterRepositoryId"] for linha in rows]
+    contagens = dict(
+        RepositoryAccess.objects.filter(harvester_repository_id__in=identificadores)
+        .values_list("harvester_repository_id")
+        .annotate(total=Count("id"))
+    )
+
+    for linha in rows:
+        linha["managerCount"] = contagens.get(linha["harvesterRepositoryId"], 0)
+    return rows
 
 
 def search_repositories(
@@ -336,9 +364,9 @@ def search_repositories(
             "count": count,
             "totalElements": total,
             "totalPages": max(1, -(-total // count)) if total else 0,
-            "results": [
-                _private_network_to_row(rede) for rede in payload.get("networks") or []
-            ],
+            "results": _annotate_manager_counts(
+                [_private_network_to_row(rede) for rede in payload.get("networks") or []]
+            ),
         }
 
     if not termo:

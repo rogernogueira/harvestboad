@@ -3,12 +3,14 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
+import { useAuth } from '@/auth/context'
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UsersIcon } from '@/components/UsersIcon'
 import { repositoriesSummaryQuery } from '@/lib/queries'
+import { AdminRepositoriesPage } from '@/pages/AdminRepositoriesPage'
 import type { LastHarvestSummary, RepositoryAccessSummary } from '@/lib/types'
 
 /**
@@ -19,6 +21,17 @@ import type { LastHarvestSummary, RepositoryAccessSummary } from '@/lib/types'
  * endpoint devolve apenas os vínculos do usuário autenticado.
  */
 export function RepositoriesPage() {
+  const { user } = useAuth()
+
+  // O administrador não tem "meus repositórios": para ele, esta é a tela de
+  // gerenciamento de todo o acervo.
+  if (user?.profile === 'ADMIN') return <AdminRepositoriesPage />
+
+  return <MyRepositoriesPage />
+}
+
+/** Painel do gestor: apenas os repositórios vinculados à sua conta. */
+function MyRepositoriesPage() {
   const { t } = useTranslation()
   const { data, isPending, isError, error, refetch } = useQuery(repositoriesSummaryQuery)
 

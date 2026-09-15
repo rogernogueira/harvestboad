@@ -222,5 +222,22 @@
       "tooShort": "A senha precisa ter ao menos 8 caracteres.",
       "mismatch": "As senhas não conferem."
     }
+  },
+  "adminRepositories": {
+    "eyebrow": "Administração",
+    "title": "Repositórios",
+    "subtitle": "{{total}} repositórios no Harvester",
+    "subtitleLoading": "Todos os repositórios do Harvester",
+    "records": "{{count}} registros",
+    "seeManagers": "Ver os {{count}} gestor(es) deste repositório",
+    "assignManager": "Sem gestor — clique para associar um",
+    "none": "sem gestor",
+    "columns": {
+      "acronym": "Sigla",
+      "repository": "Repositório",
+      "institution": "Instituição",
+      "harvest": "Última coleta",
+      "managers": "Gestores"
+    }
   }
 }
