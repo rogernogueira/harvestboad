@@ -71,6 +71,44 @@ class RepositoryAccessSerializer(serializers.ModelSerializer):
         return self._summary(obj).get("institutionName")
 
 
+class RepositoryAccessBulkSerializer(serializers.Serializer):
+    """Vínculo de um usuário a vários repositórios de uma vez.
+
+    A sigla vem junto de cada repositório porque quem seleciona já a tem em tela;
+    isso evita N consultas ao Harvester e faz o vínculo nascer correto mesmo se a
+    origem cair entre a busca e a gravação.
+    """
+
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    repositories = serializers.ListField(
+        child=serializers.DictField(), allow_empty=False, max_length=200
+    )
+
+    def validate_repositories(self, value: list[dict]) -> list[dict]:
+        limpos: list[dict] = []
+        vistos: set[str] = set()
+
+        for indice, item in enumerate(value):
+            identificador = str(item.get("harvesterRepositoryId") or "").strip()
+            if not identificador:
+                raise serializers.ValidationError(
+                    f"Item {indice}: harvesterRepositoryId é obrigatório."
+                )
+            # Repetir o mesmo repositório na seleção não é erro do usuário —
+            # basta ignorar a repetição.
+            if identificador in vistos:
+                continue
+            vistos.add(identificador)
+            limpos.append(
+                {
+                    "harvesterRepositoryId": identificador,
+                    "acronym": str(item.get("acronym") or "").strip(),
+                }
+            )
+
+        return limpos
+
+
 class RepositoryManagerSerializer(serializers.ModelSerializer):
     """Gestor vinculado a um repositório, para quem já tem acesso a ele.
 

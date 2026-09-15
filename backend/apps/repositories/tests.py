@@ -991,3 +991,117 @@ class RepositoryManagersTests(TestCase):
         response = self.api(self.admin).get(f"{REPOS}/12345/managers")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["count"], 0)
+
+
+class BulkAccessTests(TestCase):
+    """Associação de um gestor a vários repositórios de uma vez."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="adm4", email="adm4@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="ges4", email="ges4@ibict.br", password="x", profile=Profile.GESTOR
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def corpo(self, *pares) -> dict:
+        return {
+            "user": self.gestor.pk,
+            "repositories": [
+                {"harvesterRepositoryId": rid, "acronym": sigla} for rid, sigla in pares
+            ],
+        }
+
+    def test_gestor_nao_associa_em_lote(self) -> None:
+        response = self.api(self.gestor).post(
+            f"{BASE}/bulk/", self.corpo(("1", "A")), format="json"
+        )
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(RepositoryAccess.objects.exists())
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(
+            APIClient().post(f"{BASE}/bulk/", self.corpo(("1", "A")), format="json").status_code,
+            401,
+        )
+
+    def test_associa_varios_de_uma_vez(self) -> None:
+        response = self.api(self.admin).post(
+            f"{BASE}/bulk/", self.corpo(("1", "A"), ("5", "B"), ("9", "C")), format="json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["createdCount"], 3)
+        self.assertEqual(response.data["skippedCount"], 0)
+        self.assertEqual(RepositoryAccess.objects.filter(user=self.gestor).count(), 3)
+
+    def test_usa_a_sigla_enviada_sem_consultar_a_origem(self) -> None:
+        """A sigla vem da tela; consultar o Harvester N vezes seria desperdício."""
+        self.api(self.admin).post(f"{BASE}/bulk/", self.corpo(("43", "USP-29")), format="json")
+        self.assertEqual(
+            RepositoryAccess.objects.get(harvester_repository_id="43").acronym, "USP-29"
+        )
+
+    def test_ja_vinculado_e_ignorado_sem_derrubar_o_lote(self) -> None:
+        RepositoryAccess.objects.create(
+            user=self.gestor, harvester_repository_id="5", acronym="B"
+        )
+
+        response = self.api(self.admin).post(
+            f"{BASE}/bulk/", self.corpo(("1", "A"), ("5", "B"), ("9", "C")), format="json"
+        )
+
+        self.assertEqual(response.data["createdCount"], 2)
+        self.assertEqual(response.data["skippedCount"], 1)
+        self.assertEqual(response.data["skipped"][0]["harvesterRepositoryId"], "5")
+        self.assertEqual(response.data["skipped"][0]["reason"], "already_linked")
+        self.assertEqual(RepositoryAccess.objects.filter(user=self.gestor).count(), 3)
+
+    def test_repetido_na_propria_selecao_conta_uma_vez(self) -> None:
+        response = self.api(self.admin).post(
+            f"{BASE}/bulk/", self.corpo(("1", "A"), ("1", "A")), format="json"
+        )
+        self.assertEqual(response.data["createdCount"], 1)
+        self.assertEqual(RepositoryAccess.objects.count(), 1)
+
+    def test_sigla_vazia_cai_para_o_identificador(self) -> None:
+        response = self.api(self.admin).post(
+            f"{BASE}/bulk/", self.corpo(("77", "")), format="json"
+        )
+        self.assertEqual(response.data["createdCount"], 1)
+        self.assertEqual(
+            RepositoryAccess.objects.get(harvester_repository_id="77").acronym, "77"
+        )
+
+    def test_lista_vazia_e_recusada(self) -> None:
+        response = self.api(self.admin).post(
+            f"{BASE}/bulk/", {"user": self.gestor.pk, "repositories": []}, format="json"
+        )
+        self.assertEqual(response.status_code, 400)
+
+    def test_item_sem_identificador_e_recusado(self) -> None:
+        response = self.api(self.admin).post(
+            f"{BASE}/bulk/",
+            {"user": self.gestor.pk, "repositories": [{"acronym": "A"}]},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(RepositoryAccess.objects.exists())
+
+    def test_cada_vinculo_gera_auditoria(self) -> None:
+        self.api(self.admin).post(
+            f"{BASE}/bulk/", self.corpo(("1", "A"), ("5", "B")), format="json"
+        )
+        logs = AuditLog.objects.filter(
+            action=AuditLog.Action.CREATE, resource="repository_access"
+        )
+        self.assertEqual(logs.count(), 2)
+        self.assertTrue(all(log.user == self.admin for log in logs))

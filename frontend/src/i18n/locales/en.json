@@ -177,13 +177,24 @@
       "all": "full listing"
     },
     "noSelection": "No repository selected",
-    "selectHint": "Search and pick a repository on the left to register its managers.",
+    "selectHint": "Search repositories, check the ones you want and link them all to a manager at once.",
     "selectedRepository": "Selected repository",
     "managersWithAccess": "Managers with access ({{count}})",
     "noManagers": "No manager registered for this repository.",
-    "addManager": "Add manager",
-    "allManagersLinked": "All matching managers already have access to this repository.",
-    "since": "since {{date}}"
+    "since": "since {{date}}",
+    "typeToSearch": "Type to search a repository by acronym, name or institution.",
+    "selectRepository": "Select repository {{repo}}",
+    "seeManagers": "managers",
+    "selectPage": "Select this page",
+    "unselectPage": "Unselect this page",
+    "selectedCount": "{{count}} repository(ies) selected",
+    "clearSelection": "Clear selection",
+    "removeFromSelection": "Remove from selection",
+    "linkToManager": "Link to a manager",
+    "linkCount": "Link {{count}} repository(ies)",
+    "noManagersFound": "No manager found.",
+    "bulkResult": "{{created}} link(s) created for {{user}}.",
+    "bulkSkipped": "{{skipped}} already existed."
   },
   "managers": {
     "title": "Linked users",

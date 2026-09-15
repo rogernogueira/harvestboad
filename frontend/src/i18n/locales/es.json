@@ -177,13 +177,24 @@
       "all": "listado completo"
     },
     "noSelection": "Ningún repositorio seleccionado",
-    "selectHint": "Busque y elija un repositorio a la izquierda para registrar sus gestores.",
+    "selectHint": "Busque repositorios, marque los deseados y asócielos todos a un gestor de una vez.",
     "selectedRepository": "Repositorio seleccionado",
     "managersWithAccess": "Gestores con acceso ({{count}})",
     "noManagers": "Ningún gestor registrado en este repositorio.",
-    "addManager": "Registrar gestor",
-    "allManagersLinked": "Todos los gestores encontrados ya tienen acceso a este repositorio.",
-    "since": "desde {{date}}"
+    "since": "desde {{date}}",
+    "typeToSearch": "Escriba para buscar un repositorio por sigla, nombre o institución.",
+    "selectRepository": "Seleccionar el repositorio {{repo}}",
+    "seeManagers": "gestores",
+    "selectPage": "Marcar los de esta página",
+    "unselectPage": "Desmarcar los de esta página",
+    "selectedCount": "{{count}} repositorio(s) seleccionado(s)",
+    "clearSelection": "Limpiar selección",
+    "removeFromSelection": "Quitar de la selección",
+    "linkToManager": "Asociar a un gestor",
+    "linkCount": "Asociar {{count}} repositorio(s)",
+    "noManagersFound": "Ningún gestor encontrado.",
+    "bulkResult": "{{created}} asociación(es) creada(s) para {{user}}.",
+    "bulkSkipped": "{{skipped}} ya existía(n)."
   },
   "managers": {
     "title": "Usuarios vinculados",

@@ -58,8 +58,9 @@ export const gestoresQuery = (search: string) =>
 /**
  * Busca de repositórios no Harvester. Exclusivo do ADMIN.
  *
- * Sem termo, lista todos paginados — é a tela inicial da administração, e uma
- * lista vazia esperando digitação seria pior que mostrar o acervo.
+ * Só dispara com termo: são 2.181 repositórios na origem, e listar todos de
+ * saída não ajuda quem sabe o que procura — além de custar uma consulta a uma
+ * origem instável a cada abertura da tela.
  */
 export const repositorySearchQuery = (term: string, page: number, count = 10) =>
   queryOptions({
@@ -68,6 +69,7 @@ export const repositorySearchQuery = (term: string, page: number, count = 10) =>
       apiGet<RepositorySearchResult>(
         `/repositories/accesses/search/?search=${encodeURIComponent(term)}&page=${page}&count=${count}`,
       ),
+    enabled: term.trim().length > 0,
     staleTime: 5 * 60_000,
   })
 

@@ -115,6 +115,15 @@ export interface RepositoryHit {
   lastValidSize: number | null
 }
 
+export interface BulkLinkResult {
+  user: number
+  username: string
+  createdCount: number
+  skippedCount: number
+  created: { id: number; harvesterRepositoryId: string; acronym: string }[]
+  skipped: { harvesterRepositoryId: string; reason: string }[]
+}
+
 export interface RepositorySearchResult {
   query: string
   /** Campo em que a origem encontrou: sigla, nome ou instituição. */

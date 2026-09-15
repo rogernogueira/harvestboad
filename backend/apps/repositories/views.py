@@ -13,6 +13,7 @@ from . import services
 from .models import RepositoryAccess
 from .permissions import IsAdminProfile, assert_can_read_repository
 from .serializers import (
+    RepositoryAccessBulkSerializer,
     RepositoryAccessSerializer,
     RepositoryAccessWriteSerializer,
     RepositoryManagerSerializer,
@@ -81,6 +82,78 @@ class RepositoryAccessViewSet(
             resource=RESOURCE,
             resource_id=resource_id,
             request=self.request,
+        )
+
+    @extend_schema(
+        request=RepositoryAccessBulkSerializer,
+        description=(
+            "Associa um gestor a vários repositórios de uma vez. Cada item é "
+            "independente: o que já existia é relatado como ignorado, sem "
+            "impedir os demais. Exclusivo do perfil ADMIN."
+        ),
+        responses={200: None},
+    )
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="bulk",
+        permission_classes=[permissions.IsAuthenticated, IsAdminProfile],
+    )
+    def bulk(self, request: Request) -> Response:
+        serializer = RepositoryAccessBulkSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        usuario = serializer.validated_data["user"]
+        repositorios = serializer.validated_data["repositories"]
+
+        criados: list[dict] = []
+        ignorados: list[dict] = []
+
+        # Sem transação envolvendo o lote: um repositório já vinculado não deve
+        # desfazer a associação dos outros. O relatório diz o que houve com cada um.
+        existentes = set(
+            RepositoryAccess.objects.filter(
+                user=usuario,
+                harvester_repository_id__in=[r["harvesterRepositoryId"] for r in repositorios],
+            ).values_list("harvester_repository_id", flat=True)
+        )
+
+        for repositorio in repositorios:
+            identificador = repositorio["harvesterRepositoryId"]
+            if identificador in existentes:
+                ignorados.append(
+                    {"harvesterRepositoryId": identificador, "reason": "already_linked"}
+                )
+                continue
+
+            acesso = RepositoryAccess.objects.create(
+                user=usuario,
+                harvester_repository_id=identificador,
+                acronym=repositorio["acronym"] or identificador,
+            )
+            record(
+                action=AuditLog.Action.CREATE,
+                resource=RESOURCE,
+                resource_id=acesso.pk,
+                request=request,
+            )
+            criados.append(
+                {
+                    "id": acesso.pk,
+                    "harvesterRepositoryId": identificador,
+                    "acronym": acesso.acronym,
+                }
+            )
+
+        return Response(
+            {
+                "user": usuario.pk,
+                "username": usuario.username,
+                "createdCount": len(criados),
+                "skippedCount": len(ignorados),
+                "created": criados,
+                "skipped": ignorados,
+            }
         )
 
     @extend_schema(
