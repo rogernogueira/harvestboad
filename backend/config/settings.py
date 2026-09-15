@@ -5,6 +5,7 @@ Valores sensíveis vêm do .env na raiz do repositório (ver .env.example).
 """
 
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -207,11 +208,15 @@ HARVESTER = {
     # TTLs do cache das coletas, em segundos. O Harvester é lento e instável,
     # e seus dados são de coletas já concluídas — daí janelas generosas.
     # NETWORK é o mais longo: o repositório dono de um snapshot nunca muda.
+    # Uma coleta concluída não muda: diagnóstico, regras, registros e XML dela
+    # são imutáveis, e prazos curtos só geravam ida à origem sem ganho. O que
+    # ainda muda é o estado do snapshot (uma coleta em andamento vira VALID) e
+    # o cadastro do repositório — esses ficam com prazo menor.
     "CACHE_TTL_NETWORK": int(os.getenv("HARVESTER_CACHE_TTL_NETWORK", str(24 * 60 * 60))),
-    "CACHE_TTL_SNAPSHOT": int(os.getenv("HARVESTER_CACHE_TTL_SNAPSHOT", str(10 * 60))),
-    "CACHE_TTL_DIAGNOSE": int(os.getenv("HARVESTER_CACHE_TTL_DIAGNOSE", str(30 * 60))),
-    "CACHE_TTL_RECORDS": int(os.getenv("HARVESTER_CACHE_TTL_RECORDS", str(10 * 60))),
-    "CACHE_TTL_XML": int(os.getenv("HARVESTER_CACHE_TTL_XML", str(60 * 60))),
+    "CACHE_TTL_SNAPSHOT": int(os.getenv("HARVESTER_CACHE_TTL_SNAPSHOT", str(30 * 60))),
+    "CACHE_TTL_DIAGNOSE": int(os.getenv("HARVESTER_CACHE_TTL_DIAGNOSE", str(12 * 60 * 60))),
+    "CACHE_TTL_RECORDS": int(os.getenv("HARVESTER_CACHE_TTL_RECORDS", str(6 * 60 * 60))),
+    "CACHE_TTL_XML": int(os.getenv("HARVESTER_CACHE_TTL_XML", str(24 * 60 * 60))),
     "USER": os.getenv("HARVESTER_USER", ""),
     "PASSWORD": os.getenv("HARVESTER_PASSWORD", ""),
     "TIMEOUT": float(os.getenv("HARVESTER_TIMEOUT", "10")),
@@ -226,18 +231,38 @@ HARVESTER = {
 }
 
 
-# Cache — usado para o vínculo snapshot→repositório, consultado a cada request.
-# Sem REDIS_URL fica em memória do processo; a arquitetura prevê Redis opcional.
+# Cache
+#
+# Guarda as respostas do Harvester, que é lento e perde metade das conexões.
+# É **Redis**, não memória do processo: o cache precisa sobreviver a reinício e
+# ser compartilhado entre workers — com vários processos de Gunicorn, um cache
+# local daria a cada um a sua própria cópia fria, e a taxa de acerto cairia na
+# proporção do número de processos.
+#
+# A suíte usa memória do processo, detectada por `sys.argv`: testes não podem
+# depender de um serviço externo nem compartilhar estado entre execuções.
+# `CACHE_BACKEND=locmem` força o mesmo comportamento fora dos testes.
 
 _redis_url = os.getenv("REDIS_URL", "")
+_cache_backend = os.getenv("CACHE_BACKEND", "").strip().lower()
+_rodando_testes = "test" in sys.argv
 
-CACHES = {
-    "default": (
-        {"BACKEND": "django.core.cache.backends.redis.RedisCache", "LOCATION": _redis_url}
-        if _redis_url
-        else {
+if _rodando_testes or _cache_backend == "locmem" or not _redis_url:
+    CACHES = {
+        "default": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
             "LOCATION": "monitor-integra",
         }
-    )
-}
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": _redis_url,
+        }
+    }
+
+# Nota: o backend nativo do Django **não** tem `IGNORE_EXCEPTIONS` (isso é do
+# pacote django-redis). Um Redis fora do ar levantaria exceção em toda leitura,
+# então a tolerância é tratada em `apps.integrations.cache`, que já é o ponto
+# único de acesso ao cache.

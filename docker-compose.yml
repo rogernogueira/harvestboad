@@ -22,6 +22,32 @@ services:
       retries: 5
       start_period: 10s
 
+  redis:
+    image: redis:8-alpine
+    container_name: monitor_integra_redis
+    restart: unless-stopped
+    # Guarda o cache das respostas do Harvester. A persistência em disco é o que
+    # faz o cache sobreviver a reinício do container — sem ela, voltaria frio e
+    # a primeira carga de cada tela pagaria a lentidão da origem de novo.
+    command: >
+      redis-server
+      --save 60 1
+      --appendonly yes
+      --maxmemory ${REDIS_MAXMEMORY:-256mb}
+      --maxmemory-policy allkeys-lru
+    ports:
+      # 6380 no host: 6379 já é usada por outro projeto nesta máquina
+      - "${REDIS_PORT:-6380}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   postgres_data:
     name: monitor_integra_postgres_data
+  redis_data:
+    name: monitor_integra_redis_data
