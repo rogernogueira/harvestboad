@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { lazy, Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
@@ -10,8 +10,15 @@ import { PageHeader } from '@/components/PageHeader'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UsersIcon } from '@/components/UsersIcon'
 import { repositoriesSummaryQuery } from '@/lib/queries'
-import { AdminRepositoriesPage } from '@/pages/AdminRepositoriesPage'
 import type { LastHarvestSummary, RepositoryAccessSummary } from '@/lib/types'
+
+// Sob demanda: a tela do administrador carrega a TanStack Table, e o gestor
+// nunca a abre — um import estático faria todo gestor baixar a biblioteca à toa.
+const AdminRepositoriesPage = lazy(() =>
+  import('@/pages/AdminRepositoriesPage').then((m) => ({
+    default: m.AdminRepositoriesPage,
+  })),
+)
 
 /**
  * Painel de repositórios do gestor.
@@ -25,7 +32,13 @@ export function RepositoriesPage() {
 
   // O administrador não tem "meus repositórios": para ele, esta é a tela de
   // gerenciamento de todo o acervo.
-  if (user?.profile === 'ADMIN') return <AdminRepositoriesPage />
+  if (user?.profile === 'ADMIN') {
+    return (
+      <Suspense fallback={<Loading />}>
+        <AdminRepositoriesPage />
+      </Suspense>
+    )
+  }
 
   return <MyRepositoriesPage />
 }

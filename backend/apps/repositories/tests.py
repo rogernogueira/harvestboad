@@ -1124,3 +1124,219 @@ class BulkAccessTests(TestCase):
         )
         self.assertEqual(logs.count(), 2)
         self.assertTrue(all(log.user == self.admin for log in logs))
+
+
+class InvalidRatioOrderingTests(TestCase):
+    """Listagem sem termo: acervo inteiro ordenado por % de registros inválidos."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="adm5", email="adm5@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="ges5", email="ges5@ibict.br", password="x", profile=Profile.GESTOR
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    @staticmethod
+    def rede(nid, acronym, size, valid):
+        return {
+            "networkID": nid,
+            "acronym": acronym,
+            "name": f"Repo {acronym}",
+            "institution": "Inst",
+            "lstSnapshotID": 900 + nid,
+            "lstSnapshotDate": "2025-06-02 10:00:00",
+            "lstSnapshotStatus": "VALID",
+            "lstSize": size,
+            "lstValidSize": valid,
+        }
+
+    def cliente(self, redes, registro=None):
+        class _Fake:
+            def list_networks(self, page=1, count=25, filter_field=None, filter_value=None, **kw):
+                if registro is not None:
+                    registro.append(count)
+                return {"networks": redes, "totalElements": len(redes)}
+
+        return _Fake()
+
+    def acervo(self):
+        return [
+            self.rede(1, "OK", 1000, 1000),      # 0% inválidos
+            self.rede(2, "RUIM", 1000, 500),     # 50%
+            self.rede(3, "PESSIMO", 100, 10),    # 90%
+            self.rede(4, "POUCO", 1000, 990),    # 1%
+            self.rede(5, "SEMCOLETA", 0, 0),     # sem registros
+        ]
+
+    def test_ordena_do_mais_problematico_para_o_menos(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            d = self.api(self.admin).get(f"{BASE}/search/?count=10").data
+
+        self.assertEqual(
+            [r["acronym"] for r in d["results"]],
+            ["PESSIMO", "RUIM", "POUCO", "OK", "SEMCOLETA"],
+        )
+        self.assertEqual(d["ordering"], "invalidRatio")
+
+    def test_sem_coleta_fica_no_fim_e_nao_se_confunde_com_zero_invalidos(self) -> None:
+        """0% inválidos e 'não sei' são resultados diferentes."""
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            d = self.api(self.admin).get(f"{BASE}/search/?count=10").data
+
+        por_sigla = {r["acronym"]: r for r in d["results"]}
+        self.assertEqual(por_sigla["OK"]["invalidRatio"], 0.0)
+        self.assertIsNone(por_sigla["SEMCOLETA"]["invalidRatio"])
+        self.assertEqual(d["results"][-1]["acronym"], "SEMCOLETA")
+
+    def test_calcula_a_proporcao_e_o_total_de_invalidos(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            d = self.api(self.admin).get(f"{BASE}/search/?count=10").data
+
+        pessimo = next(r for r in d["results"] if r["acronym"] == "PESSIMO")
+        self.assertEqual(pessimo["invalidRatio"], 0.9)
+        self.assertEqual(pessimo["invalidSize"], 90)
+
+    def test_pagina_sobre_o_acervo_inteiro(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            p1 = self.api(self.admin).get(f"{BASE}/search/?count=2&page=1").data
+            p2 = self.api(self.admin).get(f"{BASE}/search/?count=2&page=2").data
+
+        self.assertEqual(p1["totalElements"], 5)
+        self.assertEqual(p1["totalPages"], 3)
+        self.assertEqual([r["acronym"] for r in p1["results"]], ["PESSIMO", "RUIM"])
+        self.assertEqual([r["acronym"] for r in p2["results"]], ["POUCO", "OK"])
+
+    def test_indice_e_buscado_uma_vez_e_reaproveitado(self) -> None:
+        """O acervo inteiro custa ~40s na origem: paginar não pode refazer a busca."""
+        chamadas = []
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo(), chamadas)):
+            self.api(self.admin).get(f"{BASE}/search/?count=2&page=1")
+            self.api(self.admin).get(f"{BASE}/search/?count=2&page=2")
+            self.api(self.admin).get(f"{BASE}/search/?count=2&page=3")
+
+        self.assertEqual(len(chamadas), 1)
+
+    def test_com_termo_volta_a_busca_filtrada_na_origem(self) -> None:
+        """Buscar por termo não deve arrastar o acervo inteiro."""
+        chamadas = []
+
+        class _Busca:
+            def list_networks(self, page=1, count=25, filter_field=None, filter_value=None, **kw):
+                chamadas.append((filter_field, count))
+                return {"networks": [], "totalElements": 0}
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _Busca()):
+            d = self.api(self.admin).get(f"{BASE}/search/?search=UFT&count=10").data
+
+        self.assertNotIn("ordering", d)
+        self.assertEqual(chamadas[0][0], "acronym")
+        self.assertNotEqual(chamadas[0][1], 2500)
+
+    def test_gestor_nao_lista_o_acervo(self) -> None:
+        self.assertEqual(self.api(self.gestor).get(f"{BASE}/search/").status_code, 403)
+
+
+class RepositoryIndexTests(TestCase):
+    """Acervo inteiro entregue ao cliente para ordenar e filtrar no navegador."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="adm6", email="adm6@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="ges6", email="ges6@ibict.br", password="x", profile=Profile.GESTOR
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    @staticmethod
+    def rede(nid, acronym, size, valid):
+        return {
+            "networkID": nid,
+            "acronym": acronym,
+            "name": f"Repo {acronym}",
+            "institution": "Inst",
+            "lstSnapshotID": 900 + nid,
+            "lstSnapshotDate": "2025-06-02 10:00:00",
+            "lstSnapshotStatus": "VALID",
+            "lstSize": size,
+            "lstValidSize": valid,
+        }
+
+    def cliente(self, redes, registro=None):
+        class _Fake:
+            def list_networks(self, page=1, count=25, **kw):
+                if registro is not None:
+                    registro.append(count)
+                return {"networks": redes, "totalElements": len(redes)}
+
+        return _Fake()
+
+    def test_gestor_nao_acessa(self) -> None:
+        self.assertEqual(self.api(self.gestor).get(f"{BASE}/index/").status_code, 403)
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().get(f"{BASE}/index/").status_code, 401)
+
+    def test_devolve_o_acervo_inteiro_sem_paginar(self) -> None:
+        redes = [self.rede(i, f"R{i}", 100, 90) for i in range(1, 51)]
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(redes)):
+            d = self.api(self.admin).get(f"{BASE}/index/").data
+
+        self.assertEqual(d["count"], 50)
+        self.assertEqual(len(d["results"]), 50)
+        self.assertNotIn("page", d)
+
+    def test_anota_proporcao_de_invalidos_e_gestores(self) -> None:
+        RepositoryAccess.objects.create(
+            user=self.gestor, harvester_repository_id="1", acronym="R1"
+        )
+        redes = [self.rede(1, "R1", 200, 150), self.rede(2, "R2", 0, 0)]
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(redes)):
+            por_id = {
+                r["harvesterRepositoryId"]: r
+                for r in self.api(self.admin).get(f"{BASE}/index/").data["results"]
+            }
+
+        self.assertEqual(por_id["1"]["invalidRatio"], 0.25)
+        self.assertEqual(por_id["1"]["invalidSize"], 50)
+        self.assertEqual(por_id["1"]["managerCount"], 1)
+        # Sem registros não há proporção — e isso é diferente de 0%.
+        self.assertIsNone(por_id["2"]["invalidRatio"])
+        self.assertEqual(por_id["2"]["managerCount"], 0)
+
+    def test_reaproveita_o_indice_ja_cacheado(self) -> None:
+        """O acervo custa ~40s na origem: duas aberturas da tela não podem refazê-lo."""
+        chamadas = []
+        redes = [self.rede(1, "R1", 10, 10)]
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(redes, chamadas)):
+            self.api(self.admin).get(f"{BASE}/index/")
+            self.api(self.admin).get(f"{BASE}/index/")
+
+        self.assertEqual(len(chamadas), 1)
+
+    def test_harvester_fora_do_ar_responde_503(self) -> None:
+        class _Fora:
+            def list_networks(self, **kw):
+                raise HarvesterError("sem rota")
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _Fora()):
+            self.assertEqual(self.api(self.admin).get(f"{BASE}/index/").status_code, 503)

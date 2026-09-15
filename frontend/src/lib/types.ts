@@ -117,6 +117,9 @@ export interface RepositoryHit {
   lastIndexStatus: string | null
   /** Quantos gestores estão vinculados — dado nosso, não da origem. */
   managerCount: number
+  /** Fração de inválidos na última coleta (0 a 1). Nulo sem coleta. */
+  invalidRatio?: number | null
+  invalidSize?: number | null
 }
 
 export interface BulkLinkResult {
@@ -128,8 +131,16 @@ export interface BulkLinkResult {
   skipped: { harvesterRepositoryId: string; reason: string }[]
 }
 
+/** Acervo inteiro, para ordenar e filtrar no navegador. */
+export interface RepositoryIndex {
+  count: number
+  results: RepositoryHit[]
+}
+
 export interface RepositorySearchResult {
   query: string
+  /** Presente quando a listagem vem ordenada por critério calculado. */
+  ordering?: 'invalidRatio'
   /** Campo em que a origem encontrou: sigla, nome ou instituição. */
   field: 'acronym' | 'name' | 'institution' | null
   page: number

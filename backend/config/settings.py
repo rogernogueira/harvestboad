@@ -217,6 +217,9 @@ HARVESTER = {
     "CACHE_TTL_DIAGNOSE": int(os.getenv("HARVESTER_CACHE_TTL_DIAGNOSE", str(12 * 60 * 60))),
     "CACHE_TTL_RECORDS": int(os.getenv("HARVESTER_CACHE_TTL_RECORDS", str(6 * 60 * 60))),
     "CACHE_TTL_XML": int(os.getenv("HARVESTER_CACHE_TTL_XML", str(24 * 60 * 60))),
+    # Índice completo dos repositórios: ~40 s e 2,9 MB por busca. TTL longo
+    # porque o cadastro muda pouco e o custo de refazer é alto.
+    "CACHE_TTL_INDEX": int(os.getenv("HARVESTER_CACHE_TTL_INDEX", str(12 * 60 * 60))),
     "USER": os.getenv("HARVESTER_USER", ""),
     "PASSWORD": os.getenv("HARVESTER_PASSWORD", ""),
     "TIMEOUT": float(os.getenv("HARVESTER_TIMEOUT", "10")),

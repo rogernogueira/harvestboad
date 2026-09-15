@@ -9,6 +9,26 @@ function harvestTone(status: string): 'ok' | 'warn' | 'down' {
   return 'warn'
 }
 
+/**
+ * Rótulos curtos para os estados de coleta.
+ *
+ * A origem devolve valores como `HARVESTING_FINISHED_ERROR` — 25 caracteres sem
+ * espaço, que numa coluna estreita não quebram e transbordam a célula, gerando
+ * barra de rolagem na tabela inteira. A interface do próprio Harvester faz a
+ * mesma redução (o filtro `ShortenStatus` dela).
+ *
+ * O valor bruto continua acessível no `title`.
+ */
+const ROTULOS: Record<string, string> = {
+  VALID: 'harvestStatus.valid',
+  HARVESTING: 'harvestStatus.running',
+  HARVESTING_FINISHED_VALID: 'harvestStatus.finishedValid',
+  HARVESTING_FINISHED_ERROR: 'harvestStatus.finishedError',
+  HARVESTING_STOPPED: 'harvestStatus.stopped',
+  HARVESTING_ERROR: 'harvestStatus.error',
+  INDEXED: 'harvestStatus.indexed',
+}
+
 const TONES = {
   ok: 'border-ok bg-ok-soft text-ok',
   warn: 'border-warn bg-warn-soft text-warn',
@@ -21,10 +41,21 @@ const TONES = {
  * Retangular com barra lateral, seguindo a linguagem angular do design — e a
  * cor nunca é o único sinal: o texto sempre nomeia o estado.
  */
-export function Tag({ tone, children }: { tone: keyof typeof TONES; children: ReactNode }) {
+export function Tag({
+  tone,
+  title,
+  children,
+}: {
+  tone: keyof typeof TONES
+  title?: string
+  children: ReactNode
+}) {
   return (
     <span
-      className={`inline-flex items-center border-l-2 px-2 py-0.5 font-mono text-[0.6875rem] tracking-wide uppercase ${TONES[tone]}`}
+      title={title}
+      // `break-words` é rede de proteção: um estado novo da origem, sem rótulo
+      // curto, quebra em vez de empurrar a tabela.
+      className={`inline-flex items-center border-l-2 px-2 py-0.5 font-mono text-[0.6875rem] tracking-wide break-words uppercase ${TONES[tone]}`}
     >
       {children}
     </span>
@@ -32,7 +63,14 @@ export function Tag({ tone, children }: { tone: keyof typeof TONES; children: Re
 }
 
 export function HarvestStatusBadge({ status }: { status: string }) {
-  return <Tag tone={harvestTone(status)}>{status}</Tag>
+  const { t } = useTranslation()
+  const chave = ROTULOS[status.toUpperCase()]
+
+  return (
+    <Tag tone={harvestTone(status)} title={status}>
+      {chave ? t(chave) : status}
+    </Tag>
+  )
 }
 
 export function ValidityBadge({ valid }: { valid: boolean | null | undefined }) {

@@ -13,6 +13,7 @@ import type {
   Repository,
   RepositoryAccess,
   RepositoryAccessSummaryList,
+  RepositoryIndex,
   RepositoryManagerList,
   RepositorySearchResult,
   RuleList,
@@ -56,11 +57,25 @@ export const gestoresQuery = (search: string) =>
   })
 
 /**
+ * Acervo inteiro do Harvester. Exclusivo do ADMIN.
+ *
+ * São ~960 KB para 2.181 repositórios, buscados uma vez e mantidos por bastante
+ * tempo: é o que permite ordenar e filtrar a tabela de administração sem ida ao
+ * servidor. O backend já tem o índice em cache, então o custo aqui é só tráfego.
+ */
+export const repositoryIndexQuery = queryOptions({
+  queryKey: ['repositories', 'index'],
+  queryFn: () => apiGet<RepositoryIndex>('/repositories/accesses/index/'),
+  staleTime: 30 * 60_000,
+})
+
+/**
  * Busca de repositórios no Harvester. Exclusivo do ADMIN.
  *
- * Só dispara com termo: são 2.181 repositórios na origem, e listar todos de
- * saída não ajuda quem sabe o que procura — além de custar uma consulta a uma
- * origem instável a cada abertura da tela.
+ * Sem termo, o backend devolve o acervo inteiro ordenado pelo percentual de
+ * registros inválidos — é o que o painel de administração mostra ao abrir. A
+ * tela de acessos, que quer um repositório específico, desliga a consulta sem
+ * termo passando `enabled` por fora.
  */
 export const repositorySearchQuery = (term: string, page: number, count = 10) =>
   queryOptions({
@@ -69,7 +84,6 @@ export const repositorySearchQuery = (term: string, page: number, count = 10) =>
       apiGet<RepositorySearchResult>(
         `/repositories/accesses/search/?search=${encodeURIComponent(term)}&page=${page}&count=${count}`,
       ),
-    enabled: term.trim().length > 0,
     staleTime: 5 * 60_000,
   })
 

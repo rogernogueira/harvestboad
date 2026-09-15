@@ -237,7 +237,35 @@
       "repository": "Repositório",
       "institution": "Instituição",
       "harvest": "Última coleta",
-      "managers": "Gestores"
-    }
+      "managers": "Gestores",
+      "invalid": "Inválidos"
+    },
+    "invalidRecords": "{{count}} registros",
+    "loading": "Carregando o acervo de repositórios…",
+    "filterSearch": "Buscar",
+    "filterStatus": "Situação da coleta",
+    "filterManagers": "Gestores",
+    "showing": "Exibindo {{shown}} de {{total}} repositórios",
+    "status": {
+      "all": "Todas",
+      "valid": "Válida",
+      "error": "Com erro",
+      "none": "Sem coleta"
+    },
+    "managers": {
+      "all": "Todos",
+      "with": "Com gestor",
+      "without": "Sem gestor"
+    },
+    "openRepository": "Abrir a página do repositório"
+  },
+  "harvestStatus": {
+    "valid": "Válida",
+    "running": "Coletando",
+    "finishedValid": "Concluída",
+    "finishedError": "Com erro",
+    "stopped": "Interrompida",
+    "error": "Erro",
+    "indexed": "Indexada"
   }
 }

@@ -237,7 +237,35 @@
       "repository": "Repository",
       "institution": "Institution",
       "harvest": "Last harvest",
-      "managers": "Managers"
-    }
+      "managers": "Managers",
+      "invalid": "Invalid"
+    },
+    "invalidRecords": "{{count}} records",
+    "loading": "Loading the repository index…",
+    "filterSearch": "Search",
+    "filterStatus": "Harvest status",
+    "filterManagers": "Managers",
+    "showing": "Showing {{shown}} of {{total}} repositories",
+    "status": {
+      "all": "All",
+      "valid": "Valid",
+      "error": "With error",
+      "none": "No harvest"
+    },
+    "managers": {
+      "all": "All",
+      "with": "With manager",
+      "without": "Without manager"
+    },
+    "openRepository": "Open the repository page"
+  },
+  "harvestStatus": {
+    "valid": "Valid",
+    "running": "Harvesting",
+    "finishedValid": "Finished",
+    "finishedError": "With error",
+    "stopped": "Stopped",
+    "error": "Error",
+    "indexed": "Indexed"
   }
 }

@@ -42,8 +42,13 @@ export function AccessPage() {
   const [selecionados, setSelecionados] = useState<Selecionado[]>([])
   const [detalhado, setDetalhado] = useState<Selecionado | null>(null)
 
-  const busca = useQuery(repositorySearchQuery(termoAtrasado, pagina, POR_PAGINA))
   const temTermo = termoAtrasado.trim().length > 0
+  // Aqui o objetivo é achar um repositório específico: sem termo não há o que
+  // buscar, e o acervo inteiro só atrapalharia.
+  const busca = useQuery({
+    ...repositorySearchQuery(termoAtrasado, pagina, POR_PAGINA),
+    enabled: temTermo,
+  })
 
   // Chegada com repositório indicado na URL, vinda do painel de administração:
   // assim que ele aparecer no resultado da busca, entra na seleção uma vez só.

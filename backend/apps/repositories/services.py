@@ -335,6 +335,113 @@ def _annotate_manager_counts(rows: list[dict]) -> list[dict]:
     return rows
 
 
+# O índice inteiro custa ~40 s e 2,9 MB. Só vale porque o cache é persistente:
+# uma busca por TTL, compartilhada entre workers e sobrevivendo a reinício.
+FULL_INDEX_TIMEOUT = 180.0
+FULL_INDEX_PAGE = 2500
+
+
+def full_network_index(client: HarvesterClient | None = None) -> list[dict]:
+    """Todos os repositórios do Harvester, em uma lista.
+
+    Existe para ordenações que a origem não oferece — ela só ordena por sigla,
+    nome e instituição, e o painel precisa ordenar por percentual de registros
+    inválidos, que é calculado.
+
+    Ordenar apenas a página visível daria a ilusão de ordenar o conjunto, então
+    ou se traz tudo ou não se ordena. Trazer tudo custa ~40 s, o que só é
+    aceitável com cache persistente — daí o TTL longo e o comando
+    `warm_repository_index`, que paga esse custo fora da hora do usuário.
+    """
+    def produce() -> list[dict]:
+        # Cliente próprio: o timeout padrão de 10 s não cobre uma resposta de 40 s.
+        lento = HarvesterClient(timeout=FULL_INDEX_TIMEOUT)
+        payload = lento.list_networks(page=1, count=FULL_INDEX_PAGE) or {}
+        return [_private_network_to_row(rede) for rede in payload.get("networks") or []]
+
+    return cached(f"{CACHE_PREFIX}:index", _ttl("INDEX"), produce)
+
+
+def invalid_ratio(row: dict) -> float:
+    """Fração de registros inválidos da última coleta, entre 0 e 1.
+
+    Sem coleta ou sem registros não há o que comparar: devolve -1 para que essas
+    linhas fiquem no fim da ordenação em vez de se misturarem às de 0% inválidos,
+    que são um resultado bem diferente.
+    """
+    total = row.get("lastSize") or 0
+    if total <= 0:
+        return -1.0
+    validos = row.get("lastValidSize") or 0
+    return max(0.0, (total - validos) / total)
+
+
+def repositories_by_invalid_ratio(
+    page: int = 1,
+    count: int = 25,
+    client: HarvesterClient | None = None,
+) -> dict:
+    """Todos os repositórios, do mais problemático para o menos.
+
+    Ordena pelo percentual de registros inválidos da última coleta e pagina
+    localmente, já que a ordenação não vem da origem.
+    """
+    indice = list(full_network_index(client))
+    indice.sort(
+        key=lambda linha: (-invalid_ratio(linha), (linha.get("acronym") or "").lower())
+    )
+
+    total = len(indice)
+    inicio = (page - 1) * count
+    pagina = _annotate_manager_counts(indice[inicio : inicio + count])
+
+    for linha in pagina:
+        proporcao = invalid_ratio(linha)
+        linha["invalidRatio"] = None if proporcao < 0 else round(proporcao, 6)
+        linha["invalidSize"] = (
+            None
+            if proporcao < 0
+            else (linha.get("lastSize") or 0) - (linha.get("lastValidSize") or 0)
+        )
+
+    return {
+        "query": "",
+        "field": None,
+        "ordering": "invalidRatio",
+        "page": page,
+        "count": count,
+        "totalElements": total,
+        "totalPages": max(1, -(-total // count)) if total else 0,
+        "results": pagina,
+    }
+
+
+def repository_index(client: HarvesterClient | None = None) -> dict:
+    """Acervo inteiro, anotado e pronto para ordenar e filtrar no navegador.
+
+    São ~960 KB (240 KB comprimidos) para 2.181 repositórios. Vale a pena porque
+    é tela de administração: o custo é pago uma vez e, em troca, ordenar e
+    filtrar por qualquer coluna deixa de exigir ida ao servidor. A alternativa
+    — paginar e ordenar aqui — obrigaria a um parâmetro de consulta por critério.
+
+    As contagens de gestores saem em **uma** consulta ao banco para todo o
+    acervo, não uma por linha.
+    """
+    linhas = [dict(linha) for linha in full_network_index(client)]
+    _annotate_manager_counts(linhas)
+
+    for linha in linhas:
+        proporcao = invalid_ratio(linha)
+        linha["invalidRatio"] = None if proporcao < 0 else round(proporcao, 6)
+        linha["invalidSize"] = (
+            None
+            if proporcao < 0
+            else (linha.get("lastSize") or 0) - (linha.get("lastValidSize") or 0)
+        )
+
+    return {"count": len(linhas), "results": linhas}
+
+
 def search_repositories(
     term: str,
     page: int = 1,

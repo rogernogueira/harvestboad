@@ -85,6 +85,26 @@ class RepositoryAccessViewSet(
         )
 
     @extend_schema(
+        description=(
+            "Acervo inteiro do Harvester, anotado com percentual de registros "
+            "inválidos e quantidade de gestores. Pensado para ordenar e filtrar "
+            "no cliente — são ~2.181 linhas. Exclusivo do perfil ADMIN."
+        ),
+        responses={200: None, 503: None},
+    )
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="index",
+        permission_classes=[permissions.IsAuthenticated, IsAdminProfile],
+    )
+    def index(self, request: Request) -> Response:
+        try:
+            return Response(services.repository_index())
+        except HarvesterError as exc:
+            return Response({"detail": str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+    @extend_schema(
         request=RepositoryAccessBulkSerializer,
         description=(
             "Associa um gestor a vários repositórios de uma vez. Cada item é "
@@ -186,10 +206,16 @@ class RepositoryAccessViewSet(
         except ValueError:
             page, count = 1, 20
 
+        termo = request.query_params.get("search", "").strip()
+
         try:
-            resultado = services.search_repositories(
-                request.query_params.get("search", ""), page=page, count=count
-            )
+            if termo:
+                resultado = services.search_repositories(termo, page=page, count=count)
+            else:
+                # Sem termo, a listagem é o acervo inteiro ordenado pelo percentual
+                # de registros inválidos — ordenação que a origem não oferece e que
+                # por isso exige o índice completo.
+                resultado = services.repositories_by_invalid_ratio(page=page, count=count)
         except HarvesterError as exc:
             return Response({"detail": str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
