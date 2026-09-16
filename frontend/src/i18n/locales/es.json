@@ -8,6 +8,7 @@
   "auth": {
     "signIn": "Entrar",
     "signingIn": "Entrando…",
+    "cafeAccess": "Acceso CAFe",
     "logout": "Salir",
     "username": "Usuario",
     "password": "Contraseña",

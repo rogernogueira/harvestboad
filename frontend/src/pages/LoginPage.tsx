@@ -49,6 +49,8 @@ const ICONE_SETA = 'M13 7l5 5-5 5M18 12H6'
 const ICONE_REPOSITORIOS =
   'M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7m-16 5c0 1.7 3.6 3 8 3s8-1.3 8-3'
 const ICONE_COLETAS = 'M4 4v5h5M20 20v-5h-5M20 9a8 8 0 00-13.7-3.7L4 7m0 8a8 8 0 0013.7 3.7L20 17'
+const ICONE_CAFE =
+  'M4 6h13v8a5 5 0 01-5 5H9a5 5 0 01-5-5zM17 8h1.5a3.5 3.5 0 010 7H17M3 21h15'
 
 /**
  * Destaque institucional da coluna esquerda.
@@ -268,6 +270,21 @@ export function LoginPage() {
                           <Icone path={ICONE_SETA} className="h-4 w-4" />
                         </>
                       )}
+                    </button>
+
+                    {/*
+                      Acesso federado CAFe. Entra desabilitado: o lugar dele na
+                      tela já está definido, mas a integração com a federação
+                      ainda não existe. Contorno em vez de preenchido para não
+                      disputar atenção com o botão que de fato funciona.
+                    */}
+                    <button
+                      type="button"
+                      disabled
+                      className="flex items-center justify-center gap-2 border border-brand px-4 py-2.5 text-sm font-semibold text-brand transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      <Icone path={ICONE_CAFE} className="h-4 w-4" />
+                      {t('auth.cafeAccess')}
                     </button>
                   </form>
                 </div>
