@@ -73,6 +73,8 @@
     "unnamed": "(sin nombre en el origen)",
     "grantedAt": "Asociado el {{date}}",
     "loadingStats": "Cargando repositorios y estadísticas…",
+    "sortedByAge": "ordenados por la recolección más antigua primero",
+    "openLastHarvest": "Abrir la última recolección",
     "lastHarvest": "Última recolección",
     "violatedRules": "Reglas infringidas",
     "topViolations": "Reglas con más infracciones",

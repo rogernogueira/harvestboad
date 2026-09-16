@@ -72,6 +72,8 @@
     "unnamed": "(unnamed at source)",
     "grantedAt": "Linked on {{date}}",
     "loadingStats": "Loading repositories and statistics…",
+    "sortedByAge": "sorted by oldest harvest first",
+    "openLastHarvest": "Open the last harvest",
     "lastHarvest": "Last harvest",
     "violatedRules": "Violated rules",
     "topViolations": "Most violated rules",

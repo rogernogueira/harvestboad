@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
 import { useAuth } from '@/auth/context'
-import { HarvestStatusBadge } from '@/components/Badges'
+import { HarvestStatusBadge, Tag } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
@@ -43,10 +43,54 @@ export function RepositoriesPage() {
   return <MyRepositoriesPage />
 }
 
+/*
+  Limiares de idade da última coleta.
+
+  Escolhidos a partir da distribuição real deste acervo, onde as coletas se
+  espaçam por meses: abaixo de 90 dias nada a fazer, acima de um ano o
+  repositório está parado. São um ponto de partida para ajuste com quem opera,
+  não uma regra do domínio.
+*/
+const DIAS_ATENCAO = 90
+const DIAS_CRITICO = 365
+
+/**
+ * Ordena por necessidade de atenção.
+ *
+ * A regra é uma só, para o gestor conseguir prever a ordem olhando a lista:
+ * coleta mais antiga primeiro. Antes dela vêm os casos que nem dá para avaliar
+ * — repositório sem resposta da origem e repositório nunca coletado.
+ *
+ * A ordem anterior era a da origem, que segue a sigla (UFT, UFT-2, UFT-4…).
+ * Sigla é código interno: por ela, o repositório parado há mais tempo caía no
+ * meio da lista e o mais saudável no fim.
+ *
+ * O contador de inválidos de propósito não entra: neste acervo ele não passa de
+ * 0,6% em nenhum repositório, e misturá-lo faria a ordem deixar de ser
+ * explicável numa frase.
+ */
+function ordenarPorAtencao(itens: RepositoryAccessSummary[]) {
+  const quando = (item: RepositoryAccessSummary) => {
+    if (item.unavailable) return Number.NEGATIVE_INFINITY
+    const fim = item.lastHarvest?.endTime
+    if (!fim) return Number.NEGATIVE_INFINITY + 1
+    const instante = Date.parse(fim.replace(' ', 'T'))
+    return Number.isNaN(instante) ? Number.NEGATIVE_INFINITY + 1 : instante
+  }
+  // Desempate pelo nome: sem ele, duas coletas do mesmo instante trocariam de
+  // lugar entre renderizações.
+  return [...itens].sort(
+    (a, b) => quando(a) - quando(b) || (a.name ?? '').localeCompare(b.name ?? ''),
+  )
+}
+
 /** Painel do gestor: apenas os repositórios vinculados à sua conta. */
 function MyRepositoriesPage() {
   const { t } = useTranslation()
   const { data, isPending, isError, error, refetch } = useQuery(repositoriesSummaryQuery)
+
+  // Antes dos retornos antecipados: hook não pode ficar atrás de condicional.
+  const ordenados = useMemo(() => ordenarPorAtencao(data?.results ?? []), [data?.results])
 
   if (isPending) return <Loading label={t('repositories.loadingStats')} />
   if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />
@@ -60,14 +104,20 @@ function MyRepositoriesPage() {
       */}
       <PageHeader
         title={t('repositories.title')}
-        description={t('repositories.subtitle', { count: data.count })}
+        description={
+          <>
+            {t('repositories.subtitle', { count: data.count })}
+            {' · '}
+            {t('repositories.sortedByAge')}
+          </>
+        }
       />
 
-      {data.results.length === 0 ? (
+      {ordenados.length === 0 ? (
         <Empty label={t('repositories.none')} />
       ) : (
         <ul className="flex flex-col gap-4">
-          {data.results.map((acesso) => (
+          {ordenados.map((acesso) => (
             <li key={acesso.id}>
               <RepositoryRow acesso={acesso} />
             </li>
@@ -151,6 +201,52 @@ function tom(valor: number | null | undefined, cor: string) {
   return valor ? cor : ''
 }
 
+/**
+ * Idade da última coleta, em destaque e clicável.
+ *
+ * A data absoluta sozinha não tria: para saber se "07/05/2025" é problema, o
+ * gestor precisa fazer a conta de cabeça, em cada cartão. O badge faz a conta e
+ * a colore — e é o mesmo sinal que ordena a lista, então a ordem da tela passa
+ * a se explicar sozinha.
+ *
+ * A data exata continua ao lado, porque o badge arredonda e há quem precise do
+ * dia. Clicar abre a coleta.
+ */
+function IdadeDaColeta({ fim, snapshotId }: { fim: Date; snapshotId: string }) {
+  const { t, i18n } = useTranslation()
+
+  const relativo = useMemo(
+    () => new Intl.RelativeTimeFormat(i18n.resolvedLanguage, { numeric: 'auto' }),
+    [i18n.resolvedLanguage],
+  )
+
+  // Date.now() num inicializador de estado, não no corpo do render: a referência
+  // de "agora" fica presa à montagem e a idade não oscila a cada renderização.
+  const [agora] = useState(() => Date.now())
+  const dias = Math.max(0, Math.floor((agora - fim.getTime()) / 86_400_000))
+
+  // Meses até dois anos: "há 16 meses" localiza melhor que "há 1 ano", que
+  // esconderia quatro meses de diferença entre dois repositórios parados.
+  const rotulo =
+    dias < 30
+      ? relativo.format(-dias, 'day')
+      : dias < 730
+        ? relativo.format(-Math.round(dias / 30.44), 'month')
+        : relativo.format(-Math.round(dias / 365.25), 'year')
+
+  const tone = dias >= DIAS_CRITICO ? 'down' : dias >= DIAS_ATENCAO ? 'warn' : 'ok'
+
+  return (
+    <Link
+      to={`/coletas/${snapshotId}`}
+      aria-label={t('repositories.openLastHarvest')}
+      className="transition-opacity duration-150 hover:opacity-80"
+    >
+      <Tag tone={tone}>{rotulo}</Tag>
+    </Link>
+  )
+}
+
 function HarvestStats({
   coleta,
   repositoryId,
@@ -227,6 +323,7 @@ function HarvestStats({
           #{coleta.snapshotId}
         </Link>
         {coleta.status ? <HarvestStatusBadge status={coleta.status} /> : null}
+        {fimValido ? <IdadeDaColeta fim={fim} snapshotId={coleta.snapshotId} /> : null}
         <span className="text-xs text-content-muted">{fimValido ? dataHora.format(fim) : '—'}</span>
         {/*
           Coleta sem indexação não passou por validação: os campos de válidos,
