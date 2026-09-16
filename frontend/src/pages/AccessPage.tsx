@@ -461,7 +461,7 @@ function ManagersPanel({
   repositorio: Selecionado
   onFechar: () => void
 }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
   const [aviso, setAviso] = useState<string | null>(null)
 
@@ -520,7 +520,7 @@ function ManagersPanel({
                     <span className="text-sm font-semibold">{vinculo.username}</span>
                     <span className="block text-xs text-content-muted">
                       {t('access.since', {
-                        date: new Date(vinculo.grantedAt).toLocaleDateString(),
+                        date: new Date(vinculo.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
                       })}
                     </span>
                   </span>

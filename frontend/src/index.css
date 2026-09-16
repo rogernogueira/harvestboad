@@ -31,7 +31,13 @@
   /* Estados */
   --color-ok: #3f7a4f;
   --color-ok-soft: #eef4ef;
-  --color-warn: #8a7524;
+  /*
+    Escurecido de #8a7524: sobre o --color-warn-soft aquele dava 4,14 de
+    contraste, abaixo dos 4,5 exigidos para o texto de 11px dos badges. Este dá
+    4,94. O tom nunca é fundo sólido com texto por cima — só texto e borda —,
+    então escurecer não prejudica nenhum uso.
+  */
+  --color-warn: #7c6920;
   --color-warn-soft: #f9f5e8;
   --color-down: #b3261e;
   --color-down-soft: #fbeeed;

@@ -130,7 +130,7 @@ function MyRepositoriesPage() {
 
 /** Uma linha do painel: identificação + estatísticas lado a lado. */
 function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [gestoresAbertos, setGestoresAbertos] = useState(false)
   const nomeRepositorio = acesso.name ?? acesso.acronym
 
@@ -161,7 +161,7 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
         ) : null}
         <span className="mt-auto pt-3 text-xs text-content-muted">
           {t('repositories.grantedAt', {
-            date: new Date(acesso.grantedAt).toLocaleDateString(),
+            date: new Date(acesso.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
           })}
         </span>
 

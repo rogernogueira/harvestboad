@@ -15,7 +15,7 @@ import { harvestQuery } from '@/lib/queries'
  * escolhido no diagnóstico continuar valendo ao abrir os registros, e vice-versa.
  */
 export function HarvestLayout() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { snapshotId = '' } = useParams()
   const [searchParams] = useSearchParams()
 
@@ -58,7 +58,7 @@ export function HarvestLayout() {
         </div>
         <p className="text-sm text-content-muted">
           {data.repository.name} · {t('harvest.endedAt')}{' '}
-          {data.endTime ? new Date(data.endTime).toLocaleString() : '—'}
+          {data.endTime ? new Date(data.endTime).toLocaleString(i18n.resolvedLanguage) : '—'}
         </p>
       </div>
 
