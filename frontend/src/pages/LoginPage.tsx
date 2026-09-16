@@ -138,7 +138,7 @@ export function LoginPage() {
             dizer em que sistema se está entrando.
           */}
           <div className="mb-6 flex items-center gap-3 lg:hidden">
-            <img src="/logoHB.png" alt="HarvestBoard" className="h-10 w-auto" />
+            <img src="/logoHB.svg" alt="HarvestBoard" className="h-10 w-auto" />
             <div className="leading-tight">
               <h1 className="font-heading text-lg font-extrabold tracking-tight">
                 {t('auth.panelTitle')}
@@ -152,7 +152,7 @@ export function LoginPage() {
               {/* Coluna da marca — só em telas largas. */}
               <div className="hidden flex-col justify-between gap-8 border-r border-border-subtle bg-brand-soft p-10 lg:flex">
                 <div className="flex flex-1 flex-col justify-center">
-                  <img src="/logoHB.png" alt="HarvestBoard" className="h-36 w-auto self-start" />
+                  <img src="/logoHB.svg" alt="HarvestBoard" className="h-36 w-auto self-start" />
                   {/*
                     Título menor que a marca nominal desenhada no logo: aqui ele
                     nomeia a tela, não o produto. Em pé de igualdade, os dois
