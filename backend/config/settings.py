@@ -33,6 +33,23 @@ DEBUG = env_bool("DJANGO_DEBUG", True)
 
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
 
+# Em produção o Django fica atrás de dois saltos: o proxy reverso institucional,
+# onde o TLS termina, e o nginx do container. O esquema original só chega até
+# aqui pelo cabeçalho — sem isto o Django acha que a requisição é HTTP e recusa
+# o POST do admin por origem inválida.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+
+# Precisa do esquema junto do domínio: "https://hb.comais.uft.edu.br".
+CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS")
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # SECURE_SSL_REDIRECT fica de fora de propósito: quem redireciona para HTTPS
+    # é o proxy reverso. Ligá-lo aqui faria o Django redirecionar também o
+    # tráfego interno do nginx, que é HTTP por natureza.
+
 
 # Application definition
 
@@ -170,7 +187,10 @@ REST_FRAMEWORK = {
 }
 
 
-# CORS — o dev server do Vite roda em outra origem
+# CORS — só existe em desenvolvimento, onde o dev server do Vite (5173) e o
+# Django (8002) são origens diferentes. Em produção o nginx serve o SPA e faz
+# proxy de /api/ na mesma origem, então o navegador não emite requisição
+# cross-origin e a lista fica vazia.
 
 CORS_ALLOWED_ORIGINS = env_list(
     "DJANGO_CORS_ORIGINS",

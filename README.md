@@ -48,6 +48,49 @@ Nesta máquina de desenvolvimento, 5432 (PostgreSQL do sistema) e 8000/8001
 banco e **8002** para a API. Ambas são configuráveis no `.env`; ao mudar a
 porta da API, ajuste também o proxy em `frontend/vite.config.ts`.
 
+## Deploy
+
+Em produção o nginx serve o SPA já compilado **e** faz proxy de `/api/` para o
+gunicorn. É o mesmo desenho do `vite.config.ts` em desenvolvimento, e tem a
+mesma consequência: o navegador só conhece uma origem, então não há requisição
+cross-origin e o CORS não entra em jogo. A lista `CORS_ALLOWED_ORIGINS` fica
+vazia em produção de propósito.
+
+```
+proxy reverso (192.168.105.5)        hb.comais.uft.edu.br, o TLS termina aqui
+        │ HTTP
+        ▼
+host:8085 ──▶ web (nginx)
+                 ├── /             SPA (build do Vite)
+                 ├── /static/      estáticos do admin e do Swagger
+                 └── /api/ /admin/ ──▶ api (gunicorn) ──▶ postgres, redis
+```
+
+Só o container `web` publica porta no host. O gunicorn, o PostgreSQL e o Redis
+conversam pela rede interna do compose.
+
+```bash
+cp .env.example .env     # ajuste DJANGO_SECRET_KEY e DJANGO_ALLOWED_HOSTS
+docker compose build
+docker compose up -d
+```
+
+O `docker-entrypoint.sh` do backend aplica as migrações e roda o
+`collectstatic` a cada subida, então não há passo manual entre o build e o ar.
+
+### O que o proxy reverso precisa saber
+
+| Item | Valor |
+|------|-------|
+| Destino | `192.168.105.5:8085` (ajustável em `WEB_PORT`) |
+| Protocolo interno | HTTP — o TLS termina no proxy |
+| Cabeçalhos | `Host`, `X-Forwarded-For` e `X-Forwarded-Proto: https` |
+
+O `X-Forwarded-Proto` não é opcional: sem ele o Django trata a requisição como
+HTTP e recusa os POSTs do admin por origem inválida. O domínio precisa estar em
+`DJANGO_ALLOWED_HOSTS` e em `DJANGO_CSRF_TRUSTED_ORIGINS` — neste **com o
+esquema** (`https://hb.comais.uft.edu.br`).
+
 ## Estrutura
 
 ```

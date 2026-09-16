@@ -24,3 +24,4 @@ media/
 
 # Documento de referência de design, mantido apenas localmente
 DESIGN_SPEC.md
+backup_pre_rename.sql
