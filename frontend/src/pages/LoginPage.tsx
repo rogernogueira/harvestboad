@@ -288,19 +288,25 @@ export function LoginPage() {
                       tela já está definido, mas a integração com a federação
                       ainda não existe. Contorno em vez de preenchido para não
                       disputar atenção com o botão que de fato funciona.
-                    */}
-                    {/*
+
                       O "em breve" é ligado ao botão por aria-describedby: um
                       botão desabilitado sem explicação deixa a dúvida se é
                       limitação da conta ou funcionalidade que ainda não chegou,
                       e quem usa leitor de tela não veria o texto solto ao lado.
+
+                      O rótulo usa brand-strong, não brand: a 14px o alvo de
+                      contraste é 4,5:1, e brand sobre branco dá 3,9 — reprovaria
+                      no dia em que o botão for habilitado. A borda segue em
+                      brand, porque como contorno de controle o alvo dela é 3:1,
+                      que ela cumpre, e escurecê-la daria a este botão mais peso
+                      de traço que o primário logo acima.
                     */}
                     <div className="flex flex-col gap-1.5">
                       <button
                         type="button"
                         disabled
                         aria-describedby="cafe-em-breve"
-                        className="flex items-center justify-center gap-2 border border-brand px-4 py-2.5 text-sm font-semibold text-brand transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex items-center justify-center gap-2 border border-brand px-4 py-2.5 text-sm font-semibold text-brand-strong transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         <Icone path={ICONE_CAFE} className="h-4 w-4" />
                         {t('auth.cafeAccess')}
