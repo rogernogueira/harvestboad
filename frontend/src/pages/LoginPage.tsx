@@ -278,14 +278,26 @@ export function LoginPage() {
                       ainda não existe. Contorno em vez de preenchido para não
                       disputar atenção com o botão que de fato funciona.
                     */}
-                    <button
-                      type="button"
-                      disabled
-                      className="flex items-center justify-center gap-2 border border-brand px-4 py-2.5 text-sm font-semibold text-brand transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <Icone path={ICONE_CAFE} className="h-4 w-4" />
-                      {t('auth.cafeAccess')}
-                    </button>
+                    {/*
+                      O "em breve" é ligado ao botão por aria-describedby: um
+                      botão desabilitado sem explicação deixa a dúvida se é
+                      limitação da conta ou funcionalidade que ainda não chegou,
+                      e quem usa leitor de tela não veria o texto solto ao lado.
+                    */}
+                    <div className="flex flex-col gap-1.5">
+                      <button
+                        type="button"
+                        disabled
+                        aria-describedby="cafe-em-breve"
+                        className="flex items-center justify-center gap-2 border border-brand px-4 py-2.5 text-sm font-semibold text-brand transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        <Icone path={ICONE_CAFE} className="h-4 w-4" />
+                        {t('auth.cafeAccess')}
+                      </button>
+                      <p id="cafe-em-breve" className="text-center text-xs text-content-muted">
+                        {t('auth.cafeSoon')}
+                      </p>
+                    </div>
                   </form>
                 </div>
               </div>
