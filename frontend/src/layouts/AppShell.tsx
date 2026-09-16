@@ -65,11 +65,19 @@ export function AppShell() {
             </span>
           </button>
 
-          <Link to="/" className="mr-auto leading-tight">
-            <span className="block font-heading text-base font-extrabold tracking-tight">
-              {t('app.name')}
-            </span>
-            <span className="eyebrow">{t('app.tagline')}</span>
+          {/*
+            Lockup horizontal, 44px — a mesma altura que o par nome + eyebrow
+            ocupava, então o cabeçalho não muda de tamanho.
+
+            O eyebrow sai porque o nome já vem desenhado na logo: o símbolo ocupa
+            68% da altura da arte e o wordmark só 24%, então a 44px o nome tem
+            10,5px de caixa alta. Com "Repositórios e coletas" embaixo, a tagline
+            ficaria maior que a marca que ela qualifica.
+
+            O alt carrega o nome acessível do link, que antes vinha do texto.
+          */}
+          <Link to="/" className="mr-auto">
+            <img src="/logoHB-horizontal.svg" alt={t('app.name')} className="h-11 w-auto" />
           </Link>
 
           {user ? (
