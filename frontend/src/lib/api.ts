@@ -31,7 +31,7 @@ export class ApiError extends Error {
 }
 
 /** Disparado quando a sessão não pode mais ser renovada. */
-export const SESSION_EXPIRED = 'monitor-integra:session-expired'
+export const SESSION_EXPIRED = 'harvestboard:session-expired'
 
 let refreshing: Promise<boolean> | null = null
 

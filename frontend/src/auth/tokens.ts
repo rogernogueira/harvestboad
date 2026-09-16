@@ -6,8 +6,8 @@
  * cookie httpOnly, que exige o backend emitindo e renovando o cookie — decisão
  * do lado do servidor, não contornável só aqui.
  */
-const ACCESS = 'monitor-integra.access'
-const REFRESH = 'monitor-integra.refresh'
+const ACCESS = 'harvestboard.access'
+const REFRESH = 'harvestboard.refresh'
 
 function read(key: string): string | null {
   try {

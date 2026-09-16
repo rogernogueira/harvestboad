@@ -272,7 +272,7 @@ if _rodando_testes or _cache_backend == "locmem" or not _redis_url:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-            "LOCATION": "monitor-integra",
+            "LOCATION": "harvestboard",
         }
     }
 else:
