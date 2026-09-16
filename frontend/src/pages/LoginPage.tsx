@@ -138,9 +138,14 @@ export function LoginPage() {
             dizer em que sistema se está entrando.
           */}
           <div className="mb-6 flex items-center gap-3 lg:hidden">
-            <img src="/logoHB.svg" alt="HarvestBoard" className="h-10 w-auto" />
+            {/*
+              Monograma, não o logo completo: a 40px a palavra desenhada dentro
+              do lockup renderiza com 4px de altura e vira borrão. O nome do
+              produto quem diz é o rodapé, e a tela quem nomeia é o h1 ao lado.
+            */}
+            <img src="/iconHB.svg" alt="HarvestBoard" className="h-10 w-auto" />
             <div className="leading-tight">
-              <h1 className="font-heading text-lg font-extrabold tracking-tight">
+              <h1 className="font-heading text-lg font-bold tracking-tight">
                 {t('auth.panelTitle')}
               </h1>
               <p className="eyebrow mt-0.5">{t('app.tagline')}</p>
@@ -187,7 +192,13 @@ export function LoginPage() {
                 <div className="mx-auto w-full max-w-sm">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h2 className="font-heading text-xl font-extrabold tracking-tight">
+                      {/*
+                        Mesmo tamanho e peso do h1 da coluna ao lado. Maior que
+                        ele, "Bem-vindo" passava à frente do título da página —
+                        e subir o h1 para compensar recriaria a disputa com a
+                        marca nominal do logo, que o comentário acima evita.
+                      */}
+                      <h2 className="font-heading text-lg font-bold tracking-tight">
                         {t('auth.welcome')}
                       </h2>
                       <p className="mt-1 text-sm text-content-muted">{t('auth.credentialsHint')}</p>
