@@ -1,9 +1,9 @@
 {
   "app": {
-    "name": "Manager interface",
+    "name": "HarvestBoard",
     "tagline": "Repositories and harvests",
     "institution": "IBICT — Brazilian Institute of Information in Science and Technology",
-    "footer": "Monitor Integra · repository and harvest monitoring"
+    "footer": "HarvestBoard · repository and harvest monitoring"
   },
   "auth": {
     "signIn": "Sign in",
@@ -17,6 +17,20 @@
     "changePassword": "Change password",
     "mustChangePassword": "You must set a new password before continuing.",
     "invalidCredentials": "Invalid username or password.",
+    "welcome": "Welcome",
+    "credentialsHint": "Sign in with your institutional credentials.",
+    "panelTitle": "Manager panel",
+    "panelTagline": "Collection 100% ready for integration",
+    "highlights": {
+      "repositories": {
+        "title": "Repositories",
+        "description": "Registry and status of the monitored sources."
+      },
+      "harvests": {
+        "title": "Harvests",
+        "description": "History of runs and harvested records."
+      }
+    },
     "validation": {
       "usernameRequired": "Enter your username.",
       "passwordRequired": "Enter your password.",
@@ -50,7 +64,8 @@
   },
   "repositories": {
     "title": "My repositories",
-    "subtitle": "{{count}} repository(ies) you manage",
+    "subtitle_one": "{{count}} repository you manage",
+    "subtitle_other": "{{count}} repositories you manage",
     "none": "No repository is linked to your account.",
     "unnamed": "(unnamed at source)",
     "grantedAt": "Linked on {{date}}",
@@ -117,7 +132,8 @@
   },
   "records": {
     "title": "Records",
-    "total": "{{count}} record(s)",
+    "total_one": "{{count}} record",
+    "total_other": "{{count}} records",
     "none": "No records for this selection.",
     "valid": "Valid",
     "invalid": "Invalid",
@@ -149,6 +165,18 @@
     "origin": "Origin",
     "repository": "Repository",
     "institution": "Institution",
+    "link": {
+      "open": "Open in repository",
+      "openProbable": "Open in repository (likely)",
+      "probableHint": "Address inferred from the identifier. It could not be confirmed: the server could not reach the repository.",
+      "resolving": "Looking up the address…",
+      "unavailable": "Address unavailable",
+      "reasons": {
+        "unreachable": "The source repository did not respond.",
+        "no-usable-url": "The record metadata carries no usable address.",
+        "oai-error": "The source repository refused the query for this record."
+      }
+    },
     "xml": "Transformed XML",
     "xmlUnavailable": "The Harvester did not return the XML for this record. The diagnosis report is outdated at the source."
   },
@@ -178,7 +206,8 @@
     "confirmRemove": "Remove {{user}} access to this repository?",
     "findRepository": "Find repository",
     "noRepositories": "No repository found.",
-    "foundBy": "{{total}} repository(ies) — matched by {{field}}",
+    "foundBy_one": "{{count}} repository — matched by {{field}}",
+    "foundBy_other": "{{count}} repositories — matched by {{field}}",
     "fields": {
       "acronym": "acronym",
       "name": "name",
@@ -196,14 +225,18 @@
     "seeManagers": "managers",
     "selectPage": "Select this page",
     "unselectPage": "Unselect this page",
-    "selectedCount": "{{count}} repository(ies) selected",
+    "selectedCount_one": "{{count}} repository selected",
+    "selectedCount_other": "{{count}} repositories selected",
     "clearSelection": "Clear selection",
     "removeFromSelection": "Remove from selection",
     "linkToManager": "Link to a manager",
-    "linkCount": "Link {{count}} repository(ies)",
+    "linkCount_one": "Link {{count}} repository",
+    "linkCount_other": "Link {{count}} repositories",
     "noManagersFound": "No manager found.",
-    "bulkResult": "{{created}} link(s) created for {{user}}.",
-    "bulkSkipped": "{{skipped}} already existed."
+    "bulkResult_one": "{{count}} link created for {{user}}.",
+    "bulkResult_other": "{{count}} links created for {{user}}.",
+    "bulkSkipped_one": "{{count}} already existed.",
+    "bulkSkipped_other": "{{count}} already existed."
   },
   "managers": {
     "title": "Linked users",
@@ -235,10 +268,13 @@
   "adminRepositories": {
     "eyebrow": "Administration",
     "title": "Repositories",
-    "subtitle": "{{total}} repositories in the Harvester",
+    "subtitle_one": "{{count, number}} repository in the Harvester",
+    "subtitle_other": "{{count, number}} repositories in the Harvester",
     "subtitleLoading": "All Harvester repositories",
-    "records": "{{count}} records",
-    "seeManagers": "See the {{count}} manager(s) of this repository",
+    "records_one": "{{count, number}} record",
+    "records_other": "{{count, number}} records",
+    "seeManagers_one": "See the manager of this repository",
+    "seeManagers_other": "See the {{count}} managers of this repository",
     "assignManager": "No manager — click to link one",
     "none": "no manager",
     "columns": {
@@ -249,12 +285,14 @@
       "managers": "Managers",
       "invalid": "Invalid"
     },
-    "invalidRecords": "{{count}} records",
+    "invalidRecords_one": "{{count, number}} record",
+    "invalidRecords_other": "{{count, number}} records",
     "loading": "Loading the repository index…",
     "filterSearch": "Search",
     "filterStatus": "Harvest status",
     "filterManagers": "Managers",
-    "showing": "Showing {{shown}} of {{total}} repositories",
+    "showing_one": "Showing {{shown, number}} of {{count, number}} repository",
+    "showing_other": "Showing {{shown, number}} of {{count, number}} repositories",
     "status": {
       "all": "All",
       "valid": "Valid",

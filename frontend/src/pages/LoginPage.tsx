@@ -16,6 +16,71 @@ const schema = z.object({
 
 type LoginForm = z.infer<typeof schema>
 
+const CAMPO_CLASSES = 'border bg-surface px-3 py-2.5 text-sm transition-colors duration-150'
+
+/**
+ * Ícones decorativos da tela.
+ *
+ * Inline e locais: são adornos de rótulo, não elementos reutilizados em outras
+ * telas, e o sprite de `icons.svg` guarda só as marcas externas. Todos ficam
+ * fora da árvore de acessibilidade — o texto ao lado já diz o que são.
+ */
+function Icone({ path, className }: { path: string; className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d={path} />
+    </svg>
+  )
+}
+
+const ICONE_USUARIO = 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+const ICONE_CADEADO =
+  'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'
+const ICONE_SETA = 'M13 7l5 5-5 5M18 12H6'
+const ICONE_REPOSITORIOS =
+  'M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7m-16 5c0 1.7 3.6 3 8 3s8-1.3 8-3'
+const ICONE_COLETAS = 'M4 4v5h5M20 20v-5h-5M20 9a8 8 0 00-13.7-3.7L4 7m0 8a8 8 0 0013.7 3.7L20 17'
+
+/**
+ * Destaque institucional da coluna esquerda.
+ *
+ * Repete o recurso do `StatCard`: faixa colorida no topo para diferenciar
+ * blocos sem pintar o fundo, que abafaria o contraste do texto.
+ */
+function Destaque({
+  icon,
+  faixa,
+  cor,
+  title,
+  description,
+}: {
+  icon: string
+  faixa: string
+  cor: string
+  title: string
+  description: string
+}) {
+  return (
+    <div className="panel overflow-hidden bg-surface">
+      <div className={`h-1 ${faixa}`} aria-hidden="true" />
+      <div className="p-4">
+        <Icone path={icon} className={`h-5 w-5 ${cor}`} />
+        <h3 className="mt-2.5 font-heading text-sm font-bold">{title}</h3>
+        <p className="mt-1 text-xs text-content-muted">{description}</p>
+      </div>
+    </div>
+  )
+}
+
 export function LoginPage() {
   const { t } = useTranslation()
   const { login, status } = useAuth()
@@ -63,71 +128,154 @@ export function LoginPage() {
         </div>
       </div>
 
-      <div className="flex flex-1 items-center justify-center px-4 py-12">
-        <div className="w-full max-w-sm">
-          <div className="mb-6">
-            <h1 className="font-heading text-xl font-extrabold tracking-tight">{t('app.name')}</h1>
-            <p className="eyebrow mt-1">{t('app.tagline')}</p>
+      <div className="flex flex-1 items-center justify-center px-4 py-10">
+        <div className="enter-up w-full max-w-4xl">
+          {/*
+            Marca acima do cartão no celular: a coluna de identidade some nessa
+            largura, e a tela não pode abrir direto no campo de usuário sem
+            dizer em que sistema se está entrando.
+          */}
+          <div className="mb-6 flex items-center gap-3 lg:hidden">
+            <img src="/logoHB.svg" alt="HarvestBoard" className="h-10 w-auto" />
+            <div className="leading-tight">
+              <h1 className="font-heading text-lg font-extrabold tracking-tight">
+                {t('auth.panelTitle')}
+              </h1>
+              <p className="eyebrow mt-0.5">{t('app.tagline')}</p>
+            </div>
           </div>
 
-          <form
-            onSubmit={(event) => void onSubmit(event)}
-            noValidate
-            className="flex flex-col gap-4 panel p-6"
-          >
-            <h2 className="font-heading text-sm font-bold">{t('auth.signIn')}</h2>
+          <div className="panel overflow-hidden">
+            <div className="grid lg:grid-cols-2">
+              {/* Coluna da marca — só em telas largas. */}
+              <div className="hidden flex-col justify-between gap-8 border-r border-border-subtle bg-brand-soft p-10 lg:flex">
+                <div className="flex flex-1 flex-col justify-center">
+                  <img src="/logoHB.svg" alt="HarvestBoard" className="h-36 w-auto self-start" />
+                  {/*
+                    Título menor que a marca nominal desenhada no logo: aqui ele
+                    nomeia a tela, não o produto. Em pé de igualdade, os dois
+                    liam-se como duas manchetes disputando a mesma posição.
+                  */}
+                  <h1 className="mt-8 font-heading text-lg font-bold tracking-tight">
+                    {t('auth.panelTitle')}
+                  </h1>
+                  <p className="mt-1.5 text-sm text-content-muted">{t('auth.panelTagline')}</p>
+                </div>
 
-            <label className="flex flex-col gap-1.5">
-              <span className="text-sm">{t('auth.username')}</span>
-              <input
-                type="text"
-                autoComplete="username"
-                autoFocus
-                aria-invalid={errors.username ? true : undefined}
-                {...register('username')}
-                className={`border bg-surface px-3 py-2 text-sm ${
-                  errors.username ? 'border-down' : 'border-border-subtle'
-                }`}
-              />
-              {errors.username?.message ? (
-                <span role="alert" className="text-xs text-down">
-                  {t(errors.username.message)}
-                </span>
-              ) : null}
-            </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <Destaque
+                    icon={ICONE_REPOSITORIOS}
+                    faixa="bg-brand"
+                    cor="text-brand-strong"
+                    title={t('auth.highlights.repositories.title')}
+                    description={t('auth.highlights.repositories.description')}
+                  />
+                  <Destaque
+                    icon={ICONE_COLETAS}
+                    faixa="bg-gold"
+                    cor="text-gold-strong"
+                    title={t('auth.highlights.harvests.title')}
+                    description={t('auth.highlights.harvests.description')}
+                  />
+                </div>
+              </div>
 
-            <label className="flex flex-col gap-1.5">
-              <span className="text-sm">{t('auth.password')}</span>
-              <input
-                type="password"
-                autoComplete="current-password"
-                aria-invalid={errors.password ? true : undefined}
-                {...register('password')}
-                className={`border bg-surface px-3 py-2 text-sm ${
-                  errors.password ? 'border-down' : 'border-border-subtle'
-                }`}
-              />
-              {errors.password?.message ? (
-                <span role="alert" className="text-xs text-down">
-                  {t(errors.password.message)}
-                </span>
-              ) : null}
-            </label>
+              {/* Coluna do formulário. */}
+              <div className="flex flex-col justify-center p-8 lg:p-10">
+                <div className="mx-auto w-full max-w-sm">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h2 className="font-heading text-xl font-extrabold tracking-tight">
+                        {t('auth.welcome')}
+                      </h2>
+                      <p className="mt-1 text-sm text-content-muted">{t('auth.credentialsHint')}</p>
+                    </div>
+                    <Icone path={ICONE_CADEADO} className="mt-1 h-5 w-5 shrink-0 text-brand" />
+                  </div>
 
-            {erro ? (
-              <p role="alert" className="text-sm text-down">
-                {erro}
-              </p>
-            ) : null}
+                  <form
+                    onSubmit={(event) => void onSubmit(event)}
+                    noValidate
+                    className="mt-6 flex flex-col gap-4"
+                  >
+                    <label className="flex flex-col gap-1.5">
+                      <span className="flex items-center gap-1.5 text-sm font-semibold">
+                        <Icone path={ICONE_USUARIO} className="h-4 w-4 text-content-muted" />
+                        {t('auth.username')}
+                      </span>
+                      <input
+                        type="text"
+                        autoComplete="username"
+                        autoFocus
+                        aria-invalid={errors.username ? true : undefined}
+                        {...register('username')}
+                        className={`${CAMPO_CLASSES} ${
+                          errors.username ? 'border-down' : 'border-border-subtle'
+                        }`}
+                      />
+                      {errors.username?.message ? (
+                        <span role="alert" className="text-xs text-down">
+                          {t(errors.username.message)}
+                        </span>
+                      ) : null}
+                    </label>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"
-            >
-              {isSubmitting ? t('auth.signingIn') : t('auth.signIn')}
-            </button>
-          </form>
+                    <label className="flex flex-col gap-1.5">
+                      <span className="flex items-center gap-1.5 text-sm font-semibold">
+                        <Icone path={ICONE_CADEADO} className="h-4 w-4 text-content-muted" />
+                        {t('auth.password')}
+                      </span>
+                      <input
+                        type="password"
+                        autoComplete="current-password"
+                        aria-invalid={errors.password ? true : undefined}
+                        {...register('password')}
+                        className={`${CAMPO_CLASSES} ${
+                          errors.password ? 'border-down' : 'border-border-subtle'
+                        }`}
+                      />
+                      {errors.password?.message ? (
+                        <span role="alert" className="text-xs text-down">
+                          {t(errors.password.message)}
+                        </span>
+                      ) : null}
+                    </label>
+
+                    {/*
+                      A borda à esquerda é o mesmo recurso da navegação: marca o
+                      bloco sem depender só da cor do texto, que sozinha não
+                      distingue o aviso para quem não percebe o vermelho.
+                    */}
+                    {erro ? (
+                      <p
+                        role="alert"
+                        className="border-l-2 border-down bg-down-soft px-3 py-2 text-sm text-down"
+                      >
+                        {erro}
+                      </p>
+                    ) : null}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="mt-1 flex items-center justify-center gap-2 bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-strong disabled:opacity-60"
+                    >
+                      {isSubmitting ? (
+                        t('auth.signingIn')
+                      ) : (
+                        <>
+                          {t('auth.signIn')}
+                          <Icone path={ICONE_SETA} className="h-4 w-4" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-6 text-center text-xs text-content-muted">{t('app.footer')}</p>
         </div>
       </div>
     </div>

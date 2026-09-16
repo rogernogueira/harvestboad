@@ -193,7 +193,7 @@ SIMPLE_JWT = {
 # OpenAPI
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Monitor Integra API",
+    "TITLE": "HarvestBoard API",
     "DESCRIPTION": "API de monitoramento de repositórios e coletas do Harvester.",
     "VERSION": "0.1.0",
     "SERVE_INCLUDE_SCHEMA": False,
@@ -231,6 +231,24 @@ HARVESTER = {
     # pode cair numa varredura. Estes valores limitam o custo dela.
     "RECORD_SCAN_PAGE_SIZE": int(os.getenv("HARVESTER_SCAN_PAGE_SIZE", "100")),
     "RECORD_SCAN_MAX_PAGES": int(os.getenv("HARVESTER_SCAN_MAX_PAGES", "20")),
+}
+
+
+# OAI-PMH das origens
+#
+# A resolução do link público de um registro fala com o repositório do cliente,
+# não com o Harvester: outra rede, outro dono, outros prazos. Timeout curto
+# porque a chamada acontece com a tela do registro aberta, esperando; sem
+# repetição porque, ao contrário do Harvester, a falha aqui tem resposta útil
+# (o identificador pode já conter o DOI).
+#
+# MAX_BYTES limita o que se lê da origem: o `baseURL` chega do cliente e pode
+# apontar para qualquer coisa. TTL longo porque o endereço de um registro
+# publicado não muda.
+OAI = {
+    "TIMEOUT": float(os.getenv("OAI_TIMEOUT", "5")),
+    "MAX_BYTES": int(os.getenv("OAI_MAX_BYTES", str(2 * 1024 * 1024))),
+    "CACHE_TTL_LINK": int(os.getenv("OAI_CACHE_TTL_LINK", str(24 * 60 * 60))),
 }
 
 

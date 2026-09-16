@@ -1,4 +1,4 @@
-# Monitor Integra
+# HarvestBoard
 
 Painel de acompanhamento de repositórios e coletas do Harvester do IBICT.
 

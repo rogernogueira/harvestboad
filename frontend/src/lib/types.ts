@@ -264,6 +264,21 @@ export interface RecordItem {
   invalidOccurrencesByRuleID?: Record<string, unknown> | null
 }
 
+/**
+ * Endereço público do registro, resolvido pelo backend no OAI-PMH da origem.
+ *
+ * `link` nulo não é erro: a rota responde 200 e `reason` diz se a origem não
+ * respondeu (`unreachable`), se o metadado não trazia endereço utilizável
+ * (`no-usable-url`) ou se o próprio OAI recusou (`oai-error:<código>`).
+ */
+export interface RecordLink {
+  oaiId: string
+  link: string | null
+  source: string | null
+  reason: string | null
+  candidates: string[]
+}
+
 /** Eco dos filtros aplicados, devolvido pelo backend. */
 export interface AppliedFilters {
   valid: string | null

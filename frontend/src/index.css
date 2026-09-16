@@ -114,6 +114,15 @@
     transform: scaleX(1);
   }
 
+  /*
+   * Entrada de tela: um leve subir com fade. Em CSS e não em estado de React
+   * porque nada além da animação dependeria desse estado — e a regra de
+   * `prefers-reduced-motion` abaixo já encurta a duração a quase nada.
+   */
+  .enter-up {
+    animation: enter-up 500ms ease-out both;
+  }
+
   /* Bloco de conteúdo padrão: borda sutil, sem sombra pesada. */
   .panel {
     background-color: var(--color-surface-raised);
@@ -134,5 +143,17 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

@@ -53,8 +53,12 @@ function MyRepositoriesPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      {/*
+        Sem eyebrow: aqui ele repetiria o título. O rótulo existe para situar a
+        tela numa seção — é o que faz em "Administração" —, e esta não está sob
+        nenhuma.
+      */}
       <PageHeader
-        eyebrow={t('nav.repositories')}
         title={t('repositories.title')}
         description={t('repositories.subtitle', { count: data.count })}
       />
@@ -135,6 +139,18 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
   )
 }
 
+/**
+ * Cor de um indicador, aplicada só quando há o que sinalizar.
+ *
+ * Zero inválido é o melhor resultado possível e não podia continuar usando a
+ * cor de erro; zero válido não é conquista e não pode usar a de sucesso. Vale
+ * também para o traço de uma coleta sem indexação, que herdava a cor do
+ * indicador que deixou vazio.
+ */
+function tom(valor: number | null | undefined, cor: string) {
+  return valor ? cor : ''
+}
+
 function HarvestStats({
   coleta,
   repositoryId,
@@ -180,21 +196,21 @@ function HarvestStats({
     {
       rotulo: t('diagnosis.valid'),
       valor: coleta.validSize,
-      cor: 'text-ok',
+      cor: tom(coleta.validSize, 'text-ok'),
       para: coleta.validSize ? `${registros}?valid=true` : null,
       titulo: t('repositories.openValidRecords'),
     },
     {
       rotulo: t('diagnosis.invalid'),
       valor: coleta.invalidSize,
-      cor: 'text-down',
+      cor: tom(coleta.invalidSize, 'text-down'),
       para: coleta.invalidSize ? `${registros}?valid=false` : null,
       titulo: t('repositories.openInvalidRecords'),
     },
     {
       rotulo: t('repositories.violatedRules'),
       valor: coleta.violatedRuleCount,
-      cor: 'text-warn',
+      cor: tom(coleta.violatedRuleCount, 'text-warn'),
       para: coleta.violatedRuleCount ? `/coletas/${coleta.snapshotId}` : null,
       titulo: t('repositories.openDiagnosis'),
     },

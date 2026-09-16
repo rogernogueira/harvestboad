@@ -66,10 +66,6 @@ export function AdminRepositoriesPage() {
 
   const { data, isPending, isError, error, refetch } = useQuery(repositoryIndexQuery)
 
-  const numero = useMemo(
-    () => new Intl.NumberFormat(i18n.resolvedLanguage),
-    [i18n.resolvedLanguage],
-  )
   const percentual = useMemo(
     () =>
       new Intl.NumberFormat(i18n.resolvedLanguage, {
@@ -130,14 +126,12 @@ export function AdminRepositoriesPage() {
         }),
         columnHelper.accessor('lastSnapshotDate', {
           header: t('adminRepositories.columns.harvest'),
-          cell: (info) => <HarvestCell repo={info.row.original} numero={numero} />,
+          cell: (info) => <HarvestCell repo={info.row.original} />,
         }),
         columnHelper.accessor((repo) => repo.invalidRatio ?? -1, {
           id: 'invalidRatio',
           header: t('adminRepositories.columns.invalid'),
-          cell: (info) => (
-            <InvalidCell repo={info.row.original} numero={numero} percentual={percentual} />
-          ),
+          cell: (info) => <InvalidCell repo={info.row.original} percentual={percentual} />,
         }),
         columnHelper.accessor('managerCount', {
           header: t('adminRepositories.columns.managers'),
@@ -146,7 +140,7 @@ export function AdminRepositoriesPage() {
           ),
         }),
       ]),
-    [t, numero, percentual],
+    [t, percentual],
   )
 
   const table = useTable({
@@ -174,7 +168,7 @@ export function AdminRepositoriesPage() {
       <PageHeader
         eyebrow={t('adminRepositories.eyebrow')}
         title={t('adminRepositories.title')}
-        description={t('adminRepositories.subtitle', { total: numero.format(data.count) })}
+        description={t('adminRepositories.subtitle', { count: data.count })}
       />
 
       <div className="flex flex-wrap items-end gap-3">
@@ -218,10 +212,7 @@ export function AdminRepositoriesPage() {
       </div>
 
       <p className="text-sm text-content-muted">
-        {t('adminRepositories.showing', {
-          shown: numero.format(filtradas),
-          total: numero.format(data.count),
-        })}
+        {t('adminRepositories.showing', { shown: filtradas, count: data.count })}
       </p>
 
       {visiveis.length === 0 ? (
@@ -358,7 +349,7 @@ export function AdminRepositoriesPage() {
 }
 
 /** Dados da última coleta: situação, número, data e totais. */
-function HarvestCell({ repo, numero }: { repo: RepositoryHit; numero: Intl.NumberFormat }) {
+function HarvestCell({ repo }: { repo: RepositoryHit }) {
   const { t } = useTranslation()
 
   if (!repo.lastSnapshotId) {
@@ -393,10 +384,10 @@ function HarvestCell({ repo, numero }: { repo: RepositoryHit; numero: Intl.Numbe
                 title={t('adminRepositories.openRecords')}
                 className="text-brand-strong hover:underline"
               >
-                {t('adminRepositories.records', { count: numero.format(repo.lastSize) })}
+                {t('adminRepositories.records', { count: repo.lastSize })}
               </Link>
             ) : (
-              t('adminRepositories.records', { count: numero.format(repo.lastSize) })
+              t('adminRepositories.records', { count: repo.lastSize })
             )}
           </>
         ) : null}
@@ -411,15 +402,7 @@ function HarvestCell({ repo, numero }: { repo: RepositoryHit; numero: Intl.Numbe
  * Sem coleta não há proporção — e "não sei" é diferente de 0%, por isso o traço
  * em vez de zero.
  */
-function InvalidCell({
-  repo,
-  numero,
-  percentual,
-}: {
-  repo: RepositoryHit
-  numero: Intl.NumberFormat
-  percentual: Intl.NumberFormat
-}) {
+function InvalidCell({ repo, percentual }: { repo: RepositoryHit; percentual: Intl.NumberFormat }) {
   const { t } = useTranslation()
 
   if (repo.invalidRatio === null || repo.invalidRatio === undefined) {
@@ -457,7 +440,7 @@ function InvalidCell({
         {percentual.format(repo.invalidRatio)}
       </span>
       <span className="text-xs text-content-muted">
-        {t('adminRepositories.invalidRecords', { count: numero.format(repo.invalidSize) })}
+        {t('adminRepositories.invalidRecords', { count: repo.invalidSize })}
       </span>
     </Link>
   )

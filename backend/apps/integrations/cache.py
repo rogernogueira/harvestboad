@@ -37,18 +37,28 @@ def _gravar(key: str, value: Any, ttl: int) -> None:
         logger.warning("Cache indisponível na gravação de %s", key, exc_info=True)
 
 
-def cached(key: str, ttl: int, produce: Callable[[], Any]) -> Any:
+def cached(
+    key: str,
+    ttl: int,
+    produce: Callable[[], Any],
+    should_cache: Callable[[Any], bool] | None = None,
+) -> Any:
     """Lê do cache ou produz e grava.
 
     Usa sentinela em vez de `is not None` para que valores legitimamente vazios
     (um dicionário sem chaves, uma lista vazia) também sejam cacheados. Falhas
     do Harvester propagam sem serem gravadas: erro não vira resposta cacheada,
     senão uma indisponibilidade momentânea contaminaria toda a janela do TTL.
+
+    `should_cache` cobre o caso em que a falha **não** vira exceção: quem
+    resolve o link público de um registro devolve um resultado "sem link" em
+    vez de levantar erro, e esse resultado não pode ocupar a janela do TTL.
     """
     hit = _ler(key)
     if hit is not _MISS:
         return hit
 
     value = produce()
-    _gravar(key, value, ttl)
+    if should_cache is None or should_cache(value):
+        _gravar(key, value, ttl)
     return value

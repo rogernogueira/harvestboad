@@ -9,6 +9,7 @@ import type {
   HarvestList,
   Paginated,
   RecordItem,
+  RecordLink,
   RecordPage,
   Repository,
   RepositoryAccess,
@@ -198,3 +199,25 @@ export const recordXmlQuery = (snapshotId: string, identifier: string) =>
     queryFn: () => apiGetText(`/harvests/${snapshotId}/records/${identifier}/xml`),
     retry: false,
   })
+
+/**
+ * Endereço público do registro no repositório de origem.
+ *
+ * `baseUrl` vem do próprio registro (`origin`), não de um cadastro nosso: é a
+ * origem que o Harvester coletou, e é contra ela que o `GetRecord` precisa ir.
+ *
+ * `retry: false` porque o backend já responde 200 com o motivo quando a origem
+ * não colabora — repetir aqui só atrasaria a tela. E a resolução é estável o
+ * bastante (o backend cacheia por 24 h) para um `staleTime` longo.
+ */
+export const recordLinkQuery = (oaiId: string, baseUrl: string, prefix?: string | null) => {
+  const params = new URLSearchParams({ oaiId, baseUrl })
+  if (prefix) params.set('prefix', prefix)
+  return queryOptions({
+    queryKey: ['record-link', oaiId, baseUrl, prefix ?? ''],
+    queryFn: () => apiGet<RecordLink>(`/oai/record-link?${params}`),
+    enabled: oaiId.length > 0 && baseUrl.length > 0,
+    staleTime: 30 * 60_000,
+    retry: false,
+  })
+}

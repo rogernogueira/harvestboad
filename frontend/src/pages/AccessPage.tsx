@@ -164,7 +164,7 @@ export function AccessPage() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-xs text-content-muted">
                   {t('access.foundBy', {
-                    total: busca.data.totalElements,
+                    count: busca.data.totalElements,
                     field: busca.data.field
                       ? t(`access.fields.${busca.data.field}`)
                       : t('access.fields.all'),
@@ -430,11 +430,11 @@ function BulkLinkPanel({
         {resultado ? (
           <p className="border-l-2 border-ok bg-ok-soft px-3 py-2 text-sm text-ok">
             {t('access.bulkResult', {
-              created: resultado.createdCount,
+              count: resultado.createdCount,
               user: resultado.username,
             })}
             {resultado.skippedCount > 0
-              ? ` ${t('access.bulkSkipped', { skipped: resultado.skippedCount })}`
+              ? ` ${t('access.bulkSkipped', { count: resultado.skippedCount })}`
               : ''}
           </p>
         ) : null}

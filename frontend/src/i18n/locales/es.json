@@ -1,9 +1,9 @@
 {
   "app": {
-    "name": "Interfaz del gestor",
+    "name": "HarvestBoard",
     "tagline": "Repositorios y recolecciones",
     "institution": "IBICT — Instituto Brasileño de Información en Ciencia y Tecnología",
-    "footer": "Monitor Integra · seguimiento de repositorios y recolecciones"
+    "footer": "HarvestBoard · seguimiento de repositorios y recolecciones"
   },
   "auth": {
     "signIn": "Entrar",
@@ -17,6 +17,20 @@
     "changePassword": "Cambiar contraseña",
     "mustChangePassword": "Es necesario definir una nueva contraseña antes de continuar.",
     "invalidCredentials": "Usuario o contraseña inválidos.",
+    "welcome": "Bienvenido",
+    "credentialsHint": "Entre con sus credenciales institucionales.",
+    "panelTitle": "Panel del gestor",
+    "panelTagline": "Acervo 100% listo para la integración",
+    "highlights": {
+      "repositories": {
+        "title": "Repositorios",
+        "description": "Registro y situación de las fuentes monitoreadas."
+      },
+      "harvests": {
+        "title": "Recolecciones",
+        "description": "Historial de ejecuciones y registros recolectados."
+      }
+    },
     "validation": {
       "usernameRequired": "Indique el usuario.",
       "passwordRequired": "Indique la contraseña.",
@@ -50,7 +64,9 @@
   },
   "repositories": {
     "title": "Mis repositorios",
-    "subtitle": "{{count}} repositorio(s) bajo su gestión",
+    "subtitle_one": "{{count}} repositorio bajo su gestión",
+    "subtitle_other": "{{count}} repositorios bajo su gestión",
+    "subtitle_many": "{{count}} repositorios bajo su gestión",
     "none": "Ningún repositorio asociado a su cuenta.",
     "unnamed": "(sin nombre en el origen)",
     "grantedAt": "Asociado el {{date}}",
@@ -117,7 +133,9 @@
   },
   "records": {
     "title": "Registros",
-    "total": "{{count}} registro(s)",
+    "total_one": "{{count}} registro",
+    "total_other": "{{count}} registros",
+    "total_many": "{{count}} registros",
     "none": "Ningún registro para esta selección.",
     "valid": "Válido",
     "invalid": "Inválido",
@@ -149,6 +167,18 @@
     "origin": "Origen",
     "repository": "Repositorio",
     "institution": "Institución",
+    "link": {
+      "open": "Abrir en el repositorio",
+      "openProbable": "Abrir en el repositorio (probable)",
+      "probableHint": "Dirección deducida del identificador. No fue posible confirmarla: el servidor no alcanzó el repositorio.",
+      "resolving": "Buscando la dirección…",
+      "unavailable": "Dirección no disponible",
+      "reasons": {
+        "unreachable": "El repositorio de origen no respondió.",
+        "no-usable-url": "Los metadatos del registro no traen una dirección utilizable.",
+        "oai-error": "El repositorio de origen rechazó la consulta de este registro."
+      }
+    },
     "xml": "XML transformado",
     "xmlUnavailable": "El Harvester no devolvió el XML de este registro. El informe de diagnóstico está desactualizado en el origen."
   },
@@ -178,7 +208,9 @@
     "confirmRemove": "¿Quitar el acceso de {{user}} a este repositorio?",
     "findRepository": "Encontrar repositorio",
     "noRepositories": "Ningún repositorio encontrado.",
-    "foundBy": "{{total}} repositorio(s) — encontrados por {{field}}",
+    "foundBy_one": "{{count}} repositorio — encontrado por {{field}}",
+    "foundBy_other": "{{count}} repositorios — encontrados por {{field}}",
+    "foundBy_many": "{{count}} repositorios — encontrados por {{field}}",
     "fields": {
       "acronym": "sigla",
       "name": "nombre",
@@ -196,14 +228,22 @@
     "seeManagers": "gestores",
     "selectPage": "Marcar los de esta página",
     "unselectPage": "Desmarcar los de esta página",
-    "selectedCount": "{{count}} repositorio(s) seleccionado(s)",
+    "selectedCount_one": "{{count}} repositorio seleccionado",
+    "selectedCount_other": "{{count}} repositorios seleccionados",
+    "selectedCount_many": "{{count}} repositorios seleccionados",
     "clearSelection": "Limpiar selección",
     "removeFromSelection": "Quitar de la selección",
     "linkToManager": "Asociar a un gestor",
-    "linkCount": "Asociar {{count}} repositorio(s)",
+    "linkCount_one": "Asociar {{count}} repositorio",
+    "linkCount_other": "Asociar {{count}} repositorios",
+    "linkCount_many": "Asociar {{count}} repositorios",
     "noManagersFound": "Ningún gestor encontrado.",
-    "bulkResult": "{{created}} asociación(es) creada(s) para {{user}}.",
-    "bulkSkipped": "{{skipped}} ya existía(n)."
+    "bulkResult_one": "{{count}} asociación creada para {{user}}.",
+    "bulkResult_other": "{{count}} asociaciones creadas para {{user}}.",
+    "bulkResult_many": "{{count}} asociaciones creadas para {{user}}.",
+    "bulkSkipped_one": "{{count}} ya existía.",
+    "bulkSkipped_other": "{{count}} ya existían.",
+    "bulkSkipped_many": "{{count}} ya existían."
   },
   "managers": {
     "title": "Usuarios vinculados",
@@ -235,10 +275,16 @@
   "adminRepositories": {
     "eyebrow": "Administración",
     "title": "Repositorios",
-    "subtitle": "{{total}} repositorios en el Harvester",
+    "subtitle_one": "{{count, number}} repositorio en el Harvester",
+    "subtitle_other": "{{count, number}} repositorios en el Harvester",
+    "subtitle_many": "{{count, number}} repositorios en el Harvester",
     "subtitleLoading": "Todos los repositorios del Harvester",
-    "records": "{{count}} registros",
-    "seeManagers": "Ver los {{count}} gestor(es) de este repositorio",
+    "records_one": "{{count, number}} registro",
+    "records_other": "{{count, number}} registros",
+    "records_many": "{{count, number}} registros",
+    "seeManagers_one": "Ver el gestor de este repositorio",
+    "seeManagers_other": "Ver los {{count}} gestores de este repositorio",
+    "seeManagers_many": "Ver los {{count}} gestores de este repositorio",
     "assignManager": "Sin gestor — haga clic para asociar uno",
     "none": "sin gestor",
     "columns": {
@@ -249,12 +295,16 @@
       "managers": "Gestores",
       "invalid": "Inválidos"
     },
-    "invalidRecords": "{{count}} registros",
+    "invalidRecords_one": "{{count, number}} registro",
+    "invalidRecords_other": "{{count, number}} registros",
+    "invalidRecords_many": "{{count, number}} registros",
     "loading": "Cargando el acervo de repositorios…",
     "filterSearch": "Buscar",
     "filterStatus": "Situación de la recolección",
     "filterManagers": "Gestores",
-    "showing": "Mostrando {{shown}} de {{total}} repositorios",
+    "showing_one": "Mostrando {{shown, number}} de {{count, number}} repositorio",
+    "showing_other": "Mostrando {{shown, number}} de {{count, number}} repositorios",
+    "showing_many": "Mostrando {{shown, number}} de {{count, number}} repositorios",
     "status": {
       "all": "Todas",
       "valid": "Válida",

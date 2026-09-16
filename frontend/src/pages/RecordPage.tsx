@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from 'react-router'
 import { ValidityBadge } from '@/components/Badges'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { ErrorState, Loading } from '@/components/Feedback'
+import { RecordLinkButton } from '@/components/RecordLinkButton'
 import { ApiError } from '@/lib/api'
 import { filtersFromSearch, filtersToParams } from '@/lib/filters'
 import { recordQuery, recordXmlQuery } from '@/lib/queries'
@@ -52,6 +53,12 @@ export function RecordPage() {
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="font-mono text-base break-all">{r.identifier}</h1>
           <ValidityBadge valid={r.isValid} />
+          {/*
+           * O registro já carrega tudo o que a resolução precisa: `origin` é o
+           * baseURL OAI de onde ele foi coletado — não o cadastro atual do
+           * repositório, que pode ter mudado desde a coleta.
+           */}
+          <RecordLinkButton record={r} />
         </div>
       </div>
 
