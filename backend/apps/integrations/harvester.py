@@ -241,15 +241,26 @@ class HarvesterClient:
         O identificador é um único segmento de caminho, mas identificadores OAI
         contêm "/" (ex.: `oai:host:article/1`). Contra o Tomcat do Harvester:
 
-        - barra crua        -> 404 (quebra o roteamento em segmentos extras)
-        - escape simples    -> 400 (Tomcat recusa %2F em caminho por padrão)
-        - escape duplo      -> 200 (Tomcat decodifica uma vez e repassa)
+        - barra crua     -> 404 (quebra o roteamento em segmentos extras)
+        - escape simples -> 400 (Tomcat recusa %2F em caminho por padrão)
+        - escape duplo   -> 200, e é o que a interface do Harvester usa
 
-        Daí o `quote` aplicado duas vezes.
+        **Só a barra leva escape duplo.** Escapar duas vezes o resto também
+        devolve 200, mas com o texto "No record found - Probably the diagnose
+        report is outdated": depois da única decodificação do Tomcat sobra
+        `%3A` no lugar do ":", e o identificador deixa de casar com o indexado.
+        Medido em 17/09/2026 contra as coletas 98768 e 108702 — a mesma
+        requisição, mudando só o escape dos dois-pontos, devolve o XML.
+
+        É o que a interface dela faz em `rest-url-helper.js`: troca "/" por
+        "%2F" e passa o resto por `encodeURI`, que preserva ":" e escapa o "%"
+        do escape anterior.
 
         Retorna texto: a resposta é XML, não JSON.
         """
-        encoded = quote(quote(str(identifier), safe=""), safe="")
+        # Conjunto seguro do `encodeURI`, menos "/" (já substituído) e menos
+        # "%", que precisa virar %25 para o Tomcat decodificar de volta a %2F.
+        encoded = quote(str(identifier).replace("/", "%2F"), safe=";,?:@&=+$-_.!~*'()#")
         return self.get_text(
             "/public/getRecordMetadataBySnapshotAndIdentifier/"
             f"{quote(str(snapshot_id))}/{encoded}"

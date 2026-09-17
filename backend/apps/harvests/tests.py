@@ -12,6 +12,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 
 from apps.accounts.models import Profile
+from apps.harvests import services
 from apps.integrations.harvester import HarvesterError
 from apps.repositories.models import RepositoryAccess
 
@@ -199,7 +200,24 @@ class HarvestAPITests(TestCase):
         self.assertEqual(data["validTotal"], 26091)
         self.assertEqual(data["invalidTotal"], 12)  # 10 + 2
         self.assertEqual(data["invalid"][0]["value"], "no_occurrences_found")
+        self.assertFalse(data["validTruncated"])
         self.assertEqual(data["filters"]["valid"], None)
+
+    @patch(CLIENT, lambda *a, **k: fake_client())
+    def test_ocorrencias_sinalizam_a_lista_cortada_pela_origem(self) -> None:
+        """A origem corta em 1.000 valores e o total passa a somar só os listados."""
+        cheia = [{"value": f"v{i}", "count": 1} for i in range(services.OCCURRENCES_LIMIT)]
+        cliente = fake_client(
+            list_validation_occurrences=lambda *a, **k: {
+                "validRuleOccrs": cheia,
+                "invalidRuleOccrs": [{"value": "malformed", "count": 2}],
+            }
+        )
+        with patch(CLIENT, lambda *a, **k: cliente):
+            data = self.api(self.admin).get(f"{BASE}/{SNAP}/rules/110/occurrences").data
+        self.assertTrue(data["validTruncated"])
+        self.assertFalse(data["invalidTruncated"])
+        self.assertEqual(data["validTotal"], services.OCCURRENCES_LIMIT)
 
     @patch(CLIENT, lambda *a, **k: fake_client())
     def test_ocorrencias_aceitam_o_vocabulario_de_filtros(self) -> None:
@@ -309,6 +327,10 @@ class HarvestAPITests(TestCase):
         response = self.api(self.admin).get(f"{BASE}/{SNAP}/records/{IDENT}/xml")
         self.assertEqual(response.status_code, 200)
         self.assertIn("application/xml", response["Content-Type"])
+        # Cru, não serializado: com o `Response` do DRF o corpo saía como
+        # string JSON — `"<record>…"` com cada aspa escapada — e a tela exibia
+        # o escape junto com o XML.
+        self.assertEqual(response.content.decode(), "<record><id>1</id></record>")
 
     @patch(CLIENT, lambda *a, **k: fake_client(
         get_record_metadata=lambda *a, **k: "No record found - Probably the diagnose report is outdated"

@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import status
 from rest_framework.exceptions import ValidationError as DRFValidationError
@@ -150,7 +151,9 @@ class HarvestRecordXmlView(BaseHarvestView):
         description="XML transformado do registro. Responde text/xml.",
         responses={200: str, 404: None},
     )
-    def get(self, request: Request, snapshot_id: str, identifier: str) -> Response:
+    def get(
+        self, request: Request, snapshot_id: str, identifier: str
+    ) -> Response | HttpResponse:
         self.authorize(request, snapshot_id)
         xml = services.record_xml(snapshot_id, identifier)
         if xml is None:
@@ -163,4 +166,8 @@ class HarvestRecordXmlView(BaseHarvestView):
                 },
                 status=status.HTTP_404_NOT_FOUND,
             )
-        return Response(xml, content_type="application/xml; charset=utf-8")
+        # `HttpResponse`, e não `Response`: o `Response` do DRF passa pelo
+        # renderizador negociado, e o JSONRenderer devolveria o XML como string
+        # JSON — com as aspas externas e cada `"` escapado —, sob um
+        # Content-Type que anuncia XML. O corpo tem que sair como veio.
+        return HttpResponse(xml, content_type="application/xml; charset=utf-8")

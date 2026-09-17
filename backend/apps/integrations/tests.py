@@ -139,16 +139,19 @@ class HarvesterClientTests(SimpleTestCase):
     def test_xml_do_registro_volta_como_texto(self) -> None:
         xml = self.client_.get_record_metadata("snap-1", "oai:repo.br:123/456")
         self.assertEqual(xml, "<record><id>1</id></record>")
-        # Escape duplo: o Tomcat do Harvester recusa %2F simples no caminho (400)
-        # e decodifica uma vez antes de rotear.
+        # Escape duplo **só na barra**: o Tomcat recusa %2F simples no caminho
+        # (400) e decodifica uma vez antes de rotear. Os dois-pontos vão crus —
+        # escapá-los faz a origem responder "No record found", porque sobra
+        # "%3A" dentro do identificador que ela procura no índice.
         self.assertEqual(
             self.last()["raw_path"],
-            "/public/getRecordMetadataBySnapshotAndIdentifier/snap-1/oai%253Arepo.br%253A123%252F456",
+            "/public/getRecordMetadataBySnapshotAndIdentifier/snap-1/oai:repo.br:123%252F456",
         )
-        # Depois da primeira decodificação sobra o escape simples, num único segmento.
+        # Depois da primeira decodificação sobra o escape simples, num único
+        # segmento, e o identificador volta a ser igual ao indexado.
         self.assertEqual(
             unquote(self.last()["raw_path"]),
-            "/public/getRecordMetadataBySnapshotAndIdentifier/snap-1/oai%3Arepo.br%3A123%2F456",
+            "/public/getRecordMetadataBySnapshotAndIdentifier/snap-1/oai:repo.br:123%2F456",
         )
 
     def test_erro_http_vira_harvester_error_com_status(self) -> None:

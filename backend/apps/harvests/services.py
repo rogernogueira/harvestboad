@@ -29,6 +29,13 @@ from .filters import RecordFilters
 # muda e o cache antigo passa a ter a forma errada.
 CACHE_PREFIX = "harvests:v1"
 
+# Teto de valores distintos que `/public/diagnoseValidationOcurrences` devolve
+# por lista. Não está documentado na origem; foi medido em 17/09/2026, com as
+# regras 109, 110 e 115 de duas coletas de repositórios diferentes (108702 da
+# UFT e 103350 da Kroton) — todas pararam em exatamente 1.000 valores, com a
+# soma bem abaixo da contagem de registros da mesma regra.
+OCCURRENCES_LIMIT = 1000
+
 def _ttl(name: str) -> int:
     return settings.HARVESTER[f"CACHE_TTL_{name}"]
 
@@ -174,6 +181,11 @@ def rule_occurrences(
     mesma forma, o que mantém o modal de ocorrências coerente com o número em
     que o usuário clicou. Sem filtro a consulta não vai no caminho: o literal
     neutro "fq" da listagem faz esta rota responder 500.
+
+    Os totais são a soma do que a origem listou — e ela corta em
+    `OCCURRENCES_LIMIT`. Numa lista cortada o total conta só os valores
+    listados, por isso os sinalizadores `validTruncated`/`invalidTruncated`:
+    sem eles a tela apresentaria como "total" um número que não é o total.
     """
     client = client or HarvesterClient()
     filters = filters or RecordFilters()
@@ -197,6 +209,8 @@ def rule_occurrences(
         "ruleId": str(rule_id),
         "validTotal": sum(item["count"] or 0 for item in valid),
         "invalidTotal": sum(item["count"] or 0 for item in invalid),
+        "validTruncated": len(valid) >= OCCURRENCES_LIMIT,
+        "invalidTruncated": len(invalid) >= OCCURRENCES_LIMIT,
         "filters": filters.as_dict(),
         "valid": valid,
         "invalid": invalid,
@@ -304,12 +318,18 @@ def record_xml(
 
     O serviço responde 200 com a mensagem de texto
     "No record found - Probably the diagnose report is outdated" em vez de um
-    404, então a detecção é pelo conteúdo. A ausência também é cacheada: hoje
-    ela é a resposta para todo registro, e repetir a chamada não muda nada.
+    404, então a detecção é pelo conteúdo. A ausência também é cacheada: quando
+    a origem não tem o registro, repetir a chamada não muda nada.
+
+    A mensagem já foi, por um tempo, a resposta para *todo* registro — não por
+    ausência na origem, mas pelo escape do identificador no cliente (ver
+    `harvester.get_record_metadata`). O `:v2` na chave existe por causa disso:
+    sem ele, o texto de "não encontrado" guardado sob a chave antiga seguiria
+    respondendo pelo TTL inteiro depois da correção.
     """
     client = client or HarvesterClient()
     body = _cached(
-        f"{CACHE_PREFIX}:xml:{snapshot_id}:{identifier}",
+        f"{CACHE_PREFIX}:xml:v2:{snapshot_id}:{identifier}",
         _ttl("XML"),
         lambda: client.get_record_metadata(snapshot_id, identifier),
     )
@@ -337,6 +357,7 @@ def clear_snapshot_cache(snapshot_id: str) -> None:
 
 __all__ = [
     "CACHE_PREFIX",
+    "OCCURRENCES_LIMIT",
     "HarvesterError",
     "clear_snapshot_cache",
     "diagnosis",
