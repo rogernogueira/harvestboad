@@ -28,3 +28,6 @@ backup_pre_rename.sql
 
 # Saída do MCP do Playwright (snapshots, screenshots, logs de console)
 .playwright-mcp/
+
+# Configuração local do Claude Code (o resto de .claude/ é versionado)
+.claude/settings.local.json
