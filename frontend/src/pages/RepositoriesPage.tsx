@@ -301,7 +301,6 @@ interface Indicador {
   rotulo: string
   valor: number | null | undefined
   cor: string
-  emFicha: boolean
   para: string | null
   titulo: string
 }
@@ -309,23 +308,20 @@ interface Indicador {
 /**
  * Um par rótulo/valor da fileira de indicadores.
  *
- * A altura mínima do valor (`4xh`, 36px) é maior que a da ficha de violações,
- * que renderiza a 31px. Sem isso a ficha define a altura da própria célula e as
- * bases dos quatro números saem desalinhadas — degrau visível numa fileira
- * curta. Com a mínima acima das duas, todas as células ficam iguais.
+ * A altura mínima do valor (`4xh`, 36px) mantém as quatro células iguais: sem
+ * ela, cada valor mede o próprio conteúdo e as bases dos números saem
+ * desalinhadas — degrau visível numa fileira curta.
  */
 function Indicador({
   id,
   item,
   numero,
-  snapshotId,
 }: {
   id: string
   item: Indicador
   numero: Intl.NumberFormat
-  snapshotId: string
 }) {
-  const destino = item.emFicha ? (item.para ?? `/coletas/${snapshotId}`) : item.para
+  const destino = item.para
   const conteudo = item.valor === null || item.valor === undefined ? '—' : numero.format(item.valor)
 
   return (
@@ -360,15 +356,9 @@ function Indicador({
               id={`${id}-link`}
               to={destino}
               title={item.titulo}
-              className={item.emFicha ? 'stretched-link' : 'inherit-color stretched-link'}
+              className="inherit-color stretched-link"
             >
-              {item.emFicha ? (
-                <Tag id={`${id}-tag`} tone="warn" size="medium">
-                  {conteudo}
-                </Tag>
-              ) : (
-                conteudo
-              )}
+              {conteudo}
             </Link>
           ) : (
             conteudo
@@ -418,7 +408,6 @@ function HarvestStats({
   const contagensDeRegistro = [
     {
       chave: 'size',
-      emFicha: false,
       rotulo: t('diagnosis.size'),
       valor: coleta.size,
       cor: '',
@@ -427,7 +416,6 @@ function HarvestStats({
     },
     {
       chave: 'valid',
-      emFicha: false,
       rotulo: t('diagnosis.valid'),
       valor: coleta.validSize,
       cor: tom(coleta.validSize, 'text-green-cool-vivid-50'),
@@ -436,7 +424,6 @@ function HarvestStats({
     },
     {
       chave: 'invalid',
-      emFicha: false,
       rotulo: t('diagnosis.invalid'),
       valor: coleta.invalidSize,
       cor: tom(coleta.invalidSize, 'text-red-vivid-50'),
@@ -456,17 +443,22 @@ function HarvestStats({
       chave: 'violated-rules',
       rotulo: t('repositories.violatedRules'),
       valor: coleta.violatedRuleCount,
-      cor: '',
       /*
-        Único indicador que vira ficha, e por um motivo de contraste: o padrão
-        define Alerta como #ffcd07, que dá 1,50 sobre branco e não pode ser
-        texto. Como preenchimento de ficha ele é elemento gráfico, e aí a cor
-        do padrão entra sem adaptação — o texto por cima é o da função Leitura.
+        Amarelo no número, como nos vizinhos verde e vermelho — e não o Alerta
+        do padrão, que como texto é ilegível: #ffcd07 (`--yellow-vivid-20`) dá
+        1,50 sobre o fundo do cartão. Era por esse 1,50 que o número vinha em
+        ficha, onde a cor é preenchimento e não texto.
 
-        Só com violação: uma ficha amarela escrita "0" leria como aviso o que é
-        justamente a ausência dele. É a mesma regra do `tom()` logo acima.
+        Três passos abaixo na mesma família, o `--yellow-vivid-50` (#947100)
+        mede **4,28** sobre o #f8f8f8 do cartão. O valor renderiza a 20,16px em
+        negrito, que é texto grande para a WCAG (≥18,66px com peso ≥700) e pede
+        3:1 — e é o mesmo patamar do verde ao lado, que ali mede 4,32. Medido na
+        tela em 17/09/2026.
+
+        Só com violação, como no `tom()` dos outros: pintar "0" de amarelo
+        anunciaria como aviso justamente a ausência dele.
       */
-      emFicha: Boolean(coleta.violatedRuleCount),
+      cor: tom(coleta.violatedRuleCount, 'text-yellow-vivid-50'),
       para: coleta.violatedRuleCount ? `/coletas/${coleta.snapshotId}` : null,
       titulo: t('repositories.openDiagnosis'),
     },
@@ -554,7 +546,6 @@ function HarvestStats({
             id={`${id}-indicator-${item.chave}`}
             item={item}
             numero={numero}
-            snapshotId={coleta.snapshotId}
           />
         ))}
       </dl>
