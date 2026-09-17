@@ -63,7 +63,6 @@ export function DiagnosisPage() {
       .sort((a, b) => (b.invalidCount ?? 0) - (a.invalidCount ?? 0))
       .slice(0, 8)
       .map((regra) => ({
-        regra: String(regra.ruleId),
         nome: regra.name,
         invalidos: regra.invalidCount ?? 0,
       }))
@@ -139,56 +138,72 @@ export function DiagnosisPage() {
           <h2 id="diagnosis-page-chart-title" className="mb-4 text-base text-bold">
             {t('diagnosis.topInvalidRules')}
           </h2>
-          <div id="diagnosis-page-chart-canvas" style={{ height: '16rem' }}>
+          {/*
+            Barras deitadas, não em pé. O eixo de categoria leva o nome da regra
+            ("Versão da publicação"), e nome longo em eixo horizontal só cabe
+            girado ou cortado — girado fica ilegível, cortado perde justamente a
+            informação que motivou a troca. Deitado, o nome se lê da esquerda
+            para a direita e ainda sobra espaço quando a tela é estreita.
+
+            A altura acompanha a quantidade de barras em vez de ser fixa: com
+            altura fixa a faixa de rótulos fica de fora e o cartão ganha uma
+            barra de rolagem interna.
+          */}
+          <div
+            id="diagnosis-page-chart-canvas"
+            style={{ height: `${grafico.length * 2.25 + 2.5}rem` }}
+          >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={grafico} margin={{ top: 8, right: 12, bottom: 16, left: 0 }}>
-                <CartesianGrid stroke="var(--color-border-subtle)" vertical={false} />
-                {/*
-                  As marcas do eixo X são os identificadores das regras (110, 117…),
-                  que não dizem nada sozinhos — daí o rótulo. O nome de cada regra
-                  aparece no tooltip.
-                */}
+              <BarChart
+                data={grafico}
+                layout="vertical"
+                margin={{ top: 4, right: 16, bottom: 16, left: 0 }}
+              >
+                <CartesianGrid stroke="var(--color-border-subtle)" horizontal={false} />
                 <XAxis
-                  dataKey="regra"
+                  type="number"
                   stroke="var(--color-content-muted)"
                   tickLine={false}
                   fontSize={11}
+                  allowDecimals={false}
                 >
                   <Label
-                    value={t('diagnosis.chart.xAxis')}
+                    value={t('diagnosis.chart.valueAxis')}
                     position="insideBottom"
                     offset={-12}
                     fill="var(--color-content-muted)"
                     fontSize={11}
                   />
                 </XAxis>
+                {/*
+                  O nome completo fica no tooltip; a marca do eixo corta os casos
+                  extremos para não empurrar a área do gráfico até sumir.
+                */}
                 <YAxis
+                  type="category"
+                  dataKey="nome"
                   stroke="var(--color-content-muted)"
                   tickLine={false}
                   fontSize={11}
-                  width={68}
-                >
-                  <Label
-                    value={t('diagnosis.chart.yAxis')}
-                    angle={-90}
-                    position="insideLeft"
-                    style={{ textAnchor: 'middle' }}
-                    fill="var(--color-content-muted)"
-                    fontSize={11}
-                  />
-                </YAxis>
+                  width={150}
+                  interval={0}
+                  tickFormatter={(nome: string) =>
+                    nome.length > 24 ? `${nome.slice(0, 23)}…` : nome
+                  }
+                />
                 <Tooltip
+                  cursor={{ fill: 'var(--color-surface-muted)' }}
                   contentStyle={{
                     borderRadius: '0.5rem',
                     border: '1px solid var(--color-border-subtle)',
                     fontSize: '0.8rem',
                   }}
-                  formatter={(value, _name, item) => [
+                  formatter={(value) => [
                     numero.format(Number(value)),
-                    (item?.payload as { nome?: string } | undefined)?.nome ?? '',
+                    t('diagnosis.columns.invalidCount'),
                   ]}
                 />
-                <Bar dataKey="invalidos" fill="var(--color-down)" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="invalidos" fill="var(--color-down)" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -221,7 +236,10 @@ export function DiagnosisPage() {
                   <th id="diagnosis-page-column-rule" className="px-3 py-2 text-down-01 text-bold">
                     {t('diagnosis.columns.rule')}
                   </th>
-                  <th id="diagnosis-page-column-name" className="px-3 py-2 text-down-01 text-bold">
+                  <th
+                    id="diagnosis-page-column-description"
+                    className="px-3 py-2 text-down-01 text-bold"
+                  >
                     {t('diagnosis.columns.name')}
                   </th>
                   <th
@@ -253,12 +271,12 @@ export function DiagnosisPage() {
               <tbody id="diagnosis-page-rules-table-body">
                 {regras.data.results.map((regra) => (
                   <tr id={`diagnosis-page-rule-${regra.ruleId}`} key={regra.ruleId}>
-                    <td
-                      id={`diagnosis-page-rule-${regra.ruleId}-id`}
-                      className="px-3 py-2 text-down-01"
-                    >
-                      {regra.ruleId}
-                    </td>
+                    {/*
+                      A coluna "Regra" leva o nome, não o `ruleID`. O número é
+                      chave da origem, não informação ao gestor: "110" não diz
+                      nada, "Abstract" diz. Ele continua no `id` do elemento,
+                      que é onde precisa ser único e estável.
+                    */}
                     <td id={`diagnosis-page-rule-${regra.ruleId}-name`} className="px-3 py-2">
                       <span
                         id={`diagnosis-page-rule-${regra.ruleId}-name-text`}
@@ -266,12 +284,12 @@ export function DiagnosisPage() {
                       >
                         {regra.name}
                       </span>
-                      <span
-                        id={`diagnosis-page-rule-${regra.ruleId}-description`}
-                        className="d-block text-down-01 text-gray-70"
-                      >
-                        {regra.description}
-                      </span>
+                    </td>
+                    <td
+                      id={`diagnosis-page-rule-${regra.ruleId}-description`}
+                      className="px-3 py-2 text-down-01 text-gray-70"
+                    >
+                      {regra.description}
                     </td>
                     <td
                       id={`diagnosis-page-rule-${regra.ruleId}-mandatory`}
