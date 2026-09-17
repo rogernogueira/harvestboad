@@ -10,6 +10,7 @@ from typing import Iterator
 
 from apps.harvests import services as harvests
 from apps.harvests.filters import RecordFilters
+from apps.repositories import services as repositories
 
 PAGE_SIZE = 200
 
@@ -24,6 +25,19 @@ COLUMNS = [
     ("setSpec", "conjunto"),
     ("metadataPrefix", "prefixo_metadados"),
     ("origin", "origem"),
+]
+
+
+HARVEST_COLUMNS = [
+    ("snapshotId", "coleta"),
+    ("status", "situacao"),
+    ("indexStatus", "situacao_indexacao"),
+    ("startTime", "inicio"),
+    ("endTime", "termino"),
+    ("size", "registros"),
+    ("validSize", "validos"),
+    ("invalidSize", "invalidos"),
+    ("transformedSize", "transformados"),
 ]
 
 
@@ -80,6 +94,35 @@ def csv_rows(
 
     for record in iter_records(snapshot_id, filters, max_rows):
         yield writer.writerow([record.get(campo) for campo, _ in COLUMNS])
+
+
+def harvest_csv_rows(repository_id: str) -> Iterator[str]:
+    """Gera o CSV do histórico de coletas de um repositório.
+
+    Sem streaming por página como os registros: o histórico de um repositório
+    tem dezenas de coletas, não dezenas de milhares de linhas, e vem numa
+    requisição só. O gerador existe para caber no mesmo
+    `StreamingHttpResponse` da outra exportação.
+
+    `invalidSize` não vem da origem — é a diferença entre o total e os
+    válidos, a mesma conta que o painel de repositórios faz. Fica em branco
+    quando algum dos dois falta, porque aí a subtração seria invenção.
+    """
+    writer = csv.writer(_Echo())
+    yield writer.writerow([titulo for _, titulo in HARVEST_COLUMNS])
+
+    payload = repositories.repository_harvests(str(repository_id))
+    for coleta in payload.get("results") or []:
+        linha = dict(coleta)
+        total, validos = linha.get("size"), linha.get("validSize")
+        linha["invalidSize"] = (
+            total - validos if isinstance(total, int) and isinstance(validos, int) else None
+        )
+        yield writer.writerow([linha.get(campo) for campo, _ in HARVEST_COLUMNS])
+
+
+def harvest_filename(repository_id: str) -> str:
+    return f"repositorio-{repository_id}-coletas.csv"
 
 
 def filename(snapshot_id: str, filters: RecordFilters | None = None) -> str:

@@ -8,6 +8,8 @@ from apps.harvests.filters import RecordFilters
 from apps.harvests.permissions import assert_can_read_snapshot
 from apps.harvests.views import FILTER_PARAMS, SNAPSHOT_PARAM
 from apps.integrations.views import HarvesterBackedAPIView
+from apps.repositories.permissions import assert_can_read_repository
+from apps.repositories.views import REPOSITORY_PARAM
 
 from . import services
 
@@ -57,5 +59,37 @@ class RecordsCsvExportView(HarvesterBackedAPIView):
             content_type="text/csv; charset=utf-8",
         )
         nome = services.filename(snapshot_id, filters)
+        response["Content-Disposition"] = f'attachment; filename="{nome}"'
+        return response
+
+
+class HarvestsCsvExportView(HarvesterBackedAPIView):
+    """Exporta o histórico de coletas de um repositório em CSV.
+
+    A autorização é a do repositório, não a da coleta: aqui não há snapshot
+    escolhido, e a lista é justamente o que diz quais existem. Vale a mesma
+    `assert_can_read_repository` da tela de histórico.
+    """
+
+    @extend_schema(
+        parameters=[REPOSITORY_PARAM],
+        description="Exportação CSV do histórico de coletas do repositório.",
+        responses={(200, "text/csv"): str},
+    )
+    def get(self, request: Request, repository_id: int) -> StreamingHttpResponse:
+        assert_can_read_repository(request.user, repository_id)
+
+        audit_record(
+            action=AuditLog.Action.EXPORT,
+            resource="repository_harvests_csv",
+            resource_id=str(repository_id),
+            request=request,
+        )
+
+        response = StreamingHttpResponse(
+            services.harvest_csv_rows(str(repository_id)),
+            content_type="text/csv; charset=utf-8",
+        )
+        nome = services.harvest_filename(str(repository_id))
         response["Content-Disposition"] = f'attachment; filename="{nome}"'
         return response

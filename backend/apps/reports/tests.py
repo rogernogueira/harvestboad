@@ -27,6 +27,43 @@ NETWORK_PAYLOAD = {
 }
 
 CLIENT = "apps.harvests.services.HarvesterClient"
+HISTORICO = "/api/v1/reports/repositories"
+SNAPSHOTS_CLIENT = "apps.repositories.services.HarvesterClient"
+
+
+def fake_snapshots():
+    """Duplo do histórico: uma coleta contada e outra sem contagem."""
+
+    class _Fake:
+        def list_snapshots(self, repository_id):
+            return {
+                "_embedded": {
+                    "snapshot": [
+                        {
+                            "status": "VALID",
+                            "indexStatus": "INDEXED",
+                            "startTime": "2026-09-16 15:54:58",
+                            "endTime": "2026-09-16 15:55:01",
+                            "size": 10,
+                            "validSize": 8,
+                            "transformedSize": 10,
+                            "_links": {"self": {"href": "http://h:8090/rest/snapshot/108702"}},
+                        },
+                        {
+                            "status": "HARVESTING",
+                            "indexStatus": None,
+                            "startTime": "2026-09-17 10:00:00",
+                            "endTime": None,
+                            "size": None,
+                            "validSize": None,
+                            "transformedSize": None,
+                            "_links": {"self": {"href": "http://h:8090/rest/snapshot/108703"}},
+                        },
+                    ]
+                }
+            }
+
+    return _Fake()
 
 
 def fake_client(total=3, capture=None):
@@ -117,6 +154,44 @@ class ExportAuthorizationTests(TestCase):
         self.assertEqual(
             self.api(self.admin).get(f"{BASE}/{SNAP}/records.csv").status_code, 200
         )
+
+    # --- Histórico de coletas ------------------------------------------------
+
+    def test_historico_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().get(f"{HISTORICO}/1/harvests.csv").status_code, 401)
+
+    def test_historico_de_repositorio_alheio_nao_exporta(self) -> None:
+        """A autorização é a do repositório: 403 antes de qualquer ida à origem."""
+        response = self.api(self.alheio).get(f"{HISTORICO}/1/harvests.csv")
+        self.assertEqual(response.status_code, 403)
+
+    @patch(SNAPSHOTS_CLIENT, lambda *a, **k: fake_snapshots())
+    def test_historico_sai_com_coletas_e_invalidos_calculados(self) -> None:
+        response = self.api(self.gestor).get(f"{HISTORICO}/1/harvests.csv")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("text/csv", response["Content-Type"])
+        self.assertIn(
+            'filename="repositorio-1-coletas.csv"', response["Content-Disposition"]
+        )
+
+        linhas = self.corpo(response).strip().splitlines()
+        self.assertEqual(
+            linhas[0],
+            "coleta,situacao,situacao_indexacao,inicio,termino,registros,validos,"
+            "invalidos,transformados",
+        )
+        # 10 registros, 8 válidos: os inválidos saem da subtração, não da origem.
+        self.assertIn("108702,VALID,INDEXED,2026-09-16 15:54:58,2026-09-16 15:55:01,10,8,2,10", linhas[1])
+        # Coleta sem contagem: a subtração ficaria inventada, então sai em branco.
+        self.assertTrue(linhas[2].endswith(",,,"))
+
+    @patch(SNAPSHOTS_CLIENT, lambda *a, **k: fake_snapshots())
+    def test_historico_registra_auditoria(self) -> None:
+        self.api(self.gestor).get(f"{HISTORICO}/1/harvests.csv")
+        trilha = AuditLog.objects.filter(resource="repository_harvests_csv").first()
+        self.assertIsNotNone(trilha)
+        self.assertEqual(trilha.action, AuditLog.Action.EXPORT)
+        self.assertEqual(trilha.resource_id, "1")
 
     @patch(CLIENT, lambda *a, **k: fake_client())
     def test_autorizacao_da_exportacao_bate_com_a_da_tela(self) -> None:
