@@ -182,14 +182,31 @@ class HarvesterClient:
         """Diagnóstico da coleta. GET /public/diagnose/{snapshotID}"""
         return self.get_json(f"/public/diagnose/{quote(str(snapshot_id))}")
 
-    def list_validation_occurrences(self, snapshot_id: str | int, rule_id: str | int) -> Any:
-        """Ocorrências por regra.
+    def list_validation_occurrences(
+        self,
+        snapshot_id: str | int,
+        rule_id: str | int,
+        query: str | None = None,
+    ) -> Any:
+        """Ocorrências por regra, com filtro opcional.
 
-        GET /public/diagnoseValidationOcurrences/{snapshotID}/{ruleID}
+        GET /public/diagnoseValidationOcurrences/{snapshotID}/{ruleID}[/{fq}]
+
+        O segmento de filtro é a mesma consulta Solr da listagem de registros, e
+        recorta as contagens do mesmo jeito: sem filtro a regra 110 da coleta
+        108434 conta 527 ocorrências, com `record_is_valid:false` conta 2.
+
+        Ao contrário da listagem, aqui **não existe filtro neutro**: o literal
+        "fq" faz a rota responder 500. Sem filtro o segmento simplesmente não
+        entra — é o que a interface do próprio Harvester faz.
         """
-        return self.get_json(
-            f"/public/diagnoseValidationOcurrences/{quote(str(snapshot_id))}/{quote(str(rule_id))}"
+        path = (
+            f"/public/diagnoseValidationOcurrences/"
+            f"{quote(str(snapshot_id))}/{quote(str(rule_id))}"
         )
+        if query:
+            path = f"{path}/{quote(query, safe='')}"
+        return self.get_json(path)
 
     def list_record_validation_results(
         self,

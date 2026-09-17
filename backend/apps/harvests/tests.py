@@ -90,7 +90,7 @@ def fake_client(**overrides):
         def get_record_metadata(self, snapshot_id, identifier):
             return "<record><id>1</id></record>"
 
-        def list_validation_occurrences(self, snapshot_id, rule_id):
+        def list_validation_occurrences(self, snapshot_id, rule_id, query=None):
             return {
                 "validRuleOccrs": [{"value": "ok", "count": 26091}],
                 "invalidRuleOccrs": [
@@ -199,6 +199,17 @@ class HarvestAPITests(TestCase):
         self.assertEqual(data["validTotal"], 26091)
         self.assertEqual(data["invalidTotal"], 12)  # 10 + 2
         self.assertEqual(data["invalid"][0]["value"], "no_occurrences_found")
+        self.assertEqual(data["filters"]["valid"], None)
+
+    @patch(CLIENT, lambda *a, **k: fake_client())
+    def test_ocorrencias_aceitam_o_vocabulario_de_filtros(self) -> None:
+        data = (
+            self.api(self.admin)
+            .get(f"{BASE}/{SNAP}/rules/110/occurrences?valid=false&invalidRule=110")
+            .data
+        )
+        self.assertEqual(data["filters"]["valid"], "false")
+        self.assertEqual(data["filters"]["invalidRule"], ["110"])
 
     @patch(CLIENT, lambda *a, **k: fake_client())
     def test_registros_paginados(self) -> None:
@@ -344,8 +355,8 @@ class HarvestAPITests(TestCase):
                 chamadas.append(f"diagnose:{snapshot_id}")
                 return DIAGNOSE_PAYLOAD
 
-            def list_validation_occurrences(self, snapshot_id, rule_id):
-                chamadas.append(f"occurrences:{snapshot_id}:{rule_id}")
+            def list_validation_occurrences(self, snapshot_id, rule_id, query=None):
+                chamadas.append(f"occurrences:{snapshot_id}:{rule_id}:{query or '-'}")
                 return {"validRuleOccrs": [], "invalidRuleOccrs": []}
 
             def list_record_validation_results(self, snapshot_id, page=1, count=20, **kw):
@@ -391,7 +402,22 @@ class HarvestAPITests(TestCase):
             self.api(self.admin).get(f"{BASE}/{SNAP}/rules/110/occurrences")
             self.api(self.admin).get(f"{BASE}/{SNAP}/rules/104/occurrences")
         ocorrencias = [c for c in chamadas if c.startswith("occurrences:")]
-        self.assertEqual(ocorrencias, [f"occurrences:{SNAP}:110", f"occurrences:{SNAP}:104"])
+        self.assertEqual(ocorrencias, [f"occurrences:{SNAP}:110:-", f"occurrences:{SNAP}:104:-"])
+
+    def test_ocorrencias_ficam_em_cache_por_filtro(self) -> None:
+        """Recortes diferentes são respostas diferentes — não podem colidir na chave."""
+        chamadas, duplo = self.contador()
+        with patch(CLIENT, lambda *a, **k: duplo):
+            self.api(self.admin).get(f"{BASE}/{SNAP}/rules/110/occurrences")
+            self.api(self.admin).get(f"{BASE}/{SNAP}/rules/110/occurrences?valid=false")
+            self.api(self.admin).get(f"{BASE}/{SNAP}/rules/110/occurrences?valid=false")
+        self.assertEqual(
+            [c for c in chamadas if c.startswith("occurrences:")],
+            [
+                f"occurrences:{SNAP}:110:-",
+                f"occurrences:{SNAP}:110:record_is_valid:false",
+            ],
+        )
 
     def test_pagina_de_registros_fica_em_cache_por_pagina(self) -> None:
         chamadas, duplo = self.contador()

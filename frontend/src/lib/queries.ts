@@ -152,11 +152,24 @@ export const rulesQuery = (snapshotId: string) =>
     queryFn: () => apiGet<RuleList>(`/harvests/${snapshotId}/rules`),
   })
 
-export const occurrencesQuery = (snapshotId: string, ruleId: string) =>
-  queryOptions({
-    queryKey: ['harvest', snapshotId, 'rules', ruleId, 'occurrences'],
-    queryFn: () => apiGet<RuleOccurrences>(`/harvests/${snapshotId}/rules/${ruleId}/occurrences`),
+/**
+ * Ocorrências de uma regra, no mesmo recorte da tela.
+ *
+ * Os filtros seguem junto porque a origem os aplica também aqui: sem eles as
+ * contagens do modal seriam as da coleta inteira e discordariam do número em
+ * que o usuário clicou.
+ */
+export const occurrencesQuery = (snapshotId: string, ruleId: string, filters: RecordFilters) => {
+  const params = filtersToParams(filters)
+  const query = params.toString()
+  return queryOptions({
+    queryKey: ['harvest', snapshotId, 'rules', ruleId, 'occurrences', query],
+    queryFn: () =>
+      apiGet<RuleOccurrences>(
+        `/harvests/${snapshotId}/rules/${ruleId}/occurrences${query ? `?${query}` : ''}`,
+      ),
   })
+}
 
 export const recordsQuery = (
   snapshotId: string,

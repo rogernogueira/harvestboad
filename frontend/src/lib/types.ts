@@ -244,6 +244,7 @@ export interface RuleOccurrences {
   ruleId: string
   validTotal: number
   invalidTotal: number
+  filters: AppliedFilters
   valid: Occurrence[]
   invalid: Occurrence[]
 }

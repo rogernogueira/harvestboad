@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams, useSearchParams } from 'react-router'
 import {
@@ -14,9 +14,11 @@ import {
 } from 'recharts'
 
 import { ErrorState, Loading } from '@/components/Feedback'
+import { RuleOccurrencesModal } from '@/components/RuleOccurrencesModal'
 import { StatCard } from '@/components/StatCard'
 import { filtersFromSearch, filtersToParams, toggleRule } from '@/lib/filters'
 import { diagnosisQuery, rulesQuery } from '@/lib/queries'
+import type { Rule } from '@/lib/types'
 
 /**
  * Diagnóstico da coleta.
@@ -32,6 +34,11 @@ export function DiagnosisPage() {
 
   const diagnostico = useQuery(diagnosisQuery(snapshotId))
   const regras = useQuery(rulesQuery(snapshotId))
+
+  // Um modal por vez, montado só quando há regra escolhida: a tabela tem
+  // dezenas de linhas, e um `<dialog>` por linha encheria o HTML de dialogos
+  // fechados só para manter estado que cabe aqui.
+  const [regraAberta, setRegraAberta] = useState<Rule | null>(null)
 
   const numero = useMemo(
     () => new Intl.NumberFormat(i18n.resolvedLanguage),
@@ -235,6 +242,12 @@ export function DiagnosisPage() {
                   >
                     {t('diagnosis.columns.invalidCount')}
                   </th>
+                  <th
+                    id="diagnosis-page-column-occurrences"
+                    className="px-3 py-2 text-right text-down-01 text-bold"
+                  >
+                    {t('diagnosis.columns.occurrences')}
+                  </th>
                 </tr>
               </thead>
               <tbody id="diagnosis-page-rules-table-body">
@@ -298,6 +311,21 @@ export function DiagnosisPage() {
                         <span className="text-gray-70">—</span>
                       )}
                     </td>
+                    <td
+                      id={`diagnosis-page-rule-${regra.ruleId}-occurrences`}
+                      className="px-3 py-2 text-right"
+                    >
+                      <button
+                        id={`diagnosis-page-rule-${regra.ruleId}-occurrences-button`}
+                        type="button"
+                        onClick={() => setRegraAberta(regra)}
+                        aria-label={t('diagnosis.occurrences.open', { rule: regra.name })}
+                        title={t('diagnosis.occurrences.openShort')}
+                        className="br-button circle small"
+                      >
+                        <i className="fas fa-chart-bar" aria-hidden="true" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -305,6 +333,18 @@ export function DiagnosisPage() {
           </div>
         ) : null}
       </section>
+
+      {regraAberta ? (
+        <RuleOccurrencesModal
+          id={`diagnosis-page-rule-${regraAberta.ruleId}-occurrences-modal`}
+          aberto
+          onFechar={() => setRegraAberta(null)}
+          snapshotId={snapshotId}
+          ruleId={String(regraAberta.ruleId)}
+          nome={regraAberta.name}
+          filtros={filtros}
+        />
+      ) : null}
     </div>
   )
 }

@@ -163,17 +163,25 @@ def rule_occurrences(
     snapshot_id: str,
     rule_id: str,
     client: HarvesterClient | None = None,
+    filters: RecordFilters | None = None,
 ) -> dict:
     """Ocorrências de uma regra na coleta, agrupadas por valor.
 
     O Harvester devolve `validRuleOccrs` / `invalidRuleOccrs`; aqui viram `valid`
     e `invalid`, com os totais somados.
+
+    Os filtros são os mesmos da listagem de registros e recortam as contagens da
+    mesma forma, o que mantém o modal de ocorrências coerente com o número em
+    que o usuário clicou. Sem filtro a consulta não vai no caminho: o literal
+    neutro "fq" da listagem faz esta rota responder 500.
     """
     client = client or HarvesterClient()
+    filters = filters or RecordFilters()
+    query = None if filters.is_empty else filters.to_query()
     payload = _cached(
-        f"{CACHE_PREFIX}:occurrences:{snapshot_id}:{rule_id}",
+        f"{CACHE_PREFIX}:occurrences:{snapshot_id}:{rule_id}:{filters.cache_token()}",
         _ttl("DIAGNOSE"),
-        lambda: client.list_validation_occurrences(snapshot_id, rule_id) or {},
+        lambda: client.list_validation_occurrences(snapshot_id, rule_id, query=query) or {},
     )
 
     def normalize(entries: list | None) -> list[dict]:
@@ -189,6 +197,7 @@ def rule_occurrences(
         "ruleId": str(rule_id),
         "validTotal": sum(item["count"] or 0 for item in valid),
         "invalidTotal": sum(item["count"] or 0 for item in invalid),
+        "filters": filters.as_dict(),
         "valid": valid,
         "invalid": invalid,
     }

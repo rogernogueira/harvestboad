@@ -15,6 +15,22 @@ SNAPSHOT_PARAM = OpenApiParameter(
 )
 
 
+FILTER_PARAMS = [
+    OpenApiParameter("valid", bool, description="Filtra por registros válidos ou inválidos."),
+    OpenApiParameter("transformed", bool, description="Filtra por registros transformados."),
+    OpenApiParameter(
+        "invalidRule",
+        str,
+        description="ID de regra violada. Repetível ou separado por vírgula; combina em E.",
+    ),
+    OpenApiParameter(
+        "validRule",
+        str,
+        description="ID de regra atendida. Repetível ou separado por vírgula; combina em E.",
+    ),
+]
+
+
 class BaseHarvestView(HarvesterBackedAPIView):
     """Base das rotas de coleta: acrescenta o controle de acesso por snapshot."""
 
@@ -59,28 +75,18 @@ class HarvestRuleOccurrencesView(BaseHarvestView):
             OpenApiParameter(
                 "rule_id", str, OpenApiParameter.PATH, description="ID da regra no diagnóstico."
             ),
+            *FILTER_PARAMS,
         ],
-        description="Ocorrências de uma regra na coleta, agrupadas por valor.",
+        description=(
+            "Ocorrências de uma regra na coleta, agrupadas por valor. Aceita o mesmo "
+            "vocabulário de filtros dos registros, que recorta as contagens do mesmo "
+            "jeito, e os devolve ecoados em `filters`."
+        ),
     )
     def get(self, request: Request, snapshot_id: str, rule_id: str) -> Response:
         self.authorize(request, snapshot_id)
-        return Response(services.rule_occurrences(snapshot_id, rule_id))
-
-
-FILTER_PARAMS = [
-    OpenApiParameter("valid", bool, description="Filtra por registros válidos ou inválidos."),
-    OpenApiParameter("transformed", bool, description="Filtra por registros transformados."),
-    OpenApiParameter(
-        "invalidRule",
-        str,
-        description="ID de regra violada. Repetível ou separado por vírgula; combina em E.",
-    ),
-    OpenApiParameter(
-        "validRule",
-        str,
-        description="ID de regra atendida. Repetível ou separado por vírgula; combina em E.",
-    ),
-]
+        filters = RecordFilters.from_query(request.query_params)
+        return Response(services.rule_occurrences(snapshot_id, rule_id, filters=filters))
 
 
 def parse_pagination(request: Request) -> tuple[int, int]:

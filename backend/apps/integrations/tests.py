@@ -105,6 +105,30 @@ class HarvesterClientTests(SimpleTestCase):
             self.last()["path"], "/public/diagnoseValidationOcurrences/snap-1/7"
         )
 
+    def test_ocorrencias_por_regra_com_filtro(self) -> None:
+        self.client_.list_validation_occurrences(
+            "snap-1", 7, query="record_is_valid:false AND invalid_rules:110"
+        )
+        # A consulta é um segmento só, com ":" e espaço escapados. É a forma que
+        # o Harvester aceita: contra a coleta 108434, a regra 110 conta 527
+        # ocorrências sem filtro e 2 com `record_is_valid:false`.
+        self.assertEqual(
+            self.last()["path"],
+            "/public/diagnoseValidationOcurrences/snap-1/7"
+            "/record_is_valid%3Afalse%20AND%20invalid_rules%3A110",
+        )
+
+    def test_ocorrencias_sem_filtro_nao_ganham_segmento(self) -> None:
+        """O literal neutro da listagem ("fq") faz esta rota responder 500.
+
+        Sem filtro o caminho tem de terminar na regra, como faz a interface do
+        próprio Harvester — acrescentar um segmento vazio ou "fq" quebraria.
+        """
+        self.client_.list_validation_occurrences("snap-1", 7, query="")
+        self.assertEqual(
+            self.last()["path"], "/public/diagnoseValidationOcurrences/snap-1/7"
+        )
+
     def test_registros_individuais_com_paginacao(self) -> None:
         self.client_.list_record_validation_results("snap-1", page=3, count=50)
         self.assertEqual(

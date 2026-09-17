@@ -131,7 +131,19 @@
       "name": "Descrição",
       "mandatory": "Obrigatória",
       "validCount": "Atendem",
-      "invalidCount": "Violam"
+      "invalidCount": "Violam",
+      "occurrences": "Ocorrências"
+    },
+    "occurrences": {
+      "open": "Ver as ocorrências da regra {{rule}}",
+      "openShort": "Ver ocorrências",
+      "title": "Ocorrências da regra {{rule}}",
+      "valid": "Valores que atendem",
+      "invalid": "Valores que violam",
+      "total": "{{total}} no total",
+      "none": "Nenhuma ocorrência registrada.",
+      "filtered": "Contagens no recorte aplicado na tela.",
+      "whole": "Contagens da coleta inteira."
     },
     "chart": {
       "xAxis": "Regras violadas",

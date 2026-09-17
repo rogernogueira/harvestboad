@@ -130,7 +130,19 @@
       "name": "Description",
       "mandatory": "Mandatory",
       "validCount": "Pass",
-      "invalidCount": "Fail"
+      "invalidCount": "Fail",
+      "occurrences": "Occurrences"
+    },
+    "occurrences": {
+      "open": "View occurrences for rule {{rule}}",
+      "openShort": "View occurrences",
+      "title": "Occurrences for rule {{rule}}",
+      "valid": "Passing values",
+      "invalid": "Failing values",
+      "total": "{{total}} in total",
+      "none": "No occurrences recorded.",
+      "filtered": "Counts within the filters applied on screen.",
+      "whole": "Counts for the whole harvest."
     },
     "chart": {
       "xAxis": "Violated rules",

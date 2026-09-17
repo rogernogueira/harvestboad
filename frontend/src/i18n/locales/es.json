@@ -131,7 +131,19 @@
       "name": "Descripción",
       "mandatory": "Obligatoria",
       "validCount": "Cumplen",
-      "invalidCount": "Infringen"
+      "invalidCount": "Infringen",
+      "occurrences": "Ocurrencias"
+    },
+    "occurrences": {
+      "open": "Ver las ocurrencias de la regla {{rule}}",
+      "openShort": "Ver ocurrencias",
+      "title": "Ocurrencias de la regla {{rule}}",
+      "valid": "Valores que cumplen",
+      "invalid": "Valores que infringen",
+      "total": "{{total}} en total",
+      "none": "Ninguna ocurrencia registrada.",
+      "filtered": "Conteos según el recorte aplicado en la pantalla.",
+      "whole": "Conteos de la recolección completa."
     },
     "chart": {
       "xAxis": "Reglas infringidas",
