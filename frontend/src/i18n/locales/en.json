@@ -139,14 +139,15 @@
       "title": "Occurrences for rule {{rule}}",
       "valid": "Passing values",
       "invalid": "Failing values",
-      "total": "{{total}} in total",
+      "total": "{{total}} occurrences",
       "none": "No occurrences recorded.",
+      "missing": "(field missing)",
+      "truncated": "The source lists at most {{listados}} values; the total adds up only those listed.",
       "filtered": "Counts within the filters applied on screen.",
       "whole": "Counts for the whole harvest."
     },
     "chart": {
-      "xAxis": "Violated rules",
-      "yAxis": "Count"
+      "valueAxis": "Failing records"
     }
   },
   "records": {
@@ -172,7 +173,8 @@
       "identifier": "Identifier",
       "valid": "Validity",
       "transformed": "Transformed",
-      "set": "Set"
+      "set": "Set",
+      "details": "Details"
     }
   },
   "record": {
@@ -198,6 +200,28 @@
     },
     "xml": "Transformed XML",
     "xmlUnavailable": "The Harvester did not return the XML for this record. The diagnosis report is outdated at the source."
+  },
+  "recordDiagnosis": {
+    "title": "Validation details",
+    "open": "View validation details for record {{record}}",
+    "openShort": "View validation details",
+    "tabs": {
+      "validation": "Validation",
+      "xml": "Transformed record XML"
+    },
+    "failsCount_one": "{{count}} rule failed",
+    "failsCount_other": "{{count}} rules failed",
+    "passesCount_one": "{{count}} passed",
+    "passesCount_other": "{{count}} passed",
+    "passes": "Passes",
+    "fails": "Fails",
+    "mandatory": "Mandatory",
+    "optional": "Optional",
+    "quantifier": "Quantifier: {{value}}",
+    "occurrenceValid": "Passing occurrence",
+    "occurrenceInvalid": "Failing occurrence",
+    "unknownRule": "Rule not present in this harvest diagnosis",
+    "none": "The source recorded no rule evaluation for this record."
   },
   "notFound": {
     "title": "Page not found",

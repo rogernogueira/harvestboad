@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useSearchParams } from 'react-router'
 
@@ -9,6 +10,7 @@ import { RecordLinkButton } from '@/components/RecordLinkButton'
 import { ApiError } from '@/lib/api'
 import { filtersFromSearch, filtersToParams } from '@/lib/filters'
 import { recordQuery, recordXmlQuery } from '@/lib/queries'
+import { indentarXml } from '@/lib/xml'
 
 /** Registro individual e seu XML transformado. */
 export function RecordPage() {
@@ -19,6 +21,7 @@ export function RecordPage() {
   const filtros = filtersFromSearch(searchParams)
   const registro = useQuery(recordQuery(snapshotId, identifier, filtros))
   const xml = useQuery(recordXmlQuery(snapshotId, identifier))
+  const xmlFormatado = useMemo(() => (xml.data ? indentarXml(xml.data) : ''), [xml.data])
 
   // Preserva o recorte ao voltar para a listagem.
   const query = filtersToParams(filtros).toString()
@@ -140,9 +143,10 @@ export function RecordPage() {
           <pre
             id="record-page-xml-content"
             className="br-card p-3 text-down-01 mb-0"
-            style={{ overflowX: 'auto' }}
+            /* Mesma razão do modal: o valor longo quebra em vez de rolar. */
+            style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}
           >
-            <code id="record-page-xml-code">{xml.data}</code>
+            <code id="record-page-xml-code">{xmlFormatado}</code>
           </pre>
         ) : null}
       </section>

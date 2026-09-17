@@ -239,11 +239,20 @@ export interface Occurrence {
   count: number | null
 }
 
+/**
+ * Ocorrências de uma regra, agrupadas por valor.
+ *
+ * Os totais são a soma dos valores listados, e a origem corta a lista em 1.000
+ * — daí os sinalizadores: com `true`, o total acima é o da lista cortada, não
+ * o da coleta.
+ */
 export interface RuleOccurrences {
   snapshotId: string
   ruleId: string
   validTotal: number
   invalidTotal: number
+  validTruncated: boolean
+  invalidTruncated: boolean
   filters: AppliedFilters
   valid: Occurrence[]
   invalid: Occurrence[]
@@ -261,8 +270,20 @@ export interface RecordItem {
   institutionName?: string | null
   isValid?: boolean | null
   isTransformed?: boolean | null
-  validOccurrencesByRuleID?: Record<string, unknown> | null
-  invalidOccurrencesByRuleID?: Record<string, unknown> | null
+  /*
+   * Resultado da validação regra a regra, como a origem devolve no próprio
+   * registro — é o que alimenta o modal de detalhes sem uma segunda ida ao
+   * Harvester. Os ids vêm como string, embora `Rule.ruleId` seja número.
+   *
+   * As duas listas não particionam as regras: uma regra pode estar em
+   * `validRulesID` e ainda ter entrada em `invalidOccurrencesByRuleID` — é o
+   * caso das condicionais, em que o campo ausente não invalida o registro mas
+   * fica registrado como ocorrência.
+   */
+  validRulesID?: string[] | null
+  invalidRulesID?: string[] | null
+  validOccurrencesByRuleID?: Record<string, string[]> | null
+  invalidOccurrencesByRuleID?: Record<string, string[]> | null
 }
 
 /**

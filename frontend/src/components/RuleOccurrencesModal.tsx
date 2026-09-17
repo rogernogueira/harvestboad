@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { Modal } from '@/components/Modal'
 import { countActiveFilters, type RecordFilters } from '@/lib/filters'
+import { SEM_OCORRENCIA } from '@/lib/occurrences'
 import { occurrencesQuery } from '@/lib/queries'
 import type { Occurrence } from '@/lib/types'
 
@@ -60,7 +61,12 @@ export function RuleOccurrencesModal({
   const ordenar = (itens: Occurrence[]) =>
     [...itens].sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
 
-  const lista = (chave: 'valid' | 'invalid', itens: Occurrence[], total: number) => (
+  const lista = (
+    chave: 'valid' | 'invalid',
+    itens: Occurrence[],
+    total: number,
+    cortada: boolean,
+  ) => (
     <section id={`${idBase}-${chave}`} className="mb-4">
       <div
         id={`${idBase}-${chave}-header`}
@@ -84,6 +90,18 @@ export function RuleOccurrencesModal({
         </span>
       </div>
 
+      {/*
+        O aviso vem antes da lista, e não depois: a lista cortada é justamente a
+        de 1.000 itens, e no fim dela ninguém rola para ler que o total só soma
+        o que está listado — na regra 109 da coleta 108702 são 14.837 somados
+        sobre esses 1.000 valores, contra 7.980 registros na tabela.
+      */}
+      {cortada ? (
+        <p id={`${idBase}-${chave}-truncated`} className="text-down-02 text-gray-70 mt-0 mb-1">
+          {t('diagnosis.occurrences.truncated', { listados: numero.format(itens.length) })}
+        </p>
+      ) : null}
+
       {itens.length === 0 ? (
         <Empty id={`${idBase}-${chave}-empty`} label={t('diagnosis.occurrences.none')} />
       ) : (
@@ -106,9 +124,18 @@ export function RuleOccurrencesModal({
               <span
                 id={`${idBase}-${chave}-item-${indice}-value`}
                 className="text-down-01"
-                style={{ minWidth: 0, overflowWrap: 'anywhere' }}
+                title={ocorrencia.value === SEM_OCORRENCIA ? SEM_OCORRENCIA : undefined}
+                style={{
+                  minWidth: 0,
+                  overflowWrap: 'anywhere',
+                  fontStyle: ocorrencia.value === SEM_OCORRENCIA ? 'italic' : undefined,
+                  color:
+                    ocorrencia.value === SEM_OCORRENCIA ? 'var(--color-content-muted)' : undefined,
+                }}
               >
-                {ocorrencia.value ?? '—'}
+                {ocorrencia.value === SEM_OCORRENCIA
+                  ? t('diagnosis.occurrences.missing')
+                  : (ocorrencia.value ?? '—')}
               </span>
               <span
                 id={`${idBase}-${chave}-item-${indice}-count`}
@@ -139,8 +166,8 @@ export function RuleOccurrencesModal({
 
       {data ? (
         <>
-          {lista('invalid', data.invalid, data.invalidTotal)}
-          {lista('valid', data.valid, data.validTotal)}
+          {lista('invalid', data.invalid, data.invalidTotal, data.invalidTruncated)}
+          {lista('valid', data.valid, data.validTotal, data.validTruncated)}
           <p id={`${idBase}-scope`} className="text-down-02 text-gray-70 mt-0 mb-0">
             {filtrado ? t('diagnosis.occurrences.filtered') : t('diagnosis.occurrences.whole')}
           </p>

@@ -140,14 +140,15 @@
       "title": "Ocorrências da regra {{rule}}",
       "valid": "Valores que atendem",
       "invalid": "Valores que violam",
-      "total": "{{total}} no total",
+      "total": "{{total}} ocorrências",
       "none": "Nenhuma ocorrência registrada.",
+      "missing": "(campo ausente)",
+      "truncated": "A origem lista no máximo {{listados}} valores; o total soma só os listados.",
       "filtered": "Contagens no recorte aplicado na tela.",
       "whole": "Contagens da coleta inteira."
     },
     "chart": {
-      "xAxis": "Regras violadas",
-      "yAxis": "Quantidade"
+      "valueAxis": "Registros que violam"
     }
   },
   "records": {
@@ -174,7 +175,8 @@
       "identifier": "Identificador",
       "valid": "Validade",
       "transformed": "Transformado",
-      "set": "Conjunto"
+      "set": "Conjunto",
+      "details": "Detalhes"
     }
   },
   "record": {
@@ -200,6 +202,30 @@
     },
     "xml": "XML transformado",
     "xmlUnavailable": "O Harvester não devolveu o XML deste registro. O relatório de diagnóstico está desatualizado na origem."
+  },
+  "recordDiagnosis": {
+    "title": "Detalhes da validação",
+    "open": "Ver os detalhes da validação do registro {{record}}",
+    "openShort": "Ver detalhes da validação",
+    "tabs": {
+      "validation": "Validação",
+      "xml": "XML do registro transformado"
+    },
+    "failsCount_one": "{{count}} regra violada",
+    "failsCount_other": "{{count}} regras violadas",
+    "failsCount_many": "{{count}} regras violadas",
+    "passesCount_one": "{{count}} atendida",
+    "passesCount_other": "{{count}} atendidas",
+    "passesCount_many": "{{count}} atendidas",
+    "passes": "Atende",
+    "fails": "Viola",
+    "mandatory": "Obrigatória",
+    "optional": "Opcional",
+    "quantifier": "Quantificador: {{value}}",
+    "occurrenceValid": "Ocorrência que atende",
+    "occurrenceInvalid": "Ocorrência que viola",
+    "unknownRule": "Regra fora do diagnóstico desta coleta",
+    "none": "A origem não registrou avaliação de regras para este registro."
   },
   "notFound": {
     "title": "Página não encontrada",

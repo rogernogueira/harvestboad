@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams, useSearchParams } from 'react-router'
 
@@ -8,8 +8,10 @@ import { ExportButton } from '@/components/ExportButton'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { FilterBar } from '@/components/FilterBar'
 import { Pagination } from '@/components/Pagination'
+import { RecordDiagnosisModal } from '@/components/RecordDiagnosisModal'
 import { filtersFromSearch, filtersToParams, type RecordFilters } from '@/lib/filters'
 import { recordsQuery } from '@/lib/queries'
+import type { RecordItem } from '@/lib/types'
 
 const PAGE_SIZE = 20
 
@@ -29,6 +31,13 @@ export function RecordsPage() {
 
   const filtros = filtersFromSearch(searchParams)
   const page = Math.max(1, Number(searchParams.get('page') ?? 1))
+
+  /*
+   * Um modal por vez, montado só quando há registro escolhido — o mesmo arranjo
+   * do diagnóstico. Guardar a linha inteira, e não só o identificador, é o que
+   * dispensa uma segunda consulta: o detalhe da validação já vem nela.
+   */
+  const [registroAberto, setRegistroAberto] = useState<RecordItem | null>(null)
 
   const { data, isPending, isError, error, refetch, isFetching } = useQuery({
     ...recordsQuery(snapshotId, page, PAGE_SIZE, filtros),
@@ -107,6 +116,9 @@ export function RecordsPage() {
                   <th id="records-page-column-set" scope="col">
                     {t('records.columns.set')}
                   </th>
+                  <th id="records-page-column-details" scope="col">
+                    {t('records.columns.details')}
+                  </th>
                 </tr>
               </thead>
               <tbody id="records-page-table-body">
@@ -138,6 +150,18 @@ export function RecordsPage() {
                     <td id={`records-page-row-${registro.id}-set`} className="text-gray-70">
                       {registro.setSpec ?? '—'}
                     </td>
+                    <td id={`records-page-row-${registro.id}-details`}>
+                      <button
+                        id={`records-page-row-${registro.id}-details-button`}
+                        type="button"
+                        onClick={() => setRegistroAberto(registro)}
+                        aria-label={t('recordDiagnosis.open', { record: registro.identifier })}
+                        title={t('recordDiagnosis.openShort')}
+                        className="br-button circle small"
+                      >
+                        <i className="fas fa-clipboard-check" aria-hidden="true" />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -152,6 +176,16 @@ export function RecordsPage() {
           />
         </>
       )}
+
+      {registroAberto ? (
+        <RecordDiagnosisModal
+          id={`records-page-row-${registroAberto.id}-details-modal`}
+          aberto
+          onFechar={() => setRegistroAberto(null)}
+          snapshotId={snapshotId}
+          registro={registroAberto}
+        />
+      ) : null}
     </div>
   )
 }

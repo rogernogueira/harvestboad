@@ -22,6 +22,11 @@ export function Modal({
   onFechar,
   titulo,
   descricao,
+  /**
+   * `largo` para conteúdo que não é texto corrido: o XML de um registro a 32rem
+   * quebra em quase toda linha, e o que se quer ler ali é a indentação.
+   */
+  tamanho = 'padrao',
   children,
 }: {
   id?: string
@@ -29,6 +34,7 @@ export function Modal({
   onFechar: () => void
   titulo: string
   descricao?: string
+  tamanho?: 'padrao' | 'largo'
   children: ReactNode
 }) {
   const { t } = useTranslation()
@@ -39,6 +45,24 @@ export function Modal({
     if (!dialogo) return
     if (aberto && !dialogo.open) dialogo.showModal()
     if (!aberto && dialogo.open) dialogo.close()
+  }, [aberto])
+
+  /*
+   * Trava a rolagem do fundo enquanto o diálogo está aberto.
+   *
+   * O `<dialog>` modal bloqueia o clique no que está atrás, mas não a rolagem:
+   * a roda do mouse sobre o scrim rola a página, e no diagnóstico isso faz a
+   * tabela de regras correr por baixo do modal que acabou de ser aberto a
+   * partir dela. Só a instância aberta mexe no `body` — a tela de repositórios
+   * monta um modal por linha, e as fechadas não entram aqui.
+   */
+  useEffect(() => {
+    if (!aberto) return
+    const anterior = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = anterior
+    }
   }, [aberto])
 
   return (
@@ -54,9 +78,19 @@ export function Modal({
       aria-labelledby={`${id}-titulo`}
       className="br-card p-0"
       style={{
-        width: 'min(32rem, calc(100vw - 2rem))',
+        width:
+          tamanho === 'largo' ? 'min(60rem, calc(100vw - 2rem))' : 'min(32rem, calc(100vw - 2rem))',
         border: '1px solid var(--border-color)',
         color: 'var(--color)',
+        /*
+         * A centralização do `<dialog>` é o `margin: auto` do navegador, e ela
+         * cai inteira se uma das margens deixar de ser automática: o `.br-card`
+         * fixa `margin-bottom: var(--spacing-scale-2x)`, a margem de cima
+         * absorve toda a sobra e o diálogo desce até encostar embaixo (medido
+         * em produção, viewport 1280×900: topo a 474px, base a 16px). Repor
+         * `auto` nos quatro lados devolve o centro.
+         */
+        margin: 'auto',
       }}
     >
       <div

@@ -175,7 +175,7 @@ vence CSS em camada. Por isso ele é importado dentro de uma camada nomeada, em
 Sem isso o core sobrescreve qualquer regra do projeto. Mexer nessa ordem quebra
 o estilo de tudo ao mesmo tempo.
 
-**Prefira o componente do design system**, mas confira antes de trocar. Quatro
+**Prefira o componente do design system**, mas confira antes de trocar. Cinco
 deles foram testados e descartados, com o motivo no comentário de cada arquivo:
 
 | Componente | Por que não | Onde |
@@ -184,6 +184,7 @@ deles foram testados e descartados, com o motivo no comentário de cada arquivo:
 | `BrPagination` | imprime "Primeira/Última página" em português como texto visível | `components/Pagination.tsx` |
 | `BrBreadcrumbs` | `aria-label` em português; não aceita `id` nem `className` | `components/Breadcrumb.tsx` |
 | `BrModal` | sem `inert` nem captura de foco — o `<dialog>` nativo entrega os dois | `components/Modal.tsx` |
+| `BrTab` | sem `role="tablist"`/`tab`/`tabpanel`, sem `aria-selected` e sem navegação por seta; o `tab.js` do core supriria isso, mas varre o `document` no import e não alcança marcação do React | `components/Tabs.tsx` |
 
 Nesses casos vale o markup próprio sobre as classes `br-*` do core, com os
 rótulos passando por `t()`.

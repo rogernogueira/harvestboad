@@ -189,6 +189,20 @@
    * serve aqui: `display: none` tira o texto da árvore de acessibilidade, e o
    * que se quer é justamente mantê-lo lá.
    */
+  /*
+   * Scrim do modal.
+   *
+   * O `::backdrop` do `<dialog>` nasce com o cinza do navegador — no Chrome
+   * `rgba(0, 0, 0, 0.1)`, medido na página do diagnóstico — e 10% de preto não
+   * separa o diálogo de uma tabela cheia atrás dele. O core não estiliza
+   * `::backdrop` (o modal dele é `.br-scrim.foco`, uma `<div>`), mas define o
+   * tom: `--surface-overlay-scrim`, os mesmos 45% de preto que o design system
+   * usa sob o `BrModal`.
+   */
+  dialog::backdrop {
+    background: var(--surface-overlay-scrim);
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;

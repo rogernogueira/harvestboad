@@ -140,14 +140,15 @@
       "title": "Ocurrencias de la regla {{rule}}",
       "valid": "Valores que cumplen",
       "invalid": "Valores que infringen",
-      "total": "{{total}} en total",
+      "total": "{{total}} ocurrencias",
       "none": "Ninguna ocurrencia registrada.",
+      "missing": "(campo ausente)",
+      "truncated": "El origen lista como máximo {{listados}} valores; el total suma solo los listados.",
       "filtered": "Conteos según el recorte aplicado en la pantalla.",
       "whole": "Conteos de la recolección completa."
     },
     "chart": {
-      "xAxis": "Reglas infringidas",
-      "yAxis": "Cantidad"
+      "valueAxis": "Registros que infringen"
     }
   },
   "records": {
@@ -174,7 +175,8 @@
       "identifier": "Identificador",
       "valid": "Validez",
       "transformed": "Transformado",
-      "set": "Conjunto"
+      "set": "Conjunto",
+      "details": "Detalles"
     }
   },
   "record": {
@@ -200,6 +202,30 @@
     },
     "xml": "XML transformado",
     "xmlUnavailable": "El Harvester no devolvió el XML de este registro. El informe de diagnóstico está desactualizado en el origen."
+  },
+  "recordDiagnosis": {
+    "title": "Detalles de validación",
+    "open": "Ver los detalles de validación del registro {{record}}",
+    "openShort": "Ver detalles de validación",
+    "tabs": {
+      "validation": "Validación",
+      "xml": "XML del registro transformado"
+    },
+    "failsCount_one": "{{count}} regla infringida",
+    "failsCount_other": "{{count}} reglas infringidas",
+    "failsCount_many": "{{count}} reglas infringidas",
+    "passesCount_one": "{{count}} cumplida",
+    "passesCount_other": "{{count}} cumplidas",
+    "passesCount_many": "{{count}} cumplidas",
+    "passes": "Cumple",
+    "fails": "Infringe",
+    "mandatory": "Obligatoria",
+    "optional": "Opcional",
+    "quantifier": "Cuantificador: {{value}}",
+    "occurrenceValid": "Ocurrencia que cumple",
+    "occurrenceInvalid": "Ocurrencia que infringe",
+    "unknownRule": "Regla fuera del diagnóstico de esta recolección",
+    "none": "El origen no registró evaluación de reglas para este registro."
   },
   "notFound": {
     "title": "Página no encontrada",
