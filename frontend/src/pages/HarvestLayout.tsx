@@ -5,6 +5,7 @@ import { NavLink, Outlet, useLocation, useParams, useSearchParams } from 'react-
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { ErrorState, Loading } from '@/components/Feedback'
+import { harvestDuration } from '@/lib/duration'
 import { filtersFromSearch, filtersToParams } from '@/lib/filters'
 import { harvestQuery } from '@/lib/queries'
 
@@ -35,6 +36,38 @@ export function HarvestLayout() {
   if (isPending) return <Loading id="harvest-layout-loading" />
   if (isError)
     return <ErrorState id="harvest-layout-error" error={error} onRetry={() => void refetch()} />
+
+  const dataHora = (valor: string | null | undefined) =>
+    valor ? new Date(valor.replace(' ', 'T')).toLocaleString(i18n.resolvedLanguage) : '—'
+
+  /*
+   * Duração: a origem dá início e término, nunca a conta. Sem ela, saber se uma
+   * coleta levou três segundos ou três horas exigia subtrair dois horários de
+   * cabeça — e é justamente a duração que diz se a coleta travou.
+   */
+  const duracao = harvestDuration(data.startTime, data.endTime)
+  const duracaoEmTexto = duracao
+    ? [
+        duracao.horas ? `${duracao.horas} ${t('harvest.units.hours')}` : '',
+        duracao.minutos ? `${duracao.minutos} ${t('harvest.units.minutes')}` : '',
+        // Os segundos só desaparecem quando há hora: "1 h 5 min" basta, mas
+        // "3 min" sem os segundos perderia precisão numa coleta curta.
+        !duracao.horas ? `${duracao.segundos} ${t('harvest.units.seconds')}` : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : null
+
+  /*
+   * Situação da indexação, ao lado da situação da coleta: uma coleta pode ter
+   * terminado válida e não ter sido indexada, e nesse caso não há diagnóstico
+   * nenhum — é a diferença entre "não tem erro" e "não foi avaliada".
+   */
+  const indexacao = data.indexStatus
+    ? i18n.exists(`harvestStatus.${data.indexStatus.toLowerCase()}`)
+      ? t(`harvestStatus.${data.indexStatus.toLowerCase()}`)
+      : data.indexStatus
+    : t('harvest.notIndexed')
 
   const registros = `/coletas/${snapshotId}/registros`
   const abas = [
@@ -75,9 +108,33 @@ export function HarvestLayout() {
           <HarvestStatusBadge id="harvest-layout-status" status={data.status} />
         </div>
         <p id="harvest-layout-subtitle" className="text-gray-70 mt-1 mb-0">
-          {data.repository.name} · {t('harvest.endedAt')}{' '}
-          {data.endTime ? new Date(data.endTime).toLocaleString(i18n.resolvedLanguage) : '—'}
+          {data.repository.name}
         </p>
+        <dl
+          id="harvest-layout-timing"
+          className="d-flex flex-wrap text-down-01 text-gray-70 mt-1 mb-0"
+          style={{ columnGap: 'var(--spacing-scale-3x)', rowGap: 'var(--spacing-scale-half)' }}
+        >
+          {[
+            { chave: 'started', rotulo: t('harvest.startedAt'), valor: dataHora(data.startTime) },
+            { chave: 'ended', rotulo: t('harvest.endedAt'), valor: dataHora(data.endTime) },
+            { chave: 'duration', rotulo: t('harvest.duration'), valor: duracaoEmTexto ?? '—' },
+            { chave: 'index', rotulo: t('harvest.indexStatus'), valor: indexacao },
+          ].map((item) => (
+            <div id={`harvest-layout-timing-${item.chave}`} key={item.chave} className="d-flex">
+              <dt id={`harvest-layout-timing-${item.chave}-label`} className="mr-1">
+                {item.rotulo}
+              </dt>
+              <dd
+                id={`harvest-layout-timing-${item.chave}-value`}
+                className="text-medium mb-0"
+                style={{ color: 'var(--color-content)' }}
+              >
+                {item.valor}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
       <div id="harvest-layout-tabs" className="br-tab mb-3">

@@ -87,7 +87,10 @@
     "openRecords": "Ver los registros de esta recolección",
     "openValidRecords": "Ver los registros válidos de esta recolección",
     "openInvalidRecords": "Ver los registros inválidos de esta recolección",
-    "openDiagnosis": "Ver el diagnóstico de esta recolección"
+    "openDiagnosis": "Ver el diagnóstico de esta recolección",
+    "search": "Buscar por nombre, sigla o institución",
+    "found": "{{count}} en el recorte",
+    "noneFound": "Ningún repositorio corresponde a la búsqueda."
   },
   "repository": {
     "acronym": "Sigla",
@@ -105,17 +108,30 @@
       "status": "Situación",
       "end": "Finalizada el",
       "size": "Registros",
-      "valid": "Válidos"
-    }
+      "valid": "Válidos",
+      "start": "Inicio",
+      "invalid": "Inválidos"
+    },
+    "exportHistory": "Exportar historial",
+    "chartInvalid": "Inválidos"
   },
   "harvest": {
     "title": "Recolección {{id}}",
     "breadcrumb": "Recolección {{id}}",
-    "endedAt": "finalizada el",
+    "endedAt": "Término",
     "tabsLabel": "Secciones de la recolección",
     "tabs": {
       "diagnosis": "Diagnóstico",
       "records": "Registros"
+    },
+    "startedAt": "Inicio",
+    "duration": "Duración",
+    "indexStatus": "Indexación",
+    "notIndexed": "No indexada",
+    "units": {
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "s"
     }
   },
   "diagnosis": {
@@ -133,6 +149,19 @@
       "validCount": "Cumplen",
       "invalidCount": "Infringen",
       "occurrences": "Ocurrencias"
+    },
+    "filters": {
+      "name": "Buscar por nombre o identificador",
+      "mandatory": "Obligatoriedad",
+      "anyMandatory": "Cualquier obligatoriedad",
+      "onlyMandatory": "Solo obligatorias",
+      "onlyOptional": "Solo opcionales",
+      "fails": "Fallos",
+      "anyFails": "Con o sin fallos",
+      "withFails": "Solo con fallos",
+      "withoutFails": "Solo sin fallos",
+      "showing": "· {{count}} en el recorte",
+      "none": "Ninguna regla cumple el recorte."
     },
     "occurrences": {
       "open": "Ver las ocurrencias de la regla {{rule}}",
@@ -176,7 +205,9 @@
       "valid": "Validez",
       "transformed": "Transformado",
       "set": "Conjunto",
-      "details": "Detalles"
+      "details": "Detalles",
+      "origin": "Origen",
+      "prefix": "Prefijo"
     }
   },
   "record": {

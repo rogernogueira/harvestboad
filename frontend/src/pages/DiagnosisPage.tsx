@@ -13,11 +13,18 @@ import {
   YAxis,
 } from 'recharts'
 
-import { ErrorState, Loading } from '@/components/Feedback'
+import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { RuleOccurrencesModal } from '@/components/RuleOccurrencesModal'
+import { RulesFilterBar } from '@/components/RulesFilterBar'
 import { StatCard } from '@/components/StatCard'
 import { filtersFromSearch, filtersToParams, toggleRule } from '@/lib/filters'
 import { diagnosisQuery, rulesQuery } from '@/lib/queries'
+import {
+  filterRules,
+  ruleFiltersFromSearch,
+  ruleFiltersToSearch,
+  type RuleFilters,
+} from '@/lib/ruleFilters'
 import type { Rule } from '@/lib/types'
 
 /**
@@ -29,8 +36,13 @@ import type { Rule } from '@/lib/types'
 export function DiagnosisPage() {
   const { t, i18n } = useTranslation()
   const { snapshotId = '' } = useParams()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const filtros = filtersFromSearch(searchParams)
+  const filtrosDeRegra = ruleFiltersFromSearch(searchParams)
+
+  /** Troca só os parâmetros das regras, preservando o recorte compartilhado. */
+  const aplicarFiltrosDeRegra = (novos: RuleFilters) =>
+    setSearchParams(ruleFiltersToSearch(searchParams, novos), { replace: true })
 
   const diagnostico = useQuery(diagnosisQuery(snapshotId))
   const regras = useQuery(rulesQuery(snapshotId))
@@ -55,6 +67,16 @@ export function DiagnosisPage() {
     const params = filtersToParams({ ...filtros, valid })
     return `/coletas/${snapshotId}/registros?${params}`
   }
+
+  /*
+   * O recorte vale para a tabela, não para o gráfico: ele é o retrato das oito
+   * regras com mais violações na coleta, e filtrá-lo junto faria o "mais
+   * violadas" mudar de significado conforme o que se digita na busca.
+   */
+  const regrasFiltradas = useMemo(
+    () => filterRules(regras.data?.results ?? [], filtrosDeRegra),
+    [regras.data, filtrosDeRegra],
+  )
 
   const grafico = useMemo(() => {
     const itens = regras.data?.results ?? []
@@ -213,7 +235,25 @@ export function DiagnosisPage() {
       <section id="diagnosis-page-rules" className="d-flex flex-column gap-3">
         <h2 id="diagnosis-page-rules-title" className="text-base text-bold">
           {t('diagnosis.rules', { count: regras.data?.count ?? d.ruleCount })}
+          {/*
+            Quantas sobraram do total, e não só o total: uma tabela de 3 linhas
+            sob um título que anuncia 15 parece resultado errado.
+          */}
+          {regras.data && regrasFiltradas.length !== regras.data.results.length ? (
+            <span id="diagnosis-page-rules-filtered" className="text-gray-70 text-regular">
+              {' '}
+              {t('diagnosis.filters.showing', { count: regrasFiltradas.length })}
+            </span>
+          ) : null}
         </h2>
+
+        {regras.data ? (
+          <RulesFilterBar
+            id="diagnosis-page-rules-filters"
+            filters={filtrosDeRegra}
+            onChange={aplicarFiltrosDeRegra}
+          />
+        ) : null}
 
         {regras.isPending ? <Loading id="diagnosis-page-rules-loading" /> : null}
         {regras.isError ? (
@@ -224,7 +264,11 @@ export function DiagnosisPage() {
           />
         ) : null}
 
-        {regras.data ? (
+        {regras.data && regrasFiltradas.length === 0 ? (
+          <Empty id="diagnosis-page-rules-empty" label={t('diagnosis.filters.none')} />
+        ) : null}
+
+        {regras.data && regrasFiltradas.length > 0 ? (
           <div
             id="diagnosis-page-rules-table-wrapper"
             className="br-table"
@@ -269,7 +313,7 @@ export function DiagnosisPage() {
                 </tr>
               </thead>
               <tbody id="diagnosis-page-rules-table-body">
-                {regras.data.results.map((regra) => (
+                {regrasFiltradas.map((regra) => (
                   <tr id={`diagnosis-page-rule-${regra.ruleId}`} key={regra.ruleId}>
                     {/*
                       A coluna "Regra" leva o nome, não o `ruleID`. O número é
@@ -278,6 +322,20 @@ export function DiagnosisPage() {
                       que é onde precisa ser único e estável.
                     */}
                     <td id={`diagnosis-page-rule-${regra.ruleId}-name`} className="px-3 py-2">
+                      {/*
+                        O identificador volta à tela, mas antes do nome e em tom
+                        secundário, não em coluna própria: é a chave pela qual a
+                        origem, o suporte e as próprias URLs de filtro
+                        (`invalidRule=110`) chamam a regra, e sem ele não há como
+                        casar o que está aqui com o que se lê lá. O nome
+                        continua sendo o que se lê primeiro.
+                      */}
+                      <span
+                        id={`diagnosis-page-rule-${regra.ruleId}-id`}
+                        className="text-gray-70 mr-1"
+                      >
+                        {regra.ruleId}
+                      </span>
                       <span
                         id={`diagnosis-page-rule-${regra.ruleId}-name-text`}
                         className="text-medium"

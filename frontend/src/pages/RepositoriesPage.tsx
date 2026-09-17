@@ -1,12 +1,14 @@
+import { BrInput } from '@govbr-ds/react-components'
 import { useQuery } from '@tanstack/react-query'
 import { lazy, Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 
 import { useAuth } from '@/auth/context'
 import { HarvestStatusBadge, Tag } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
+import { Pagination } from '@/components/Pagination'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UsersIcon } from '@/components/UsersIcon'
 import { estadoExcepcional } from '@/lib/harvestStatus'
@@ -85,13 +87,81 @@ function ordenarPorAtencao(itens: RepositoryAccessSummary[]) {
   )
 }
 
+/**
+ * Quantos repositórios por página.
+ *
+ * Seis, e não vinte: cada linha é um cartão alto — identificação de um lado,
+ * quatro indicadores e as regras mais violadas do outro —, e seis já ocupam
+ * mais de uma tela. A paginação existe para não obrigar a rolar o acervo
+ * inteiro à procura de um repositório.
+ */
+const POR_PAGINA = 6
+
+/** Sem acento e em minúsculas: quem busca "institucao" espera achar "instituição". */
+const comparavel = (texto: string) =>
+  texto
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+
 /** Painel do gestor: apenas os repositórios vinculados à sua conta. */
 function MyRepositoriesPage() {
   const { t } = useTranslation()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { data, isPending, isError, error, refetch } = useQuery(repositoriesSummaryQuery)
 
-  // Antes dos retornos antecipados: hook não pode ficar atrás de condicional.
+  const busca = searchParams.get('q') ?? ''
+  const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
+
+  /*
+   * Busca e paginação acontecem no navegador, e não no servidor.
+   *
+   * O `/repositories/summary/` compõe cada linha a partir do Harvester e devolve
+   * o painel inteiro numa requisição cacheada; paginar no servidor não pouparia
+   * nada dessa ida à origem — ele teria de compor tudo de novo para saber o que
+   * cabe na página — e cada tecla digitada custaria uma requisição. É a mesma
+   * razão pela qual a tela de administração pagina no navegador e a de registros
+   * pagina no servidor: escala, não gosto. Um gestor tem dezenas de vínculos,
+   * uma coleta tem dezenas de milhares de registros.
+   *
+   * O recorte vive na URL, como o resto da aplicação: sobrevive ao botão voltar
+   * e pode ser colado para outra pessoa.
+   */
   const ordenados = useMemo(() => ordenarPorAtencao(data?.results ?? []), [data?.results])
+
+  const filtrados = useMemo(() => {
+    const termo = comparavel(busca.trim())
+    if (!termo) return ordenados
+    return ordenados.filter((acesso) =>
+      comparavel(
+        [acesso.name, acesso.acronym, acesso.institutionName].filter(Boolean).join(' '),
+      ).includes(termo),
+    )
+  }, [ordenados, busca])
+
+  const totalDePaginas = Math.max(1, Math.ceil(filtrados.length / POR_PAGINA))
+  const paginaAtual = Math.min(pagina, totalDePaginas)
+  const visiveis = filtrados.slice((paginaAtual - 1) * POR_PAGINA, paginaAtual * POR_PAGINA)
+
+  const alterarParams = (mudanca: (params: URLSearchParams) => void) => {
+    const params = new URLSearchParams(searchParams)
+    mudanca(params)
+    setSearchParams(params, { replace: true })
+  }
+
+  /** Buscar volta para a primeira página: a antiga pode não existir mais. */
+  const buscar = (valor: string) =>
+    alterarParams((params) => {
+      if (valor) params.set('q', valor)
+      else params.delete('q')
+      params.delete('page')
+    })
+
+  const irParaPagina = (destino: number) =>
+    alterarParams((params) => {
+      if (destino > 1) params.set('page', String(destino))
+      else params.delete('page')
+    })
 
   if (isPending)
     return <Loading id="my-repositories-loading" label={t('repositories.loadingStats')} />
@@ -111,22 +181,51 @@ function MyRepositoriesPage() {
         description={
           <>
             {t('repositories.subtitle', { count: data.count })}
+            {busca.trim() ? ` · ${t('repositories.found', { count: filtrados.length })}` : ''}
             {' · '}
             {t('repositories.sortedByAge')}
           </>
         }
       />
 
-      {ordenados.length === 0 ? (
-        <Empty id="my-repositories-empty" label={t('repositories.none')} />
+      {/*
+        A busca fica sempre visível, mesmo com poucos vínculos: quem sabe o que
+        procura digita a sigla em vez de percorrer os cartões, e esconder o
+        campo abaixo de um limiar faz o controle aparecer e desaparecer conforme
+        o acervo cresce.
+      */}
+      <BrInput
+        id="my-repositories-search"
+        label={t('repositories.search')}
+        value={busca}
+        icon="fas fa-search"
+        onChange={(evento) => buscar(evento.target.value)}
+      />
+
+      {filtrados.length === 0 ? (
+        <Empty
+          id="my-repositories-empty"
+          label={busca.trim() ? t('repositories.noneFound') : t('repositories.none')}
+        />
       ) : (
-        <ul id="my-repositories-list" className="plain-list d-flex flex-column gap-4">
-          {ordenados.map((acesso) => (
-            <li id={`my-repositories-item-${acesso.harvesterRepositoryId}`} key={acesso.id}>
-              <RepositoryRow acesso={acesso} />
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul id="my-repositories-list" className="plain-list d-flex flex-column gap-4">
+            {visiveis.map((acesso) => (
+              <li id={`my-repositories-item-${acesso.harvesterRepositoryId}`} key={acesso.id}>
+                <RepositoryRow acesso={acesso} />
+              </li>
+            ))}
+          </ul>
+
+          {totalDePaginas > 1 ? (
+            <Pagination
+              id="my-repositories-pagination"
+              page={paginaAtual}
+              totalPages={totalDePaginas}
+              onChange={irParaPagina}
+            />
+          ) : null}
+        </>
       )}
     </div>
   )

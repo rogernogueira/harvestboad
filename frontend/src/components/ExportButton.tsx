@@ -1,15 +1,15 @@
-import { BrButton } from '@govbr-ds/react-components'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ApiError, apiDownload } from '@/lib/api'
+import { CsvDownloadButton } from '@/components/CsvDownloadButton'
 import { filtersToParams, type RecordFilters } from '@/lib/filters'
 
 /**
- * Exportação CSV dos registros.
+ * Exportação CSV dos registros da coleta.
  *
- * Usa os mesmos filtros da tela, e o download passa pelo cliente autenticado:
- * um `<a href>` simples não carregaria o token JWT.
+ * O que este componente acrescenta ao `CsvDownloadButton` é uma coisa só, e é
+ * a que importa: os filtros da tela vão na query string, e o backend aplica os
+ * mesmos. O arquivo sai com o recorte que está à vista — exportar a coleta
+ * inteira quando a tela mostra 12 registros filtrados seria outra resposta.
  */
 export function ExportButton({
   id = 'export-button',
@@ -21,45 +21,15 @@ export function ExportButton({
   filters: RecordFilters
 }) {
   const { t } = useTranslation()
-  const [baixando, setBaixando] = useState(false)
-  const [erro, setErro] = useState<string | null>(null)
-
-  const exportar = async () => {
-    setBaixando(true)
-    setErro(null)
-    try {
-      const params = filtersToParams(filters)
-      const query = params.toString()
-      await apiDownload(
-        `/reports/harvests/${snapshotId}/records.csv${query ? `?${query}` : ''}`,
-        `coleta-${snapshotId}.csv`,
-      )
-    } catch (error) {
-      setErro(error instanceof ApiError ? error.detail : t('common.error'))
-    } finally {
-      setBaixando(false)
-    }
-  }
+  const query = filtersToParams(filters).toString()
 
   return (
-    <div id={id} className="d-flex flex-column align-items-end">
-      <BrButton
-        id={`${id}-trigger`}
-        type="button"
-        secondary
-        size="small"
-        icon="fas fa-download"
-        onClick={() => void exportar()}
-        loading={baixando}
-        disabled={baixando}
-      >
-        {baixando ? t('records.exporting') : t('records.export')}
-      </BrButton>
-      {erro ? (
-        <span id={`${id}-error`} role="alert" className="text-down-01 text-red-vivid-60 mt-1">
-          {erro}
-        </span>
-      ) : null}
-    </div>
+    <CsvDownloadButton
+      id={id}
+      path={`/reports/harvests/${snapshotId}/records.csv${query ? `?${query}` : ''}`}
+      filename={`coleta-${snapshotId}.csv`}
+      label={t('records.export')}
+      loadingLabel={t('records.exporting')}
+    />
   )
 }

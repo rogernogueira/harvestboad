@@ -14,12 +14,24 @@ import {
 
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { HarvestStatusBadge } from '@/components/Badges'
+import { CsvDownloadButton } from '@/components/CsvDownloadButton'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
 import { StatCard } from '@/components/StatCard'
 import { repositoryHarvestsQuery, repositoryQuery } from '@/lib/queries'
 
 /** Visão geral do repositório e histórico de coletas. */
+/**
+ * Inválidos de uma coleta: o número que a origem não manda.
+ *
+ * `null` quando falta o total ou os válidos — a subtração aí seria invenção, e
+ * zero leria como "nenhum inválido", que é outra afirmação.
+ */
+function invalidos(coleta: { size: number | null; validSize: number | null }): number | null {
+  if (typeof coleta.size !== 'number' || typeof coleta.validSize !== 'number') return null
+  return Math.max(0, coleta.size - coleta.validSize)
+}
+
 export function RepositoryPage() {
   const { t, i18n } = useTranslation()
   const { repositoryId = '' } = useParams()
@@ -47,6 +59,8 @@ export function RepositoryPage() {
         data: (coleta.endTime ?? '').slice(0, 10),
         registros: coleta.size ?? 0,
         validos: coleta.validSize ?? 0,
+        // A origem não manda inválidos: é a diferença, a mesma conta do painel.
+        invalidos: invalidos(coleta) ?? 0,
       }))
   }, [coletas.data])
 
@@ -112,9 +126,23 @@ export function RepositoryPage() {
       </section>
 
       <section id="repository-page-harvests" className="d-flex flex-column gap-4">
-        <h2 id="repository-page-harvests-title" className="text-base text-bold">
-          {t('harvests.title')}
-        </h2>
+        <div
+          id="repository-page-harvests-toolbar"
+          className="d-flex flex-wrap align-items-center justify-content-between"
+          style={{ gap: 'var(--spacing-scale-2x)' }}
+        >
+          <h2 id="repository-page-harvests-title" className="text-base text-bold mb-0">
+            {t('harvests.title')}
+          </h2>
+          {coletas.data && coletas.data.count > 0 ? (
+            <CsvDownloadButton
+              id="repository-page-harvests-export"
+              path={`/reports/repositories/${repositoryId}/harvests.csv`}
+              filename={`repositorio-${repositoryId}-coletas.csv`}
+              label={t('harvests.exportHistory')}
+            />
+          ) : null}
+        </div>
 
         {coletas.isPending ? <Loading id="repository-page-harvests-loading" /> : null}
         {coletas.isError ? (
@@ -175,6 +203,14 @@ export function RepositoryPage() {
                         strokeWidth={2}
                         dot={false}
                       />
+                      <Line
+                        type="monotone"
+                        dataKey="invalidos"
+                        name={t('harvests.chartInvalid')}
+                        stroke="var(--color-down)"
+                        strokeWidth={2}
+                        dot={false}
+                      />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
@@ -204,6 +240,12 @@ export function RepositoryPage() {
                         {t('harvests.columns.status')}
                       </th>
                       <th
+                        id="repository-page-column-start"
+                        className="px-3 py-2 text-down-01 text-bold"
+                      >
+                        {t('harvests.columns.start')}
+                      </th>
+                      <th
                         id="repository-page-column-end"
                         className="px-3 py-2 text-down-01 text-bold"
                       >
@@ -220,6 +262,12 @@ export function RepositoryPage() {
                         className="px-3 py-2 text-down-01 text-bold"
                       >
                         {t('harvests.columns.valid')}
+                      </th>
+                      <th
+                        id="repository-page-column-invalid"
+                        className="px-3 py-2 text-down-01 text-bold"
+                      >
+                        {t('harvests.columns.invalid')}
                       </th>
                     </tr>
                   </thead>
@@ -251,10 +299,20 @@ export function RepositoryPage() {
                           />
                         </td>
                         <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-start`}
+                          className="px-3 py-2 text-gray-70"
+                        >
+                          {coleta.startTime
+                            ? dataFormat.format(new Date(coleta.startTime.replace(' ', 'T')))
+                            : '—'}
+                        </td>
+                        <td
                           id={`repository-page-harvest-${coleta.snapshotId}-end`}
                           className="px-3 py-2 text-gray-70"
                         >
-                          {coleta.endTime ? dataFormat.format(new Date(coleta.endTime)) : '—'}
+                          {coleta.endTime
+                            ? dataFormat.format(new Date(coleta.endTime.replace(' ', 'T')))
+                            : '—'}
                         </td>
                         <td
                           id={`repository-page-harvest-${coleta.snapshotId}-size`}
@@ -267,6 +325,12 @@ export function RepositoryPage() {
                           className="px-3 py-2"
                         >
                           {numero.format(coleta.validSize ?? 0)}
+                        </td>
+                        <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-invalid`}
+                          className="px-3 py-2"
+                        >
+                          {invalidos(coleta) === null ? '—' : numero.format(invalidos(coleta) ?? 0)}
                         </td>
                       </tr>
                     ))}

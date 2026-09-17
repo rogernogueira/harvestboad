@@ -86,7 +86,10 @@
     "openRecords": "See this harvest's records",
     "openValidRecords": "See this harvest's valid records",
     "openInvalidRecords": "See this harvest's invalid records",
-    "openDiagnosis": "See this harvest's diagnosis"
+    "openDiagnosis": "See this harvest's diagnosis",
+    "search": "Search by name, acronym or institution",
+    "found": "{{count}} in this view",
+    "noneFound": "No repository matches the search."
   },
   "repository": {
     "acronym": "Acronym",
@@ -104,17 +107,30 @@
       "status": "Status",
       "end": "Finished at",
       "size": "Records",
-      "valid": "Valid"
-    }
+      "valid": "Valid",
+      "start": "Start",
+      "invalid": "Invalid"
+    },
+    "exportHistory": "Export history",
+    "chartInvalid": "Invalid"
   },
   "harvest": {
     "title": "Harvest {{id}}",
     "breadcrumb": "Harvest {{id}}",
-    "endedAt": "finished at",
+    "endedAt": "End",
     "tabsLabel": "Harvest sections",
     "tabs": {
       "diagnosis": "Diagnosis",
       "records": "Records"
+    },
+    "startedAt": "Start",
+    "duration": "Duration",
+    "indexStatus": "Indexing",
+    "notIndexed": "Not indexed",
+    "units": {
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "s"
     }
   },
   "diagnosis": {
@@ -132,6 +148,19 @@
       "validCount": "Pass",
       "invalidCount": "Fail",
       "occurrences": "Occurrences"
+    },
+    "filters": {
+      "name": "Search by name or identifier",
+      "mandatory": "Requirement",
+      "anyMandatory": "Any requirement",
+      "onlyMandatory": "Mandatory only",
+      "onlyOptional": "Optional only",
+      "fails": "Failures",
+      "anyFails": "With or without failures",
+      "withFails": "With failures only",
+      "withoutFails": "Without failures only",
+      "showing": "· {{count}} in this view",
+      "none": "No rule matches this view."
     },
     "occurrences": {
       "open": "View occurrences for rule {{rule}}",
@@ -174,7 +203,9 @@
       "valid": "Validity",
       "transformed": "Transformed",
       "set": "Set",
-      "details": "Details"
+      "details": "Details",
+      "origin": "Origin",
+      "prefix": "Prefix"
     }
   },
   "record": {

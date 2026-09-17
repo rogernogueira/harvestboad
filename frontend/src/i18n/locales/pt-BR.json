@@ -87,7 +87,10 @@
     "openRecords": "Ver os registros desta coleta",
     "openValidRecords": "Ver os registros válidos desta coleta",
     "openInvalidRecords": "Ver os registros inválidos desta coleta",
-    "openDiagnosis": "Ver o diagnóstico desta coleta"
+    "openDiagnosis": "Ver o diagnóstico desta coleta",
+    "search": "Buscar por nome, sigla ou instituição",
+    "found": "{{count}} no recorte",
+    "noneFound": "Nenhum repositório corresponde à busca."
   },
   "repository": {
     "acronym": "Sigla",
@@ -105,17 +108,30 @@
       "status": "Situação",
       "end": "Encerrada em",
       "size": "Registros",
-      "valid": "Válidos"
-    }
+      "valid": "Válidos",
+      "start": "Início",
+      "invalid": "Inválidos"
+    },
+    "exportHistory": "Exportar histórico",
+    "chartInvalid": "Inválidos"
   },
   "harvest": {
     "title": "Coleta {{id}}",
     "breadcrumb": "Coleta {{id}}",
-    "endedAt": "encerrada em",
+    "endedAt": "Término",
     "tabsLabel": "Seções da coleta",
     "tabs": {
       "diagnosis": "Diagnóstico",
       "records": "Registros"
+    },
+    "startedAt": "Início",
+    "duration": "Duração",
+    "indexStatus": "Indexação",
+    "notIndexed": "Não indexada",
+    "units": {
+      "hours": "h",
+      "minutes": "min",
+      "seconds": "s"
     }
   },
   "diagnosis": {
@@ -133,6 +149,19 @@
       "validCount": "Atendem",
       "invalidCount": "Violam",
       "occurrences": "Ocorrências"
+    },
+    "filters": {
+      "name": "Buscar por nome ou identificador",
+      "mandatory": "Obrigatoriedade",
+      "anyMandatory": "Qualquer obrigatoriedade",
+      "onlyMandatory": "Só obrigatórias",
+      "onlyOptional": "Só opcionais",
+      "fails": "Falhas",
+      "anyFails": "Com ou sem falhas",
+      "withFails": "Só com falhas",
+      "withoutFails": "Só sem falhas",
+      "showing": "· {{count}} no recorte",
+      "none": "Nenhuma regra atende ao recorte."
     },
     "occurrences": {
       "open": "Ver as ocorrências da regra {{rule}}",
@@ -176,7 +205,9 @@
       "valid": "Validade",
       "transformed": "Transformado",
       "set": "Conjunto",
-      "details": "Detalhes"
+      "details": "Detalhes",
+      "origin": "Origem",
+      "prefix": "Prefixo"
     }
   },
   "record": {

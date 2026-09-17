@@ -113,6 +113,12 @@ export function RecordsPage() {
                   <th id="records-page-column-transformed" scope="col">
                     {t('records.columns.transformed')}
                   </th>
+                  <th id="records-page-column-origin" scope="col">
+                    {t('records.columns.origin')}
+                  </th>
+                  <th id="records-page-column-prefix" scope="col">
+                    {t('records.columns.prefix')}
+                  </th>
                   <th id="records-page-column-set" scope="col">
                     {t('records.columns.set')}
                   </th>
@@ -146,6 +152,27 @@ export function RecordsPage() {
                         : registro.isTransformed
                           ? t('common.yes')
                           : t('common.no')}
+                    </td>
+                    {/*
+                      A origem é o baseURL OAI de onde o registro veio, e não o
+                      cadastro atual do repositório: numa coleta a origem pode
+                      diferir de linha para linha (repositório migrado de
+                      endereço), e é ela que explica de onde saiu aquele
+                      metadado. Vai em fonte menor e com quebra porque é uma URL
+                      longa ao lado de colunas curtas.
+                    */}
+                    <td
+                      id={`records-page-row-${registro.id}-origin`}
+                      className="text-down-01 text-gray-70"
+                      style={{ wordBreak: 'break-all' }}
+                    >
+                      {registro.origin ?? '—'}
+                    </td>
+                    <td
+                      id={`records-page-row-${registro.id}-prefix`}
+                      className="text-down-01 text-gray-70"
+                    >
+                      {registro.metadataPrefix ?? '—'}
                     </td>
                     <td id={`records-page-row-${registro.id}-set`} className="text-gray-70">
                       {registro.setSpec ?? '—'}
