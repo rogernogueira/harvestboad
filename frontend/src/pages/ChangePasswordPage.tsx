@@ -1,3 +1,4 @@
+import { BrButton, BrInput, BrMessage } from '@govbr-ds/react-components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -64,83 +65,71 @@ export function ChangePasswordPage() {
   ] as const
 
   return (
-    <div id="change-password-page" className="mx-auto flex max-w-md flex-col gap-6">
-      <header id="change-password-header">
-        <h1 id="change-password-title" className="text-xl font-semibold">
+    <div id="change-password-page" className="mx-auto" style={{ maxWidth: '28rem' }}>
+      <header id="change-password-header" className="mb-3">
+        <h1 id="change-password-title" className="mt-0 mb-1">
           {t('auth.changePassword')}
         </h1>
         {user?.mustChangePassword ? (
-          <p id="change-password-required-hint" className="mt-1 text-sm text-warn">
-            {t('auth.mustChangePassword')}
-          </p>
+          <BrMessage
+            id="change-password-required-hint"
+            status="warning"
+            message={t('auth.mustChangePassword')}
+          />
         ) : null}
       </header>
 
-      <form
-        id="change-password-form"
-        onSubmit={(event) => void onSubmit(event)}
-        noValidate
-        className="flex flex-col gap-4"
-      >
+      <form id="change-password-form" onSubmit={(event) => void onSubmit(event)} noValidate>
         {campos.map((campo) => {
           const erro = errors[campo.name]
           return (
-            <label
+            <BrInput
               id={`change-password-field-${campo.name}`}
               key={campo.name}
-              className="flex flex-col gap-1.5"
-            >
-              <span
-                id={`change-password-field-${campo.name}-label`}
-                className="text-sm font-medium"
-              >
-                {t(campo.label)}
-              </span>
-              <input
-                id={`change-password-field-${campo.name}-input`}
-                type="password"
-                autoComplete={campo.autoComplete}
-                aria-invalid={erro ? true : undefined}
-                {...register(campo.name)}
-                className={`border bg-surface px-3 py-2 text-sm ${
-                  erro ? 'border-down' : 'border-border-subtle'
-                }`}
-              />
-              {erro?.message ? (
-                <span
-                  id={`change-password-field-${campo.name}-error`}
-                  role="alert"
-                  className="text-xs text-down"
-                >
-                  {t(erro.message)}
-                </span>
-              ) : null}
-            </label>
+              label={t(campo.label)}
+              type="password"
+              autoComplete={campo.autoComplete}
+              aria-invalid={erro ? true : undefined}
+              status={erro ? 'danger' : undefined}
+              feedbackText={erro?.message && t(erro.message)}
+              {...register(campo.name)}
+            />
           )
         })}
 
+        {/*
+          Erros vindos do backend, distintos da validação local: são as regras
+          de senha do Django, que chegam já traduzidas e podem ser mais de uma.
+          O `BrMessage` emite `role="alert"` por conta própria.
+        */}
         {erros.length ? (
-          <ul
+          <BrMessage
             id="change-password-errors"
-            role="alert"
-            className="flex flex-col gap-1 text-xs text-down"
-          >
-            {erros.map((mensagem, indice) => (
-              <li id={`change-password-error-${indice}`} key={mensagem}>
-                {mensagem}
-              </li>
-            ))}
-          </ul>
+            status="danger"
+            className="mt-3"
+            message={
+              <ul id="change-password-errors-list" className="mb-0">
+                {erros.map((mensagem, indice) => (
+                  <li id={`change-password-error-${indice}`} key={mensagem}>
+                    {mensagem}
+                  </li>
+                ))}
+              </ul>
+            }
+          />
         ) : null}
 
-        <button
+        <BrButton
           id="change-password-submit"
           type="submit"
+          primary
+          block
+          loading={isSubmitting}
           disabled={isSubmitting}
-          className="bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"
+          className="mt-4"
         >
           {isSubmitting ? t('common.saving') : t('common.save')}
-        </button>
+        </BrButton>
       </form>
     </div>
   )

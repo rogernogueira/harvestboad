@@ -75,56 +75,64 @@ export function DiagnosisPage() {
   const d = diagnostico.data
 
   return (
-    <div id="diagnosis-page" className="flex flex-col gap-8">
-      <section id="diagnosis-page-stats" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          id="diagnosis-page-stat-size"
-          label={t('diagnosis.size')}
-          value={numero.format(d.size ?? 0)}
-        />
-        <StatCard
-          id="diagnosis-page-stat-valid"
-          label={t('diagnosis.valid')}
-          value={
-            <Link
-              id="diagnosis-page-stat-valid-link"
-              to={linkValidade('true')}
-              className="hover:underline"
-            >
-              {numero.format(d.validSize ?? 0)}
-            </Link>
-          }
-          tone="ok"
-          hint={t('diagnosis.clickToFilter')}
-        />
-        <StatCard
-          id="diagnosis-page-stat-invalid"
-          label={t('diagnosis.invalid')}
-          value={
-            <Link
-              id="diagnosis-page-stat-invalid-link"
-              to={linkValidade('false')}
-              className="hover:underline"
-            >
-              {numero.format(d.invalidSize ?? 0)}
-            </Link>
-          }
-          tone="down"
-          hint={t('diagnosis.clickToFilter')}
-        />
-        <StatCard
-          id="diagnosis-page-stat-transformed"
-          label={t('diagnosis.transformed')}
-          value={numero.format(d.transformedSize ?? 0)}
-        />
+    <div id="diagnosis-page" className="d-flex flex-column gap-5">
+      <section id="diagnosis-page-stats" className="row mb-4">
+        <div id="diagnosis-page-stat-size-col" className="col-sm-6 col-lg-3 mb-2">
+          <StatCard
+            id="diagnosis-page-stat-size"
+            label={t('diagnosis.size')}
+            value={numero.format(d.size ?? 0)}
+          />
+        </div>
+        <div id="diagnosis-page-stat-valid-col" className="col-sm-6 col-lg-3 mb-2">
+          <StatCard
+            id="diagnosis-page-stat-valid"
+            label={t('diagnosis.valid')}
+            value={
+              <Link
+                id="diagnosis-page-stat-valid-link"
+                to={linkValidade('true')}
+                className="inherit-color"
+              >
+                {numero.format(d.validSize ?? 0)}
+              </Link>
+            }
+            tone="ok"
+            hint={t('diagnosis.clickToFilter')}
+          />
+        </div>
+        <div id="diagnosis-page-stat-invalid-col" className="col-sm-6 col-lg-3 mb-2">
+          <StatCard
+            id="diagnosis-page-stat-invalid"
+            label={t('diagnosis.invalid')}
+            value={
+              <Link
+                id="diagnosis-page-stat-invalid-link"
+                to={linkValidade('false')}
+                className="inherit-color"
+              >
+                {numero.format(d.invalidSize ?? 0)}
+              </Link>
+            }
+            tone="down"
+            hint={t('diagnosis.clickToFilter')}
+          />
+        </div>
+        <div id="diagnosis-page-stat-transformed-col" className="col-sm-6 col-lg-3 mb-2">
+          <StatCard
+            id="diagnosis-page-stat-transformed"
+            label={t('diagnosis.transformed')}
+            value={numero.format(d.transformedSize ?? 0)}
+          />
+        </div>
       </section>
 
       {grafico.length > 0 ? (
-        <section id="diagnosis-page-chart" className="panel p-4">
-          <h2 id="diagnosis-page-chart-title" className="mb-4 font-heading text-sm font-bold">
+        <section id="diagnosis-page-chart" className="br-card p-3 mb-4">
+          <h2 id="diagnosis-page-chart-title" className="mb-4 text-base text-bold">
             {t('diagnosis.topInvalidRules')}
           </h2>
-          <div id="diagnosis-page-chart-canvas" className="h-64 w-full">
+          <div id="diagnosis-page-chart-canvas" style={{ height: '16rem' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={grafico} margin={{ top: 8, right: 12, bottom: 16, left: 0 }}>
                 <CartesianGrid stroke="var(--color-border-subtle)" vertical={false} />
@@ -180,8 +188,8 @@ export function DiagnosisPage() {
         </section>
       ) : null}
 
-      <section id="diagnosis-page-rules" className="flex flex-col gap-3">
-        <h2 id="diagnosis-page-rules-title" className="font-heading text-sm font-bold">
+      <section id="diagnosis-page-rules" className="d-flex flex-column gap-3">
+        <h2 id="diagnosis-page-rules-title" className="text-base text-bold">
           {t('diagnosis.rules', { count: regras.data?.count ?? d.ruleCount })}
         </h2>
 
@@ -195,43 +203,35 @@ export function DiagnosisPage() {
         ) : null}
 
         {regras.data ? (
-          <div id="diagnosis-page-rules-table-wrapper" className="overflow-x-auto panel">
-            <table
-              id="diagnosis-page-rules-table"
-              className="w-full min-w-3xl border-collapse text-sm"
-            >
+          <div
+            id="diagnosis-page-rules-table-wrapper"
+            className="br-table"
+            style={{ overflowX: 'auto' }}
+          >
+            <table id="diagnosis-page-rules-table">
               <thead id="diagnosis-page-rules-table-head">
-                <tr
-                  id="diagnosis-page-rules-table-head-row"
-                  className="border-b border-border-subtle bg-surface-muted text-left"
-                >
-                  <th
-                    id="diagnosis-page-column-rule"
-                    className="px-4 py-3 font-heading text-xs font-bold"
-                  >
+                <tr id="diagnosis-page-rules-table-head-row" className="bg-gray-2 text-left">
+                  <th id="diagnosis-page-column-rule" className="px-3 py-2 text-down-01 text-bold">
                     {t('diagnosis.columns.rule')}
                   </th>
-                  <th
-                    id="diagnosis-page-column-name"
-                    className="px-4 py-3 font-heading text-xs font-bold"
-                  >
+                  <th id="diagnosis-page-column-name" className="px-3 py-2 text-down-01 text-bold">
                     {t('diagnosis.columns.name')}
                   </th>
                   <th
                     id="diagnosis-page-column-mandatory"
-                    className="px-4 py-3 font-heading text-xs font-bold"
+                    className="px-3 py-2 text-down-01 text-bold"
                   >
                     {t('diagnosis.columns.mandatory')}
                   </th>
                   <th
                     id="diagnosis-page-column-valid-count"
-                    className="px-4 py-3 text-right font-heading text-xs font-bold"
+                    className="px-3 py-2 text-right text-down-01 text-bold"
                   >
                     {t('diagnosis.columns.validCount')}
                   </th>
                   <th
                     id="diagnosis-page-column-invalid-count"
-                    className="px-4 py-3 text-right font-heading text-xs font-bold"
+                    className="px-3 py-2 text-right text-down-01 text-bold"
                   >
                     {t('diagnosis.columns.invalidCount')}
                   </th>
@@ -239,67 +239,63 @@ export function DiagnosisPage() {
               </thead>
               <tbody id="diagnosis-page-rules-table-body">
                 {regras.data.results.map((regra) => (
-                  <tr
-                    id={`diagnosis-page-rule-${regra.ruleId}`}
-                    key={regra.ruleId}
-                    className="border-b border-border-subtle last:border-0"
-                  >
+                  <tr id={`diagnosis-page-rule-${regra.ruleId}`} key={regra.ruleId}>
                     <td
                       id={`diagnosis-page-rule-${regra.ruleId}-id`}
-                      className="px-4 py-3 font-mono text-xs"
+                      className="px-3 py-2 text-down-01"
                     >
                       {regra.ruleId}
                     </td>
-                    <td id={`diagnosis-page-rule-${regra.ruleId}-name`} className="px-4 py-3">
+                    <td id={`diagnosis-page-rule-${regra.ruleId}-name`} className="px-3 py-2">
                       <span
                         id={`diagnosis-page-rule-${regra.ruleId}-name-text`}
-                        className="font-medium"
+                        className="text-medium"
                       >
                         {regra.name}
                       </span>
                       <span
                         id={`diagnosis-page-rule-${regra.ruleId}-description`}
-                        className="block text-xs text-content-muted"
+                        className="d-block text-down-01 text-gray-70"
                       >
                         {regra.description}
                       </span>
                     </td>
                     <td
                       id={`diagnosis-page-rule-${regra.ruleId}-mandatory`}
-                      className="px-4 py-3 text-content-muted"
+                      className="px-3 py-2 text-gray-70"
                     >
                       {regra.mandatory ? t('common.yes') : t('common.no')}
                     </td>
                     <td
                       id={`diagnosis-page-rule-${regra.ruleId}-valid-count`}
-                      className="px-4 py-3 text-right tabular-nums"
+                      className="px-3 py-2 text-right"
                     >
                       {regra.validCount ? (
                         <Link
                           id={`diagnosis-page-rule-${regra.ruleId}-valid-link`}
                           to={linkRegistros('validRule', String(regra.ruleId))}
-                          className="text-ok hover:underline"
+                          className="text-green-cool-vivid-50"
                         >
                           {numero.format(regra.validCount)}
                         </Link>
                       ) : (
-                        <span className="text-content-muted">—</span>
+                        <span className="text-gray-70">—</span>
                       )}
                     </td>
                     <td
                       id={`diagnosis-page-rule-${regra.ruleId}-invalid-count`}
-                      className="px-4 py-3 text-right tabular-nums"
+                      className="px-3 py-2 text-right"
                     >
                       {regra.invalidCount ? (
                         <Link
                           id={`diagnosis-page-rule-${regra.ruleId}-invalid-link`}
                           to={linkRegistros('invalidRule', String(regra.ruleId))}
-                          className="text-down hover:underline"
+                          className="text-red-vivid-50"
                         >
                           {numero.format(regra.invalidCount)}
                         </Link>
                       ) : (
-                        <span className="text-content-muted">—</span>
+                        <span className="text-gray-70">—</span>
                       )}
                     </td>
                   </tr>

@@ -30,4 +30,23 @@ void i18n
     },
   })
 
+/*
+ * Mantém o `lang` do documento igual ao idioma ativo.
+ *
+ * O `index.html` fixa `lang="pt-BR"`, e o atributo não acompanhava a troca de
+ * idioma: a página se anunciava como portuguesa mesmo inteira em inglês. Quem
+ * usa leitor de tela recebia texto inglês lido com fonética portuguesa, e o
+ * navegador oferecia tradução de uma página que já estava no idioma pedido.
+ *
+ * Fica aqui, e não num efeito de componente, porque não há nada para
+ * renderizar — é o próprio i18next quem sabe a hora, inclusive na carga
+ * inicial, quando o detector escolhe a partir do localStorage ou do navegador.
+ */
+const sincronizarLangDoDocumento = (idioma: string) => {
+  document.documentElement.lang = idioma
+}
+
+sincronizarLangDoDocumento(i18n.resolvedLanguage ?? 'pt-BR')
+i18n.on('languageChanged', sincronizarLangDoDocumento)
+
 export default i18n

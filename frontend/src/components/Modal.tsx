@@ -2,10 +2,15 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 /**
- * Diálogo modal sobre o `<dialog>` nativo.
+ * Diálogo modal sobre o `<dialog>` nativo, vestido com as classes do design
+ * system.
  *
- * O elemento nativo já entrega o que uma implementação manual teria de refazer:
- * captura de foco, fechamento por Esc e camada superior sem disputa de z-index.
+ * Continua sendo o elemento nativo, e não o `BrModal`, por acessibilidade. O
+ * `<dialog>` entrega de graça o que uma implementação manual teria de refazer:
+ * captura de foco, fechamento por Esc e camada superior sem disputa de
+ * z-index. O bundle do `BrModal` não traz `inert` nem utilitário de captura de
+ * foco, então trocar um pelo outro perderia a captura — e o `BrModal` também
+ * não aceita `id`, que aqui batiza o título.
  *
  * O `id` também batiza o título: como a tela de repositórios monta um modal por
  * linha, um `id` fixo no `<h2>` deixaria o `aria-labelledby` de todos apontando
@@ -47,18 +52,24 @@ export function Modal({
         if (event.target === ref.current) onFechar()
       }}
       aria-labelledby={`${id}-titulo`}
-      className="w-[min(32rem,calc(100vw-2rem))] border border-border-subtle bg-surface p-0 text-content backdrop:bg-black/40"
+      className="br-card p-0"
+      style={{
+        width: 'min(32rem, calc(100vw - 2rem))',
+        border: '1px solid var(--border-color)',
+        color: 'var(--color)',
+      }}
     >
       <div
         id={`${id}-header`}
-        className="flex items-start justify-between gap-4 border-b border-border-subtle px-5 py-4"
+        className="card-header d-flex align-items-start justify-content-between p-3"
+        style={{ gap: 'var(--spacing-scale-2x)' }}
       >
-        <div id={`${id}-header-text`} className="min-w-0">
-          <h2 id={`${id}-titulo`} className="font-heading text-base font-bold tracking-tight">
+        <div id={`${id}-header-text`} style={{ minWidth: 0 }}>
+          <h2 id={`${id}-titulo`} className="text-up-01 text-bold mt-0 mb-0">
             {titulo}
           </h2>
           {descricao ? (
-            <p id={`${id}-descricao`} className="mt-0.5 text-sm text-content-muted">
+            <p id={`${id}-descricao`} className="text-down-01 mt-1 mb-0">
               {descricao}
             </p>
           ) : null}
@@ -68,15 +79,17 @@ export function Modal({
           type="button"
           onClick={onFechar}
           aria-label={t('common.close')}
-          className="-mt-1 -mr-1 px-2 py-1 text-lg leading-none text-content-muted transition-colors duration-150 hover:text-content"
+          className="br-button circle small"
         >
-          <span id={`${id}-close-icon`} aria-hidden="true">
-            ×
-          </span>
+          <i className="fas fa-times" aria-hidden="true" />
         </button>
       </div>
 
-      <div id={`${id}-body`} className="max-h-[60vh] overflow-y-auto px-5 py-4">
+      <div
+        id={`${id}-body`}
+        className="card-content p-3"
+        style={{ maxHeight: '60vh', overflowY: 'auto' }}
+      >
         {children}
       </div>
     </dialog>

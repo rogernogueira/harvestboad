@@ -1,3 +1,4 @@
+import { BrButton } from '@govbr-ds/react-components'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -41,18 +42,21 @@ export function ExportButton({
   }
 
   return (
-    <div id={id} className="flex flex-col items-end gap-1">
-      <button
+    <div id={id} className="d-flex flex-column align-items-end">
+      <BrButton
         id={`${id}-trigger`}
         type="button"
+        secondary
+        size="small"
+        icon="fas fa-download"
         onClick={() => void exportar()}
+        loading={baixando}
         disabled={baixando}
-        className="border border-border-subtle px-3 py-1.5 text-sm hover:bg-border-subtle disabled:opacity-60"
       >
         {baixando ? t('records.exporting') : t('records.export')}
-      </button>
+      </BrButton>
       {erro ? (
-        <span id={`${id}-error`} role="alert" className="text-xs text-down">
+        <span id={`${id}-error`} role="alert" className="text-down-01 text-red-vivid-60 mt-1">
           {erro}
         </span>
       ) : null}

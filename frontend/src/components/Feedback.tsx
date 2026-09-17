@@ -1,27 +1,40 @@
+import { BrButton, BrLoading, BrMessage } from '@govbr-ds/react-components'
 import { useTranslation } from 'react-i18next'
 
 import { ApiError } from '@/lib/api'
 
+/**
+ * Estado de carregamento.
+ *
+ * O `BrLoading` entra dentro de um wrapper com `role="status"` porque ele não
+ * tem região viva: o componente renderiza só a roda e o rótulo, sem `role` nem
+ * `aria-live`, e sozinho não seria anunciado por leitor de tela. O `role` fica
+ * aqui, e não nele, porque ele também não aceita `id` nem `className` — as
+ * props são apenas `label` e `large`.
+ */
 export function Loading({ id = 'loading', label }: { id?: string; label?: string }) {
   const { t } = useTranslation()
   return (
-    <p id={id} className="flex items-center gap-2 py-8 text-sm text-content-muted" role="status">
-      <span
-        id={`${id}-spinner`}
-        aria-hidden="true"
-        className="inline-block size-3 animate-spin border-2 border-border-strong border-t-brand"
-      />
-      {label ?? t('common.loading')}
-    </p>
+    <div id={id} role="status" className="py-5">
+      <BrLoading label={label ?? t('common.loading')} />
+    </div>
   )
 }
 
+/**
+ * Lista vazia.
+ *
+ * Continua sendo markup próprio: o `BrMessage` com `status="info"` chamaria
+ * atenção demais para o que é ausência de resultado, não ocorrência.
+ */
 export function Empty({ id = 'empty', label }: { id?: string; label?: string }) {
   const { t } = useTranslation()
   return (
-    <p id={id} className="panel px-4 py-8 text-center text-sm text-content-muted">
-      {label ?? t('common.noResults')}
-    </p>
+    <div id={id} className="br-card">
+      <div id={`${id}-body`} className="card-content text-center py-5">
+        {label ?? t('common.noResults')}
+      </div>
+    </div>
   )
 }
 
@@ -31,6 +44,9 @@ export function Empty({ id = 'empty', label }: { id?: string; label?: string }) 
  * O backend distingue indisponibilidade temporária do Harvester (503) de erro
  * definitivo, e a mensagem muda junto: só faz sentido oferecer "tentar de novo"
  * no primeiro caso.
+ *
+ * O `BrMessage` já emite `role="alert"` por conta própria, então o aviso é
+ * anunciado sem precisarmos declarar o papel.
  */
 export function ErrorState({
   id = 'error-state',
@@ -53,19 +69,12 @@ export function ErrorState({
   else if (error instanceof ApiError) mensagem = error.detail
 
   return (
-    <div id={id} className="border-l-2 border-down bg-down-soft px-4 py-4">
-      <p id={`${id}-message`} className="text-sm text-down">
-        {mensagem}
-      </p>
+    <div id={id}>
+      <BrMessage id={`${id}-message`} status="danger" message={mensagem} />
       {onRetry && transitorio ? (
-        <button
-          id={`${id}-retry`}
-          type="button"
-          onClick={onRetry}
-          className="mt-3 bg-brand px-3 py-1.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-strong"
-        >
+        <BrButton id={`${id}-retry`} type="button" secondary onClick={onRetry} className="mt-2">
           {t('common.retry')}
-        </button>
+        </BrButton>
       ) : null}
     </div>
   )

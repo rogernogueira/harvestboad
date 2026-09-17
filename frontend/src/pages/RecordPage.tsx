@@ -46,8 +46,8 @@ export function RecordPage() {
   ]
 
   return (
-    <div id="record-page" className="flex flex-col gap-6">
-      <div id="record-page-heading">
+    <div id="record-page">
+      <div id="record-page-heading" className="mb-3">
         <Breadcrumb
           id="record-page-breadcrumb"
           items={[
@@ -57,8 +57,18 @@ export function RecordPage() {
             { label: t('record.title') },
           ]}
         />
-        <div id="record-page-title-row" className="flex flex-wrap items-center gap-3">
-          <h1 id="record-page-title" className="font-mono text-base break-all">
+        <div id="record-page-title-row" className="d-flex flex-wrap align-items-center gap-3">
+          {/*
+            Também abaixo do tamanho de h1 do core: o título aqui é o
+            identificador OAI cru, uma string longa e sem espaços que já quebra
+            em mais de uma linha. A 29px ele ocuparia a tela inteira antes do
+            conteúdo do registro.
+          */}
+          <h1
+            id="record-page-title"
+            className="text-up-01 mt-0 mb-0"
+            style={{ wordBreak: 'break-all' }}
+          >
             {r.identifier}
           </h1>
           <ValidityBadge id="record-page-validity" valid={r.isValid} />
@@ -71,21 +81,30 @@ export function RecordPage() {
         </div>
       </div>
 
-      <section id="record-page-fields" className="panel">
-        <dl id="record-page-fields-list" className="divide-y divide-border-subtle text-sm">
-          {campos.map(([chave, rotulo, valor]) => (
+      <section id="record-page-fields" className="br-card mb-4">
+        <dl id="record-page-fields-list" className="card-content mb-0">
+          {campos.map(([chave, rotulo, valor], indice) => (
             <div
               id={`record-page-field-${chave}`}
               key={chave}
-              className="flex flex-wrap gap-2 px-4 py-3"
+              className="d-flex flex-wrap py-2"
+              style={{
+                gap: 'var(--spacing-scale-base)',
+                borderTop: indice > 0 ? '1px solid var(--border-color)' : undefined,
+              }}
             >
               <dt
                 id={`record-page-field-${chave}-label`}
-                className="w-44 shrink-0 text-content-muted"
+                className="text-gray-70 flex-shrink-0"
+                style={{ width: '11rem' }}
               >
                 {rotulo}
               </dt>
-              <dd id={`record-page-field-${chave}-value`} className="break-all">
+              <dd
+                id={`record-page-field-${chave}-value`}
+                className="mb-0"
+                style={{ wordBreak: 'break-all' }}
+              >
                 {valor ?? '—'}
               </dd>
             </div>
@@ -93,8 +112,8 @@ export function RecordPage() {
         </dl>
       </section>
 
-      <section id="record-page-xml" className="flex flex-col gap-3">
-        <h2 id="record-page-xml-title" className="font-heading text-sm font-bold">
+      <section id="record-page-xml">
+        <h2 id="record-page-xml-title" className="text-up-01 text-bold mt-0 mb-2">
           {t('record.xml')}
         </h2>
 
@@ -105,9 +124,9 @@ export function RecordPage() {
             // O Harvester responde 200 com uma mensagem de texto quando o
             // relatório de diagnóstico está desatualizado; o backend traduz
             // isso em 404. Não é erro do usuário nem falha de rede.
-            <p id="record-page-xml-unavailable" className="panel p-4 text-sm text-content-muted">
-              {t('record.xmlUnavailable')}
-            </p>
+            <div id="record-page-xml-unavailable" className="br-card">
+              <p className="card-content text-gray-70 mb-0">{t('record.xmlUnavailable')}</p>
+            </div>
           ) : (
             <ErrorState
               id="record-page-xml-error"
@@ -118,7 +137,11 @@ export function RecordPage() {
         ) : null}
 
         {xml.data ? (
-          <pre id="record-page-xml-content" className="overflow-x-auto panel p-4 font-mono text-xs">
+          <pre
+            id="record-page-xml-content"
+            className="br-card p-3 text-down-01 mb-0"
+            style={{ overflowX: 'auto' }}
+          >
             <code id="record-page-xml-code">{xml.data}</code>
           </pre>
         ) : null}

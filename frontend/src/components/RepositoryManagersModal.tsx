@@ -53,41 +53,48 @@ export function RepositoryManagersModal({
         data.count === 0 ? (
           <Empty id={`${idBase}-empty`} label={t('managers.none')} />
         ) : (
-          <ul id={`${idBase}-list`} className="divide-y divide-border-subtle">
-            {data.results.map((gestor) => (
+          <ul id={`${idBase}-list`} className="plain-list">
+            {data.results.map((gestor, indice) => (
               <li
                 id={`${idBase}-item-${gestor.id}`}
                 key={gestor.id}
-                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3"
+                className="d-flex flex-wrap align-items-baseline py-2"
+                style={{
+                  gap: 'var(--spacing-scale-baseh)',
+                  borderTop: indice > 0 ? '1px solid var(--border-color)' : undefined,
+                }}
               >
-                <span id={`${idBase}-item-${gestor.id}-username`} className="font-semibold">
+                <span id={`${idBase}-item-${gestor.id}-username`} className="text-semi-bold">
                   {gestor.username}
                 </span>
                 {gestor.fullName ? (
-                  <span
-                    id={`${idBase}-item-${gestor.id}-fullname`}
-                    className="text-sm text-content-muted"
-                  >
+                  <span id={`${idBase}-item-${gestor.id}-fullname`} className="text-gray-70">
                     {gestor.fullName}
                   </span>
                 ) : null}
                 <span
                   id={`${idBase}-item-${gestor.id}-profile`}
-                  className="eyebrow !text-brand-strong"
+                  className="eyebrow"
+                  style={{ color: 'var(--blue-warm-vivid-80)' }}
                 >
                   {gestor.profileDisplay}
                 </span>
                 {!gestor.isActive ? (
                   <span
                     id={`${idBase}-item-${gestor.id}-inactive`}
-                    className="bg-warn-soft px-1.5 py-0.5 text-[0.65rem] text-warn"
+                    className="br-tag text warning"
+                    // Mesma correção do `Badges.tsx`: o amarelo do design
+                    // system com o texto branco dele dá 1,50 de contraste, e o
+                    // padrão exige 4,5:1. Em `--gray-80`, a cor da função
+                    // Leitura, dá 8,42.
+                    style={{ color: 'var(--gray-80)' }}
                   >
                     {t('managers.inactive')}
                   </span>
                 ) : null}
                 <span
                   id={`${idBase}-item-${gestor.id}-since`}
-                  className="ml-auto text-xs text-content-muted"
+                  className="text-down-01 text-gray-70 ml-auto"
                 >
                   {t('access.since', { date: data_.format(new Date(gestor.grantedAt)) })}
                 </span>
@@ -95,7 +102,8 @@ export function RepositoryManagersModal({
                 {gestor.email ? (
                   <span
                     id={`${idBase}-item-${gestor.id}-email`}
-                    className="w-full text-xs text-content-muted"
+                    className="text-down-01 text-gray-70"
+                    style={{ width: '100%' }}
                   >
                     {gestor.email}
                   </span>

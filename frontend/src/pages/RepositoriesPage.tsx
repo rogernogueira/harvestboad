@@ -9,6 +9,7 @@ import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UsersIcon } from '@/components/UsersIcon'
+import { estadoExcepcional } from '@/lib/harvestStatus'
 import { repositoriesSummaryQuery } from '@/lib/queries'
 import type { LastHarvestSummary, RepositoryAccessSummary } from '@/lib/types'
 
@@ -98,7 +99,7 @@ function MyRepositoriesPage() {
     return <ErrorState id="my-repositories-error" error={error} onRetry={() => void refetch()} />
 
   return (
-    <div id="my-repositories-page" className="flex flex-col gap-6">
+    <div id="my-repositories-page" className="d-flex flex-column gap-4">
       {/*
         Sem eyebrow: aqui ele repetiria o título. O rótulo existe para situar a
         tela numa seção — é o que faz em "Administração" —, e esta não está sob
@@ -119,7 +120,7 @@ function MyRepositoriesPage() {
       {ordenados.length === 0 ? (
         <Empty id="my-repositories-empty" label={t('repositories.none')} />
       ) : (
-        <ul id="my-repositories-list" className="flex flex-col gap-4">
+        <ul id="my-repositories-list" className="plain-list d-flex flex-column gap-4">
           {ordenados.map((acesso) => (
             <li id={`my-repositories-item-${acesso.harvesterRepositoryId}`} key={acesso.id}>
               <RepositoryRow acesso={acesso} />
@@ -140,75 +141,95 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
   // os ids desta subárvore.
   const id = `repository-row-${acesso.harvesterRepositoryId}`
 
+  /*
+   * `mb-0` anula a margem inferior que o `.br-card` traz de fábrica (16px). A
+   * lista já separa os cartões com `gap-4` (24px), e o padrão manda que entre
+   * dois espaçamentos em sequência prevaleça o maior — não a soma. Sem isto a
+   * distância sai 40px, que é a soma dos dois.
+   */
   return (
-    <article
-      id={id}
-      className="panel grid gap-px overflow-hidden bg-border-subtle lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]"
-    >
-      {/* Identificação */}
-      <div id={`${id}-identity`} className="flex flex-col gap-1 bg-surface p-5">
-        <span id={`${id}-identity-top`} className="flex items-center justify-between gap-2">
-          <span id={`${id}-acronym`} className="eyebrow !text-brand-strong">
-            {acesso.acronym}
-          </span>
-          <button
-            id={`${id}-managers-button`}
-            type="button"
-            onClick={() => setGestoresAbertos(true)}
-            title={t('managers.open')}
-            aria-label={t('managers.open')}
-            className="-mt-1 -mr-1 p-1.5 text-content-muted transition-colors duration-150 hover:text-brand-strong"
+    <article id={id} className="br-card mb-0">
+      {/*
+        Gutter zerado. O `.row` do design system aplica margem negativa de meio
+        gutter (−12px) nas laterais, para que o padding das colunas produza o
+        respiro. Aqui as colunas usam `p-3` (16px), e a margem negativa comia
+        12px dela: o texto ficava a **4px** da borda do cartão, encostado nela.
+        Sem gutter, os 16px do padding valem inteiros.
+      */}
+      <div id={`${id}-grid`} className="row" style={{ ['--grid-gutter' as string]: '0' }}>
+        {/* Identificação */}
+        <div id={`${id}-identity`} className="col-lg-5 d-flex flex-column gap-half p-3">
+          <span
+            id={`${id}-identity-top`}
+            className="d-flex align-items-center justify-content-between gap-2"
           >
-            <UsersIcon id={`${id}-managers-icon`} />
-          </button>
-        </span>
-        <Link
-          id={`${id}-name`}
-          to={`/repositorios/${acesso.harvesterRepositoryId}`}
-          className="font-heading text-lg font-bold tracking-tight hover:text-brand-strong hover:underline"
-        >
-          {acesso.name ?? t('repositories.unnamed')}
-        </Link>
-        {acesso.institutionName ? (
-          <span id={`${id}-institution`} className="text-sm text-content-muted">
-            {acesso.institutionName}
+            <span
+              id={`${id}-acronym`}
+              className="eyebrow"
+              style={{ color: 'var(--blue-warm-vivid-80)' }}
+            >
+              {acesso.acronym}
+            </span>
+            <button
+              id={`${id}-managers-button`}
+              type="button"
+              onClick={() => setGestoresAbertos(true)}
+              title={t('managers.open')}
+              aria-label={t('managers.open')}
+              className="br-button circle small"
+            >
+              <UsersIcon id={`${id}-managers-icon`} />
+            </button>
           </span>
-        ) : null}
-        <span id={`${id}-granted-at`} className="mt-auto pt-3 text-xs text-content-muted">
-          {t('repositories.grantedAt', {
-            date: new Date(acesso.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
-          })}
-        </span>
-
-        <RepositoryManagersModal
-          id={`${id}-managers-modal`}
-          aberto={gestoresAbertos}
-          onFechar={() => setGestoresAbertos(false)}
-          repositoryId={acesso.harvesterRepositoryId}
-          repositorio={`${acesso.acronym} · ${nomeRepositorio}`}
-        />
-      </div>
-
-      {/* Estatísticas da última coleta */}
-      <div id={`${id}-stats`} className="bg-surface p-5">
-        {acesso.unavailable ? (
-          <p
-            id={`${id}-stats-unavailable`}
-            className="border-l-2 border-warn bg-warn-soft px-3 py-2 text-sm text-warn"
+          <Link
+            id={`${id}-name`}
+            to={`/repositorios/${acesso.harvesterRepositoryId}`}
+            className="text-up-01 text-bold"
           >
-            {t('repositories.statsUnavailable')}
-          </p>
-        ) : acesso.lastHarvest ? (
-          <HarvestStats
-            id={`${id}-harvest`}
-            coleta={acesso.lastHarvest}
+            {acesso.name ?? t('repositories.unnamed')}
+          </Link>
+          {acesso.institutionName ? (
+            <span id={`${id}-institution`} className="text-base text-gray-70">
+              {acesso.institutionName}
+            </span>
+          ) : null}
+          <span id={`${id}-granted-at`} className="mt-auto pt-3 text-down-01 text-gray-70">
+            {t('repositories.grantedAt', {
+              date: new Date(acesso.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
+            })}
+          </span>
+
+          <RepositoryManagersModal
+            id={`${id}-managers-modal`}
+            aberto={gestoresAbertos}
+            onFechar={() => setGestoresAbertos(false)}
             repositoryId={acesso.harvesterRepositoryId}
+            repositorio={`${acesso.acronym} · ${nomeRepositorio}`}
           />
-        ) : (
-          <p id={`${id}-stats-none`} className="text-sm text-content-muted">
-            {t('harvests.none')}
-          </p>
-        )}
+        </div>
+
+        {/* Estatísticas da última coleta */}
+        <div id={`${id}-stats`} className="col-lg-7 column-divider p-3">
+          {acesso.unavailable ? (
+            <p
+              id={`${id}-stats-unavailable`}
+              className="bg-yellow-vivid-5 px-2 py-2 text-base text-gold-vivid-60"
+              style={{ borderLeft: '2px solid var(--gold-vivid-60)' }}
+            >
+              {t('repositories.statsUnavailable')}
+            </p>
+          ) : acesso.lastHarvest ? (
+            <HarvestStats
+              id={`${id}-harvest`}
+              coleta={acesso.lastHarvest}
+              repositoryId={acesso.harvesterRepositoryId}
+            />
+          ) : (
+            <p id={`${id}-stats-none`} className="text-base text-gray-70">
+              {t('harvests.none')}
+            </p>
+          )}
+        </div>
       </div>
     </article>
   )
@@ -266,12 +287,95 @@ function IdadeDaColeta({ id, fim, snapshotId }: { id: string; fim: Date; snapsho
       id={id}
       to={`/coletas/${snapshotId}`}
       aria-label={t('repositories.openLastHarvest')}
-      className="transition-opacity duration-150 hover:opacity-80"
+      className="d-block"
     >
       <Tag id={`${id}-tag`} tone={tone}>
         {rotulo}
       </Tag>
     </Link>
+  )
+}
+
+interface Indicador {
+  chave: string
+  rotulo: string
+  valor: number | null | undefined
+  cor: string
+  emFicha: boolean
+  para: string | null
+  titulo: string
+}
+
+/**
+ * Um par rótulo/valor da fileira de indicadores.
+ *
+ * A altura mínima do valor (`4xh`, 36px) é maior que a da ficha de violações,
+ * que renderiza a 31px. Sem isso a ficha define a altura da própria célula e as
+ * bases dos quatro números saem desalinhadas — degrau visível numa fileira
+ * curta. Com a mínima acima das duas, todas as células ficam iguais.
+ */
+function Indicador({
+  id,
+  item,
+  numero,
+  snapshotId,
+}: {
+  id: string
+  item: Indicador
+  numero: Intl.NumberFormat
+  snapshotId: string
+}) {
+  const destino = item.emFicha ? (item.para ?? `/coletas/${snapshotId}`) : item.para
+  const conteudo = item.valor === null || item.valor === undefined ? '—' : numero.format(item.valor)
+
+  return (
+    /*
+      Cada indicador é um cartão, e o cartão inteiro é o alvo — não só os
+      dígitos. Em "Inválidos: 1" o número tinha menos de 10px de largura
+      clicável; agora o alvo é o bloco.
+
+      `position: relative` é requisito do `.stretched-link`: sem ele o pseudo se
+      estica até o primeiro ancestral posicionado. A classe `hover` só entra
+      quando há destino, para o cartão não sugerir clique onde não há.
+    */
+    <div
+      id={id}
+      className={`br-card mb-0 ${destino ? 'hover' : ''}`}
+      style={{ position: 'relative' }}
+    >
+      <div id={`${id}-body`} className="card-content p-2">
+        <dt id={`${id}-label`} className="eyebrow">
+          {item.rotulo}
+        </dt>
+        <dd
+          id={`${id}-value`}
+          className={`text-up-02 text-bold d-flex align-items-center mb-0 ${item.cor}`}
+          style={{
+            fontVariantNumeric: 'tabular-nums',
+            minHeight: 'var(--spacing-scale-4xh)',
+          }}
+        >
+          {destino ? (
+            <Link
+              id={`${id}-link`}
+              to={destino}
+              title={item.titulo}
+              className={item.emFicha ? 'stretched-link' : 'inherit-color stretched-link'}
+            >
+              {item.emFicha ? (
+                <Tag id={`${id}-tag`} tone="warn" size="medium">
+                  {conteudo}
+                </Tag>
+              ) : (
+                conteudo
+              )}
+            </Link>
+          ) : (
+            conteudo
+          )}
+        </dd>
+      </div>
+    </div>
   )
 }
 
@@ -311,9 +415,10 @@ function HarvestStats({
     coleta é indexada: com `UNKNOWN` ou `FAILED` o link abriria uma tela vazia.
     E zero inválidos não tem o que listar.
   */
-  const indicadores = [
+  const contagensDeRegistro = [
     {
       chave: 'size',
+      emFicha: false,
       rotulo: t('diagnosis.size'),
       valor: coleta.size,
       cor: '',
@@ -322,48 +427,97 @@ function HarvestStats({
     },
     {
       chave: 'valid',
+      emFicha: false,
       rotulo: t('diagnosis.valid'),
       valor: coleta.validSize,
-      cor: tom(coleta.validSize, 'text-ok'),
+      cor: tom(coleta.validSize, 'text-green-cool-vivid-50'),
       para: coleta.validSize ? `${registros}?valid=true` : null,
       titulo: t('repositories.openValidRecords'),
     },
     {
       chave: 'invalid',
+      emFicha: false,
       rotulo: t('diagnosis.invalid'),
       valor: coleta.invalidSize,
-      cor: tom(coleta.invalidSize, 'text-down'),
+      cor: tom(coleta.invalidSize, 'text-red-vivid-50'),
       para: coleta.invalidSize ? `${registros}?valid=false` : null,
       titulo: t('repositories.openInvalidRecords'),
     },
+  ]
+
+  /*
+    As violações contam **regras**, não registros — por isso saem da lista
+    acima. Os três números de cima somam entre si (válidos + inválidos = total);
+    este mede outra coisa, e ficar na mesma fileira sugeria uma relação
+    aritmética que não existe.
+  */
+  const contagensDeRegra = [
     {
       chave: 'violated-rules',
       rotulo: t('repositories.violatedRules'),
       valor: coleta.violatedRuleCount,
-      cor: tom(coleta.violatedRuleCount, 'text-warn'),
+      cor: '',
+      /*
+        Único indicador que vira ficha, e por um motivo de contraste: o padrão
+        define Alerta como #ffcd07, que dá 1,50 sobre branco e não pode ser
+        texto. Como preenchimento de ficha ele é elemento gráfico, e aí a cor
+        do padrão entra sem adaptação — o texto por cima é o da função Leitura.
+
+        Só com violação: uma ficha amarela escrita "0" leria como aviso o que é
+        justamente a ausência dele. É a mesma regra do `tom()` logo acima.
+      */
+      emFicha: Boolean(coleta.violatedRuleCount),
       para: coleta.violatedRuleCount ? `/coletas/${coleta.snapshotId}` : null,
       titulo: t('repositories.openDiagnosis'),
     },
   ]
 
   return (
-    <div id={id} className="flex h-full flex-col gap-4">
-      <div id={`${id}-summary`} className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span id={`${id}-summary-label`} className="eyebrow">
-          {t('repositories.lastHarvest')}
-        </span>
+    <div id={id} className="d-flex flex-column gap-2">
+      <div
+        id={`${id}-summary`}
+        className="d-flex flex-wrap align-items-center"
+        style={{ columnGap: 'var(--spacing-scale-2x)', rowGap: 'var(--spacing-scale-half)' }}
+      >
+        {/*
+          O rótulo e o número da coleta viraram um alvo só. Antes o "Última
+          coleta" era texto morto e quem clicava era o `#105828` ao lado — um
+          alvo de poucos pixels, feito de um número que só quem conhece o
+          Harvester reconhece. O botão nomeia o destino, carrega o número e dá
+          área de clique.
+
+          Sem `secondary`: a base do `.br-button` é transparente e sem borda.
+          Com o contorno o botão era o elemento mais pesado da linha — 8.226px²,
+          quatro vezes a área do selo mais chamativo — e competia com a
+          identidade do repositório, que é o que deve ser lido primeiro.
+
+          O estilo do ícone é `fas` (Solid), não `fal` (Light): o Light é
+          exclusivo do Font Awesome Pro e o projeto usa o pacote livre. Com
+          `fal` a classe não existe, o glifo cai na fonte de texto e sai uma
+          caixa vazia; com `far` este ícone específico não tem variante no peso
+          400 e não renderiza nada.
+        */}
         <Link
           id={`${id}-snapshot-link`}
           to={`/coletas/${coleta.snapshotId}`}
-          className="font-mono text-xs text-brand-strong hover:underline"
+          className="br-button small px-0"
         >
-          #{coleta.snapshotId}
+          <i className="fas fa-file-medical-alt" aria-hidden="true" />
+          {t('repositories.lastHarvest')} #{coleta.snapshotId}
         </Link>
-        {coleta.status ? <HarvestStatusBadge id={`${id}-status`} status={coleta.status} /> : null}
         {fimValido ? (
           <IdadeDaColeta id={`${id}-age`} fim={fim} snapshotId={coleta.snapshotId} />
         ) : null}
-        <span id={`${id}-end-time`} className="text-xs text-content-muted">
+        {/*
+          O selo só aparece no que foge do normal. Numa lista de seis
+          repositórios todos válidos, ele era seis vezes o mesmo verde — ocupava
+          o lugar mais chamativo da linha sem distinguir nada, e disputava
+          atenção com a ficha de idade, que é o dado que varia.
+        */}
+        {estadoExcepcional(coleta.status) ? (
+          <HarvestStatusBadge id={`${id}-status`} status={coleta.status as string} />
+        ) : null}
+        <span id={`${id}-end-time`} className="text-down-01 text-gray-70">
           {fimValido ? dataHora.format(fim) : '—'}
         </span>
         {/*
@@ -374,7 +528,8 @@ function HarvestStats({
         {coleta.evaluated ? null : (
           <span
             id={`${id}-not-evaluated`}
-            className="text-xs text-content-muted italic"
+            className="text-down-01 text-gray-70"
+            style={{ fontStyle: 'italic' }}
             title={coleta.indexStatus ?? ''}
           >
             {t('repositories.notEvaluated')}
@@ -382,77 +537,68 @@ function HarvestStats({
         )}
       </div>
 
-      <dl id={`${id}-indicators`} className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
-        {indicadores.map((item) => (
-          <div id={`${id}-indicator-${item.chave}`} key={item.chave}>
-            <dt id={`${id}-indicator-${item.chave}-label`} className="eyebrow">
-              {item.rotulo}
-            </dt>
-            <dd
-              id={`${id}-indicator-${item.chave}-value`}
-              className={`font-heading text-xl font-extrabold tabular-nums ${item.cor}`}
-            >
-              {item.valor === null || item.valor === undefined ? (
-                '—'
-              ) : item.para ? (
-                <Link
-                  id={`${id}-indicator-${item.chave}-link`}
-                  to={item.para}
-                  title={item.titulo}
-                  className="hover:underline"
-                >
-                  {numero.format(item.valor)}
-                </Link>
-              ) : (
-                numero.format(item.valor)
-              )}
-            </dd>
-          </div>
+      {/*
+        Uma fileira só, em grade de quatro colunas iguais. A separação por
+        distância que havia entre contagens de registro e de regra saiu: com
+        cada indicador em cartão, é a borda que delimita cada medida, e o vão
+        maior no meio virava um buraco sem função.
+
+        Grade, e não flex: em flex cada cartão media o próprio conteúdo, e
+        "65.529" ficava com o dobro da largura de "1". A grade dá a mesma
+        coluna a todos, o que faz a fileira ler como uma unidade.
+      */}
+      <dl id={`${id}-indicators-records`} className="indicator-grid mb-0">
+        {[...contagensDeRegistro, ...contagensDeRegra].map((item) => (
+          <Indicador
+            key={item.chave}
+            id={`${id}-indicator-${item.chave}`}
+            item={item}
+            numero={numero}
+            snapshotId={coleta.snapshotId}
+          />
         ))}
       </dl>
 
       {coleta.topViolations.length > 0 ? (
         <div id={`${id}-violations`} className="mt-auto">
-          <p id={`${id}-violations-label`} className="eyebrow mb-1.5">
+          <p id={`${id}-violations-label`} className="eyebrow mb-1">
             {t('repositories.topViolations')}
           </p>
-          <ul id={`${id}-violations-list`} className="flex flex-col gap-1">
+          <ul id={`${id}-violations-list`} className="plain-list d-flex flex-column gap-half">
             {coleta.topViolations.map((violacao) => (
-              <li
-                id={`${id}-violation-${violacao.ruleId}`}
-                key={violacao.ruleId}
-                className="flex items-baseline gap-2 text-xs"
-              >
+              <li id={`${id}-violation-${violacao.ruleId}`} key={violacao.ruleId}>
+                {/*
+                  A linha inteira é o link — nome, linha pontilhada e contagem.
+                  Antes só o nome clicava, num alvo de 45×17px: abaixo dos 24px
+                  que a WCAG 2.2 pede, e difícil de acertar no toque. Com o
+                  `Link` em `flex` o alvo passa a ocupar a largura da coluna, e
+                  a contagem, que é o número que motiva o clique, deixa de ser
+                  texto morto ao lado do que se clica.
+                */}
                 <Link
                   id={`${id}-violation-${violacao.ruleId}-link`}
                   to={`/coletas/${coleta.snapshotId}/registros?invalidRule=${violacao.ruleId}`}
-                  className="text-brand-strong hover:underline"
                   title={t('repositories.seeRecords')}
+                  className="d-flex align-items-baseline gap-2 text-down-01 py-1"
                 >
-                  {violacao.name}
+                  <span id={`${id}-violation-${violacao.ruleId}-name`}>{violacao.name}</span>
+                  <span
+                    id={`${id}-violation-${violacao.ruleId}-leader`}
+                    className="flex-grow-1"
+                    style={{ borderBottom: '1px dotted var(--border-color)' }}
+                  />
+                  <span id={`${id}-violation-${violacao.ruleId}-count`} className="text-gray-70">
+                    {numero.format(violacao.invalidCount)}
+                  </span>
                 </Link>
-                <span
-                  id={`${id}-violation-${violacao.ruleId}-leader`}
-                  className="flex-1 border-b border-dotted border-border-strong"
-                />
-                <span
-                  id={`${id}-violation-${violacao.ruleId}-count`}
-                  className="tabular-nums text-content-muted"
-                >
-                  {numero.format(violacao.invalidCount)}
-                </span>
               </li>
             ))}
           </ul>
         </div>
       ) : null}
 
-      <p id={`${id}-history`} className="text-xs text-content-muted">
-        <Link
-          id={`${id}-history-link`}
-          to={`/repositorios/${repositoryId}`}
-          className="hover:underline"
-        >
+      <p id={`${id}-history`} className="text-down-01 text-gray-70 mb-0">
+        <Link id={`${id}-history-link`} to={`/repositorios/${repositoryId}`}>
           {t('repositories.seeHistory')}
         </Link>
       </p>

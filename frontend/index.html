@@ -6,11 +6,16 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HarvestBoard — IBICT</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Rawline é a fonte do Padrão Digital de Governo. Ela não vem no pacote
+      @govbr-ds/core — o core só declara `--font-family-base: Rawline, Raleway,
+      sans-serif` e nenhum @font-face —, então sem este link tudo cai no
+      sans-serif do sistema e as métricas do design saem erradas.
+    -->
+    <link rel="preconnect" href="https://cdngovbr-ds.estaleiro.serpro.gov.br" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap"
       rel="stylesheet"
+      href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"
     />
   </head>
   <body>

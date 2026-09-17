@@ -18,8 +18,9 @@ const PAGE_SIZE = 20
  *
  * Paginação e filtros são resolvidos no servidor: a coleta tem dezenas de
  * milhares de registros e trazer tudo para o navegador não é opção. A tabela
- * apenas apresenta a página corrente — daí ser HTML puro, como as demais do
- * projeto. Ordenar só os 20 visíveis daria a ilusão de ordenar o conjunto.
+ * apenas apresenta a página corrente — daí ser HTML puro sobre as classes
+ * `br-table`, e não uma tabela com estado. Ordenar só os 20 visíveis daria a
+ * ilusão de ordenar o conjunto.
  */
 export function RecordsPage() {
   const { t } = useTranslation()
@@ -67,13 +68,17 @@ export function RecordsPage() {
     return <ErrorState id="records-page-error" error={error} onRetry={() => void refetch()} />
 
   return (
-    <div id="records-page" className="flex flex-col gap-4">
-      <div id="records-page-toolbar" className="flex flex-wrap items-start justify-between gap-4">
+    <div id="records-page">
+      <div
+        id="records-page-toolbar"
+        className="d-flex flex-wrap align-items-start justify-content-between mb-3"
+        style={{ gap: 'var(--spacing-scale-2x)' }}
+      >
         <FilterBar id="records-page-filters" filters={filtros} onChange={aplicarFiltros} />
         <ExportButton id="records-page-export" snapshotId={snapshotId} filters={filtros} />
       </div>
 
-      <p id="records-page-total" className="text-sm text-content-muted">
+      <p id="records-page-total" className="text-gray-70 mb-2">
         {t('records.total', { count: data.totalElements ?? 0 })}
         {isFetching ? ` · ${t('common.loading')}` : ''}
       </p>
@@ -82,81 +87,55 @@ export function RecordsPage() {
         <Empty id="records-page-empty" label={t('records.none')} />
       ) : (
         <>
-          <div id="records-page-table-wrapper" className="panel overflow-x-auto">
-            <table id="records-page-table" className="w-full min-w-3xl border-collapse text-sm">
+          <div
+            id="records-page-table-wrapper"
+            className="br-table mb-3"
+            style={{ overflowX: 'auto' }}
+          >
+            <table id="records-page-table">
               <thead id="records-page-table-head">
-                <tr
-                  id="records-page-table-head-row"
-                  className="border-b border-border-subtle bg-surface-muted text-left"
-                >
-                  <th
-                    id="records-page-column-identifier"
-                    className="px-4 py-3 font-heading text-xs font-bold"
-                  >
+                <tr id="records-page-table-head-row">
+                  <th id="records-page-column-identifier" scope="col">
                     {t('records.columns.identifier')}
                   </th>
-                  <th
-                    id="records-page-column-valid"
-                    className="px-4 py-3 font-heading text-xs font-bold"
-                  >
+                  <th id="records-page-column-valid" scope="col">
                     {t('records.columns.valid')}
                   </th>
-                  <th
-                    id="records-page-column-transformed"
-                    className="px-4 py-3 font-heading text-xs font-bold"
-                  >
+                  <th id="records-page-column-transformed" scope="col">
                     {t('records.columns.transformed')}
                   </th>
-                  <th
-                    id="records-page-column-set"
-                    className="px-4 py-3 font-heading text-xs font-bold"
-                  >
+                  <th id="records-page-column-set" scope="col">
                     {t('records.columns.set')}
                   </th>
                 </tr>
               </thead>
               <tbody id="records-page-table-body">
                 {registros.map((registro) => (
-                  <tr
-                    id={`records-page-row-${registro.id}`}
-                    key={registro.id}
-                    className="border-b border-border-subtle last:border-0"
-                  >
-                    <td
-                      id={`records-page-row-${registro.id}-identifier`}
-                      className="px-4 py-3 align-top"
-                    >
+                  <tr id={`records-page-row-${registro.id}`} key={registro.id}>
+                    <td id={`records-page-row-${registro.id}-identifier`}>
                       <Link
                         id={`records-page-row-${registro.id}-link`}
                         to={`/coletas/${snapshotId}/registros/${registro.identifier}${sufixoFiltros}`}
-                        className="font-mono text-xs break-all text-brand-strong hover:underline"
+                        className="text-down-01"
+                        style={{ wordBreak: 'break-all' }}
                       >
                         {registro.identifier}
                       </Link>
                     </td>
-                    <td
-                      id={`records-page-row-${registro.id}-valid`}
-                      className="px-4 py-3 align-top"
-                    >
+                    <td id={`records-page-row-${registro.id}-valid`}>
                       <ValidityBadge
                         id={`records-page-row-${registro.id}-validity`}
                         valid={registro.isValid}
                       />
                     </td>
-                    <td
-                      id={`records-page-row-${registro.id}-transformed`}
-                      className="px-4 py-3 align-top"
-                    >
+                    <td id={`records-page-row-${registro.id}-transformed`}>
                       {registro.isTransformed === null || registro.isTransformed === undefined
                         ? '—'
                         : registro.isTransformed
                           ? t('common.yes')
                           : t('common.no')}
                     </td>
-                    <td
-                      id={`records-page-row-${registro.id}-set`}
-                      className="px-4 py-3 align-top text-content-muted"
-                    >
+                    <td id={`records-page-row-${registro.id}-set`} className="text-gray-70">
                       {registro.setSpec ?? '—'}
                     </td>
                   </tr>

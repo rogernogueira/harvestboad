@@ -61,6 +61,8 @@
   },
   "pagination": {
     "page": "Page {{page}} of {{total}}",
+    "label": "Pagination",
+    "goToPage": "Page {{page}}",
     "previous": "Previous",
     "next": "Next"
   },
@@ -75,7 +77,7 @@
     "sortedByAge": "sorted by oldest harvest first",
     "openLastHarvest": "Open the last harvest",
     "lastHarvest": "Last harvest",
-    "violatedRules": "Violated rules",
+    "violatedRules": "Violations",
     "topViolations": "Most violated rules",
     "seeRecords": "See the records violating this rule",
     "statsUnavailable": "Statistics unavailable: the Harvester did not respond for this repository.",
@@ -109,6 +111,7 @@
     "title": "Harvest {{id}}",
     "breadcrumb": "Harvest {{id}}",
     "endedAt": "finished at",
+    "tabsLabel": "Harvest sections",
     "tabs": {
       "diagnosis": "Diagnosis",
       "records": "Records"
@@ -191,7 +194,9 @@
   },
   "nav": {
     "main": "Main navigation",
+    "breadcrumb": "Breadcrumb",
     "sections": "Sections",
+    "skipToContent": "Skip to content",
     "repositories": "Repositories",
     "access": "Access",
     "toggleMenu": "Open or close the menu"

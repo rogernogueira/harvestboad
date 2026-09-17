@@ -5,18 +5,14 @@ export function NotFoundPage() {
   const { t } = useTranslation()
 
   return (
-    <section id="not-found-page" className="py-16 text-center">
-      <h1 id="not-found-page-title" className="text-2xl font-semibold">
+    <section id="not-found-page" className="text-center py-6">
+      <h1 id="not-found-page-title" className="mt-0 mb-1">
         {t('notFound.title')}
       </h1>
-      <p id="not-found-page-description" className="mt-2 text-content-muted">
+      <p id="not-found-page-description" className="text-base mb-3">
         {t('notFound.description')}
       </p>
-      <Link
-        id="not-found-page-back"
-        to="/"
-        className="mt-6 inline-block bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong"
-      >
+      <Link id="not-found-page-back" to="/" className="br-button primary">
         {t('notFound.back')}
       </Link>
     </section>

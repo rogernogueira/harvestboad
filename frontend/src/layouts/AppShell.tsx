@@ -1,3 +1,4 @@
+import { BrSkipLink } from '@govbr-ds/react-components'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
@@ -8,25 +9,40 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 interface NavItem {
   to: string
   label: string
+  icon: string
   end: boolean
   adminOnly?: boolean
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { to: '/', label: 'nav.repositories', end: true },
-  { to: '/acessos', label: 'nav.access', end: false, adminOnly: true },
+  { to: '/', label: 'nav.repositories', icon: 'fas fa-database', end: true },
+  { to: '/acessos', label: 'nav.access', icon: 'fas fa-users', end: false, adminOnly: true },
 ]
 
 /** Identificador de navegação a partir da rota, para o id sair legível. */
 const navId = (to: string) => (to === '/' ? 'home' : to.replace(/^\//, '').replace(/\//g, '-'))
 
 /**
- * Moldura do painel.
+ * Moldura do painel, no Padrão Digital de Governo.
  *
- * Segue a especificação de design: faixa institucional no topo, marca,
- * navegação com underline animado e blocos angulares. A estrutura é de
- * dashboard — navegação lateral persistente em telas grandes e conteúdo à
- * direita —, não de landing page.
+ * O cabeçalho e a navegação são markup próprio sobre as classes `br-header` e
+ * `br-list` do core, e não os componentes `BrHeader`/`BrMenu`. Dois motivos
+ * medidos, não de gosto:
+ *
+ * 1. O `BrHeader` embute `aria-label` em português no código — "Abrir Acesso
+ *    Rápido", "Menu" — sem prop que os sobrescreva. Confirmado renderizando a
+ *    página com `lang="en"`: os rótulos saem em português. O projeto exige que
+ *    todo texto visível passe por `t()` nos três idiomas, e rótulo de leitor de
+ *    tela é texto visível para quem depende dele.
+ * 2. O `BrMenu` é gaveta, não barra lateral: com `type="push"` ele renderiza
+ *    com altura 0 até ser acionado. A navegação daqui é persistente em telas
+ *    largas, e trocá-la por gaveta seria mudança de uso, não de visual.
+ *
+ * O `BrSkipLink` continua sendo o componente do design system — ele não tem
+ * rótulo embutido, recebe o texto por prop.
+ *
+ * A marca gráfica do gov.br não é usada: o `header-logo` recebe o lockup do
+ * HarvestBoard e o `header-sign` a assinatura do IBICT.
  */
 export function AppShell() {
   const { t } = useTranslation()
@@ -36,149 +52,154 @@ export function AppShell() {
 
   const itens = NAV_ITEMS.filter((item) => !item.adminOnly || user?.profile === 'ADMIN')
 
-  const linkClasses = ({ isActive }: { isActive: boolean }) =>
-    `block border-l-2 px-4 py-2.5 text-sm transition-colors duration-150 ${
-      isActive
-        ? 'border-brand bg-brand-soft font-semibold text-brand-strong'
-        : 'border-transparent text-content-muted hover:border-border-strong hover:text-content'
-    }`
+  const itemClasses = ({ isActive }: { isActive: boolean }) => `br-item ${isActive ? 'active' : ''}`
 
   return (
-    <div id="app-shell" className="min-h-dvh bg-surface-muted">
-      {/* Faixa institucional */}
-      <div id="app-shell-institution-bar" className="bg-brand-strong text-white">
-        <div
-          id="app-shell-institution-bar-inner"
-          className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5"
-        >
-          <p id="app-shell-institution-name" className="eyebrow !text-white/85">
-            {t('app.institution')}
-          </p>
-          <LanguageSwitcher id="app-shell-language-switcher" />
-        </div>
-      </div>
+    <div id="app-shell" className="d-flex flex-column" style={{ minHeight: '100dvh' }}>
+      {/*
+        Salto para o conteúdo: ganho novo da migração. Antes, quem navegava por
+        teclado percorria o cabeçalho e a navegação inteiros, a cada troca de
+        página, antes de chegar ao conteúdo.
+      */}
+      <BrSkipLink data={[{ link: '#app-shell-main', label: t('nav.skipToContent') }]} />
 
-      {/* Barra principal */}
-      <header
-        id="app-shell-header"
-        className="sticky top-0 z-20 border-b border-border-subtle bg-surface"
-      >
-        <div
-          id="app-shell-header-inner"
-          className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3"
-        >
-          <button
-            id="app-shell-menu-toggle"
-            type="button"
-            onClick={() => setMenuAberto((aberto) => !aberto)}
-            aria-expanded={menuAberto}
-            aria-label={t('nav.toggleMenu')}
-            className="-ml-1 rounded-card p-2 text-content-muted hover:bg-surface-muted lg:hidden"
-          >
-            <span
-              id="app-shell-menu-toggle-icon"
-              aria-hidden="true"
-              className="block text-lg leading-none"
-            >
-              {menuAberto ? '×' : '≡'}
-            </span>
-          </button>
-
-          {/*
-            Lockup horizontal, 44px — a mesma altura que o par nome + eyebrow
-            ocupava, então o cabeçalho não muda de tamanho.
-
-            O eyebrow sai porque o nome já vem desenhado na logo: o símbolo ocupa
-            68% da altura da arte e o wordmark só 24%, então a 44px o nome tem
-            10,5px de caixa alta. Com "Repositórios e coletas" embaixo, a tagline
-            ficaria maior que a marca que ela qualifica.
-
-            O alt carrega o nome acessível do link, que antes vinha do texto.
-          */}
-          <Link id="app-shell-logo-link" to="/" className="mr-auto">
-            <img
-              id="app-shell-logo"
-              src="/logoHB-horizontal.svg"
-              alt={t('app.name')}
-              className="h-11 w-auto"
-            />
-          </Link>
-
-          {user ? (
-            <div id="app-shell-user" className="flex items-center gap-3">
-              <div id="app-shell-user-identity" className="hidden text-right sm:block">
-                <p id="app-shell-user-username" className="text-sm font-semibold">
-                  {user.username}
-                </p>
-                <p id="app-shell-user-profile" className="eyebrow !text-brand-strong">
-                  {user.profileDisplay}
-                </p>
-              </div>
-              <Link
-                id="app-shell-change-password"
-                to="/trocar-senha"
-                className="hidden border border-border-subtle px-3 py-1.5 text-sm text-content-muted transition-colors duration-150 hover:border-brand hover:text-brand-strong sm:block"
-              >
-                {t('auth.changePassword')}
+      <header id="app-shell-header" className="br-header" data-sticky="data-sticky">
+        <div id="app-shell-header-inner" className="container-lg">
+          <div id="app-shell-header-top" className="header-top">
+            <div id="app-shell-header-logo" className="header-logo">
+              {/*
+                Altura explícita no `img`: no exemplo do design system ele é
+                filho direto do `.header-logo`, que é flex. Envolvê-lo no `Link`
+                — necessário para a marca levar à home — cria um item flex sem
+                largura própria, e o SVG colapsava para 0×0. O `max-height` de
+                40px do DS continua valendo por cima.
+              */}
+              <Link id="app-shell-logo-link" to="/" className="d-inline-flex align-items-center">
+                <img
+                  id="app-shell-logo"
+                  src="/logoHB-horizontal.svg"
+                  alt={t('app.name')}
+                  style={{ height: '40px', width: 'auto' }}
+                />
               </Link>
-              <button
-                id="app-shell-logout"
-                type="button"
-                onClick={logout}
-                className="border border-border-subtle px-3 py-1.5 text-sm transition-colors duration-150 hover:border-brand hover:text-brand-strong"
-              >
-                {t('auth.logout')}
-              </button>
+              <span className="br-divider vertical" aria-hidden="true" />
+              <div id="app-shell-institution-name" className="header-sign">
+                {t('app.institution')}
+              </div>
             </div>
-          ) : null}
+
+            <div id="app-shell-header-actions" className="header-actions">
+              <LanguageSwitcher id="app-shell-language-switcher" />
+
+              {user ? (
+                <>
+                  <span className="br-divider vertical mx-1" aria-hidden="true" />
+                  <div id="app-shell-user" className="d-flex align-items-center">
+                    <div id="app-shell-user-identity" className="d-none d-sm-block text-right mr-2">
+                      <p id="app-shell-user-username" className="text-base text-semi-bold mb-0">
+                        {user.username}
+                      </p>
+                      <p id="app-shell-user-profile" className="eyebrow mb-0">
+                        {user.profileDisplay}
+                      </p>
+                    </div>
+                    <Link
+                      id="app-shell-change-password"
+                      to="/trocar-senha"
+                      className="br-button secondary small d-none d-sm-inline-flex mr-2"
+                    >
+                      {t('auth.changePassword')}
+                    </Link>
+                    <button
+                      id="app-shell-logout"
+                      type="button"
+                      onClick={logout}
+                      className="br-button secondary small"
+                    >
+                      {t('auth.logout')}
+                    </button>
+                  </div>
+                </>
+              ) : null}
+            </div>
+          </div>
+
+          <div id="app-shell-header-bottom" className="header-bottom">
+            <div id="app-shell-header-menu" className="header-menu">
+              <div id="app-shell-menu-trigger" className="header-menu-trigger d-lg-none">
+                <button
+                  id="app-shell-menu-toggle"
+                  className="br-button small circle"
+                  type="button"
+                  onClick={() => setMenuAberto((aberto) => !aberto)}
+                  aria-expanded={menuAberto}
+                  aria-controls="app-shell-nav"
+                  aria-label={t('nav.toggleMenu')}
+                >
+                  <i className={menuAberto ? 'fas fa-times' : 'fas fa-bars'} aria-hidden="true" />
+                </button>
+              </div>
+              <div id="app-shell-header-info" className="header-info">
+                <div id="app-shell-header-title" className="header-title">
+                  {t('app.name')}
+                </div>
+                <div id="app-shell-header-subtitle" className="header-subtitle">
+                  {t('app.tagline')}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      <div id="app-shell-body" className="mx-auto flex max-w-7xl gap-8 px-4 py-6">
-        {/* Navegação lateral */}
-        <nav
-          id="app-shell-nav"
-          aria-label={t('nav.main')}
-          className={`${menuAberto ? 'block' : 'hidden'} w-full shrink-0 lg:block lg:w-56`}
-        >
-          <p id="app-shell-nav-label" className="eyebrow mb-2 px-4">
-            {t('nav.sections')}
-          </p>
-          <ul id="app-shell-nav-list" className="border-l border-border-subtle">
-            {itens.map((item) => (
-              <li id={`app-shell-nav-item-${navId(item.to)}`} key={item.to}>
+      <div id="app-shell-body" className="container-lg flex-grow-1">
+        <div id="app-shell-body-row" className="row">
+          <nav
+            id="app-shell-nav"
+            aria-label={t('nav.main')}
+            className={`col-lg-3 py-4 ${menuAberto ? 'd-block' : 'd-none'} d-lg-block`}
+          >
+            <p id="app-shell-nav-label" className="eyebrow mb-1">
+              {t('nav.sections')}
+            </p>
+            <div id="app-shell-nav-list" className="br-list">
+              {itens.map((item) => (
                 <NavLink
                   id={`app-shell-nav-link-${navId(item.to)}`}
+                  key={item.to}
                   to={item.to}
                   end={item.end}
                   onClick={() => setMenuAberto(false)}
-                  className={linkClasses}
+                  className={itemClasses}
                 >
-                  {t(item.label)}
+                  <span className="content">
+                    <i className={`${item.icon} mr-2`} aria-hidden="true" />
+                    {t(item.label)}
+                  </span>
                 </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
+              ))}
+            </div>
+          </nav>
 
-        <main
-          id="app-shell-main"
-          className={`${menuAberto ? 'hidden' : 'block'} min-w-0 flex-1 lg:block`}
-          key={location.pathname}
-        >
-          <Outlet />
-        </main>
+          <main
+            id="app-shell-main"
+            className={`col-lg-9 py-4 ${menuAberto ? 'd-none' : 'd-block'} d-lg-block`}
+            key={location.pathname}
+          >
+            <Outlet />
+          </main>
+        </div>
       </div>
 
-      <footer id="app-shell-footer" className="mt-8 border-t border-border-subtle bg-surface">
+      <footer id="app-shell-footer" className="bg-pure-0 mt-4">
         <div
           id="app-shell-footer-inner"
-          className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-6"
+          className="container-lg d-flex flex-wrap align-items-center justify-content-between py-4"
         >
-          <p id="app-shell-footer-text" className="text-sm text-content-muted">
+          <p id="app-shell-footer-text" className="text-base mb-0">
             {t('app.footer')}
           </p>
-          <p id="app-shell-footer-institution" className="eyebrow">
+          <p id="app-shell-footer-institution" className="eyebrow mb-0">
             {t('app.institution')}
           </p>
         </div>

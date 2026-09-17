@@ -1,3 +1,4 @@
+import { BrButton, BrInput, BrMessage } from '@govbr-ds/react-components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useEffect } from 'react'
@@ -134,79 +135,71 @@ export function NewUserModal({
       <form
         id={`${id}-form`}
         noValidate
-        className="flex flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault()
           void handleSubmit((valores) => criar.mutateAsync(valores).catch(() => undefined))(event)
         }}
       >
-        <div id={`${id}-fields`} className="grid gap-3 sm:grid-cols-2">
+        <div id={`${id}-fields`} className="row">
           {campos.map((campo) => {
             const erro = errors[campo.name]
             return (
-              <label
-                id={`${id}-field-${campo.name}`}
-                key={campo.name}
-                className="flex flex-col gap-1.5"
-              >
-                <span id={`${id}-field-${campo.name}-label`} className="eyebrow">
-                  {t(campo.label)}
-                </span>
-                <input
+              <div id={`${id}-field-${campo.name}`} key={campo.name} className="col-sm-6">
+                <BrInput
                   id={`${id}-field-${campo.name}-input`}
+                  label={t(campo.label)}
                   type={campo.type}
                   autoComplete={campo.autoComplete}
                   aria-invalid={erro ? true : undefined}
+                  status={erro ? 'danger' : undefined}
+                  feedbackText={
+                    // Chave de tradução (Zod) ou mensagem já pronta do backend.
+                    erro?.message
+                      ? erro.message.startsWith('newUser.')
+                        ? t(erro.message)
+                        : erro.message
+                      : undefined
+                  }
                   {...register(campo.name)}
-                  className={`border bg-surface px-3 py-2 text-sm ${
-                    erro ? 'border-down' : 'border-border-subtle'
-                  }`}
                 />
-                {erro?.message ? (
-                  <span
-                    id={`${id}-field-${campo.name}-error`}
-                    role="alert"
-                    className="text-xs text-down"
-                  >
-                    {/* Chave de tradução (Zod) ou mensagem já pronta do backend. */}
-                    {erro.message.startsWith('newUser.') ? t(erro.message) : erro.message}
-                  </span>
-                ) : null}
-              </label>
+              </div>
             )
           })}
         </div>
 
-        <p
+        <BrMessage
           id={`${id}-provisional-hint`}
-          className="border-l-2 border-brand bg-brand-soft px-3 py-2 text-xs text-brand-strong"
-        >
-          {t('newUser.provisionalPassword')}
-        </p>
+          status="info"
+          message={t('newUser.provisionalPassword')}
+          className="mt-2"
+        />
 
         {errors.root?.message ? (
-          <p id={`${id}-error`} role="alert" className="text-sm text-down">
-            {errors.root.message}
-          </p>
+          <BrMessage
+            id={`${id}-error`}
+            status="danger"
+            message={errors.root.message}
+            className="mt-2"
+          />
         ) : null}
 
-        <div id={`${id}-actions`} className="flex justify-end gap-2">
-          <button
-            id={`${id}-cancel`}
-            type="button"
-            onClick={onFechar}
-            className="border border-border-subtle px-4 py-2 text-sm transition-colors duration-150 hover:border-brand"
-          >
+        <div
+          id={`${id}-actions`}
+          className="d-flex justify-content-end mt-3"
+          style={{ gap: 'var(--spacing-scale-base)' }}
+        >
+          <BrButton id={`${id}-cancel`} type="button" secondary onClick={onFechar}>
             {t('common.cancel')}
-          </button>
-          <button
+          </BrButton>
+          <BrButton
             id={`${id}-submit`}
             type="submit"
+            primary
+            loading={isSubmitting}
             disabled={isSubmitting}
-            className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-strong disabled:opacity-50"
           >
             {isSubmitting ? t('newUser.creating') : t('newUser.create')}
-          </button>
+          </BrButton>
         </div>
       </form>
     </Modal>

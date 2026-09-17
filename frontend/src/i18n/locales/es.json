@@ -61,6 +61,8 @@
   },
   "pagination": {
     "page": "Página {{page}} de {{total}}",
+    "label": "Paginación",
+    "goToPage": "Página {{page}}",
     "previous": "Anterior",
     "next": "Siguiente"
   },
@@ -76,7 +78,7 @@
     "sortedByAge": "ordenados por la recolección más antigua primero",
     "openLastHarvest": "Abrir la última recolección",
     "lastHarvest": "Última recolección",
-    "violatedRules": "Reglas infringidas",
+    "violatedRules": "Infracciones",
     "topViolations": "Reglas con más infracciones",
     "seeRecords": "Ver los registros que infringen esta regla",
     "statsUnavailable": "Estadísticas no disponibles: el Harvester no respondió para este repositorio.",
@@ -110,6 +112,7 @@
     "title": "Recolección {{id}}",
     "breadcrumb": "Recolección {{id}}",
     "endedAt": "finalizada el",
+    "tabsLabel": "Secciones de la recolección",
     "tabs": {
       "diagnosis": "Diagnóstico",
       "records": "Registros"
@@ -193,7 +196,9 @@
   },
   "nav": {
     "main": "Navegación principal",
+    "breadcrumb": "Ruta de navegación",
     "sections": "Secciones",
+    "skipToContent": "Ir al contenido",
     "repositories": "Repositorios",
     "access": "Accesos",
     "toggleMenu": "Abrir o cerrar el menú"

@@ -153,6 +153,50 @@ A tabela de registros pagina **no servidor** (dezenas de milhares de linhas) e a
 de administração pagina **no navegador** (~2.200 linhas buscadas de uma vez, com
 TanStack Table). A diferença é de escala, não de gosto: não uniformize as duas.
 
+### Padrão Digital de Governo
+
+A interface segue o [gov.br/ds](https://www.gov.br/ds). Não há Tailwind: o
+estilo vem de `@govbr-ds/core` e os componentes de `@govbr-ds/react-components`,
+com Font Awesome **5** (o core referencia `"Font Awesome 5 Free"`; na 6 o mapa de
+glifos muda) e a fonte Rawline pelo CDN do SERPRO, declarada no `index.html`.
+
+A marca gráfica do gov.br **não** é usada — o cabeçalho leva o lockup do
+HarvestBoard e a assinatura do IBICT.
+
+**Camadas da cascata.** O core não usa `@layer` em lugar nenhum, e CSS sem camada
+vence CSS em camada. Por isso ele é importado dentro de uma camada nomeada, em
+`src/index.css`:
+
+```css
+@layer base, govbr, components;
+@import '@govbr-ds/core/dist/core-lite.min.css' layer(govbr);
+```
+
+Sem isso o core sobrescreve qualquer regra do projeto. Mexer nessa ordem quebra
+o estilo de tudo ao mesmo tempo.
+
+**Prefira o componente do design system**, mas confira antes de trocar. Quatro
+deles foram testados e descartados, com o motivo no comentário de cada arquivo:
+
+| Componente | Por que não | Onde |
+|---|---|---|
+| `BrHeader`, `BrMenu` | `aria-label` em português fixo no código; o menu é gaveta, não barra lateral | `layouts/AppShell.tsx` |
+| `BrPagination` | imprime "Primeira/Última página" em português como texto visível | `components/Pagination.tsx` |
+| `BrBreadcrumbs` | `aria-label` em português; não aceita `id` nem `className` | `components/Breadcrumb.tsx` |
+| `BrModal` | sem `inert` nem captura de foco — o `<dialog>` nativo entrega os dois | `components/Modal.tsx` |
+
+Nesses casos vale o markup próprio sobre as classes `br-*` do core, com os
+rótulos passando por `t()`.
+
+**Contraste não é herdado do padrão.** Os tokens de estado do DS reprovam como
+texto pequeno: `--success` dá 4,02, `--danger` 4,24 e `--warning` 1,36 sobre o
+pastel da mesma família. Os tokens do projeto descem um ou dois passos na mesma
+escala; as medições estão nos comentários de `src/index.css` e de
+`components/Badges.tsx`. Ao trocar uma cor, remeça e atualize o número.
+
+Três classes do projeto cobrem o que o core não tem: `.sr-only`, `.plain-list` e
+`.gap-1`…`.gap-5` — esta última na mesma escala de espaçamento das margens dele.
+
 ## API
 
 Tudo sob `/api/v1/`, com Swagger em `/api/v1/docs/`. A app `audit` grava a

@@ -1,3 +1,4 @@
+import { BrSelectStandard } from '@govbr-ds/react-components'
 import { useTranslation } from 'react-i18next'
 
 import { countActiveFilters, EMPTY_FILTERS, type RecordFilters } from '@/lib/filters'
@@ -8,6 +9,15 @@ import { countActiveFilters, EMPTY_FILTERS, type RecordFilters } from '@/lib/fil
  * Como o recorte chega pela URL (vindo do diagnóstico), o usuário precisa ver
  * o que está aplicado — senão uma lista de 12 registros entre 26 mil parece
  * um erro.
+ *
+ * Os seletores usam `BrSelectStandard`, o `<select>` nativo do design system, e
+ * não o `BrSelect`: este último devolve o valor cru em `onChange`, em vez do
+ * evento, e traz busca e seleção múltipla que aqui não servem. O rótulo agora é
+ * visível — antes existia só como `aria-label`, invisível para quem enxerga.
+ *
+ * As fichas de filtro não usam `BrTag type="interaction"`: aquele tipo emite
+ * `id="tag"` fixo no código da biblioteca, e como há uma ficha por filtro a
+ * página sairia com ids repetidos.
  */
 export function FilterBar({
   id = 'filter-bar',
@@ -59,42 +69,44 @@ export function FilterBar({
   )
 
   return (
-    <div id={id} className="flex flex-wrap items-center gap-2">
-      <div id={`${id}-selects`} className="flex flex-wrap gap-2">
-        <select
-          id={`${id}-valid`}
-          value={filters.valid ?? ''}
-          onChange={(event) =>
-            onChange({
-              ...filters,
-              valid: (event.target.value || undefined) as RecordFilters['valid'],
-            })
-          }
-          aria-label={t('records.filterValidity')}
-          className="border border-border-subtle bg-surface px-3 py-1.5 text-sm"
-        >
-          <option value="">{t('records.anyValidity')}</option>
-          <option value="true">{t('records.valid')}</option>
-          <option value="false">{t('records.invalid')}</option>
-        </select>
+    <div
+      id={id}
+      className="d-flex flex-wrap align-items-end"
+      style={{ gap: 'var(--spacing-scale-base)' }}
+    >
+      <BrSelectStandard
+        id={`${id}-valid`}
+        label={t('records.filterValidity')}
+        value={filters.valid ?? ''}
+        onChange={(event) =>
+          onChange({
+            ...filters,
+            valid: (event.target.value || undefined) as RecordFilters['valid'],
+          })
+        }
+        options={[
+          { label: t('records.anyValidity'), value: '' },
+          { label: t('records.valid'), value: 'true' },
+          { label: t('records.invalid'), value: 'false' },
+        ]}
+      />
 
-        <select
-          id={`${id}-transformed`}
-          value={filters.transformed ?? ''}
-          onChange={(event) =>
-            onChange({
-              ...filters,
-              transformed: (event.target.value || undefined) as RecordFilters['transformed'],
-            })
-          }
-          aria-label={t('records.filterTransformed')}
-          className="border border-border-subtle bg-surface px-3 py-1.5 text-sm"
-        >
-          <option value="">{t('records.anyTransformed')}</option>
-          <option value="true">{t('records.transformed')}</option>
-          <option value="false">{t('records.notTransformed')}</option>
-        </select>
-      </div>
+      <BrSelectStandard
+        id={`${id}-transformed`}
+        label={t('records.filterTransformed')}
+        value={filters.transformed ?? ''}
+        onChange={(event) =>
+          onChange({
+            ...filters,
+            transformed: (event.target.value || undefined) as RecordFilters['transformed'],
+          })
+        }
+        options={[
+          { label: t('records.anyTransformed'), value: '' },
+          { label: t('records.transformed'), value: 'true' },
+          { label: t('records.notTransformed'), value: 'false' },
+        ]}
+      />
 
       {chips.map((chip) => (
         <button
@@ -102,12 +114,15 @@ export function FilterBar({
           key={chip.key}
           type="button"
           onClick={chip.remove}
-          className="inline-flex items-center gap-1.5 bg-brand/10 px-2.5 py-1 text-xs text-brand-strong hover:bg-brand/20"
+          className="br-tag text-down-01"
+          style={{ cursor: 'pointer', border: 'none' }}
         >
           {chip.label}
-          <span id={`${id}-chip-${chip.key}-remove-icon`} aria-hidden="true">
-            ×
-          </span>
+          <i
+            id={`${id}-chip-${chip.key}-remove-icon`}
+            className="fas fa-times ml-1"
+            aria-hidden="true"
+          />
           <span id={`${id}-chip-${chip.key}-remove-label`} className="sr-only">
             {t('records.removeFilter')}
           </span>
@@ -119,7 +134,7 @@ export function FilterBar({
           id={`${id}-clear`}
           type="button"
           onClick={() => onChange(EMPTY_FILTERS)}
-          className="text-xs text-content-muted underline hover:text-content"
+          className="br-button small"
         >
           {t('records.clearFilters')}
         </button>

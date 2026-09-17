@@ -1,27 +1,21 @@
-/** Ícone de "adicionar usuário": repositório sem nenhum gestor vinculado. */
+/**
+ * Ícone de adicionar usuário.
+ *
+ * Era um SVG desenhado inline "para não puxar uma biblioteca inteira". A
+ * biblioteca agora já vem: o Font Awesome 5 é dependência do Padrão Digital de
+ * Governo e é carregado de qualquer forma, então o desenho à mão deixou de
+ * economizar peso e só divergia do traço dos demais ícones da interface.
+ *
+ * O componente continua existindo, em vez de o `<i>` ir direto nas páginas,
+ * porque ele carrega o `id` da convenção e o `aria-hidden` — o texto ao lado é
+ * que nomeia a ação.
+ */
 export function UserPlusIcon({
   id = 'user-plus-icon',
-  className = 'size-4',
+  className,
 }: {
   id?: string
   className?: string
 }) {
-  return (
-    <svg
-      id={id}
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <line x1="19" y1="8" x2="19" y2="14" />
-      <line x1="22" y1="11" x2="16" y2="11" />
-    </svg>
-  )
+  return <i id={id} className={`fas fa-user-plus ${className ?? ''}`} aria-hidden="true" />
 }

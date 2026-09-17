@@ -15,13 +15,15 @@ export function AdminRoute() {
 
   if (user?.profile !== 'ADMIN') {
     return (
-      <div id="admin-route-forbidden" className="panel p-6">
-        <p id="admin-route-forbidden-label" className="eyebrow mb-1">
-          {t('common.forbiddenLabel')}
-        </p>
-        <p id="admin-route-forbidden-message" className="text-sm text-content-muted">
-          {t('common.adminOnly')}
-        </p>
+      <div id="admin-route-forbidden" className="br-card">
+        <div id="admin-route-forbidden-body" className="card-content">
+          <p id="admin-route-forbidden-label" className="eyebrow mb-1">
+            {t('common.forbiddenLabel')}
+          </p>
+          <p id="admin-route-forbidden-message" className="text-gray-70 mb-0">
+            {t('common.adminOnly')}
+          </p>
+        </div>
       </div>
     )
   }

@@ -61,6 +61,8 @@
   },
   "pagination": {
     "page": "Página {{page}} de {{total}}",
+    "label": "Paginação",
+    "goToPage": "Página {{page}}",
     "previous": "Anterior",
     "next": "Próxima"
   },
@@ -76,7 +78,7 @@
     "sortedByAge": "ordenados pela coleta mais antiga primeiro",
     "openLastHarvest": "Abrir a última coleta",
     "lastHarvest": "Última coleta",
-    "violatedRules": "Regras violadas",
+    "violatedRules": "Violações",
     "topViolations": "Regras com mais violações",
     "seeRecords": "Ver os registros que violam esta regra",
     "statsUnavailable": "Estatísticas indisponíveis: o Harvester não respondeu para este repositório.",
@@ -110,6 +112,7 @@
     "title": "Coleta {{id}}",
     "breadcrumb": "Coleta {{id}}",
     "endedAt": "encerrada em",
+    "tabsLabel": "Seções da coleta",
     "tabs": {
       "diagnosis": "Diagnóstico",
       "records": "Registros"
@@ -193,7 +196,9 @@
   },
   "nav": {
     "main": "Navegação principal",
+    "breadcrumb": "Trilha de navegação",
     "sections": "Seções",
+    "skipToContent": "Ir para o conteúdo",
     "repositories": "Repositórios",
     "access": "Acessos",
     "toggleMenu": "Abrir ou fechar o menu"

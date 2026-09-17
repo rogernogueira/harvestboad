@@ -10,7 +10,7 @@ export function ProtectedRoute() {
 
   if (status === 'carregando') {
     return (
-      <p id="protected-route-loading" className="p-8 text-content-muted">
+      <p id="protected-route-loading" className="text-gray-70 p-4">
         {t('common.loading')}
       </p>
     )

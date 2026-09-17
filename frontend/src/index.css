@@ -1,57 +1,118 @@
-@import 'tailwindcss';
+/*
+ * Ordem das camadas da cascata.
+ *
+ * O `core.min.css` não usa `@layer` em nenhuma das suas 16 mil linhas, e CSS
+ * sem camada vence CSS em camada. Sem o embrulho abaixo, o core passaria por
+ * cima de qualquer regra nossa: as classes `.eyebrow`, `.sr-only` e as de
+ * `gap` perderiam para os seletores de elemento dele.
+ *
+ * Importar o core dentro de `govbr` inverte isso de forma controlada:
+ *
+ *   - `base` vem antes, então o core sobrepõe os estilos globais de elemento;
+ *   - `components` vem depois, então as classes do projeto vencem o core onde
+ *     precisam vencer.
+ *
+ * Esta linha precisa vir antes dos `@import` — é a única regra que a
+ * especificação permite ali além do `@charset`.
+ */
+@layer base, govbr, components;
+
+@import '@govbr-ds/core/dist/core-lite.min.css' layer(govbr);
 
 /*
- * Tokens visuais da especificação de design.
+ * Cores, conforme os Fundamentos Visuais do Padrão Digital de Governo.
  *
- * A paleta institucional é azul/dourado/verde sobre fundo branco, com texto em
- * cinza escuro. As cores de estado (ok/atenção/erro) derivam do verde, do
- * dourado e de um vermelho institucional, escurecidas o suficiente para manter
- * contraste de texto sobre fundo claro — os valores originais da paleta são
- * claros demais para texto.
+ * O documento organiza a paleta por **função**, e é essa a ordem abaixo:
+ * Container (superfícies), Leitura (tipografia e ícones), Interação e
+ * Feedback. Cada valor é o token que o padrão atribui àquela função — não uma
+ * escolha nossa —, com o nome oficial no comentário ao lado.
+ *
+ * São literais, e não `var(--gray-80)`, para que o arquivo diga de qual token
+ * cada cor veio sem exigir uma ida ao node_modules.
+ *
+ * Quem lê estes tokens hoje é curto e vale saber: os componentes `br-*` pegam
+ * a cor direto do core, sem passar por aqui. Sobra o Recharts — que recebe a
+ * cor por `var(--color-…)` nas props de eixo, grade e série — e as duas regras
+ * de base no fim deste arquivo. Por isso a lista tem só o que tem consumidor.
+ *
+ * O padrão exige usar sempre as cores pré-definidas; acrescentar uma cor nova
+ * à paleta pede teste de acessibilidade e aprovação prévia da equipe do DS.
  */
-@theme {
-  /* Marca */
-  --color-brand: #5b84b1;
-  --color-brand-strong: #40648c;
-  --color-brand-soft: #eef3f9;
-  --color-gold: #d6c68b;
-  --color-gold-strong: #8a7524;
-  --color-green: #9cb994;
-  --color-green-strong: #3f7a4f;
+:root {
+  /* Função Container — fundo claro */
+  --color-surface: #ffffff; /* --pure-0, principal */
+  --color-surface-muted: #f8f8f8; /* --gray-2, alternativa */
 
-  /* Superfícies e texto */
-  --color-surface: #ffffff;
-  --color-surface-muted: #f8fafc;
-  --color-surface-raised: #ffffff;
-  --color-border-subtle: #e2e8f0;
-  --color-border-strong: #cbd5e1;
-  --color-content: #333333;
-  --color-content-muted: #5a5b5d;
+  /* Função Leitura — fundo claro */
+  --color-content: #333333; /* --gray-80, principal */
+  --color-content-muted: #555555; /* --gray-70 — 7,02 sobre a superfície alternativa */
 
-  /* Estados */
-  --color-ok: #3f7a4f;
-  --color-ok-soft: #eef4ef;
-  /*
-    Escurecido de #8a7524: sobre o --color-warn-soft aquele dava 4,14 de
-    contraste, abaixo dos 4,5 exigidos para o texto de 11px dos badges. Este dá
-    4,94. O tom nunca é fundo sólido com texto por cima — só texto e borda —,
-    então escurecer não prejudica nenhum uso.
-  */
-  --color-warn: #7c6920;
-  --color-warn-soft: #f9f5e8;
-  --color-down: #b3261e;
-  --color-down-soft: #fbeeed;
-
-  /* Tipografia: Montserrat nos títulos, Open Sans no corpo */
-  --font-heading: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
-  --font-sans: 'Open Sans', 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  /* Função Interação — fundo claro */
+  --color-brand: #1351b4; /* --blue-warm-vivid-70 */
 
   /*
-   * A linguagem visual é angular: blocos bem definidos e linhas retas. O raio
-   * existe, mas discreto — nada de cantos muito arredondados.
+   * Função Feedback — par principal (P) e alternativo (A) de cada aviso.
+   *
+   * Os quatro estados ficam nomeados num lugar só, ainda que a interação use
+   * quase sempre o componente do design system.
+   *
+   * Sobre contraste: o padrão adota AA, com 4,5:1 para texto normal e 3:1 para
+   * texto grande — e enquadra **elementos gráficos e componentes na mesma
+   * regra do texto grande**. É por isso que estes valores entram sem
+   * escurecimento: como traço de gráfico sobre branco dão 4,59 (sucesso), 4,60
+   * (erro) e 7,33 (interação), todos acima dos 3:1 exigidos.
+   *
+   * O par P sobre A é seguro como componente (sucesso 4,02, erro 3,69), mas
+   * não como texto pequeno. Onde a cor de estado vira texto, quem colore é a
+   * função Leitura — ver o aviso de lote em `AccessPage`.
    */
-  --radius-card: 0.25rem;
+  --color-info: #155bcb; /* --blue-warm-vivid-60 */
+  --color-info-soft: #d4e5ff; /* --blue-warm-vivid-10 */
+  --color-ok: #168821; /* --green-cool-vivid-50 */
+  --color-ok-soft: #e3f5e1; /* --green-cool-vivid-5 */
+  --color-warn: #ffcd07; /* --yellow-vivid-20 */
+  --color-warn-soft: #fff5c2; /* --yellow-vivid-5 */
+  --color-down: #e52207; /* --red-vivid-50 */
+  --color-down-soft: #fde0db; /* --red-vivid-10 */
+
+  /* Bordas e divisórias, da escala neutra */
+  --color-border-subtle: #e6e6e6; /* --gray-10 */
+
+  /*
+   * Tipografia: nenhum token aqui, de propósito.
+   *
+   * O padrão adota uma família só — Rawline, com fallback Raleway e sans-serif
+   * — e ela já chega pelo `--font-family-base` do core, aplicado na regra
+   * `body` dele. Declarar uma cadeia paralela aqui só criaria uma segunda
+   * fonte da verdade para a mesma coisa.
+   *
+   * Saíram junto as famílias de título e monoespaçada que o projeto mantinha:
+   * o princípio de Experiência Única diz que a variedade de pesos da Rawline
+   * torna desnecessária outra família. A monoespaçada, aliás, nunca chegou a
+   * ser carregada — era `JetBrains Mono` sem `@font-face`, caindo no que cada
+   * sistema operacional oferecesse.
+   */
+}
+
+/*
+ * Ajustes no próprio design system.
+ *
+ * São redefinições de token, não de regra: o core resolve tudo por
+ * `var(--…)`, então mudar o valor aqui reveste os componentes sem precisar
+ * competir com os seletores dele. Fica fora de `@layer` porque token não
+ * participa de cascata por camada — o que vale é a última declaração.
+ */
+:root {
+  /*
+   * O core pinta `body { background: var(--background) }` de branco. O shell da
+   * aplicação usa a superfície alternativa no elemento raiz, e a diferença
+   * aparecia como uma faixa branca ao rolar além do conteúdo.
+   *
+   * O core traz `--background-alternative: var(--gray-5)` (#f0f0f0), que
+   * diverge do documento de Fundamentos Visuais — lá a alternativa do fundo
+   * claro é `--gray-2` (#f8f8f8). Aqui vale o documento.
+   */
+  --background: #f8f8f8; /* --gray-2 */
 }
 
 @layer base {
@@ -62,62 +123,52 @@
 
   body {
     margin: 0;
-    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: var(--font-heading);
-    letter-spacing: -0.015em;
+  /*
+   * Recuo padrão do `<dd>`.
+   *
+   * O navegador dá 40px de `margin-inline-start` a toda definição, e o design
+   * system não reseta isso — o Preflight do Tailwind resetava. Sem a regra, os
+   * indicadores de coleta saem deslocados do rótulo que os nomeia, e a ficha
+   * de regras violadas, por ser estreita, denuncia o desalinhamento.
+   *
+   * As listas de definição do projeto são todas estrutura de dado com rótulo
+   * acima ou ao lado, nunca texto corrido — o recuo não serve a nenhuma delas.
+   */
+  dd {
+    margin-inline-start: 0;
   }
 
-  /* Foco sempre visível, em anel azul institucional. */
+  /*
+   * Foco sempre visível, nos elementos que não são do design system.
+   *
+   * Os três valores vêm dos tokens do core — inclusive o `--focus-style`, que
+   * é `dashed`. Sem ele a regra saía `solid` e a mesma tela teria dois anéis de
+   * foco diferentes: tracejado nos componentes `br-*` e sólido no resto.
+   */
   :focus-visible {
-    outline: 2px solid var(--color-brand);
-    outline-offset: 2px;
+    outline: var(--focus-width, 4px) var(--focus-style, dashed)
+      var(--focus-color, var(--color-brand));
+    outline-offset: var(--focus-offset, 2px);
   }
 }
 
 @layer components {
   /*
-   * Rótulo de seção: mono, caixa alta e tracking alto. É a assinatura
-   * tipográfica que separa hierarquia sem depender de tamanho de fonte.
+   * Rótulo de seção: caixa alta e tracking alto, separando hierarquia sem
+   * depender de tamanho de fonte.
+   *
+   * A família é a Rawline, herdada — antes era uma monoespaçada própria, que o
+   * padrão não admite. O tamanho é o passo `down-01` da escala Minor Third; o
+   * valor anterior, 11px, não estava na escala.
    */
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: var(--font-size-scale-down-01);
     text-transform: uppercase;
     letter-spacing: 0.18em;
     color: var(--color-content-muted);
-  }
-
-  /*
-   * Underline animado da navegação: cresce da esquerda em 2px.
-   * O estado ativo mantém a barra inteira.
-   */
-  .nav-underline {
-    position: relative;
-  }
-
-  .nav-underline::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    height: 2px;
-    width: 100%;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 150ms ease-out;
-  }
-
-  .nav-underline:hover::after,
-  .nav-underline[aria-current='page']::after {
-    transform: scaleX(1);
   }
 
   /*
@@ -129,11 +180,152 @@
     animation: enter-up 500ms ease-out both;
   }
 
-  /* Bloco de conteúdo padrão: borda sutil, sem sombra pesada. */
-  .panel {
-    background-color: var(--color-surface-raised);
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--radius-card);
+  /*
+   * Texto só para leitor de tela.
+   *
+   * O design system não tem equivalente: onde ele precisa esconder um rótulo
+   * — o `<label>` da busca do cabeçalho — usa `display: none`, que serve
+   * naquele caso porque o nome acessível chega ao input pelo `for`, mas não
+   * serve aqui: `display: none` tira o texto da árvore de acessibilidade, e o
+   * que se quer é justamente mantê-lo lá.
+   */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /*
+   * Link que herda a cor de quem o contém.
+   *
+   * O design system pinta todo `<a>` com `--interactive`, o azul da função
+   * Interação. Isso é o certo na maioria dos casos, mas nos indicadores de
+   * coleta o número **é** o link, e a cor dele carrega o estado: verde para
+   * válidos, vermelho para inválidos. Pintado de azul, o cartão perde a leitura
+   * por cor e os quatro números viram a mesma coisa.
+   *
+   * O sublinhado entra no lugar do azul como sinal de que ali se clica — e é
+   * um sinal melhor, porque não depende de enxergar cor.
+   */
+  .inherit-color {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  /*
+   * Divisória entre as duas colunas do cartão de repositório.
+   *
+   * Antes ela vinha de um truque de grid: um vão de 1px sobre o fundo cinza do
+   * cartão. O grid do design system não tem vão configurável, então a linha
+   * passa a ser uma borda — e só a partir de `lg`, que é onde as colunas ficam
+   * lado a lado; abaixo disso elas empilham e uma borda à esquerda apareceria
+   * atravessada.
+   */
+  @media (min-width: 992px) {
+    .column-divider {
+      border-left: 1px solid var(--color-border-subtle);
+    }
+  }
+
+  /*
+   * Fileira de indicadores de coleta: quatro colunas iguais.
+   *
+   * O design system não tem utilitária de grade bidimensional — só o
+   * `row`/`col` de doze colunas, que exigiria aninhar uma `div` de coluna em
+   * volta de cada cartão. Isso quebraria o modelo de conteúdo do `<dl>`, que
+   * aceita uma `div` agrupadora por par, não duas.
+   *
+   * Duas colunas abaixo de `sm`: a 390px, quatro colunas dariam cerca de 60px
+   * cada, e um número como "31.860" não caberia.
+   */
+  .indicator-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-scale-2x);
+  }
+
+  @media (min-width: 576px) {
+    .indicator-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /*
+   * Link que estende o alvo a todo o bloco que o contém.
+   *
+   * O design system não tem equivalente. Serve aos cartões de indicador: o
+   * número é o link, mas quem clica mira o cartão inteiro — rótulo, número e o
+   * vazio ao redor. Sem isso o alvo é só a largura dos dígitos, e "1" dá menos
+   * de 10px de área.
+   *
+   * O bloco que o contém precisa de `position: relative`, senão o pseudo se
+   * estica até o primeiro ancestral posicionado, que pode ser a página toda.
+   */
+  .stretched-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  /*
+   * Lista usada como estrutura, não como enumeração.
+   *
+   * O Preflight do Tailwind zerava marcador e recuo de toda `<ul>`; com a saída
+   * dele as bolinhas voltaram nas listas que só agrupam cartões e fichas. O
+   * design system reseta as listas dele (`br-list`, `br-tab`), não as nossas.
+   *
+   * Continua sendo `<ul>`, e não `<div>`, porque a contagem de itens importa
+   * para quem usa leitor de tela — é a marca visual que sobra, não a semântica.
+   */
+  .plain-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /*
+   * Espaçamento entre itens de flex e grid.
+   *
+   * O design system não tem utilitária de `gap` — nem os componentes `Row` e
+   * `Col` dele, que recebem a medida por `style`. Como o layout das telas é
+   * quase todo flex, resolver isso em estilo inline em cada elemento tornaria
+   * as páginas ilegíveis. Nada de medida nova aqui: só o eixo que faltava,
+   * sobre os tokens do próprio core.
+   *
+   * O nome separa as duas escalas do padrão, de propósito:
+   *
+   *   `.gap-half`  → escala Ajuste (4px). O documento a restringe a **texto e
+   *                  ícone** — rótulo e campo, parágrafos empilhados, ícone ao
+   *                  lado de legenda. Nunca entre componentes.
+   *   `.gap-2`…`5` → escala Layout (8/16/24/32px), para tudo o mais.
+   *
+   * Fosse `.gap-1`, a numeração convidaria a usar 4px entre componentes — que
+   * é justamente o que o padrão proíbe.
+   */
+  .gap-half {
+    gap: var(--spacing-scale-half);
+  }
+
+  .gap-2 {
+    gap: var(--spacing-scale-base);
+  }
+
+  .gap-3 {
+    gap: var(--spacing-scale-2x);
+  }
+
+  .gap-4 {
+    gap: var(--spacing-scale-3x);
+  }
+
+  .gap-5 {
+    gap: var(--spacing-scale-4x);
   }
 }
 

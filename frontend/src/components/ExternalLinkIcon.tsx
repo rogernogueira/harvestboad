@@ -1,26 +1,21 @@
-/** Ícone de link externo: o destino abre fora da aplicação. */
+/**
+ * Ícone de link externo.
+ *
+ * Era um SVG desenhado inline "para não puxar uma biblioteca inteira". A
+ * biblioteca agora já vem: o Font Awesome 5 é dependência do Padrão Digital de
+ * Governo e é carregado de qualquer forma, então o desenho à mão deixou de
+ * economizar peso e só divergia do traço dos demais ícones da interface.
+ *
+ * O componente continua existindo, em vez de o `<i>` ir direto nas páginas,
+ * porque ele carrega o `id` da convenção e o `aria-hidden` — o texto ao lado é
+ * que nomeia a ação.
+ */
 export function ExternalLinkIcon({
   id = 'external-link-icon',
-  className = 'size-4',
+  className,
 }: {
   id?: string
   className?: string
 }) {
-  return (
-    <svg
-      id={id}
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-      <polyline points="15 3 21 3 21 9" />
-      <line x1="10" y1="14" x2="21" y2="3" />
-    </svg>
-  )
+  return <i id={id} className={`fas fa-external-link-alt ${className ?? ''}`} aria-hidden="true" />
 }

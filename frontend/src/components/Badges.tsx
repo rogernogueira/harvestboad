@@ -1,13 +1,7 @@
-import type { ReactNode } from 'react'
+import { BrTag } from '@govbr-ds/react-components'
 import { useTranslation } from 'react-i18next'
 
-/** Classifica o status de coleta do Harvester em três níveis visuais. */
-function harvestTone(status: string): 'ok' | 'warn' | 'down' {
-  const value = status.toUpperCase()
-  if (value.includes('ERROR')) return 'down'
-  if (value.includes('VALID')) return 'ok'
-  return 'warn'
-}
+import { harvestTone } from '@/lib/harvestStatus'
 
 /**
  * Rótulos curtos para os estados de coleta.
@@ -29,42 +23,70 @@ const ROTULOS: Record<string, string> = {
   INDEXED: 'harvestStatus.indexed',
 }
 
-const TONES = {
-  ok: 'border-ok bg-ok-soft text-ok',
-  warn: 'border-warn bg-warn-soft text-warn',
-  down: 'border-down bg-down-soft text-down',
+const CORES = {
+  ok: 'success',
+  warn: 'warning',
+  down: 'danger',
+} as const
+
+/*
+ * Correção de contraste no tom de atenção.
+ *
+ * Aqui o design system reprova no critério dele mesmo. O `.br-tag` pinta o
+ * texto de branco (`--color-dark`) sobre a cor do estado; o padrão adota AA,
+ * que exige 4,5:1 para texto normal. Medido sobre cada cor de Alerta:
+ *
+ *   sucesso #168821 → 4,59   erro #e52207 → 4,60   alerta #ffcd07 → **1,50**
+ *
+ * O amarelo reprova por larga margem. O texto passa então para `--gray-80`, a
+ * cor principal da função Leitura, que sobre aquele amarelo dá 8,42.
+ *
+ * Vai em `style` porque é exceção de um tom só — virar regra global
+ * sobrescreveria as tags de atenção de qualquer tela futura sem que se veja
+ * o porquê aqui.
+ */
+const CORRECAO_DE_TEXTO = {
+  ok: undefined,
+  warn: { color: 'var(--gray-80)' },
+  down: undefined,
 } as const
 
 /**
  * Marcador de estado.
  *
- * Retangular com barra lateral, seguindo a linguagem angular do design — e a
- * cor nunca é o único sinal: o texto sempre nomeia o estado.
+ * Usa o `BrTag` do design system no tipo `text`, e não no tipo `status`: este
+ * último renderiza um círculo sem rótulo (`border-radius: 50%`, `padding: 0`),
+ * o que faria da cor o único sinal do estado. Aqui o texto sempre nomeia o
+ * estado, e a cor só reforça.
  *
- * O `id` tem um padrão só para o caso avulso; onde o componente se repete (uma
- * linha de tabela, um cartão por repositório) quem chama passa um valor único,
- * senão a página sairia com ids repetidos.
+ * O `span` externo existe porque o `BrTag` não aceita `id` nem `title`: o `id`
+ * é exigência da convenção do projeto — o componente se repete uma vez por
+ * linha de tabela — e o `title` carrega o valor bruto vindo da origem.
  */
 export function Tag({
   id = 'tag',
   tone,
   title,
+  size = 'small',
   children,
 }: {
   id?: string
-  tone: keyof typeof TONES
+  tone: keyof typeof CORES
   title?: string
-  children: ReactNode
+  /** `medium` para quando a ficha está no lugar de um número em destaque. */
+  size?: 'small' | 'medium' | 'large'
+  children: string
 }) {
   return (
-    <span
-      id={id}
-      title={title}
-      // `break-words` é rede de proteção: um estado novo da origem, sem rótulo
-      // curto, quebra em vez de empurrar a tabela.
-      className={`inline-flex items-center border-l-2 px-2 py-0.5 font-mono text-[0.6875rem] tracking-wide break-words uppercase ${TONES[tone]}`}
-    >
-      {children}
+    <span id={id} title={title} className="d-inline-flex">
+      {/* O texto vai por `value`: o BrTag não recebe filhos. */}
+      <BrTag
+        type="text"
+        size={size}
+        color={CORES[tone]}
+        value={children}
+        style={CORRECAO_DE_TEXTO[tone]}
+      />
     </span>
   )
 }
@@ -96,7 +118,7 @@ export function ValidityBadge({
   const { t } = useTranslation()
   if (valid === null || valid === undefined)
     return (
-      <span id={id} className="text-content-muted">
+      <span id={id} className="text-gray-70">
         —
       </span>
     )

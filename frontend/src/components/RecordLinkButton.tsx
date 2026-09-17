@@ -54,7 +54,7 @@ export function RecordLinkButton({
         // endereço interno da aplicação para o site do repositório.
         rel="noopener noreferrer"
         title={provavel ? `${link}\n\n${t('record.link.probableHint')}` : link}
-        className="inline-flex items-center gap-2 border border-border-subtle px-3 py-1.5 text-sm hover:bg-border-subtle"
+        className="br-button secondary small"
       >
         {provavel ? t('record.link.openProbable') : t('record.link.open')}
         <ExternalLinkIcon id={`${id}-icon`} />
@@ -66,7 +66,7 @@ export function RecordLinkButton({
   // `fetchStatus` é o que separa "esperando resposta" de "nunca vai buscar".
   if (consulta.isPending && consulta.fetchStatus !== 'idle') {
     return (
-      <span id={`${id}-resolving`} className="text-xs text-content-muted">
+      <span id={`${id}-resolving`} className="text-down-01 text-gray-70">
         {t('record.link.resolving')}
       </span>
     )
@@ -76,7 +76,7 @@ export function RecordLinkButton({
   return (
     <span
       id={`${id}-unavailable`}
-      className="text-xs text-content-muted"
+      className="text-down-01 text-gray-70"
       title={motivo ? t(`record.link.reasons.${motivo}`) : undefined}
     >
       {t('record.link.unavailable')}
