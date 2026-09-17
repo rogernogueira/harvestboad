@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router'
 
 import { AppProviders } from '@/app/providers'
 import { router } from '@/app/router'
+import { recarregarQuandoFaltarChunk } from '@/lib/chunks'
 /*
  * Ordem de carga: Font Awesome, core do DS e por último o nosso CSS.
  *
@@ -21,6 +22,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import '@/i18n'
 import '@/index.css'
+
+/*
+ * Antes de renderizar: uma aba aberta durante um deploy fica com o mapa de
+ * assets antigo, e a primeira rota que ela tentar carregar pede um pedaço que
+ * já não existe. O ouvinte precisa estar de pé antes da primeira navegação.
+ */
+recarregarQuandoFaltarChunk()
 
 const rootElement = document.getElementById('root')
 
