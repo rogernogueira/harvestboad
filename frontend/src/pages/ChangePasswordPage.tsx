@@ -64,21 +64,40 @@ export function ChangePasswordPage() {
   ] as const
 
   return (
-    <div className="mx-auto flex max-w-md flex-col gap-6">
-      <header>
-        <h1 className="text-xl font-semibold">{t('auth.changePassword')}</h1>
+    <div id="change-password-page" className="mx-auto flex max-w-md flex-col gap-6">
+      <header id="change-password-header">
+        <h1 id="change-password-title" className="text-xl font-semibold">
+          {t('auth.changePassword')}
+        </h1>
         {user?.mustChangePassword ? (
-          <p className="mt-1 text-sm text-warn">{t('auth.mustChangePassword')}</p>
+          <p id="change-password-required-hint" className="mt-1 text-sm text-warn">
+            {t('auth.mustChangePassword')}
+          </p>
         ) : null}
       </header>
 
-      <form onSubmit={(event) => void onSubmit(event)} noValidate className="flex flex-col gap-4">
+      <form
+        id="change-password-form"
+        onSubmit={(event) => void onSubmit(event)}
+        noValidate
+        className="flex flex-col gap-4"
+      >
         {campos.map((campo) => {
           const erro = errors[campo.name]
           return (
-            <label key={campo.name} className="flex flex-col gap-1.5">
-              <span className="text-sm font-medium">{t(campo.label)}</span>
+            <label
+              id={`change-password-field-${campo.name}`}
+              key={campo.name}
+              className="flex flex-col gap-1.5"
+            >
+              <span
+                id={`change-password-field-${campo.name}-label`}
+                className="text-sm font-medium"
+              >
+                {t(campo.label)}
+              </span>
               <input
+                id={`change-password-field-${campo.name}-input`}
                 type="password"
                 autoComplete={campo.autoComplete}
                 aria-invalid={erro ? true : undefined}
@@ -88,7 +107,11 @@ export function ChangePasswordPage() {
                 }`}
               />
               {erro?.message ? (
-                <span role="alert" className="text-xs text-down">
+                <span
+                  id={`change-password-field-${campo.name}-error`}
+                  role="alert"
+                  className="text-xs text-down"
+                >
                   {t(erro.message)}
                 </span>
               ) : null}
@@ -97,14 +120,21 @@ export function ChangePasswordPage() {
         })}
 
         {erros.length ? (
-          <ul role="alert" className="flex flex-col gap-1 text-xs text-down">
-            {erros.map((mensagem) => (
-              <li key={mensagem}>{mensagem}</li>
+          <ul
+            id="change-password-errors"
+            role="alert"
+            className="flex flex-col gap-1 text-xs text-down"
+          >
+            {erros.map((mensagem, indice) => (
+              <li id={`change-password-error-${indice}`} key={mensagem}>
+                {mensagem}
+              </li>
             ))}
           </ul>
         ) : null}
 
         <button
+          id="change-password-submit"
           type="submit"
           disabled={isSubmitting}
           className="bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-strong disabled:opacity-60"

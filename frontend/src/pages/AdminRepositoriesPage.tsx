@@ -100,13 +100,19 @@ export function AdminRepositoriesPage() {
         columnHelper.accessor('acronym', {
           header: t('adminRepositories.columns.acronym'),
           cell: (info) => (
-            <span className="font-mono text-xs break-all text-brand-strong">{info.getValue()}</span>
+            <span
+              id={`admin-repositories-cell-acronym-${info.row.original.harvesterRepositoryId}`}
+              className="font-mono text-xs break-all text-brand-strong"
+            >
+              {info.getValue()}
+            </span>
           ),
         }),
         columnHelper.accessor('name', {
           header: t('adminRepositories.columns.repository'),
           cell: (info) => (
             <Link
+              id={`admin-repositories-cell-name-${info.row.original.harvesterRepositoryId}`}
               to={`/repositorios/${info.row.original.harvesterRepositoryId}`}
               // Nomes chegam a 112 caracteres: o title mostra o que a linha corta.
               title={info.getValue() ?? t('adminRepositories.openRepository')}
@@ -119,7 +125,11 @@ export function AdminRepositoriesPage() {
         columnHelper.accessor('institutionName', {
           header: t('adminRepositories.columns.institution'),
           cell: (info) => (
-            <span className="line-clamp-2 text-content-muted" title={info.getValue() ?? ''}>
+            <span
+              id={`admin-repositories-cell-institution-${info.row.original.harvesterRepositoryId}`}
+              className="line-clamp-2 text-content-muted"
+              title={info.getValue() ?? ''}
+            >
               {info.getValue() ?? '—'}
             </span>
           ),
@@ -157,24 +167,33 @@ export function AdminRepositoriesPage() {
     },
   })
 
-  if (isPending) return <Loading label={t('adminRepositories.loading')} />
-  if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />
+  if (isPending)
+    return <Loading id="admin-repositories-loading" label={t('adminRepositories.loading')} />
+  if (isError)
+    return <ErrorState id="admin-repositories-error" error={error} onRetry={() => void refetch()} />
 
   const visiveis = table.getRowModel().rows
   const filtradas = table.getFilteredRowModel().rows.length
 
   return (
-    <div className="flex flex-col gap-6">
+    <div id="admin-repositories-page" className="flex flex-col gap-6">
       <PageHeader
+        id="admin-repositories-header"
         eyebrow={t('adminRepositories.eyebrow')}
         title={t('adminRepositories.title')}
         description={t('adminRepositories.subtitle', { count: data.count })}
       />
 
-      <div className="flex flex-wrap items-end gap-3">
-        <label className="flex min-w-64 flex-1 flex-col gap-1.5">
-          <span className="eyebrow">{t('adminRepositories.filterSearch')}</span>
+      <div id="admin-repositories-filters" className="flex flex-wrap items-end gap-3">
+        <label
+          id="admin-repositories-filter-search"
+          className="flex min-w-64 flex-1 flex-col gap-1.5"
+        >
+          <span id="admin-repositories-filter-search-label" className="eyebrow">
+            {t('adminRepositories.filterSearch')}
+          </span>
           <input
+            id="admin-repositories-filter-search-input"
             type="search"
             value={busca}
             onChange={(event) => setBusca(event.target.value)}
@@ -183,9 +202,12 @@ export function AdminRepositoriesPage() {
           />
         </label>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="eyebrow">{t('adminRepositories.filterStatus')}</span>
+        <label id="admin-repositories-filter-status" className="flex flex-col gap-1.5">
+          <span id="admin-repositories-filter-status-label" className="eyebrow">
+            {t('adminRepositories.filterStatus')}
+          </span>
           <select
+            id="admin-repositories-filter-status-select"
             value={situacao}
             onChange={(event) => setSituacao(event.target.value as FiltroSituacao)}
             className="border border-border-subtle bg-surface px-3 py-2 text-sm"
@@ -197,9 +219,12 @@ export function AdminRepositoriesPage() {
           </select>
         </label>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="eyebrow">{t('adminRepositories.filterManagers')}</span>
+        <label id="admin-repositories-filter-managers" className="flex flex-col gap-1.5">
+          <span id="admin-repositories-filter-managers-label" className="eyebrow">
+            {t('adminRepositories.filterManagers')}
+          </span>
           <select
+            id="admin-repositories-filter-managers-select"
             value={gestor}
             onChange={(event) => setGestor(event.target.value as FiltroGestor)}
             className="border border-border-subtle bg-surface px-3 py-2 text-sm"
@@ -211,15 +236,15 @@ export function AdminRepositoriesPage() {
         </label>
       </div>
 
-      <p className="text-sm text-content-muted">
+      <p id="admin-repositories-count" className="text-sm text-content-muted">
         {t('adminRepositories.showing', { shown: filtradas, count: data.count })}
       </p>
 
       {visiveis.length === 0 ? (
-        <Empty label={t('access.noRepositories')} />
+        <Empty id="admin-repositories-empty" label={t('access.noRepositories')} />
       ) : (
         <>
-          <div className="panel overflow-x-auto">
+          <div id="admin-repositories-table-wrapper" className="panel overflow-x-auto">
             {/*
               A largura mínima é 672px, não a soma "ideal" das seis colunas. Com
               valores maiores (tentei 1024 e 896) a barra horizontal aparecia em
@@ -231,7 +256,10 @@ export function AdminRepositoriesPage() {
               cabe inteira. Abaixo disso a rolagem assume, que é o certo num
               celular — seis colunas não cabem ali de jeito nenhum.
             */}
-            <table className="w-full min-w-2xl table-fixed border-collapse text-sm">
+            <table
+              id="admin-repositories-table"
+              className="w-full min-w-2xl table-fixed border-collapse text-sm"
+            >
               {/*
                 Percentuais somando 100%: com table-fixed, misturar rem e % faz a
                 soma passar da largura disponível e a barra horizontal volta.
@@ -242,7 +270,7 @@ export function AdminRepositoriesPage() {
                 estavam estreitas demais para "26.103 registros" e para o ícone
                 com o rótulo "sem gestor", e o excesso virava barra de rolagem.
               */}
-              <colgroup>
+              <colgroup id="admin-repositories-colgroup">
                 <col className="w-[10%]" />
                 <col className="w-[24%]" />
                 <col className="w-[21%]" />
@@ -250,9 +278,10 @@ export function AdminRepositoriesPage() {
                 <col className="w-[13%]" />
                 <col className="w-[13%]" />
               </colgroup>
-              <thead>
+              <thead id="admin-repositories-table-head">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
+                    id={`admin-repositories-header-group-${headerGroup.id}`}
                     key={headerGroup.id}
                     className="border-b border-border-subtle bg-surface-muted"
                   >
@@ -261,12 +290,14 @@ export function AdminRepositoriesPage() {
                       const alinhaDireita = header.column.id === 'invalidRatio'
                       return (
                         <th
+                          id={`admin-repositories-header-${header.column.id}`}
                           key={header.id}
                           className={`px-4 py-3 font-heading text-xs font-bold ${
                             alinhaDireita ? 'text-right' : 'text-left'
                           }`}
                         >
                           <button
+                            id={`admin-repositories-sort-${header.column.id}`}
                             type="button"
                             onClick={header.column.getToggleSortingHandler()}
                             className={`flex items-center gap-1 transition-colors duration-150 hover:text-brand-strong ${
@@ -284,11 +315,16 @@ export function AdminRepositoriesPage() {
                   </tr>
                 ))}
               </thead>
-              <tbody>
+              <tbody id="admin-repositories-table-body">
                 {visiveis.map((row) => (
-                  <tr key={row.id} className="border-b border-border-subtle last:border-0">
+                  <tr
+                    id={`admin-repositories-row-${row.original.harvesterRepositoryId}`}
+                    key={row.id}
+                    className="border-b border-border-subtle last:border-0"
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <td
+                        id={`admin-repositories-row-${row.original.harvesterRepositoryId}-${cell.column.id}`}
                         key={cell.id}
                         className={`px-4 py-3 align-top ${
                           cell.column.id === 'invalidRatio'
@@ -307,15 +343,19 @@ export function AdminRepositoriesPage() {
             </table>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-            <p className="text-content-muted">
+          <div
+            id="admin-repositories-pagination"
+            className="flex flex-wrap items-center justify-between gap-3 text-sm"
+          >
+            <p id="admin-repositories-pagination-status" className="text-content-muted">
               {t('pagination.page', {
                 page: table.state.pagination.pageIndex + 1,
                 total: Math.max(table.getPageCount(), 1),
               })}
             </p>
-            <div className="flex gap-2">
+            <div id="admin-repositories-pagination-controls" className="flex gap-2">
               <button
+                id="admin-repositories-pagination-previous"
                 type="button"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
@@ -324,6 +364,7 @@ export function AdminRepositoriesPage() {
                 {t('pagination.previous')}
               </button>
               <button
+                id="admin-repositories-pagination-next"
                 type="button"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
@@ -338,6 +379,7 @@ export function AdminRepositoriesPage() {
 
       {gestoresDe ? (
         <RepositoryManagersModal
+          id="admin-repositories-managers-modal"
           aberto
           onFechar={() => setGestoresDe(null)}
           repositoryId={gestoresDe.harvesterRepositoryId}
@@ -351,23 +393,31 @@ export function AdminRepositoriesPage() {
 /** Dados da última coleta: situação, número, data e totais. */
 function HarvestCell({ repo }: { repo: RepositoryHit }) {
   const { t } = useTranslation()
+  const id = `admin-repositories-harvest-${repo.harvesterRepositoryId}`
 
   if (!repo.lastSnapshotId) {
-    return <span className="text-content-muted">{t('harvests.none')}</span>
+    return (
+      <span id={`${id}-none`} className="text-content-muted">
+        {t('harvests.none')}
+      </span>
+    )
   }
 
   return (
-    <span className="flex flex-col gap-1">
-      <span className="flex flex-wrap items-center gap-2">
-        {repo.lastSnapshotStatus ? <HarvestStatusBadge status={repo.lastSnapshotStatus} /> : null}
+    <span id={id} className="flex flex-col gap-1">
+      <span id={`${id}-top`} className="flex flex-wrap items-center gap-2">
+        {repo.lastSnapshotStatus ? (
+          <HarvestStatusBadge id={`${id}-status`} status={repo.lastSnapshotStatus} />
+        ) : null}
         <Link
+          id={`${id}-snapshot-link`}
           to={`/coletas/${repo.lastSnapshotId}`}
           className="font-mono text-xs text-brand-strong hover:underline"
         >
           #{repo.lastSnapshotId}
         </Link>
       </span>
-      <span className="text-xs text-content-muted">
+      <span id={`${id}-details`} className="text-xs text-content-muted">
         {/* A origem manda "2024-06-25 12:10:33"; só a data basta na tabela. */}
         {repo.lastSnapshotDate?.slice(0, 10) ?? '—'}
         {repo.lastSize !== null ? (
@@ -380,6 +430,7 @@ function HarvestCell({ repo }: { repo: RepositoryHit }) {
             */}
             {repo.lastIndexStatus === 'INDEXED' ? (
               <Link
+                id={`${id}-records-link`}
                 to={`/coletas/${repo.lastSnapshotId}/registros`}
                 title={t('adminRepositories.openRecords')}
                 className="text-brand-strong hover:underline"
@@ -404,13 +455,18 @@ function HarvestCell({ repo }: { repo: RepositoryHit }) {
  */
 function InvalidCell({ repo, percentual }: { repo: RepositoryHit; percentual: Intl.NumberFormat }) {
   const { t } = useTranslation()
+  const id = `admin-repositories-invalid-${repo.harvesterRepositoryId}`
 
   if (repo.invalidRatio === null || repo.invalidRatio === undefined) {
     // "Não avaliado" e "0% inválidos" são conclusões diferentes: a coleta que
     // falhou tem registros, mas nenhum passou por validação.
     const naoAvaliado = repo.lastSnapshotId && repo.lastIndexStatus !== 'INDEXED'
     return (
-      <span className="text-xs text-content-muted" title={repo.lastIndexStatus ?? ''}>
+      <span
+        id={`${id}-unknown`}
+        className="text-xs text-content-muted"
+        title={repo.lastIndexStatus ?? ''}
+      >
         {naoAvaliado ? t('adminRepositories.notEvaluated') : '—'}
       </span>
     )
@@ -422,8 +478,8 @@ function InvalidCell({ repo, percentual }: { repo: RepositoryHit; percentual: In
   // Zero inválidos não tem o que listar: vira texto, não link.
   if (!repo.invalidSize || !repo.lastSnapshotId) {
     return (
-      <span className="flex flex-col items-end">
-        <span className={`font-heading font-bold tabular-nums ${tom}`}>
+      <span id={id} className="flex flex-col items-end">
+        <span id={`${id}-ratio`} className={`font-heading font-bold tabular-nums ${tom}`}>
           {percentual.format(repo.invalidRatio)}
         </span>
       </span>
@@ -432,14 +488,15 @@ function InvalidCell({ repo, percentual }: { repo: RepositoryHit; percentual: In
 
   return (
     <Link
+      id={id}
       to={`/coletas/${repo.lastSnapshotId}/registros?valid=false`}
       title={t('adminRepositories.openInvalidRecords')}
       className="flex flex-col items-end hover:underline"
     >
-      <span className={`font-heading font-bold tabular-nums ${tom}`}>
+      <span id={`${id}-ratio`} className={`font-heading font-bold tabular-nums ${tom}`}>
         {percentual.format(repo.invalidRatio)}
       </span>
-      <span className="text-xs text-content-muted">
+      <span id={`${id}-count`} className="text-xs text-content-muted">
         {t('adminRepositories.invalidRecords', { count: repo.invalidSize })}
       </span>
     </Link>
@@ -454,31 +511,38 @@ function InvalidCell({ repo, percentual }: { repo: RepositoryHit; percentual: In
  */
 function ManagersCell({ repo, onVer }: { repo: RepositoryHit; onVer: () => void }) {
   const { t } = useTranslation()
+  const id = `admin-repositories-managers-${repo.harvesterRepositoryId}`
 
   if (repo.managerCount > 0) {
     return (
       <button
+        id={id}
         type="button"
         onClick={onVer}
         title={t('adminRepositories.seeManagers', { count: repo.managerCount })}
         aria-label={t('adminRepositories.seeManagers', { count: repo.managerCount })}
         className="inline-flex flex-wrap items-center justify-center gap-1.5 px-1 py-1 text-content-muted transition-colors duration-150 hover:text-brand-strong"
       >
-        <UsersIcon />
-        <span className="text-xs tabular-nums">{repo.managerCount}</span>
+        <UsersIcon id={`${id}-icon`} />
+        <span id={`${id}-count`} className="text-xs tabular-nums">
+          {repo.managerCount}
+        </span>
       </button>
     )
   }
 
   return (
     <Link
+      id={id}
       to={`/acessos?busca=${encodeURIComponent(repo.acronym ?? '')}&selecionar=${repo.harvesterRepositoryId}`}
       title={t('adminRepositories.assignManager')}
       aria-label={t('adminRepositories.assignManager')}
       className="inline-flex flex-wrap items-center justify-center gap-1.5 px-1 py-1 text-warn transition-colors duration-150 hover:text-brand-strong"
     >
-      <UserPlusIcon />
-      <span className="text-xs">{t('adminRepositories.none')}</span>
+      <UserPlusIcon id={`${id}-icon`} />
+      <span id={`${id}-label`} className="text-xs">
+        {t('adminRepositories.none')}
+      </span>
     </Link>
   )
 }

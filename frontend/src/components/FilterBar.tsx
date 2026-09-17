@@ -10,9 +10,11 @@ import { countActiveFilters, EMPTY_FILTERS, type RecordFilters } from '@/lib/fil
  * um erro.
  */
 export function FilterBar({
+  id = 'filter-bar',
   filters,
   onChange,
 }: {
+  id?: string
   filters: RecordFilters
   onChange: (filters: RecordFilters) => void
 }) {
@@ -57,9 +59,10 @@ export function FilterBar({
   )
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <div className="flex flex-wrap gap-2">
+    <div id={id} className="flex flex-wrap items-center gap-2">
+      <div id={`${id}-selects`} className="flex flex-wrap gap-2">
         <select
+          id={`${id}-valid`}
           value={filters.valid ?? ''}
           onChange={(event) =>
             onChange({
@@ -76,6 +79,7 @@ export function FilterBar({
         </select>
 
         <select
+          id={`${id}-transformed`}
           value={filters.transformed ?? ''}
           onChange={(event) =>
             onChange({
@@ -94,19 +98,25 @@ export function FilterBar({
 
       {chips.map((chip) => (
         <button
+          id={`${id}-chip-${chip.key}`}
           key={chip.key}
           type="button"
           onClick={chip.remove}
           className="inline-flex items-center gap-1.5 bg-brand/10 px-2.5 py-1 text-xs text-brand-strong hover:bg-brand/20"
         >
           {chip.label}
-          <span aria-hidden="true">×</span>
-          <span className="sr-only">{t('records.removeFilter')}</span>
+          <span id={`${id}-chip-${chip.key}-remove-icon`} aria-hidden="true">
+            ×
+          </span>
+          <span id={`${id}-chip-${chip.key}-remove-label`} className="sr-only">
+            {t('records.removeFilter')}
+          </span>
         </button>
       ))}
 
       {ativos > 0 ? (
         <button
+          id={`${id}-clear`}
           type="button"
           onClick={() => onChange(EMPTY_FILTERS)}
           className="text-xs text-content-muted underline hover:text-content"

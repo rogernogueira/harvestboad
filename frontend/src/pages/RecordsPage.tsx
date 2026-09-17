@@ -62,65 +62,101 @@ export function RecordsPage() {
 
   const registros = data?.results ?? []
 
-  if (isPending) return <Loading />
-  if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />
+  if (isPending) return <Loading id="records-page-loading" />
+  if (isError)
+    return <ErrorState id="records-page-error" error={error} onRetry={() => void refetch()} />
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <FilterBar filters={filtros} onChange={aplicarFiltros} />
-        <ExportButton snapshotId={snapshotId} filters={filtros} />
+    <div id="records-page" className="flex flex-col gap-4">
+      <div id="records-page-toolbar" className="flex flex-wrap items-start justify-between gap-4">
+        <FilterBar id="records-page-filters" filters={filtros} onChange={aplicarFiltros} />
+        <ExportButton id="records-page-export" snapshotId={snapshotId} filters={filtros} />
       </div>
 
-      <p className="text-sm text-content-muted">
+      <p id="records-page-total" className="text-sm text-content-muted">
         {t('records.total', { count: data.totalElements ?? 0 })}
         {isFetching ? ` · ${t('common.loading')}` : ''}
       </p>
 
       {registros.length === 0 ? (
-        <Empty label={t('records.none')} />
+        <Empty id="records-page-empty" label={t('records.none')} />
       ) : (
         <>
-          <div className="panel overflow-x-auto">
-            <table className="w-full min-w-3xl border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-border-subtle bg-surface-muted text-left">
-                  <th className="px-4 py-3 font-heading text-xs font-bold">
+          <div id="records-page-table-wrapper" className="panel overflow-x-auto">
+            <table id="records-page-table" className="w-full min-w-3xl border-collapse text-sm">
+              <thead id="records-page-table-head">
+                <tr
+                  id="records-page-table-head-row"
+                  className="border-b border-border-subtle bg-surface-muted text-left"
+                >
+                  <th
+                    id="records-page-column-identifier"
+                    className="px-4 py-3 font-heading text-xs font-bold"
+                  >
                     {t('records.columns.identifier')}
                   </th>
-                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                  <th
+                    id="records-page-column-valid"
+                    className="px-4 py-3 font-heading text-xs font-bold"
+                  >
                     {t('records.columns.valid')}
                   </th>
-                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                  <th
+                    id="records-page-column-transformed"
+                    className="px-4 py-3 font-heading text-xs font-bold"
+                  >
                     {t('records.columns.transformed')}
                   </th>
-                  <th className="px-4 py-3 font-heading text-xs font-bold">
+                  <th
+                    id="records-page-column-set"
+                    className="px-4 py-3 font-heading text-xs font-bold"
+                  >
                     {t('records.columns.set')}
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="records-page-table-body">
                 {registros.map((registro) => (
-                  <tr key={registro.id} className="border-b border-border-subtle last:border-0">
-                    <td className="px-4 py-3 align-top">
+                  <tr
+                    id={`records-page-row-${registro.id}`}
+                    key={registro.id}
+                    className="border-b border-border-subtle last:border-0"
+                  >
+                    <td
+                      id={`records-page-row-${registro.id}-identifier`}
+                      className="px-4 py-3 align-top"
+                    >
                       <Link
+                        id={`records-page-row-${registro.id}-link`}
                         to={`/coletas/${snapshotId}/registros/${registro.identifier}${sufixoFiltros}`}
                         className="font-mono text-xs break-all text-brand-strong hover:underline"
                       >
                         {registro.identifier}
                       </Link>
                     </td>
-                    <td className="px-4 py-3 align-top">
-                      <ValidityBadge valid={registro.isValid} />
+                    <td
+                      id={`records-page-row-${registro.id}-valid`}
+                      className="px-4 py-3 align-top"
+                    >
+                      <ValidityBadge
+                        id={`records-page-row-${registro.id}-validity`}
+                        valid={registro.isValid}
+                      />
                     </td>
-                    <td className="px-4 py-3 align-top">
+                    <td
+                      id={`records-page-row-${registro.id}-transformed`}
+                      className="px-4 py-3 align-top"
+                    >
                       {registro.isTransformed === null || registro.isTransformed === undefined
                         ? '—'
                         : registro.isTransformed
                           ? t('common.yes')
                           : t('common.no')}
                     </td>
-                    <td className="px-4 py-3 align-top text-content-muted">
+                    <td
+                      id={`records-page-row-${registro.id}-set`}
+                      className="px-4 py-3 align-top text-content-muted"
+                    >
                       {registro.setSpec ?? '—'}
                     </td>
                   </tr>
@@ -129,7 +165,12 @@ export function RecordsPage() {
             </table>
           </div>
 
-          <Pagination page={data.page} totalPages={data.totalPages ?? 1} onChange={irParaPagina} />
+          <Pagination
+            id="records-page-pagination"
+            page={data.page}
+            totalPages={data.totalPages ?? 1}
+            onChange={irParaPagina}
+          />
         </>
       )}
     </div>

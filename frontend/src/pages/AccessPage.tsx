@@ -125,21 +125,30 @@ export function AccessPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div id="access-page" className="flex flex-col gap-6">
       <PageHeader
+        id="access-page-header"
         eyebrow={t('access.eyebrow')}
         title={t('access.title')}
         description={t('access.subtitle')}
       />
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
+      <div
+        id="access-page-columns"
+        className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start"
+      >
         {/* Busca de repositórios */}
-        <section className="panel flex flex-col gap-3 p-5">
-          <h2 className="font-heading text-sm font-bold">{t('access.findRepository')}</h2>
+        <section id="access-page-search" className="panel flex flex-col gap-3 p-5">
+          <h2 id="access-page-search-title" className="font-heading text-sm font-bold">
+            {t('access.findRepository')}
+          </h2>
 
-          <label className="flex flex-col gap-1.5">
-            <span className="sr-only">{t('access.searchRepository')}</span>
+          <label id="access-page-search-field" className="flex flex-col gap-1.5">
+            <span id="access-page-search-label" className="sr-only">
+              {t('access.searchRepository')}
+            </span>
             <input
+              id="access-page-search-input"
               type="search"
               value={termo}
               onChange={(event) => aoBuscar(event.target.value)}
@@ -150,19 +159,26 @@ export function AccessPage() {
           </label>
 
           {!temTermo ? (
-            <p className="py-6 text-center text-sm text-content-muted">
+            <p id="access-page-search-hint" className="py-6 text-center text-sm text-content-muted">
               {t('access.typeToSearch')}
             </p>
           ) : busca.isPending ? (
-            <Loading />
+            <Loading id="access-page-search-loading" />
           ) : busca.isError ? (
-            <ErrorState error={busca.error} onRetry={() => void busca.refetch()} />
+            <ErrorState
+              id="access-page-search-error"
+              error={busca.error}
+              onRetry={() => void busca.refetch()}
+            />
           ) : busca.data && busca.data.totalElements === 0 ? (
-            <Empty label={t('access.noRepositories')} />
+            <Empty id="access-page-search-empty" label={t('access.noRepositories')} />
           ) : busca.data ? (
             <>
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="text-xs text-content-muted">
+              <div
+                id="access-page-search-summary"
+                className="flex flex-wrap items-center justify-between gap-2"
+              >
+                <p id="access-page-search-count" className="text-xs text-content-muted">
                   {t('access.foundBy', {
                     count: busca.data.totalElements,
                     field: busca.data.field
@@ -171,6 +187,7 @@ export function AccessPage() {
                   })}
                 </p>
                 <button
+                  id="access-page-toggle-page-selection"
                   type="button"
                   onClick={alternarTodos}
                   className="text-xs text-brand-strong underline hover:text-brand"
@@ -179,9 +196,12 @@ export function AccessPage() {
                 </button>
               </div>
 
-              <ul className="flex flex-col">
+              <ul id="access-page-results" className="flex flex-col">
                 {busca.data.results.map((repo) => (
-                  <li key={repo.harvesterRepositoryId}>
+                  <li
+                    id={`access-page-result-${repo.harvesterRepositoryId}`}
+                    key={repo.harvesterRepositoryId}
+                  >
                     <RepositoryOption
                       repo={repo}
                       marcado={marcados.has(repo.harvesterRepositoryId)}
@@ -199,6 +219,7 @@ export function AccessPage() {
               </ul>
 
               <Pagination
+                id="access-page-pagination"
                 page={busca.data.page}
                 totalPages={busca.data.totalPages}
                 onChange={(destino) => atualizarUrl({ pagina: String(destino) })}
@@ -208,7 +229,7 @@ export function AccessPage() {
         </section>
 
         {/* Associação em lote ou detalhe de um repositório */}
-        <section className="flex flex-col gap-4 lg:sticky lg:top-24">
+        <section id="access-page-side" className="flex flex-col gap-4 lg:sticky lg:top-24">
           {selecionados.length > 0 ? (
             <BulkLinkPanel
               selecionados={selecionados}
@@ -223,9 +244,13 @@ export function AccessPage() {
           ) : detalhado ? (
             <ManagersPanel repositorio={detalhado} onFechar={() => setDetalhado(null)} />
           ) : (
-            <div className="panel p-5">
-              <p className="eyebrow mb-1">{t('access.noSelection')}</p>
-              <p className="text-sm text-content-muted">{t('access.selectHint')}</p>
+            <div id="access-page-no-selection" className="panel p-5">
+              <p id="access-page-no-selection-label" className="eyebrow mb-1">
+                {t('access.noSelection')}
+              </p>
+              <p id="access-page-no-selection-hint" className="text-sm text-content-muted">
+                {t('access.selectHint')}
+              </p>
             </div>
           )}
         </section>
@@ -246,31 +271,43 @@ function RepositoryOption({
   onDetalhar: () => void
 }) {
   const { t } = useTranslation()
+  const id = `access-page-option-${repo.harvesterRepositoryId}`
 
   return (
     <div
+      id={id}
       className={`flex items-start gap-3 border-l-2 px-3 py-2.5 transition-colors duration-150 ${
         marcado ? 'border-brand bg-brand-soft' : 'border-transparent hover:bg-surface-muted'
       }`}
     >
       <input
+        id={`${id}-checkbox`}
         type="checkbox"
         checked={marcado}
         onChange={onAlternar}
         aria-label={t('access.selectRepository', { repo: repo.acronym })}
         className="mt-1 size-4 shrink-0 accent-[var(--color-brand)]"
       />
-      <span className="min-w-0 flex-1">
-        <span className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-xs text-brand-strong">{repo.acronym}</span>
-          {repo.lastSnapshotStatus ? <HarvestStatusBadge status={repo.lastSnapshotStatus} /> : null}
+      <span id={`${id}-info`} className="min-w-0 flex-1">
+        <span id={`${id}-top`} className="flex flex-wrap items-center gap-2">
+          <span id={`${id}-acronym`} className="font-mono text-xs text-brand-strong">
+            {repo.acronym}
+          </span>
+          {repo.lastSnapshotStatus ? (
+            <HarvestStatusBadge id={`${id}-status`} status={repo.lastSnapshotStatus} />
+          ) : null}
         </span>
-        <span className="block text-sm font-semibold">{repo.name}</span>
+        <span id={`${id}-name`} className="block text-sm font-semibold">
+          {repo.name}
+        </span>
         {repo.institutionName ? (
-          <span className="block text-xs text-content-muted">{repo.institutionName}</span>
+          <span id={`${id}-institution`} className="block text-xs text-content-muted">
+            {repo.institutionName}
+          </span>
         ) : null}
       </span>
       <button
+        id={`${id}-see-managers`}
         type="button"
         onClick={onDetalhar}
         className="shrink-0 text-xs text-brand-strong underline hover:text-brand"
@@ -283,11 +320,13 @@ function RepositoryOption({
 
 /** Associa o conjunto selecionado a um gestor. */
 function BulkLinkPanel({
+  id = 'access-page-bulk',
   selecionados,
   onRemover,
   onLimpar,
   onConcluido,
 }: {
+  id?: string
   selecionados: Selecionado[]
   onRemover: (id: string) => void
   onLimpar: () => void
@@ -324,12 +363,13 @@ function BulkLinkPanel({
   })
 
   return (
-    <div className="panel flex flex-col gap-4 p-5">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="font-heading text-sm font-bold">
+    <div id={id} className="panel flex flex-col gap-4 p-5">
+      <div id={`${id}-header`} className="flex flex-wrap items-center justify-between gap-2">
+        <h2 id={`${id}-title`} className="font-heading text-sm font-bold">
           {t('access.selectedCount', { count: selecionados.length })}
         </h2>
         <button
+          id={`${id}-clear`}
           type="button"
           onClick={onLimpar}
           className="text-xs text-content-muted underline hover:text-content"
@@ -338,33 +378,45 @@ function BulkLinkPanel({
         </button>
       </div>
 
-      <ul className="flex flex-wrap gap-1.5">
+      <ul id={`${id}-selection`} className="flex flex-wrap gap-1.5">
         {selecionados.map((item) => (
-          <li key={item.id}>
+          <li id={`${id}-selection-${item.id}`} key={item.id}>
             <button
+              id={`${id}-selection-${item.id}-remove`}
               type="button"
               onClick={() => onRemover(item.id)}
               title={item.name}
               className="inline-flex items-center gap-1.5 bg-brand-soft px-2 py-1 font-mono text-xs text-brand-strong hover:bg-brand/20"
             >
               {item.acronym}
-              <span aria-hidden="true">×</span>
-              <span className="sr-only">{t('access.removeFromSelection')}</span>
+              <span id={`${id}-selection-${item.id}-remove-icon`} aria-hidden="true">
+                ×
+              </span>
+              <span id={`${id}-selection-${item.id}-remove-label`} className="sr-only">
+                {t('access.removeFromSelection')}
+              </span>
             </button>
           </li>
         ))}
       </ul>
 
       <form
+        id={`${id}-form`}
         className="flex flex-col gap-2 border-t border-border-subtle pt-4"
         onSubmit={(event) => {
           event.preventDefault()
           associar.mutate()
         }}
       >
-        <span className="flex flex-wrap items-center justify-between gap-2">
-          <span className="eyebrow">{t('access.linkToManager')}</span>
+        <span
+          id={`${id}-form-header`}
+          className="flex flex-wrap items-center justify-between gap-2"
+        >
+          <span id={`${id}-form-label`} className="eyebrow">
+            {t('access.linkToManager')}
+          </span>
           <button
+            id={`${id}-new-user`}
             type="button"
             onClick={() => setNovoUsuario(true)}
             className="text-xs text-brand-strong underline transition-colors duration-150 hover:text-brand"
@@ -374,6 +426,7 @@ function BulkLinkPanel({
         </span>
 
         <input
+          id={`${id}-manager-search`}
           type="search"
           value={buscaGestor}
           onChange={(event) => setBuscaGestor(event.target.value)}
@@ -381,16 +434,23 @@ function BulkLinkPanel({
           className="border border-border-subtle bg-surface px-3 py-2 text-sm"
         />
 
-        {gestores.isPending ? <Loading /> : null}
+        {gestores.isPending ? <Loading id={`${id}-managers-loading`} /> : null}
         {gestores.isError ? (
-          <ErrorState error={gestores.error} onRetry={() => void gestores.refetch()} />
+          <ErrorState
+            id={`${id}-managers-error`}
+            error={gestores.error}
+            onRetry={() => void gestores.refetch()}
+          />
         ) : null}
 
         {gestores.data ? (
           gestores.data.count === 0 ? (
-            <p className="text-sm text-content-muted">{t('access.noManagersFound')}</p>
+            <p id={`${id}-managers-empty`} className="text-sm text-content-muted">
+              {t('access.noManagersFound')}
+            </p>
           ) : (
             <select
+              id={`${id}-manager-select`}
               value={gestorId}
               onChange={(event) => setGestorId(event.target.value)}
               size={5}
@@ -399,7 +459,7 @@ function BulkLinkPanel({
             >
               <option value="">{t('access.chooseManager')}</option>
               {gestores.data.results.map((gestor) => (
-                <option key={gestor.id} value={gestor.id}>
+                <option id={`${id}-manager-option-${gestor.id}`} key={gestor.id} value={gestor.id}>
                   {gestor.username}
                   {gestor.first_name || gestor.last_name
                     ? ` — ${gestor.first_name} ${gestor.last_name}`.trimEnd()
@@ -411,6 +471,7 @@ function BulkLinkPanel({
         ) : null}
 
         <button
+          id={`${id}-submit`}
           type="submit"
           disabled={!gestorId || associar.isPending}
           className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-strong disabled:opacity-50"
@@ -421,14 +482,17 @@ function BulkLinkPanel({
         </button>
 
         {aviso ? (
-          <p role="alert" className="text-sm text-down">
+          <p id={`${id}-warning`} role="alert" className="text-sm text-down">
             {aviso}
           </p>
         ) : null}
 
         {/* O lote relata por repositório: o que já existia não é erro. */}
         {resultado ? (
-          <p className="border-l-2 border-ok bg-ok-soft px-3 py-2 text-sm text-ok">
+          <p
+            id={`${id}-result`}
+            className="border-l-2 border-ok bg-ok-soft px-3 py-2 text-sm text-ok"
+          >
             {t('access.bulkResult', {
               count: resultado.createdCount,
               user: resultado.username,
@@ -441,6 +505,7 @@ function BulkLinkPanel({
       </form>
 
       <NewUserModal
+        id={`${id}-new-user-modal`}
         aberto={novoUsuario}
         onFechar={() => setNovoUsuario(false)}
         onCriado={async (user) => {
@@ -455,9 +520,11 @@ function BulkLinkPanel({
 
 /** Gestores já vinculados a um repositório, com remoção. */
 function ManagersPanel({
+  id = 'access-page-managers',
   repositorio,
   onFechar,
 }: {
+  id?: string
   repositorio: Selecionado
   onFechar: () => void
 }) {
@@ -478,53 +545,77 @@ function ManagersPanel({
   })
 
   return (
-    <div className="panel flex flex-col gap-4 p-5">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="eyebrow !text-brand-strong">{repositorio.acronym}</p>
-          <h2 className="font-heading text-lg font-bold tracking-tight">
+    <div id={id} className="panel flex flex-col gap-4 p-5">
+      <div id={`${id}-header`} className="flex items-start justify-between gap-3">
+        <div id={`${id}-header-text`} className="min-w-0">
+          <p id={`${id}-acronym`} className="eyebrow !text-brand-strong">
+            {repositorio.acronym}
+          </p>
+          <h2 id={`${id}-title`} className="font-heading text-lg font-bold tracking-tight">
             {repositorio.name || t('access.selectedRepository')}
           </h2>
         </div>
         <button
+          id={`${id}-close`}
           type="button"
           onClick={onFechar}
           aria-label={t('common.close')}
           className="-mt-1 -mr-1 px-2 py-1 text-lg leading-none text-content-muted hover:text-content"
         >
-          <span aria-hidden="true">×</span>
+          <span id={`${id}-close-icon`} aria-hidden="true">
+            ×
+          </span>
         </button>
       </div>
 
-      <div>
-        <p className="eyebrow mb-2">
+      <div id={`${id}-body`}>
+        <p id={`${id}-count`} className="eyebrow mb-2">
           {t('access.managersWithAccess', { count: vinculos.data?.count ?? 0 })}
         </p>
 
-        {vinculos.isPending ? <Loading /> : null}
+        {vinculos.isPending ? <Loading id={`${id}-loading`} /> : null}
         {vinculos.isError ? (
-          <ErrorState error={vinculos.error} onRetry={() => void vinculos.refetch()} />
+          <ErrorState
+            id={`${id}-error`}
+            error={vinculos.error}
+            onRetry={() => void vinculos.refetch()}
+          />
         ) : null}
 
         {vinculos.data ? (
           vinculos.data.count === 0 ? (
-            <p className="text-sm text-content-muted">{t('access.noManagers')}</p>
+            <p id={`${id}-empty`} className="text-sm text-content-muted">
+              {t('access.noManagers')}
+            </p>
           ) : (
-            <ul className="divide-y divide-border-subtle border-y border-border-subtle">
+            <ul
+              id={`${id}-list`}
+              className="divide-y divide-border-subtle border-y border-border-subtle"
+            >
               {vinculos.data.results.map((vinculo) => (
                 <li
+                  id={`${id}-item-${vinculo.id}`}
                   key={vinculo.id}
                   className="flex flex-wrap items-center justify-between gap-2 py-2"
                 >
-                  <span>
-                    <span className="text-sm font-semibold">{vinculo.username}</span>
-                    <span className="block text-xs text-content-muted">
+                  <span id={`${id}-item-${vinculo.id}-info`}>
+                    <span
+                      id={`${id}-item-${vinculo.id}-username`}
+                      className="text-sm font-semibold"
+                    >
+                      {vinculo.username}
+                    </span>
+                    <span
+                      id={`${id}-item-${vinculo.id}-since`}
+                      className="block text-xs text-content-muted"
+                    >
                       {t('access.since', {
                         date: new Date(vinculo.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
                       })}
                     </span>
                   </span>
                   <button
+                    id={`${id}-item-${vinculo.id}-remove`}
                     type="button"
                     onClick={() => {
                       if (window.confirm(t('access.confirmRemove', { user: vinculo.username })))
@@ -542,7 +633,7 @@ function ManagersPanel({
         ) : null}
 
         {aviso ? (
-          <p role="alert" className="mt-2 text-sm text-down">
+          <p id={`${id}-warning`} role="alert" className="mt-2 text-sm text-down">
             {aviso}
           </p>
         ) : null}

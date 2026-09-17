@@ -17,6 +17,9 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/acessos', label: 'nav.access', end: false, adminOnly: true },
 ]
 
+/** Identificador de navegação a partir da rota, para o id sair legível. */
+const navId = (to: string) => (to === '/' ? 'home' : to.replace(/^\//, '').replace(/\//g, '-'))
+
 /**
  * Moldura do painel.
  *
@@ -41,26 +44,42 @@ export function AppShell() {
     }`
 
   return (
-    <div className="min-h-dvh bg-surface-muted">
+    <div id="app-shell" className="min-h-dvh bg-surface-muted">
       {/* Faixa institucional */}
-      <div className="bg-brand-strong text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5">
-          <p className="eyebrow !text-white/85">{t('app.institution')}</p>
-          <LanguageSwitcher />
+      <div id="app-shell-institution-bar" className="bg-brand-strong text-white">
+        <div
+          id="app-shell-institution-bar-inner"
+          className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5"
+        >
+          <p id="app-shell-institution-name" className="eyebrow !text-white/85">
+            {t('app.institution')}
+          </p>
+          <LanguageSwitcher id="app-shell-language-switcher" />
         </div>
       </div>
 
       {/* Barra principal */}
-      <header className="sticky top-0 z-20 border-b border-border-subtle bg-surface">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3">
+      <header
+        id="app-shell-header"
+        className="sticky top-0 z-20 border-b border-border-subtle bg-surface"
+      >
+        <div
+          id="app-shell-header-inner"
+          className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3"
+        >
           <button
+            id="app-shell-menu-toggle"
             type="button"
             onClick={() => setMenuAberto((aberto) => !aberto)}
             aria-expanded={menuAberto}
             aria-label={t('nav.toggleMenu')}
             className="-ml-1 rounded-card p-2 text-content-muted hover:bg-surface-muted lg:hidden"
           >
-            <span aria-hidden="true" className="block text-lg leading-none">
+            <span
+              id="app-shell-menu-toggle-icon"
+              aria-hidden="true"
+              className="block text-lg leading-none"
+            >
               {menuAberto ? '×' : '≡'}
             </span>
           </button>
@@ -76,23 +95,34 @@ export function AppShell() {
 
             O alt carrega o nome acessível do link, que antes vinha do texto.
           */}
-          <Link to="/" className="mr-auto">
-            <img src="/logoHB-horizontal.svg" alt={t('app.name')} className="h-11 w-auto" />
+          <Link id="app-shell-logo-link" to="/" className="mr-auto">
+            <img
+              id="app-shell-logo"
+              src="/logoHB-horizontal.svg"
+              alt={t('app.name')}
+              className="h-11 w-auto"
+            />
           </Link>
 
           {user ? (
-            <div className="flex items-center gap-3">
-              <div className="hidden text-right sm:block">
-                <p className="text-sm font-semibold">{user.username}</p>
-                <p className="eyebrow !text-brand-strong">{user.profileDisplay}</p>
+            <div id="app-shell-user" className="flex items-center gap-3">
+              <div id="app-shell-user-identity" className="hidden text-right sm:block">
+                <p id="app-shell-user-username" className="text-sm font-semibold">
+                  {user.username}
+                </p>
+                <p id="app-shell-user-profile" className="eyebrow !text-brand-strong">
+                  {user.profileDisplay}
+                </p>
               </div>
               <Link
+                id="app-shell-change-password"
                 to="/trocar-senha"
                 className="hidden border border-border-subtle px-3 py-1.5 text-sm text-content-muted transition-colors duration-150 hover:border-brand hover:text-brand-strong sm:block"
               >
                 {t('auth.changePassword')}
               </Link>
               <button
+                id="app-shell-logout"
                 type="button"
                 onClick={logout}
                 className="border border-border-subtle px-3 py-1.5 text-sm transition-colors duration-150 hover:border-brand hover:text-brand-strong"
@@ -104,17 +134,21 @@ export function AppShell() {
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl gap-8 px-4 py-6">
+      <div id="app-shell-body" className="mx-auto flex max-w-7xl gap-8 px-4 py-6">
         {/* Navegação lateral */}
         <nav
+          id="app-shell-nav"
           aria-label={t('nav.main')}
           className={`${menuAberto ? 'block' : 'hidden'} w-full shrink-0 lg:block lg:w-56`}
         >
-          <p className="eyebrow mb-2 px-4">{t('nav.sections')}</p>
-          <ul className="border-l border-border-subtle">
+          <p id="app-shell-nav-label" className="eyebrow mb-2 px-4">
+            {t('nav.sections')}
+          </p>
+          <ul id="app-shell-nav-list" className="border-l border-border-subtle">
             {itens.map((item) => (
-              <li key={item.to}>
+              <li id={`app-shell-nav-item-${navId(item.to)}`} key={item.to}>
                 <NavLink
+                  id={`app-shell-nav-link-${navId(item.to)}`}
                   to={item.to}
                   end={item.end}
                   onClick={() => setMenuAberto(false)}
@@ -128,6 +162,7 @@ export function AppShell() {
         </nav>
 
         <main
+          id="app-shell-main"
           className={`${menuAberto ? 'hidden' : 'block'} min-w-0 flex-1 lg:block`}
           key={location.pathname}
         >
@@ -135,10 +170,17 @@ export function AppShell() {
         </main>
       </div>
 
-      <footer className="mt-8 border-t border-border-subtle bg-surface">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-6">
-          <p className="text-sm text-content-muted">{t('app.footer')}</p>
-          <p className="eyebrow">{t('app.institution')}</p>
+      <footer id="app-shell-footer" className="mt-8 border-t border-border-subtle bg-surface">
+        <div
+          id="app-shell-footer-inner"
+          className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-6"
+        >
+          <p id="app-shell-footer-text" className="text-sm text-content-muted">
+            {t('app.footer')}
+          </p>
+          <p id="app-shell-footer-institution" className="eyebrow">
+            {t('app.institution')}
+          </p>
         </div>
       </footer>
     </div>

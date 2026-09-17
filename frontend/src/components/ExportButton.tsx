@@ -11,9 +11,11 @@ import { filtersToParams, type RecordFilters } from '@/lib/filters'
  * um `<a href>` simples não carregaria o token JWT.
  */
 export function ExportButton({
+  id = 'export-button',
   snapshotId,
   filters,
 }: {
+  id?: string
   snapshotId: string
   filters: RecordFilters
 }) {
@@ -39,8 +41,9 @@ export function ExportButton({
   }
 
   return (
-    <div className="flex flex-col items-end gap-1">
+    <div id={id} className="flex flex-col items-end gap-1">
       <button
+        id={`${id}-trigger`}
         type="button"
         onClick={() => void exportar()}
         disabled={baixando}
@@ -49,7 +52,7 @@ export function ExportButton({
         {baixando ? t('records.exporting') : t('records.export')}
       </button>
       {erro ? (
-        <span role="alert" className="text-xs text-down">
+        <span id={`${id}-error`} role="alert" className="text-xs text-down">
           {erro}
         </span>
       ) : null}

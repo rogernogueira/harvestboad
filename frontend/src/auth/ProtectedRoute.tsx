@@ -9,7 +9,11 @@ export function ProtectedRoute() {
   const { t } = useTranslation()
 
   if (status === 'carregando') {
-    return <p className="p-8 text-content-muted">{t('common.loading')}</p>
+    return (
+      <p id="protected-route-loading" className="p-8 text-content-muted">
+        {t('common.loading')}
+      </p>
+    )
   }
 
   if (status === 'anonimo') {

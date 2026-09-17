@@ -22,7 +22,13 @@ import type { RecordItem } from '@/lib/types'
  * do ar ou com metadado pobre, e um alerta vermelho em toda visita treinaria o
  * usuário a ignorá-lo. Vira um aviso discreto, com o motivo no `title`.
  */
-export function RecordLinkButton({ record }: { record: RecordItem }) {
+export function RecordLinkButton({
+  id = 'record-link-button',
+  record,
+}: {
+  id?: string
+  record: RecordItem
+}) {
   const { t } = useTranslation()
 
   const origem = record.origin ?? ''
@@ -41,6 +47,7 @@ export function RecordLinkButton({ record }: { record: RecordItem }) {
   if (link) {
     return (
       <a
+        id={id}
         href={link}
         target="_blank"
         // `noopener` protege a aba de origem; `noreferrer` evita vazar o
@@ -50,7 +57,7 @@ export function RecordLinkButton({ record }: { record: RecordItem }) {
         className="inline-flex items-center gap-2 border border-border-subtle px-3 py-1.5 text-sm hover:bg-border-subtle"
       >
         {provavel ? t('record.link.openProbable') : t('record.link.open')}
-        <ExternalLinkIcon />
+        <ExternalLinkIcon id={`${id}-icon`} />
       </a>
     )
   }
@@ -58,12 +65,17 @@ export function RecordLinkButton({ record }: { record: RecordItem }) {
   // Uma query desligada (registro sem `origin`) também fica `isPending`; o
   // `fetchStatus` é o que separa "esperando resposta" de "nunca vai buscar".
   if (consulta.isPending && consulta.fetchStatus !== 'idle') {
-    return <span className="text-xs text-content-muted">{t('record.link.resolving')}</span>
+    return (
+      <span id={`${id}-resolving`} className="text-xs text-content-muted">
+        {t('record.link.resolving')}
+      </span>
+    )
   }
 
   const motivo = consulta.data?.reason?.split(':')[0]
   return (
     <span
+      id={`${id}-unavailable`}
       className="text-xs text-content-muted"
       title={motivo ? t(`record.link.reasons.${motivo}`) : undefined}
     >

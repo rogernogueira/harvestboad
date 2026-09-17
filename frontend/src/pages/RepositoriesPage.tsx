@@ -34,7 +34,7 @@ export function RepositoriesPage() {
   // gerenciamento de todo o acervo.
   if (user?.profile === 'ADMIN') {
     return (
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading id="repositories-page-admin-loading" />}>
         <AdminRepositoriesPage />
       </Suspense>
     )
@@ -92,17 +92,20 @@ function MyRepositoriesPage() {
   // Antes dos retornos antecipados: hook não pode ficar atrás de condicional.
   const ordenados = useMemo(() => ordenarPorAtencao(data?.results ?? []), [data?.results])
 
-  if (isPending) return <Loading label={t('repositories.loadingStats')} />
-  if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />
+  if (isPending)
+    return <Loading id="my-repositories-loading" label={t('repositories.loadingStats')} />
+  if (isError)
+    return <ErrorState id="my-repositories-error" error={error} onRetry={() => void refetch()} />
 
   return (
-    <div className="flex flex-col gap-6">
+    <div id="my-repositories-page" className="flex flex-col gap-6">
       {/*
         Sem eyebrow: aqui ele repetiria o título. O rótulo existe para situar a
         tela numa seção — é o que faz em "Administração" —, e esta não está sob
         nenhuma.
       */}
       <PageHeader
+        id="my-repositories-header"
         title={t('repositories.title')}
         description={
           <>
@@ -114,11 +117,11 @@ function MyRepositoriesPage() {
       />
 
       {ordenados.length === 0 ? (
-        <Empty label={t('repositories.none')} />
+        <Empty id="my-repositories-empty" label={t('repositories.none')} />
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul id="my-repositories-list" className="flex flex-col gap-4">
           {ordenados.map((acesso) => (
-            <li key={acesso.id}>
+            <li id={`my-repositories-item-${acesso.harvesterRepositoryId}`} key={acesso.id}>
               <RepositoryRow acesso={acesso} />
             </li>
           ))}
@@ -133,39 +136,52 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
   const { t, i18n } = useTranslation()
   const [gestoresAbertos, setGestoresAbertos] = useState(false)
   const nomeRepositorio = acesso.name ?? acesso.acronym
+  // Uma linha por repositório: o id do repositório é o que mantém únicos todos
+  // os ids desta subárvore.
+  const id = `repository-row-${acesso.harvesterRepositoryId}`
 
   return (
-    <article className="panel grid gap-px overflow-hidden bg-border-subtle lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
+    <article
+      id={id}
+      className="panel grid gap-px overflow-hidden bg-border-subtle lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]"
+    >
       {/* Identificação */}
-      <div className="flex flex-col gap-1 bg-surface p-5">
-        <span className="flex items-center justify-between gap-2">
-          <span className="eyebrow !text-brand-strong">{acesso.acronym}</span>
+      <div id={`${id}-identity`} className="flex flex-col gap-1 bg-surface p-5">
+        <span id={`${id}-identity-top`} className="flex items-center justify-between gap-2">
+          <span id={`${id}-acronym`} className="eyebrow !text-brand-strong">
+            {acesso.acronym}
+          </span>
           <button
+            id={`${id}-managers-button`}
             type="button"
             onClick={() => setGestoresAbertos(true)}
             title={t('managers.open')}
             aria-label={t('managers.open')}
             className="-mt-1 -mr-1 p-1.5 text-content-muted transition-colors duration-150 hover:text-brand-strong"
           >
-            <UsersIcon />
+            <UsersIcon id={`${id}-managers-icon`} />
           </button>
         </span>
         <Link
+          id={`${id}-name`}
           to={`/repositorios/${acesso.harvesterRepositoryId}`}
           className="font-heading text-lg font-bold tracking-tight hover:text-brand-strong hover:underline"
         >
           {acesso.name ?? t('repositories.unnamed')}
         </Link>
         {acesso.institutionName ? (
-          <span className="text-sm text-content-muted">{acesso.institutionName}</span>
+          <span id={`${id}-institution`} className="text-sm text-content-muted">
+            {acesso.institutionName}
+          </span>
         ) : null}
-        <span className="mt-auto pt-3 text-xs text-content-muted">
+        <span id={`${id}-granted-at`} className="mt-auto pt-3 text-xs text-content-muted">
           {t('repositories.grantedAt', {
             date: new Date(acesso.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
           })}
         </span>
 
         <RepositoryManagersModal
+          id={`${id}-managers-modal`}
           aberto={gestoresAbertos}
           onFechar={() => setGestoresAbertos(false)}
           repositoryId={acesso.harvesterRepositoryId}
@@ -174,15 +190,24 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
       </div>
 
       {/* Estatísticas da última coleta */}
-      <div className="bg-surface p-5">
+      <div id={`${id}-stats`} className="bg-surface p-5">
         {acesso.unavailable ? (
-          <p className="border-l-2 border-warn bg-warn-soft px-3 py-2 text-sm text-warn">
+          <p
+            id={`${id}-stats-unavailable`}
+            className="border-l-2 border-warn bg-warn-soft px-3 py-2 text-sm text-warn"
+          >
             {t('repositories.statsUnavailable')}
           </p>
         ) : acesso.lastHarvest ? (
-          <HarvestStats coleta={acesso.lastHarvest} repositoryId={acesso.harvesterRepositoryId} />
+          <HarvestStats
+            id={`${id}-harvest`}
+            coleta={acesso.lastHarvest}
+            repositoryId={acesso.harvesterRepositoryId}
+          />
         ) : (
-          <p className="text-sm text-content-muted">{t('harvests.none')}</p>
+          <p id={`${id}-stats-none`} className="text-sm text-content-muted">
+            {t('harvests.none')}
+          </p>
         )}
       </div>
     </article>
@@ -212,7 +237,7 @@ function tom(valor: number | null | undefined, cor: string) {
  * A data exata continua ao lado, porque o badge arredonda e há quem precise do
  * dia. Clicar abre a coleta.
  */
-function IdadeDaColeta({ fim, snapshotId }: { fim: Date; snapshotId: string }) {
+function IdadeDaColeta({ id, fim, snapshotId }: { id: string; fim: Date; snapshotId: string }) {
   const { t, i18n } = useTranslation()
 
   const relativo = useMemo(
@@ -238,19 +263,24 @@ function IdadeDaColeta({ fim, snapshotId }: { fim: Date; snapshotId: string }) {
 
   return (
     <Link
+      id={id}
       to={`/coletas/${snapshotId}`}
       aria-label={t('repositories.openLastHarvest')}
       className="transition-opacity duration-150 hover:opacity-80"
     >
-      <Tag tone={tone}>{rotulo}</Tag>
+      <Tag id={`${id}-tag`} tone={tone}>
+        {rotulo}
+      </Tag>
     </Link>
   )
 }
 
 function HarvestStats({
+  id,
   coleta,
   repositoryId,
 }: {
+  id: string
   coleta: LastHarvestSummary
   repositoryId: string
 }) {
@@ -283,6 +313,7 @@ function HarvestStats({
   */
   const indicadores = [
     {
+      chave: 'size',
       rotulo: t('diagnosis.size'),
       valor: coleta.size,
       cor: '',
@@ -290,6 +321,7 @@ function HarvestStats({
       titulo: t('repositories.openRecords'),
     },
     {
+      chave: 'valid',
       rotulo: t('diagnosis.valid'),
       valor: coleta.validSize,
       cor: tom(coleta.validSize, 'text-ok'),
@@ -297,6 +329,7 @@ function HarvestStats({
       titulo: t('repositories.openValidRecords'),
     },
     {
+      chave: 'invalid',
       rotulo: t('diagnosis.invalid'),
       valor: coleta.invalidSize,
       cor: tom(coleta.invalidSize, 'text-down'),
@@ -304,6 +337,7 @@ function HarvestStats({
       titulo: t('repositories.openInvalidRecords'),
     },
     {
+      chave: 'violated-rules',
       rotulo: t('repositories.violatedRules'),
       valor: coleta.violatedRuleCount,
       cor: tom(coleta.violatedRuleCount, 'text-warn'),
@@ -313,39 +347,60 @@ function HarvestStats({
   ]
 
   return (
-    <div className="flex h-full flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span className="eyebrow">{t('repositories.lastHarvest')}</span>
+    <div id={id} className="flex h-full flex-col gap-4">
+      <div id={`${id}-summary`} className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span id={`${id}-summary-label`} className="eyebrow">
+          {t('repositories.lastHarvest')}
+        </span>
         <Link
+          id={`${id}-snapshot-link`}
           to={`/coletas/${coleta.snapshotId}`}
           className="font-mono text-xs text-brand-strong hover:underline"
         >
           #{coleta.snapshotId}
         </Link>
-        {coleta.status ? <HarvestStatusBadge status={coleta.status} /> : null}
-        {fimValido ? <IdadeDaColeta fim={fim} snapshotId={coleta.snapshotId} /> : null}
-        <span className="text-xs text-content-muted">{fimValido ? dataHora.format(fim) : '—'}</span>
+        {coleta.status ? <HarvestStatusBadge id={`${id}-status`} status={coleta.status} /> : null}
+        {fimValido ? (
+          <IdadeDaColeta id={`${id}-age`} fim={fim} snapshotId={coleta.snapshotId} />
+        ) : null}
+        <span id={`${id}-end-time`} className="text-xs text-content-muted">
+          {fimValido ? dataHora.format(fim) : '—'}
+        </span>
         {/*
           Coleta sem indexação não passou por validação: os campos de válidos,
           inválidos e regras vêm vazios, e o aviso explica o porquê uma vez só,
           em vez de repetir "não avaliado" em cada indicador.
         */}
         {coleta.evaluated ? null : (
-          <span className="text-xs text-content-muted italic" title={coleta.indexStatus ?? ''}>
+          <span
+            id={`${id}-not-evaluated`}
+            className="text-xs text-content-muted italic"
+            title={coleta.indexStatus ?? ''}
+          >
             {t('repositories.notEvaluated')}
           </span>
         )}
       </div>
 
-      <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
+      <dl id={`${id}-indicators`} className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
         {indicadores.map((item) => (
-          <div key={item.rotulo}>
-            <dt className="eyebrow">{item.rotulo}</dt>
-            <dd className={`font-heading text-xl font-extrabold tabular-nums ${item.cor}`}>
+          <div id={`${id}-indicator-${item.chave}`} key={item.chave}>
+            <dt id={`${id}-indicator-${item.chave}-label`} className="eyebrow">
+              {item.rotulo}
+            </dt>
+            <dd
+              id={`${id}-indicator-${item.chave}-value`}
+              className={`font-heading text-xl font-extrabold tabular-nums ${item.cor}`}
+            >
               {item.valor === null || item.valor === undefined ? (
                 '—'
               ) : item.para ? (
-                <Link to={item.para} title={item.titulo} className="hover:underline">
+                <Link
+                  id={`${id}-indicator-${item.chave}-link`}
+                  to={item.para}
+                  title={item.titulo}
+                  className="hover:underline"
+                >
                   {numero.format(item.valor)}
                 </Link>
               ) : (
@@ -357,20 +412,33 @@ function HarvestStats({
       </dl>
 
       {coleta.topViolations.length > 0 ? (
-        <div className="mt-auto">
-          <p className="eyebrow mb-1.5">{t('repositories.topViolations')}</p>
-          <ul className="flex flex-col gap-1">
+        <div id={`${id}-violations`} className="mt-auto">
+          <p id={`${id}-violations-label`} className="eyebrow mb-1.5">
+            {t('repositories.topViolations')}
+          </p>
+          <ul id={`${id}-violations-list`} className="flex flex-col gap-1">
             {coleta.topViolations.map((violacao) => (
-              <li key={violacao.ruleId} className="flex items-baseline gap-2 text-xs">
+              <li
+                id={`${id}-violation-${violacao.ruleId}`}
+                key={violacao.ruleId}
+                className="flex items-baseline gap-2 text-xs"
+              >
                 <Link
+                  id={`${id}-violation-${violacao.ruleId}-link`}
                   to={`/coletas/${coleta.snapshotId}/registros?invalidRule=${violacao.ruleId}`}
                   className="text-brand-strong hover:underline"
                   title={t('repositories.seeRecords')}
                 >
                   {violacao.name}
                 </Link>
-                <span className="flex-1 border-b border-dotted border-border-strong" />
-                <span className="tabular-nums text-content-muted">
+                <span
+                  id={`${id}-violation-${violacao.ruleId}-leader`}
+                  className="flex-1 border-b border-dotted border-border-strong"
+                />
+                <span
+                  id={`${id}-violation-${violacao.ruleId}-count`}
+                  className="tabular-nums text-content-muted"
+                >
                   {numero.format(violacao.invalidCount)}
                 </span>
               </li>
@@ -379,8 +447,12 @@ function HarvestStats({
         </div>
       ) : null}
 
-      <p className="text-xs text-content-muted">
-        <Link to={`/repositorios/${repositoryId}`} className="hover:underline">
+      <p id={`${id}-history`} className="text-xs text-content-muted">
+        <Link
+          id={`${id}-history-link`}
+          to={`/repositorios/${repositoryId}`}
+          className="hover:underline"
+        >
           {t('repositories.seeHistory')}
         </Link>
       </p>

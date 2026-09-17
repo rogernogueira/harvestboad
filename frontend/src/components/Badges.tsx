@@ -40,18 +40,25 @@ const TONES = {
  *
  * Retangular com barra lateral, seguindo a linguagem angular do design — e a
  * cor nunca é o único sinal: o texto sempre nomeia o estado.
+ *
+ * O `id` tem um padrão só para o caso avulso; onde o componente se repete (uma
+ * linha de tabela, um cartão por repositório) quem chama passa um valor único,
+ * senão a página sairia com ids repetidos.
  */
 export function Tag({
+  id = 'tag',
   tone,
   title,
   children,
 }: {
+  id?: string
   tone: keyof typeof TONES
   title?: string
   children: ReactNode
 }) {
   return (
     <span
+      id={id}
       title={title}
       // `break-words` é rede de proteção: um estado novo da origem, sem rótulo
       // curto, quebra em vez de empurrar a tabela.
@@ -62,19 +69,40 @@ export function Tag({
   )
 }
 
-export function HarvestStatusBadge({ status }: { status: string }) {
+export function HarvestStatusBadge({
+  id = 'harvest-status-badge',
+  status,
+}: {
+  id?: string
+  status: string
+}) {
   const { t } = useTranslation()
   const chave = ROTULOS[status.toUpperCase()]
 
   return (
-    <Tag tone={harvestTone(status)} title={status}>
+    <Tag id={id} tone={harvestTone(status)} title={status}>
       {chave ? t(chave) : status}
     </Tag>
   )
 }
 
-export function ValidityBadge({ valid }: { valid: boolean | null | undefined }) {
+export function ValidityBadge({
+  id = 'validity-badge',
+  valid,
+}: {
+  id?: string
+  valid: boolean | null | undefined
+}) {
   const { t } = useTranslation()
-  if (valid === null || valid === undefined) return <span className="text-content-muted">—</span>
-  return <Tag tone={valid ? 'ok' : 'down'}>{valid ? t('records.valid') : t('records.invalid')}</Tag>
+  if (valid === null || valid === undefined)
+    return (
+      <span id={id} className="text-content-muted">
+        —
+      </span>
+    )
+  return (
+    <Tag id={id} tone={valid ? 'ok' : 'down'}>
+      {valid ? t('records.valid') : t('records.invalid')}
+    </Tag>
+  )
 }

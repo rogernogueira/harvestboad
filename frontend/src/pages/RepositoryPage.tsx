@@ -50,53 +50,80 @@ export function RepositoryPage() {
       }))
   }, [coletas.data])
 
-  if (repositorio.isPending) return <Loading />
+  if (repositorio.isPending) return <Loading id="repository-page-loading" />
   if (repositorio.isError)
-    return <ErrorState error={repositorio.error} onRetry={() => void repositorio.refetch()} />
+    return (
+      <ErrorState
+        id="repository-page-error"
+        error={repositorio.error}
+        onRetry={() => void repositorio.refetch()}
+      />
+    )
 
   const repo = repositorio.data
 
   return (
-    <div className="flex flex-col gap-8">
-      <div>
+    <div id="repository-page" className="flex flex-col gap-8">
+      <div id="repository-page-heading">
         <Breadcrumb
+          id="repository-page-breadcrumb"
           items={[
             { label: t('repositories.title'), to: '/' },
             { label: repo.acronym ?? repositoryId },
           ]}
         />
         <PageHeader
+          id="repository-page-header"
           eyebrow={repo.acronym ?? repositoryId}
           title={repo.name ?? t('repositories.unnamed')}
           description={repo.institutionName}
         />
       </div>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label={t('repository.acronym')} value={repo.acronym ?? '—'} />
-        <StatCard label={t('repository.metadataPrefix')} value={repo.metadataPrefix ?? '—'} />
-        <StatCard label={t('repository.storeSchema')} value={repo.metadataStoreSchema ?? '—'} />
+      <section id="repository-page-stats" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
+          id="repository-page-stat-acronym"
+          label={t('repository.acronym')}
+          value={repo.acronym ?? '—'}
+        />
+        <StatCard
+          id="repository-page-stat-metadata-prefix"
+          label={t('repository.metadataPrefix')}
+          value={repo.metadataPrefix ?? '—'}
+        />
+        <StatCard
+          id="repository-page-stat-store-schema"
+          label={t('repository.storeSchema')}
+          value={repo.metadataStoreSchema ?? '—'}
+        />
+        <StatCard
+          id="repository-page-stat-published"
           label={t('repository.published')}
           value={repo.published ? t('common.yes') : t('common.no')}
         />
       </section>
 
-      <section className="flex flex-col gap-4">
-        <h2 className="font-heading text-sm font-bold">{t('harvests.title')}</h2>
+      <section id="repository-page-harvests" className="flex flex-col gap-4">
+        <h2 id="repository-page-harvests-title" className="font-heading text-sm font-bold">
+          {t('harvests.title')}
+        </h2>
 
-        {coletas.isPending ? <Loading /> : null}
+        {coletas.isPending ? <Loading id="repository-page-harvests-loading" /> : null}
         {coletas.isError ? (
-          <ErrorState error={coletas.error} onRetry={() => void coletas.refetch()} />
+          <ErrorState
+            id="repository-page-harvests-error"
+            error={coletas.error}
+            onRetry={() => void coletas.refetch()}
+          />
         ) : null}
 
         {coletas.data ? (
           coletas.data.count === 0 ? (
-            <Empty label={t('harvests.none')} />
+            <Empty id="repository-page-harvests-empty" label={t('harvests.none')} />
           ) : (
             <>
               {serie.length > 1 ? (
-                <div className="h-56 w-full panel p-4">
+                <div id="repository-page-harvests-chart" className="h-56 w-full panel p-4">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={serie} margin={{ top: 8, right: 12, bottom: 0, left: -12 }}>
                       <CartesianGrid stroke="var(--color-border-subtle)" vertical={false} />
@@ -141,51 +168,92 @@ export function RepositoryPage() {
                 </div>
               ) : null}
 
-              <div className="overflow-x-auto panel">
-                <table className="w-full min-w-2xl border-collapse text-sm">
-                  <thead>
-                    <tr className="border-b border-border-subtle bg-surface-muted text-left">
-                      <th className="px-4 py-3 font-heading text-xs font-bold">
+              <div id="repository-page-harvests-table-wrapper" className="overflow-x-auto panel">
+                <table
+                  id="repository-page-harvests-table"
+                  className="w-full min-w-2xl border-collapse text-sm"
+                >
+                  <thead id="repository-page-harvests-table-head">
+                    <tr
+                      id="repository-page-harvests-table-head-row"
+                      className="border-b border-border-subtle bg-surface-muted text-left"
+                    >
+                      <th
+                        id="repository-page-column-snapshot"
+                        className="px-4 py-3 font-heading text-xs font-bold"
+                      >
                         {t('harvests.columns.snapshot')}
                       </th>
-                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                      <th
+                        id="repository-page-column-status"
+                        className="px-4 py-3 font-heading text-xs font-bold"
+                      >
                         {t('harvests.columns.status')}
                       </th>
-                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                      <th
+                        id="repository-page-column-end"
+                        className="px-4 py-3 font-heading text-xs font-bold"
+                      >
                         {t('harvests.columns.end')}
                       </th>
-                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                      <th
+                        id="repository-page-column-size"
+                        className="px-4 py-3 font-heading text-xs font-bold"
+                      >
                         {t('harvests.columns.size')}
                       </th>
-                      <th className="px-4 py-3 font-heading text-xs font-bold">
+                      <th
+                        id="repository-page-column-valid"
+                        className="px-4 py-3 font-heading text-xs font-bold"
+                      >
                         {t('harvests.columns.valid')}
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="repository-page-harvests-table-body">
                     {coletas.data.results.map((coleta) => (
                       <tr
+                        id={`repository-page-harvest-${coleta.snapshotId}`}
                         key={coleta.snapshotId}
                         className="border-b border-border-subtle last:border-0"
                       >
-                        <td className="px-4 py-3">
+                        <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-snapshot`}
+                          className="px-4 py-3"
+                        >
                           <Link
+                            id={`repository-page-harvest-${coleta.snapshotId}-link`}
                             to={`/coletas/${coleta.snapshotId}`}
                             className="font-mono text-brand-strong hover:underline"
                           >
                             {coleta.snapshotId}
                           </Link>
                         </td>
-                        <td className="px-4 py-3">
-                          <HarvestStatusBadge status={coleta.status} />
+                        <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-status`}
+                          className="px-4 py-3"
+                        >
+                          <HarvestStatusBadge
+                            id={`repository-page-harvest-${coleta.snapshotId}-status-badge`}
+                            status={coleta.status}
+                          />
                         </td>
-                        <td className="px-4 py-3 text-content-muted">
+                        <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-end`}
+                          className="px-4 py-3 text-content-muted"
+                        >
                           {coleta.endTime ? dataFormat.format(new Date(coleta.endTime)) : '—'}
                         </td>
-                        <td className="px-4 py-3 tabular-nums">
+                        <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-size`}
+                          className="px-4 py-3 tabular-nums"
+                        >
                           {numero.format(coleta.size ?? 0)}
                         </td>
-                        <td className="px-4 py-3 tabular-nums">
+                        <td
+                          id={`repository-page-harvest-${coleta.snapshotId}-valid`}
+                          className="px-4 py-3 tabular-nums"
+                        >
                           {numero.format(coleta.validSize ?? 0)}
                         </td>
                       </tr>

@@ -25,12 +25,19 @@ export function HarvestLayout() {
   const filtros = filtersToParams(filtersFromSearch(searchParams)).toString()
   const sufixo = filtros ? `?${filtros}` : ''
 
-  if (isPending) return <Loading />
-  if (isError) return <ErrorState error={error} onRetry={() => void refetch()} />
+  if (isPending) return <Loading id="harvest-layout-loading" />
+  if (isError)
+    return <ErrorState id="harvest-layout-error" error={error} onRetry={() => void refetch()} />
 
   const abas = [
-    { to: `/coletas/${snapshotId}${sufixo}`, label: t('harvest.tabs.diagnosis'), end: true },
     {
+      id: 'diagnosis',
+      to: `/coletas/${snapshotId}${sufixo}`,
+      label: t('harvest.tabs.diagnosis'),
+      end: true,
+    },
+    {
+      id: 'records',
       to: `/coletas/${snapshotId}/registros${sufixo}`,
       label: t('harvest.tabs.records'),
       end: false,
@@ -38,9 +45,10 @@ export function HarvestLayout() {
   ]
 
   return (
-    <div className="flex flex-col gap-6">
-      <div>
+    <div id="harvest-layout" className="flex flex-col gap-6">
+      <div id="harvest-layout-heading">
         <Breadcrumb
+          id="harvest-layout-breadcrumb"
           items={[
             { label: t('repositories.title'), to: '/' },
             {
@@ -50,21 +58,25 @@ export function HarvestLayout() {
             { label: t('harvest.breadcrumb', { id: snapshotId }) },
           ]}
         />
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="font-heading text-2xl font-extrabold tracking-tight">
+        <div id="harvest-layout-title-row" className="flex flex-wrap items-center gap-3">
+          <h1
+            id="harvest-layout-title"
+            className="font-heading text-2xl font-extrabold tracking-tight"
+          >
             {t('harvest.title', { id: snapshotId })}
           </h1>
-          <HarvestStatusBadge status={data.status} />
+          <HarvestStatusBadge id="harvest-layout-status" status={data.status} />
         </div>
-        <p className="text-sm text-content-muted">
+        <p id="harvest-layout-subtitle" className="text-sm text-content-muted">
           {data.repository.name} · {t('harvest.endedAt')}{' '}
           {data.endTime ? new Date(data.endTime).toLocaleString(i18n.resolvedLanguage) : '—'}
         </p>
       </div>
 
-      <nav className="flex gap-1 border-b border-border-subtle">
+      <nav id="harvest-layout-tabs" className="flex gap-1 border-b border-border-subtle">
         {abas.map((aba) => (
           <NavLink
+            id={`harvest-layout-tab-${aba.id}`}
             key={aba.label}
             to={aba.to}
             end={aba.end}

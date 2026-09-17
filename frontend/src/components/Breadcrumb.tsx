@@ -7,18 +7,28 @@ export interface Crumb {
 }
 
 /** Trilha de navegação: o fluxo tem quatro níveis e é fácil se perder. */
-export function Breadcrumb({ items }: { items: Crumb[] }) {
+export function Breadcrumb({ id = 'breadcrumb', items }: { id?: string; items: Crumb[] }) {
   return (
-    <nav aria-label="breadcrumb" className="mb-4 text-sm text-content-muted">
+    <nav id={id} aria-label="breadcrumb" className="mb-4 text-sm text-content-muted">
       {items.map((item, index) => (
         <Fragment key={`${item.label}-${index}`}>
-          {index > 0 ? <span className="mx-1.5 opacity-50">/</span> : null}
+          {index > 0 ? (
+            <span id={`${id}-separator-${index}`} className="mx-1.5 opacity-50">
+              /
+            </span>
+          ) : null}
           {item.to ? (
-            <Link to={item.to} className="hover:text-brand-strong hover:underline">
+            <Link
+              id={`${id}-item-${index}`}
+              to={item.to}
+              className="hover:text-brand-strong hover:underline"
+            >
               {item.label}
             </Link>
           ) : (
-            <span className="text-content">{item.label}</span>
+            <span id={`${id}-item-${index}`} className="text-content">
+              {item.label}
+            </span>
           )}
         </Fragment>
       ))}

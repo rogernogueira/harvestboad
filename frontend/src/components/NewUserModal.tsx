@@ -32,10 +32,12 @@ type Formulario = z.infer<typeof schema>
  * obrigatória, então quem entrar pela primeira vez precisa definir a própria.
  */
 export function NewUserModal({
+  id = 'new-user-modal',
   aberto,
   onFechar,
   onCriado,
 }: {
+  id?: string
   aberto: boolean
   onFechar: () => void
   /** Recebe a conta criada para que a tela já possa selecioná-la. */
@@ -123,12 +125,14 @@ export function NewUserModal({
 
   return (
     <Modal
+      id={id}
       aberto={aberto}
       onFechar={onFechar}
       titulo={t('newUser.title')}
       descricao={t('newUser.subtitle')}
     >
       <form
+        id={`${id}-form`}
         noValidate
         className="flex flex-col gap-3"
         onSubmit={(event) => {
@@ -136,13 +140,20 @@ export function NewUserModal({
           void handleSubmit((valores) => criar.mutateAsync(valores).catch(() => undefined))(event)
         }}
       >
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div id={`${id}-fields`} className="grid gap-3 sm:grid-cols-2">
           {campos.map((campo) => {
             const erro = errors[campo.name]
             return (
-              <label key={campo.name} className="flex flex-col gap-1.5">
-                <span className="eyebrow">{t(campo.label)}</span>
+              <label
+                id={`${id}-field-${campo.name}`}
+                key={campo.name}
+                className="flex flex-col gap-1.5"
+              >
+                <span id={`${id}-field-${campo.name}-label`} className="eyebrow">
+                  {t(campo.label)}
+                </span>
                 <input
+                  id={`${id}-field-${campo.name}-input`}
                   type={campo.type}
                   autoComplete={campo.autoComplete}
                   aria-invalid={erro ? true : undefined}
@@ -152,7 +163,11 @@ export function NewUserModal({
                   }`}
                 />
                 {erro?.message ? (
-                  <span role="alert" className="text-xs text-down">
+                  <span
+                    id={`${id}-field-${campo.name}-error`}
+                    role="alert"
+                    className="text-xs text-down"
+                  >
                     {/* Chave de tradução (Zod) ou mensagem já pronta do backend. */}
                     {erro.message.startsWith('newUser.') ? t(erro.message) : erro.message}
                   </span>
@@ -162,18 +177,22 @@ export function NewUserModal({
           })}
         </div>
 
-        <p className="border-l-2 border-brand bg-brand-soft px-3 py-2 text-xs text-brand-strong">
+        <p
+          id={`${id}-provisional-hint`}
+          className="border-l-2 border-brand bg-brand-soft px-3 py-2 text-xs text-brand-strong"
+        >
           {t('newUser.provisionalPassword')}
         </p>
 
         {errors.root?.message ? (
-          <p role="alert" className="text-sm text-down">
+          <p id={`${id}-error`} role="alert" className="text-sm text-down">
             {errors.root.message}
           </p>
         ) : null}
 
-        <div className="flex justify-end gap-2">
+        <div id={`${id}-actions`} className="flex justify-end gap-2">
           <button
+            id={`${id}-cancel`}
             type="button"
             onClick={onFechar}
             className="border border-border-subtle px-4 py-2 text-sm transition-colors duration-150 hover:border-brand"
@@ -181,6 +200,7 @@ export function NewUserModal({
             {t('common.cancel')}
           </button>
           <button
+            id={`${id}-submit`}
             type="submit"
             disabled={isSubmitting}
             className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-strong disabled:opacity-50"

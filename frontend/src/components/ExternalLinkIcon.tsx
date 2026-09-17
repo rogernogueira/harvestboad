@@ -1,7 +1,14 @@
 /** Ícone de link externo: o destino abre fora da aplicação. */
-export function ExternalLinkIcon({ className = 'size-4' }: { className?: string }) {
+export function ExternalLinkIcon({
+  id = 'external-link-icon',
+  className = 'size-4',
+}: {
+  id?: string
+  className?: string
+}) {
   return (
     <svg
+      id={id}
       className={className}
       viewBox="0 0 24 24"
       fill="none"

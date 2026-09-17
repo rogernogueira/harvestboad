@@ -1,7 +1,14 @@
 /** Ícone de usuários, desenhado inline para não puxar uma biblioteca inteira. */
-export function UsersIcon({ className = 'size-4' }: { className?: string }) {
+export function UsersIcon({
+  id = 'users-icon',
+  className = 'size-4',
+}: {
+  id?: string
+  className?: string
+}) {
   return (
     <svg
+      id={id}
       className={className}
       viewBox="0 0 24 24"
       fill="none"

@@ -1,7 +1,14 @@
 /** Ícone de "adicionar usuário": repositório sem nenhum gestor vinculado. */
-export function UserPlusIcon({ className = 'size-4' }: { className?: string }) {
+export function UserPlusIcon({
+  id = 'user-plus-icon',
+  className = 'size-4',
+}: {
+  id?: string
+  className?: string
+}) {
   return (
     <svg
+      id={id}
       className={className}
       viewBox="0 0 24 24"
       fill="none"

@@ -24,10 +24,14 @@ const CAMPO_CLASSES = 'border bg-surface px-3 py-2.5 text-sm transition-colors d
  * Inline e locais: são adornos de rótulo, não elementos reutilizados em outras
  * telas, e o sprite de `icons.svg` guarda só as marcas externas. Todos ficam
  * fora da árvore de acessibilidade — o texto ao lado já diz o que são.
+ *
+ * O `id` é obrigatório porque o mesmo ícone aparece mais de uma vez na tela (o
+ * cadeado abre o cartão e rotula o campo de senha).
  */
-function Icone({ path, className }: { path: string; className?: string }) {
+function Icone({ id, path, className }: { id: string; path: string; className?: string }) {
   return (
     <svg
+      id={id}
       aria-hidden="true"
       viewBox="0 0 24 24"
       fill="none"
@@ -49,8 +53,7 @@ const ICONE_SETA = 'M13 7l5 5-5 5M18 12H6'
 const ICONE_REPOSITORIOS =
   'M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7m-16 5c0 1.7 3.6 3 8 3s8-1.3 8-3'
 const ICONE_COLETAS = 'M4 4v5h5M20 20v-5h-5M20 9a8 8 0 00-13.7-3.7L4 7m0 8a8 8 0 0013.7 3.7L20 17'
-const ICONE_CAFE =
-  'M4 6h13v8a5 5 0 01-5 5H9a5 5 0 01-5-5zM17 8h1.5a3.5 3.5 0 010 7H17M3 21h15'
+const ICONE_CAFE = 'M4 6h13v8a5 5 0 01-5 5H9a5 5 0 01-5-5zM17 8h1.5a3.5 3.5 0 010 7H17M3 21h15'
 
 /**
  * Destaque institucional da coluna esquerda.
@@ -59,12 +62,14 @@ const ICONE_CAFE =
  * blocos sem pintar o fundo, que abafaria o contraste do texto.
  */
 function Destaque({
+  id,
   icon,
   faixa,
   cor,
   title,
   description,
 }: {
+  id: string
   icon: string
   faixa: string
   cor: string
@@ -72,12 +77,16 @@ function Destaque({
   description: string
 }) {
   return (
-    <div className="panel overflow-hidden bg-surface">
-      <div className={`h-1 ${faixa}`} aria-hidden="true" />
-      <div className="p-4">
-        <Icone path={icon} className={`h-5 w-5 ${cor}`} />
-        <h3 className="mt-2.5 font-heading text-sm font-bold">{title}</h3>
-        <p className="mt-1 text-xs text-content-muted">{description}</p>
+    <div id={id} className="panel overflow-hidden bg-surface">
+      <div id={`${id}-stripe`} className={`h-1 ${faixa}`} aria-hidden="true" />
+      <div id={`${id}-body`} className="p-4">
+        <Icone id={`${id}-icon`} path={icon} className={`h-5 w-5 ${cor}`} />
+        <h3 id={`${id}-title`} className="mt-2.5 font-heading text-sm font-bold">
+          {title}
+        </h3>
+        <p id={`${id}-description`} className="mt-1 text-xs text-content-muted">
+          {description}
+        </p>
       </div>
     </div>
   )
@@ -117,60 +126,89 @@ export function LoginPage() {
   })
 
   return (
-    <div className="flex min-h-dvh flex-col bg-surface-muted">
+    <div id="login-page" className="flex min-h-dvh flex-col bg-surface-muted">
       {/*
         A faixa institucional também aqui: além de manter a identidade desde a
         primeira tela, é onde vive o seletor de idioma, cujo texto é claro e
         precisa do fundo escuro para ter contraste.
       */}
-      <div className="bg-brand-strong text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5">
-          <p className="eyebrow !text-white/85">{t('app.institution')}</p>
-          <LanguageSwitcher />
+      <div id="login-page-institution-bar" className="bg-brand-strong text-white">
+        <div
+          id="login-page-institution-bar-inner"
+          className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5"
+        >
+          <p id="login-page-institution-name" className="eyebrow !text-white/85">
+            {t('app.institution')}
+          </p>
+          <LanguageSwitcher id="login-page-language-switcher" />
         </div>
       </div>
 
-      <div className="flex flex-1 items-center justify-center px-4 py-10">
-        <div className="enter-up w-full max-w-4xl">
+      <div id="login-page-body" className="flex flex-1 items-center justify-center px-4 py-10">
+        <div id="login-page-container" className="enter-up w-full max-w-4xl">
           {/*
             Marca acima do cartão no celular: a coluna de identidade some nessa
             largura, e a tela não pode abrir direto no campo de usuário sem
             dizer em que sistema se está entrando.
           */}
-          <div className="mb-6 flex items-center gap-3 lg:hidden">
+          <div id="login-page-mobile-brand" className="mb-6 flex items-center gap-3 lg:hidden">
             {/*
               Monograma, não o logo completo: a 40px a palavra desenhada dentro
               do lockup renderiza com 4px de altura e vira borrão. O nome do
               produto quem diz é o rodapé, e a tela quem nomeia é o h1 ao lado.
             */}
-            <img src="/iconHB.svg" alt="HarvestBoard" className="h-10 w-auto" />
-            <div className="leading-tight">
-              <h1 className="font-heading text-lg font-bold tracking-tight">
+            <img
+              id="login-page-mobile-logo"
+              src="/iconHB.svg"
+              alt="HarvestBoard"
+              className="h-10 w-auto"
+            />
+            <div id="login-page-mobile-brand-text" className="leading-tight">
+              <h1
+                id="login-page-mobile-title"
+                className="font-heading text-lg font-bold tracking-tight"
+              >
                 {t('auth.panelTitle')}
               </h1>
-              <p className="eyebrow mt-0.5">{t('app.tagline')}</p>
+              <p id="login-page-mobile-tagline" className="eyebrow mt-0.5">
+                {t('app.tagline')}
+              </p>
             </div>
           </div>
 
-          <div className="panel overflow-hidden">
-            <div className="grid lg:grid-cols-2">
+          <div id="login-page-card" className="panel overflow-hidden">
+            <div id="login-page-card-grid" className="grid lg:grid-cols-2">
               {/* Coluna da marca — só em telas largas. */}
-              <div className="hidden flex-col justify-between gap-8 border-r border-border-subtle bg-brand-soft p-10 lg:flex">
-                <div className="flex flex-1 flex-col justify-center">
-                  <img src="/logoHB.svg" alt="HarvestBoard" className="h-36 w-auto self-start" />
+              <div
+                id="login-page-brand-column"
+                className="hidden flex-col justify-between gap-8 border-r border-border-subtle bg-brand-soft p-10 lg:flex"
+              >
+                <div id="login-page-brand-block" className="flex flex-1 flex-col justify-center">
+                  <img
+                    id="login-page-logo"
+                    src="/logoHB.svg"
+                    alt="HarvestBoard"
+                    className="h-36 w-auto self-start"
+                  />
                   {/*
                     Título menor que a marca nominal desenhada no logo: aqui ele
                     nomeia a tela, não o produto. Em pé de igualdade, os dois
                     liam-se como duas manchetes disputando a mesma posição.
                   */}
-                  <h1 className="mt-8 font-heading text-lg font-bold tracking-tight">
+                  <h1
+                    id="login-page-title"
+                    className="mt-8 font-heading text-lg font-bold tracking-tight"
+                  >
                     {t('auth.panelTitle')}
                   </h1>
-                  <p className="mt-1.5 text-sm text-content-muted">{t('auth.panelTagline')}</p>
+                  <p id="login-page-tagline" className="mt-1.5 text-sm text-content-muted">
+                    {t('auth.panelTagline')}
+                  </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div id="login-page-highlights" className="grid grid-cols-2 gap-3">
                   <Destaque
+                    id="login-page-highlight-repositories"
                     icon={ICONE_REPOSITORIOS}
                     faixa="bg-brand"
                     cor="text-brand-strong"
@@ -178,6 +216,7 @@ export function LoginPage() {
                     description={t('auth.highlights.repositories.description')}
                   />
                   <Destaque
+                    id="login-page-highlight-harvests"
                     icon={ICONE_COLETAS}
                     faixa="bg-gold"
                     cor="text-gold-strong"
@@ -188,35 +227,53 @@ export function LoginPage() {
               </div>
 
               {/* Coluna do formulário. */}
-              <div className="flex flex-col justify-center p-8 lg:p-10">
-                <div className="mx-auto w-full max-w-sm">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
+              <div id="login-page-form-column" className="flex flex-col justify-center p-8 lg:p-10">
+                <div id="login-page-form-container" className="mx-auto w-full max-w-sm">
+                  <div id="login-page-welcome" className="flex items-start justify-between gap-4">
+                    <div id="login-page-welcome-text">
                       {/*
                         Mesmo tamanho e peso do h1 da coluna ao lado. Maior que
                         ele, "Bem-vindo" passava à frente do título da página —
                         e subir o h1 para compensar recriaria a disputa com a
                         marca nominal do logo, que o comentário acima evita.
                       */}
-                      <h2 className="font-heading text-lg font-bold tracking-tight">
+                      <h2
+                        id="login-page-welcome-title"
+                        className="font-heading text-lg font-bold tracking-tight"
+                      >
                         {t('auth.welcome')}
                       </h2>
-                      <p className="mt-1 text-sm text-content-muted">{t('auth.credentialsHint')}</p>
+                      <p id="login-page-welcome-hint" className="mt-1 text-sm text-content-muted">
+                        {t('auth.credentialsHint')}
+                      </p>
                     </div>
-                    <Icone path={ICONE_CADEADO} className="mt-1 h-5 w-5 shrink-0 text-brand" />
+                    <Icone
+                      id="login-page-welcome-icon"
+                      path={ICONE_CADEADO}
+                      className="mt-1 h-5 w-5 shrink-0 text-brand"
+                    />
                   </div>
 
                   <form
+                    id="login-page-form"
                     onSubmit={(event) => void onSubmit(event)}
                     noValidate
                     className="mt-6 flex flex-col gap-4"
                   >
-                    <label className="flex flex-col gap-1.5">
-                      <span className="flex items-center gap-1.5 text-sm font-semibold">
-                        <Icone path={ICONE_USUARIO} className="h-4 w-4 text-content-muted" />
+                    <label id="login-page-username-field" className="flex flex-col gap-1.5">
+                      <span
+                        id="login-page-username-label"
+                        className="flex items-center gap-1.5 text-sm font-semibold"
+                      >
+                        <Icone
+                          id="login-page-username-icon"
+                          path={ICONE_USUARIO}
+                          className="h-4 w-4 text-content-muted"
+                        />
                         {t('auth.username')}
                       </span>
                       <input
+                        id="login-page-username-input"
                         type="text"
                         autoComplete="username"
                         autoFocus
@@ -227,18 +284,30 @@ export function LoginPage() {
                         }`}
                       />
                       {errors.username?.message ? (
-                        <span role="alert" className="text-xs text-down">
+                        <span
+                          id="login-page-username-error"
+                          role="alert"
+                          className="text-xs text-down"
+                        >
                           {t(errors.username.message)}
                         </span>
                       ) : null}
                     </label>
 
-                    <label className="flex flex-col gap-1.5">
-                      <span className="flex items-center gap-1.5 text-sm font-semibold">
-                        <Icone path={ICONE_CADEADO} className="h-4 w-4 text-content-muted" />
+                    <label id="login-page-password-field" className="flex flex-col gap-1.5">
+                      <span
+                        id="login-page-password-label"
+                        className="flex items-center gap-1.5 text-sm font-semibold"
+                      >
+                        <Icone
+                          id="login-page-password-icon"
+                          path={ICONE_CADEADO}
+                          className="h-4 w-4 text-content-muted"
+                        />
                         {t('auth.password')}
                       </span>
                       <input
+                        id="login-page-password-input"
                         type="password"
                         autoComplete="current-password"
                         aria-invalid={errors.password ? true : undefined}
@@ -248,7 +317,11 @@ export function LoginPage() {
                         }`}
                       />
                       {errors.password?.message ? (
-                        <span role="alert" className="text-xs text-down">
+                        <span
+                          id="login-page-password-error"
+                          role="alert"
+                          className="text-xs text-down"
+                        >
                           {t(errors.password.message)}
                         </span>
                       ) : null}
@@ -261,6 +334,7 @@ export function LoginPage() {
                     */}
                     {erro ? (
                       <p
+                        id="login-page-error"
                         role="alert"
                         className="border-l-2 border-down bg-down-soft px-3 py-2 text-sm text-down"
                       >
@@ -269,6 +343,7 @@ export function LoginPage() {
                     ) : null}
 
                     <button
+                      id="login-page-submit"
                       type="submit"
                       disabled={isSubmitting}
                       className="mt-1 flex items-center justify-center gap-2 bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-brand-strong disabled:opacity-60"
@@ -278,7 +353,11 @@ export function LoginPage() {
                       ) : (
                         <>
                           {t('auth.signIn')}
-                          <Icone path={ICONE_SETA} className="h-4 w-4" />
+                          <Icone
+                            id="login-page-submit-icon"
+                            path={ICONE_SETA}
+                            className="h-4 w-4"
+                          />
                         </>
                       )}
                     </button>
@@ -301,14 +380,15 @@ export function LoginPage() {
                       que ela cumpre, e escurecê-la daria a este botão mais peso
                       de traço que o primário logo acima.
                     */}
-                    <div className="flex flex-col gap-1.5">
+                    <div id="login-page-cafe" className="flex flex-col gap-1.5">
                       <button
+                        id="login-page-cafe-button"
                         type="button"
                         disabled
                         aria-describedby="cafe-em-breve"
                         className="flex items-center justify-center gap-2 border border-brand px-4 py-2.5 text-sm font-semibold text-brand-strong transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        <Icone path={ICONE_CAFE} className="h-4 w-4" />
+                        <Icone id="login-page-cafe-icon" path={ICONE_CAFE} className="h-4 w-4" />
                         {t('auth.cafeAccess')}
                       </button>
                       <p id="cafe-em-breve" className="text-center text-xs text-content-muted">
@@ -321,7 +401,9 @@ export function LoginPage() {
             </div>
           </div>
 
-          <p className="mt-6 text-center text-xs text-content-muted">{t('app.footer')}</p>
+          <p id="login-page-footer" className="mt-6 text-center text-xs text-content-muted">
+            {t('app.footer')}
+          </p>
         </div>
       </div>
     </div>

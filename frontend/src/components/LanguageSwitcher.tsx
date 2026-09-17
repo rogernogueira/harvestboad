@@ -20,20 +20,21 @@ const LABELS: Record<SupportedLanguage, { sigla: string; nome: string }> = {
  * 3,97 e reprovava. O sublinhado e o peso continuam marcando o ativo, então a
  * diferença de opacidade menor não confunde os dois estados.
  */
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ id = 'language-switcher' }: { id?: string }) {
   const { i18n, t } = useTranslation()
   const current = i18n.resolvedLanguage
 
   return (
-    <div className="flex items-center" role="group" aria-label={t('common.language')}>
+    <div id={id} className="flex items-center" role="group" aria-label={t('common.language')}>
       {SUPPORTED_LANGUAGES.map((lang, indice) => (
-        <span key={lang} className="flex items-center">
+        <span id={`${id}-${lang}`} key={lang} className="flex items-center">
           {indice > 0 ? (
-            <span aria-hidden="true" className="px-1 text-white/30">
+            <span id={`${id}-${lang}-separator`} aria-hidden="true" className="px-1 text-white/30">
               ·
             </span>
           ) : null}
           <button
+            id={`${id}-${lang}-button`}
             type="button"
             onClick={() => void i18n.changeLanguage(lang)}
             aria-pressed={current === lang}
@@ -46,8 +47,12 @@ export function LanguageSwitcher() {
                 : 'text-white/80 hover:text-white'
             }`}
           >
-            <span aria-hidden="true">{LABELS[lang].sigla}</span>
-            <span className="sr-only">{LABELS[lang].nome}</span>
+            <span id={`${id}-${lang}-code`} aria-hidden="true">
+              {LABELS[lang].sigla}
+            </span>
+            <span id={`${id}-${lang}-name`} className="sr-only">
+              {LABELS[lang].nome}
+            </span>
           </button>
         </span>
       ))}

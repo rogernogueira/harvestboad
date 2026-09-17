@@ -10,13 +10,18 @@ import { repositoryManagersQuery } from '@/lib/queries'
  *
  * Só consulta quando aberto: a lista não interessa a quem não abriu o modal, e
  * são N repositórios por tela.
+ *
+ * O `id` padrão embute o repositório porque a tela do gestor monta um modal por
+ * linha — todos no HTML ao mesmo tempo, abertos ou não.
  */
 export function RepositoryManagersModal({
+  id,
   aberto,
   onFechar,
   repositoryId,
   repositorio,
 }: {
+  id?: string
   aberto: boolean
   onFechar: () => void
   repositoryId: string
@@ -28,36 +33,72 @@ export function RepositoryManagersModal({
     enabled: aberto && repositoryId.length > 0,
   })
 
+  const idBase = id ?? `repository-managers-modal-${repositoryId}`
   const data_ = new Intl.DateTimeFormat(i18n.resolvedLanguage, { dateStyle: 'short' })
 
   return (
-    <Modal aberto={aberto} onFechar={onFechar} titulo={t('managers.title')} descricao={repositorio}>
-      {isPending ? <Loading /> : null}
-      {isError ? <ErrorState error={error} onRetry={() => void refetch()} /> : null}
+    <Modal
+      id={idBase}
+      aberto={aberto}
+      onFechar={onFechar}
+      titulo={t('managers.title')}
+      descricao={repositorio}
+    >
+      {isPending ? <Loading id={`${idBase}-loading`} /> : null}
+      {isError ? (
+        <ErrorState id={`${idBase}-error`} error={error} onRetry={() => void refetch()} />
+      ) : null}
 
       {data ? (
         data.count === 0 ? (
-          <Empty label={t('managers.none')} />
+          <Empty id={`${idBase}-empty`} label={t('managers.none')} />
         ) : (
-          <ul className="divide-y divide-border-subtle">
+          <ul id={`${idBase}-list`} className="divide-y divide-border-subtle">
             {data.results.map((gestor) => (
-              <li key={gestor.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3">
-                <span className="font-semibold">{gestor.username}</span>
+              <li
+                id={`${idBase}-item-${gestor.id}`}
+                key={gestor.id}
+                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-3"
+              >
+                <span id={`${idBase}-item-${gestor.id}-username`} className="font-semibold">
+                  {gestor.username}
+                </span>
                 {gestor.fullName ? (
-                  <span className="text-sm text-content-muted">{gestor.fullName}</span>
+                  <span
+                    id={`${idBase}-item-${gestor.id}-fullname`}
+                    className="text-sm text-content-muted"
+                  >
+                    {gestor.fullName}
+                  </span>
                 ) : null}
-                <span className="eyebrow !text-brand-strong">{gestor.profileDisplay}</span>
+                <span
+                  id={`${idBase}-item-${gestor.id}-profile`}
+                  className="eyebrow !text-brand-strong"
+                >
+                  {gestor.profileDisplay}
+                </span>
                 {!gestor.isActive ? (
-                  <span className="bg-warn-soft px-1.5 py-0.5 text-[0.65rem] text-warn">
+                  <span
+                    id={`${idBase}-item-${gestor.id}-inactive`}
+                    className="bg-warn-soft px-1.5 py-0.5 text-[0.65rem] text-warn"
+                  >
                     {t('managers.inactive')}
                   </span>
                 ) : null}
-                <span className="ml-auto text-xs text-content-muted">
+                <span
+                  id={`${idBase}-item-${gestor.id}-since`}
+                  className="ml-auto text-xs text-content-muted"
+                >
                   {t('access.since', { date: data_.format(new Date(gestor.grantedAt)) })}
                 </span>
                 {/* O e-mail só chega para o ADMIN; para o gestor vem nulo. */}
                 {gestor.email ? (
-                  <span className="w-full text-xs text-content-muted">{gestor.email}</span>
+                  <span
+                    id={`${idBase}-item-${gestor.id}-email`}
+                    className="w-full text-xs text-content-muted"
+                  >
+                    {gestor.email}
+                  </span>
                 ) : null}
               </li>
             ))}
