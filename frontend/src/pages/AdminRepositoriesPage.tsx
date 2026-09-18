@@ -25,6 +25,7 @@ import { Pagination } from '@/components/Pagination'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UserPlusIcon } from '@/components/UserPlusIcon'
 import { UsersIcon } from '@/components/UsersIcon'
+import { dicaDeColuna } from '@/lib/columnHints'
 import { TUDO } from '@/lib/pagination'
 import { repositoryIndexQuery } from '@/lib/queries'
 import type { RepositoryHit } from '@/lib/types'
@@ -61,6 +62,23 @@ const columnHelper = createColumnHelper<typeof features, RepositoryHit>()
  */
 const POR_PAGINA = 25
 const TAMANHOS = [25, 100, 1000, TUDO] as const
+
+/*
+ * Dica de cada coluna, pelo `id` que o TanStack dá a ela.
+ *
+ * O mapa existe porque o `id` vem do campo do `RepositoryHit`
+ * (`institutionName`, `lastSnapshotDate`) e a chave de tradução vem do rótulo
+ * que o gestor lê ("Instituição", "Última coleta"): são vocabulários
+ * diferentes, e casá-los por convenção de nome só esconderia a diferença.
+ */
+const DICAS: Record<string, string> = {
+  acronym: 'adminRepositories.columnHints.acronym',
+  name: 'adminRepositories.columnHints.repository',
+  institutionName: 'adminRepositories.columnHints.institution',
+  lastSnapshotDate: 'adminRepositories.columnHints.harvest',
+  invalidRatio: 'adminRepositories.columnHints.invalid',
+  managerCount: 'adminRepositories.columnHints.managers',
+}
 
 /** Situação da coleta agrupada em três baldes, que é como se filtra na prática. */
 type FiltroSituacao = 'todos' | 'valid' | 'error' | 'sem-coleta'
@@ -318,12 +336,14 @@ export function AdminRepositoriesPage() {
                     {headerGroup.headers.map((header) => {
                       const direcao = header.column.getIsSorted()
                       const alinhaDireita = header.column.id === 'invalidRatio'
+                      const dica = DICAS[header.column.id]
                       return (
                         <th
                           id={`admin-repositories-header-${header.column.id}`}
                           key={header.id}
                           scope="col"
                           className={alinhaDireita ? 'text-right' : 'text-left'}
+                          {...(dica ? dicaDeColuna(t(dica)) : {})}
                         >
                           <button
                             id={`admin-repositories-sort-${header.column.id}`}

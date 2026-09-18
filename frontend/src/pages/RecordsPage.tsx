@@ -10,6 +10,7 @@ import { FilterBar } from '@/components/FilterBar'
 import { Pagination } from '@/components/Pagination'
 import { RecordDiagnosisModal } from '@/components/RecordDiagnosisModal'
 import { filtersFromSearch, filtersToParams, type RecordFilters } from '@/lib/filters'
+import { dicaDeColuna } from '@/lib/columnHints'
 import { tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
 import { recordsQuery } from '@/lib/queries'
 import type { RecordItem } from '@/lib/types'
@@ -134,25 +135,53 @@ export function RecordsPage() {
             <table id="records-page-table">
               <thead id="records-page-table-head">
                 <tr id="records-page-table-head-row">
-                  <th id="records-page-column-identifier" scope="col">
+                  <th
+                    id="records-page-column-identifier"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.identifier'))}
+                  >
                     {t('records.columns.identifier')}
                   </th>
-                  <th id="records-page-column-valid" scope="col">
+                  <th
+                    id="records-page-column-valid"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.valid'))}
+                  >
                     {t('records.columns.valid')}
                   </th>
-                  <th id="records-page-column-transformed" scope="col">
+                  <th
+                    id="records-page-column-transformed"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.transformed'))}
+                  >
                     {t('records.columns.transformed')}
                   </th>
-                  <th id="records-page-column-origin" scope="col">
+                  <th
+                    id="records-page-column-origin"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.origin'))}
+                  >
                     {t('records.columns.origin')}
                   </th>
-                  <th id="records-page-column-prefix" scope="col">
+                  <th
+                    id="records-page-column-prefix"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.prefix'))}
+                  >
                     {t('records.columns.prefix')}
                   </th>
-                  <th id="records-page-column-set" scope="col">
+                  <th
+                    id="records-page-column-set"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.set'))}
+                  >
                     {t('records.columns.set')}
                   </th>
-                  <th id="records-page-column-details" scope="col">
+                  <th
+                    id="records-page-column-details"
+                    scope="col"
+                    {...dicaDeColuna(t('records.columnHints.details'))}
+                  >
                     {t('records.columns.details')}
                   </th>
                 </tr>

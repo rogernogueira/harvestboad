@@ -113,6 +113,15 @@
       "start": "Start",
       "invalid": "Invalid"
     },
+    "columnHints": {
+      "snapshot": "The harvest's number at the source. Opens its diagnosis.",
+      "status": "The state in which the source closed the harvest.",
+      "end": "When the harvest finished.",
+      "size": "Total records the harvest brought from the source.",
+      "valid": "How many of those records passed validation.",
+      "start": "When the harvest started.",
+      "invalid": "Total minus valid. The source does not report this number; it is computed here."
+    },
     "exportHistory": "Export history",
     "chartInvalid": "Invalid"
   },
@@ -150,6 +159,14 @@
       "validCount": "Pass",
       "invalidCount": "Fail",
       "occurrences": "Occurrences"
+    },
+    "columnHints": {
+      "rule": "Name of the validation rule applied to this harvest's records.",
+      "name": "What the rule requires of the metadata.",
+      "mandatory": "Whether the rule is mandatory or only optional at the source.",
+      "validCount": "How many of the harvest's records meet the rule. Opens the list already filtered.",
+      "invalidCount": "How many of the harvest's records break the rule. Opens the list already filtered.",
+      "occurrences": "The values found in the rule's field and how often each one appears."
     },
     "filters": {
       "name": "Search by name or identifier",
@@ -208,6 +225,15 @@
       "details": "Details",
       "origin": "Origin",
       "prefix": "Prefix"
+    },
+    "columnHints": {
+      "identifier": "The record's identifier at the source. Opens the record.",
+      "valid": "Whether the record passed or failed validation in this harvest.",
+      "transformed": "Whether the metadata went through the harvest's transformation.",
+      "set": "Set declared by the source that the record belongs to.",
+      "details": "Opens the record's rule-by-rule validation and the transformed XML.",
+      "origin": "The OAI address this record came from. It may differ from the repository's current registration, when the address changed.",
+      "prefix": "Metadata format the record was harvested in (e.g. oai_dc)."
     }
   },
   "record": {
@@ -362,6 +388,14 @@
       "harvest": "Last harvest",
       "managers": "Managers",
       "invalid": "Invalid"
+    },
+    "columnHints": {
+      "acronym": "The repository's code at the source (e.g. UFT, UFT-2). It is a Harvester internal key, not a name.",
+      "repository": "Repository name as registered at the source. Opens the repository page.",
+      "institution": "Institution responsible for the repository, according to the source.",
+      "harvest": "The most recent harvest: status, number, date and how many records it brought.",
+      "managers": "How many users have access to this repository.",
+      "invalid": "Share of records that failed validation in the last harvest. A harvest that was never indexed shows as not evaluated."
     },
     "invalidRecords_one": "{{count, number}} record",
     "invalidRecords_other": "{{count, number}} records",

@@ -18,6 +18,7 @@ import { CsvDownloadButton } from '@/components/CsvDownloadButton'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
 import { StatCard } from '@/components/StatCard'
+import { dicaDeColuna } from '@/lib/columnHints'
 import { repositoryHarvestsQuery, repositoryQuery } from '@/lib/queries'
 
 /** Visão geral do repositório e histórico de coletas. */
@@ -230,42 +231,49 @@ export function RepositoryPage() {
                       <th
                         id="repository-page-column-snapshot"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.snapshot'))}
                       >
                         {t('harvests.columns.snapshot')}
                       </th>
                       <th
                         id="repository-page-column-status"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.status'))}
                       >
                         {t('harvests.columns.status')}
                       </th>
                       <th
                         id="repository-page-column-start"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.start'))}
                       >
                         {t('harvests.columns.start')}
                       </th>
                       <th
                         id="repository-page-column-end"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.end'))}
                       >
                         {t('harvests.columns.end')}
                       </th>
                       <th
                         id="repository-page-column-size"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.size'))}
                       >
                         {t('harvests.columns.size')}
                       </th>
                       <th
                         id="repository-page-column-valid"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.valid'))}
                       >
                         {t('harvests.columns.valid')}
                       </th>
                       <th
                         id="repository-page-column-invalid"
                         className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t('harvests.columnHints.invalid'))}
                       >
                         {t('harvests.columns.invalid')}
                       </th>

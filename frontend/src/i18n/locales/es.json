@@ -114,6 +114,15 @@
       "start": "Inicio",
       "invalid": "Inválidos"
     },
+    "columnHints": {
+      "snapshot": "Número de la recolección en el origen. Abre su diagnóstico.",
+      "status": "En qué estado el origen cerró la recolección.",
+      "end": "Cuándo terminó la recolección.",
+      "size": "Total de registros que la recolección trajo del origen.",
+      "valid": "Cuántos de esos registros fueron aprobados en la validación.",
+      "start": "Cuándo comenzó la recolección.",
+      "invalid": "Total menos válidos. El origen no informa este número; se calcula aquí."
+    },
     "exportHistory": "Exportar historial",
     "chartInvalid": "Inválidos"
   },
@@ -151,6 +160,14 @@
       "validCount": "Cumplen",
       "invalidCount": "Infringen",
       "occurrences": "Ocurrencias"
+    },
+    "columnHints": {
+      "rule": "Nombre de la regla de validación aplicada a los registros de esta recolección.",
+      "name": "Qué exige la regla del metadato.",
+      "mandatory": "Si la regla es obligatoria o solo opcional en el origen.",
+      "validCount": "Cuántos registros de la recolección cumplen la regla. Abre la lista ya filtrada.",
+      "invalidCount": "Cuántos registros de la recolección violan la regla. Abre la lista ya filtrada.",
+      "occurrences": "Los valores encontrados en el campo de la regla y cuántas veces aparece cada uno."
     },
     "filters": {
       "name": "Buscar por nombre o identificador",
@@ -210,6 +227,15 @@
       "details": "Detalles",
       "origin": "Origen",
       "prefix": "Prefijo"
+    },
+    "columnHints": {
+      "identifier": "Identificador del registro en el origen. Abre el registro.",
+      "valid": "Si el registro fue aprobado o rechazado en la validación de esta recolección.",
+      "transformed": "Si el metadato pasó por la transformación de la recolección.",
+      "set": "Conjunto declarado por el origen al que pertenece el registro.",
+      "details": "Abre la validación del registro, regla por regla, y el XML transformado.",
+      "origin": "Dirección OAI de donde vino este registro. Puede diferir del registro actual del repositorio, cuando este cambió de dirección.",
+      "prefix": "Formato de metadatos en que se recolectó el registro (ej.: oai_dc)."
     }
   },
   "record": {
@@ -374,6 +400,14 @@
       "harvest": "Última recolección",
       "managers": "Gestores",
       "invalid": "Inválidos"
+    },
+    "columnHints": {
+      "acronym": "Código del repositorio en el origen (ej.: UFT, UFT-2). Es clave interna del Harvester, no un nombre.",
+      "repository": "Nombre del repositorio según el registro del origen. Abre la página del repositorio.",
+      "institution": "Institución responsable del repositorio, según el registro del origen.",
+      "harvest": "La recolección más reciente: situación, número, fecha y cuántos registros trajo.",
+      "managers": "Cuántos usuarios tienen acceso a este repositorio.",
+      "invalid": "Proporción de registros rechazados en la validación de la última recolección. La recolección que no llegó a indexarse aparece como no evaluada."
     },
     "invalidRecords_one": "{{count, number}} registro",
     "invalidRecords_other": "{{count, number}} registros",

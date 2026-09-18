@@ -17,6 +17,7 @@ import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { RuleOccurrencesModal } from '@/components/RuleOccurrencesModal'
 import { RulesFilterBar } from '@/components/RulesFilterBar'
 import { StatCard } from '@/components/StatCard'
+import { dicaDeColuna } from '@/lib/columnHints'
 import { filtersFromSearch, filtersToParams, toggleRule } from '@/lib/filters'
 import { diagnosisQuery, rulesQuery } from '@/lib/queries'
 import {
@@ -277,36 +278,45 @@ export function DiagnosisPage() {
             <table id="diagnosis-page-rules-table">
               <thead id="diagnosis-page-rules-table-head">
                 <tr id="diagnosis-page-rules-table-head-row" className="bg-gray-2 text-left">
-                  <th id="diagnosis-page-column-rule" className="px-3 py-2 text-down-01 text-bold">
+                  <th
+                    id="diagnosis-page-column-rule"
+                    className="px-3 py-2 text-down-01 text-bold"
+                    {...dicaDeColuna(t('diagnosis.columnHints.rule'))}
+                  >
                     {t('diagnosis.columns.rule')}
                   </th>
                   <th
                     id="diagnosis-page-column-description"
                     className="px-3 py-2 text-down-01 text-bold"
+                    {...dicaDeColuna(t('diagnosis.columnHints.name'))}
                   >
                     {t('diagnosis.columns.name')}
                   </th>
                   <th
                     id="diagnosis-page-column-mandatory"
                     className="px-3 py-2 text-down-01 text-bold"
+                    {...dicaDeColuna(t('diagnosis.columnHints.mandatory'))}
                   >
                     {t('diagnosis.columns.mandatory')}
                   </th>
                   <th
                     id="diagnosis-page-column-valid-count"
                     className="px-3 py-2 text-right text-down-01 text-bold"
+                    {...dicaDeColuna(t('diagnosis.columnHints.validCount'))}
                   >
                     {t('diagnosis.columns.validCount')}
                   </th>
                   <th
                     id="diagnosis-page-column-invalid-count"
                     className="px-3 py-2 text-right text-down-01 text-bold"
+                    {...dicaDeColuna(t('diagnosis.columnHints.invalidCount'))}
                   >
                     {t('diagnosis.columns.invalidCount')}
                   </th>
                   <th
                     id="diagnosis-page-column-occurrences"
                     className="px-3 py-2 text-right text-down-01 text-bold"
+                    {...dicaDeColuna(t('diagnosis.columnHints.occurrences'))}
                   >
                     {t('diagnosis.columns.occurrences')}
                   </th>
