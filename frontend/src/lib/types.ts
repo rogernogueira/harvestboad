@@ -89,6 +89,8 @@ export interface RepositoryAccessSummary {
   lastHarvest: LastHarvestSummary | null
   /** O Harvester não respondeu por este repositório nesta requisição. */
   unavailable: boolean
+  /** Notificações do repositório ainda sem leitura. */
+  unreadNotificationCount: number
 }
 
 export interface RepositoryAccessSummaryList {
@@ -122,6 +124,8 @@ export interface RepositoryHit {
   lastIndexStatus: string | null
   /** Quantos gestores estão vinculados — dado nosso, não da origem. */
   managerCount: number
+  /** Notificações do repositório ainda sem leitura — também dado nosso. */
+  unreadNotificationCount: number
   /** Fração de inválidos na última coleta (0 a 1). Nulo sem coleta. */
   invalidRatio?: number | null
   invalidSize?: number | null
@@ -317,4 +321,34 @@ export interface RecordPage {
   totalPages: number | null
   filters: AppliedFilters
   results: RecordItem[]
+}
+
+export type NotificationCategory = 'COMUNICACAO' | 'NOVIDADES' | 'COLETA' | 'VALIDACAO'
+
+/**
+ * Um aviso do administrador.
+ *
+ * O nome não é `Notification` de propósito: esse já existe como tipo global do
+ * `lib.dom` (a API de notificação do navegador), e a colisão passa despercebida
+ * até alguém importar o errado.
+ *
+ * `harvesterRepositoryId` vem vazio no recado direto, e `recipient` vem nulo na
+ * notificação de repositório — nunca os dois preenchidos.
+ */
+export interface NotificationItem {
+  id: number
+  title: string
+  message: string
+  category: NotificationCategory
+  categoryDisplay: string
+  harvesterRepositoryId: string
+  acronym: string
+  recipient: number | null
+  recipientUsername?: string
+  authorUsername?: string
+  createdAt: string
+  /** A leitura é compartilhada: lida por um gestor, lida para todos. */
+  read: boolean
+  readAt: string | null
+  readByUsername?: string
 }

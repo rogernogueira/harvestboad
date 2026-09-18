@@ -441,6 +441,50 @@
     "openInvalidRecords": "Ver os registros inválidos desta coleta",
     "notEvaluated": "não avaliado"
   },
+  "notifications": {
+    "title": "Notificações",
+    "open": "Ver notificações",
+    "inboxSubtitle": "Avisos dos seus repositórios e recados para você",
+    "unread_one": "{{count}} notificação não lida",
+    "unread_other": "{{count}} notificações não lidas",
+    "unread_many": "{{count}} notificações não lidas",
+    "none": "Nenhuma notificação por aqui.",
+    "direct": "recado direto",
+    "markRead": "Marcar como lida: {{title}}",
+    "markReadHint": "Clique para marcar como lida — vale para todos os gestores deste repositório.",
+    "readBy": "Lida por {{username}}",
+    "alreadyRead": "Já lida",
+    "categories": {
+      "COMUNICACAO": "Comunicação",
+      "NOVIDADES": "Novidades",
+      "COLETA": "Coleta",
+      "VALIDACAO": "Validação"
+    },
+    "new": {
+      "open": "Nova notificação",
+      "openFor": "Nova notificação para {{acronym}}",
+      "title": "Nova notificação",
+      "subtitle": "O aviso vai para um repositório ou para um gestor.",
+      "forRepository": "Para os gestores de {{acronym}}",
+      "target": "Destino",
+      "target_repositorio": "Repositório",
+      "target_gestor": "Gestor",
+      "searchRepository": "Buscar repositório",
+      "chooseRepository": "Repositório",
+      "chooseRepositoryEmpty": "Selecione um repositório",
+      "chooseManager": "Gestor",
+      "chooseManagerEmpty": "Selecione um gestor",
+      "category": "Categoria",
+      "titleField": "Título",
+      "messageField": "Mensagem",
+      "send": "Enviar"
+    },
+    "validation": {
+      "titleRequired": "Informe o título.",
+      "messageRequired": "Informe a mensagem.",
+      "messageTooLong": "A mensagem passa de 2.000 caracteres."
+    }
+  },
   "harvestStatus": {
     "valid": "Válida",
     "running": "Coletando",

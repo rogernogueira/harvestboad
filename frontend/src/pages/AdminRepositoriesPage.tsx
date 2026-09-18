@@ -20,6 +20,8 @@ import { Link } from 'react-router'
 
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
+import { NotificationsButton } from '@/components/NotificationsButton'
+import { NotificationsPanel } from '@/components/NotificationsPanel'
 import { PageHeader } from '@/components/PageHeader'
 import { Pagination } from '@/components/Pagination'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
@@ -104,6 +106,7 @@ export function AdminRepositoriesPage() {
   const [situacao, setSituacao] = useState<FiltroSituacao>('todos')
   const [gestor, setGestor] = useState<FiltroGestor>('todos')
   const [gestoresDe, setGestoresDe] = useState<RepositoryHit | null>(null)
+  const [notificacoesDe, setNotificacoesDe] = useState<RepositoryHit | null>(null)
 
   const { data, isPending, isError, error, refetch } = useQuery(repositoryIndexQuery)
 
@@ -189,7 +192,11 @@ export function AdminRepositoriesPage() {
         columnHelper.accessor('managerCount', {
           header: t('adminRepositories.columns.managers'),
           cell: (info) => (
-            <ManagersCell repo={info.row.original} onVer={() => setGestoresDe(info.row.original)} />
+            <ManagersCell
+              repo={info.row.original}
+              onVer={() => setGestoresDe(info.row.original)}
+              onVerNotificacoes={() => setNotificacoesDe(info.row.original)}
+            />
           ),
         }),
       ]),
@@ -417,6 +424,18 @@ export function AdminRepositoriesPage() {
         </>
       )}
 
+      {notificacoesDe ? (
+        <NotificationsPanel
+          id="admin-repositories-notifications-panel"
+          aberto
+          onFechar={() => setNotificacoesDe(null)}
+          repositoryId={notificacoesDe.harvesterRepositoryId}
+          titulo={t('notifications.title')}
+          descricao={`${notificacoesDe.acronym} · ${notificacoesDe.name ?? ''}`}
+          acronym={notificacoesDe.acronym ?? notificacoesDe.harvesterRepositoryId}
+        />
+      ) : null}
+
       {gestoresDe ? (
         <RepositoryManagersModal
           id="admin-repositories-managers-modal"
@@ -552,15 +571,63 @@ function InvalidCell({ repo, percentual }: { repo: RepositoryHit; percentual: In
 }
 
 /**
- * Coluna de gestores.
+ * Coluna de gestores, com o sino de notificações à frente.
+ *
+ * Só dois controles aqui: a coluna tem 13% da largura, e um terceiro botão
+ * fazia a célula quebrar em três linhas empilhadas. A criação de notificação
+ * mora no painel do sino do cabeçalho, onde cabe o seletor de destino inteiro.
  *
  * Com gestores, abre o modal. Sem nenhum, o ícone muda e leva à tela de acessos
  * com o repositório já selecionado — que é a ação que falta fazer ali.
+ *
+ * **O sino é irmão, nunca filho.** Antes desta mudança a célula devolvia um
+ * `<button>` (ou um `<Link>`) como elemento único; pôr o sino dentro dele
+ * aninharia dois elementos interativos, o que é HTML inválido e faz o clique do
+ * interno ser engolido pelo externo. Daí o invólucro.
+ *
+ * Aqui "não lida" quer dizer **nenhum gestor leu ainda**, e não "eu não li": a
+ * leitura é compartilhada, e o administrador não é destinatário. É o retorno de
+ * que o aviso chegou a alguém.
  */
-function ManagersCell({ repo, onVer }: { repo: RepositoryHit; onVer: () => void }) {
+function ManagersCell({
+  repo,
+  onVer,
+  onVerNotificacoes,
+}: {
+  repo: RepositoryHit
+  onVer: () => void
+  onVerNotificacoes: () => void
+}) {
   const { t } = useTranslation()
   const id = `admin-repositories-managers-${repo.harvesterRepositoryId}`
+  const idCelula = `admin-repositories-cell-managers-${repo.harvesterRepositoryId}`
 
+  return (
+    <span
+      id={idCelula}
+      className="d-inline-flex flex-wrap align-items-center justify-content-center gap-2"
+    >
+      <NotificationsButton
+        id={`admin-repositories-unread-${repo.harvesterRepositoryId}`}
+        count={repo.unreadNotificationCount}
+        onAbrir={onVerNotificacoes}
+      />
+      <Gestores repo={repo} onVer={onVer} id={id} t={t} />
+    </span>
+  )
+}
+
+function Gestores({
+  repo,
+  onVer,
+  id,
+  t,
+}: {
+  repo: RepositoryHit
+  onVer: () => void
+  id: string
+  t: (chave: string, opcoes?: Record<string, unknown>) => string
+}) {
   if (repo.managerCount > 0) {
     return (
       <button

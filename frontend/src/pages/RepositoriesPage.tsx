@@ -8,6 +8,8 @@ import { useAuth } from '@/auth/context'
 import { HarvestStatusBadge, Tag } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
+import { NotificationsButton } from '@/components/NotificationsButton'
+import { NotificationsPanel } from '@/components/NotificationsPanel'
 import { Pagination } from '@/components/Pagination'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UsersIcon } from '@/components/UsersIcon'
@@ -373,6 +375,7 @@ function MyRepositoriesPage() {
 function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
   const { t, i18n } = useTranslation()
   const [gestoresAbertos, setGestoresAbertos] = useState(false)
+  const [notificacoesAbertas, setNotificacoesAbertas] = useState(false)
   const nomeRepositorio = acesso.name ?? acesso.acronym
   // Uma linha por repositório: o id do repositório é o que mantém únicos todos
   // os ids desta subárvore.
@@ -407,16 +410,30 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
             >
               {acesso.acronym}
             </span>
-            <button
-              id={`${id}-managers-button`}
-              type="button"
-              onClick={() => setGestoresAbertos(true)}
-              title={t('managers.open')}
-              aria-label={t('managers.open')}
-              className="br-button circle small"
-            >
-              <UsersIcon id={`${id}-managers-icon`} />
-            </button>
+            {/*
+              O sino vem antes do ícone de gestores, e como irmão dele: são dois
+              alvos de clique distintos, e um dentro do outro seria HTML
+              inválido. Só aparece quando há notificação sem leitura — aceso com
+              "0" em toda linha ele deixaria de chamar atenção.
+            */}
+            <span id={`${id}-actions`} className="d-flex align-items-center gap-2">
+              <NotificationsButton
+                id={`${id}-unread`}
+                count={acesso.unreadNotificationCount}
+                onAbrir={() => setNotificacoesAbertas(true)}
+                className="br-button circle small"
+              />
+              <button
+                id={`${id}-managers-button`}
+                type="button"
+                onClick={() => setGestoresAbertos(true)}
+                title={t('managers.open')}
+                aria-label={t('managers.open')}
+                className="br-button circle small"
+              >
+                <UsersIcon id={`${id}-managers-icon`} />
+              </button>
+            </span>
           </span>
           <Link
             id={`${id}-name`}
@@ -442,6 +459,16 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
             onFechar={() => setGestoresAbertos(false)}
             repositoryId={acesso.harvesterRepositoryId}
             repositorio={`${acesso.acronym} · ${nomeRepositorio}`}
+          />
+
+          <NotificationsPanel
+            id={`${id}-notifications-panel`}
+            aberto={notificacoesAbertas}
+            onFechar={() => setNotificacoesAbertas(false)}
+            repositoryId={acesso.harvesterRepositoryId}
+            titulo={t('notifications.title')}
+            descricao={`${acesso.acronym} · ${nomeRepositorio}`}
+            acronym={acesso.acronym}
           />
         </div>
 

@@ -12,6 +12,7 @@ from django.db.models import Count
 
 from apps.integrations.cache import cached
 from apps.integrations.harvester import HarvesterClient, HarvesterError
+from apps.notifications.services import contar_nao_lidas_por_repositorio
 
 from .models import RepositoryAccess
 
@@ -275,6 +276,11 @@ def access_summaries(accesses) -> list[dict]:
     client = HarvesterClient()
     resumos = []
 
+    # Uma consulta para o painel inteiro, fora do laço. Dentro dele seria um
+    # N+1 difícil de notar: o laço já faz N idas à origem, e o custo do banco
+    # desapareceria no meio da espera de rede.
+    nao_lidas = contar_nao_lidas_por_repositorio()
+
     for acesso in accesses:
         repository_id = acesso.harvester_repository_id
         linha = {
@@ -286,6 +292,7 @@ def access_summaries(accesses) -> list[dict]:
             "grantedAt": acesso.granted_at,
             "lastHarvest": None,
             "unavailable": False,
+            "unreadNotificationCount": nao_lidas.get(repository_id, 0),
         }
 
         try:
@@ -348,8 +355,9 @@ def _private_network_to_row(network: dict) -> dict:
         "lastValidSize": network.get("lstValidSize"),
         "lastTransformedSize": network.get("lstTransformedSize"),
         "lastIndexStatus": network.get("lstIndexStatus"),
-        # Preenchido por `_annotate_manager_counts`; a origem não sabe disso.
+        # Preenchidos por `_annotate_local_counts`; a origem não sabe disso.
         "managerCount": 0,
+        "unreadNotificationCount": 0,
     }
 
 
@@ -372,6 +380,31 @@ def _annotate_manager_counts(rows: list[dict]) -> list[dict]:
     for linha in rows:
         linha["managerCount"] = contagens.get(linha["harvesterRepositoryId"], 0)
     return rows
+
+
+def _annotate_unread_counts(rows: list[dict]) -> list[dict]:
+    """Conta as notificações sem leitura de cada repositório da página.
+
+    Também é informação nossa, e também sai em uma consulta só. A leitura é
+    compartilhada, então o número não depende de quem pergunta: na tela do
+    ADMIN ele significa "nenhum gestor leu ainda".
+    """
+    if not rows:
+        return rows
+
+    contagens = contar_nao_lidas_por_repositorio()
+    for linha in rows:
+        linha["unreadNotificationCount"] = contagens.get(linha["harvesterRepositoryId"], 0)
+    return rows
+
+
+def _annotate_local_counts(rows: list[dict]) -> list[dict]:
+    """Tudo que é nosso e se acrescenta à linha vinda do Harvester.
+
+    Um invólucro só, em vez de duas chamadas coladas em três lugares: assim um
+    quarto chamador não esquece metade.
+    """
+    return _annotate_unread_counts(_annotate_manager_counts(rows))
 
 
 # O índice inteiro custa ~40 s e 2,9 MB. Só vale porque o cache é persistente:
@@ -446,7 +479,7 @@ def repositories_by_invalid_ratio(
 
     total = len(indice)
     inicio = (page - 1) * count
-    pagina = _annotate_manager_counts(indice[inicio : inicio + count])
+    pagina = _annotate_local_counts(indice[inicio : inicio + count])
 
     for linha in pagina:
         proporcao = invalid_ratio(linha)
@@ -481,7 +514,7 @@ def repository_index(client: HarvesterClient | None = None) -> dict:
     acervo, não uma por linha.
     """
     linhas = [dict(linha) for linha in full_network_index(client)]
-    _annotate_manager_counts(linhas)
+    _annotate_local_counts(linhas)
 
     for linha in linhas:
         proporcao = invalid_ratio(linha)
@@ -524,7 +557,7 @@ def search_repositories(
             "count": count,
             "totalElements": total,
             "totalPages": max(1, -(-total // count)) if total else 0,
-            "results": _annotate_manager_counts(
+            "results": _annotate_local_counts(
                 [_private_network_to_row(rede) for rede in payload.get("networks") or []]
             ),
         }

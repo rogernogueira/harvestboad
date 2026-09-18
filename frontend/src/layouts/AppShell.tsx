@@ -3,8 +3,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
 
+import { useQuery } from '@tanstack/react-query'
+
 import { useAuth } from '@/auth/context'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { NotificationsButton } from '@/components/NotificationsButton'
+import { NotificationsPanel } from '@/components/NotificationsPanel'
+import { unreadNotificationsQuery } from '@/lib/queries'
 
 interface NavItem {
   to: string
@@ -49,6 +54,10 @@ export function AppShell() {
   const { user, logout } = useAuth()
   const location = useLocation()
   const [menuAberto, setMenuAberto] = useState(false)
+  const [notificacoesAbertas, setNotificacoesAbertas] = useState(false)
+
+  // Só o número; a lista fica para quando o painel abrir.
+  const naoLidas = useQuery({ ...unreadNotificationsQuery, enabled: Boolean(user) })
 
   const itens = NAV_ITEMS.filter((item) => !item.adminOnly || user?.profile === 'ADMIN')
 
@@ -87,6 +96,24 @@ export function AppShell() {
 
               {user ? (
                 <>
+                  {/*
+                    O sino fica antes do divisor, junto dos controles de sessão:
+                    é o único lugar onde o recado direto a um gestor — que não
+                    tem repositório — tem onde acender. As notificações de
+                    repositório aparecem aqui também, e na linha do próprio
+                    repositório.
+
+                    `sempreVisivel` porque no cabeçalho ele é porta de entrada,
+                    não sinal: some com a caixa vazia, e quem procurasse as
+                    notificações lidas não teria por onde.
+                  */}
+                  <NotificationsButton
+                    id="app-shell-notifications"
+                    count={naoLidas.data?.unread ?? 0}
+                    onAbrir={() => setNotificacoesAbertas(true)}
+                    sempreVisivel
+                    className="br-button circle small mr-1"
+                  />
                   <span className="br-divider vertical mx-1" aria-hidden="true" />
                   <div id="app-shell-user" className="d-flex align-items-center">
                     <div id="app-shell-user-identity" className="d-none d-sm-block text-right mr-2">
@@ -228,6 +255,16 @@ export function AppShell() {
           </p>
         </div>
       </footer>
+
+      {user ? (
+        <NotificationsPanel
+          id="app-shell-notifications-panel"
+          aberto={notificacoesAbertas}
+          onFechar={() => setNotificacoesAbertas(false)}
+          titulo={t('notifications.title')}
+          descricao={t('notifications.inboxSubtitle')}
+        />
+      ) : null}
     </div>
   )
 }

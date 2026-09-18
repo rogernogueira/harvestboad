@@ -427,6 +427,49 @@
     "openInvalidRecords": "See the invalid records of this harvest",
     "notEvaluated": "not evaluated"
   },
+  "notifications": {
+    "title": "Notifications",
+    "open": "See notifications",
+    "inboxSubtitle": "Notices from your repositories and messages for you",
+    "unread_one": "{{count}} unread notification",
+    "unread_other": "{{count}} unread notifications",
+    "none": "No notifications here.",
+    "direct": "direct message",
+    "markRead": "Mark as read: {{title}}",
+    "markReadHint": "Click to mark as read — this applies to every manager of this repository.",
+    "readBy": "Read by {{username}}",
+    "alreadyRead": "Already read",
+    "categories": {
+      "COMUNICACAO": "Communication",
+      "NOVIDADES": "News",
+      "COLETA": "Harvest",
+      "VALIDACAO": "Validation"
+    },
+    "new": {
+      "open": "New notification",
+      "openFor": "New notification for {{acronym}}",
+      "title": "New notification",
+      "subtitle": "The notice goes to a repository or to a manager.",
+      "forRepository": "To the managers of {{acronym}}",
+      "target": "Destination",
+      "target_repositorio": "Repository",
+      "target_gestor": "Manager",
+      "searchRepository": "Search repository",
+      "chooseRepository": "Repository",
+      "chooseRepositoryEmpty": "Select a repository",
+      "chooseManager": "Manager",
+      "chooseManagerEmpty": "Select a manager",
+      "category": "Category",
+      "titleField": "Title",
+      "messageField": "Message",
+      "send": "Send"
+    },
+    "validation": {
+      "titleRequired": "Enter the title.",
+      "messageRequired": "Enter the message.",
+      "messageTooLong": "The message is over 2,000 characters."
+    }
+  },
   "harvestStatus": {
     "valid": "Valid",
     "running": "Harvesting",

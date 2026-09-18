@@ -7,6 +7,7 @@ import type {
   Diagnosis,
   HarvestDetail,
   HarvestList,
+  NotificationItem,
   Paginated,
   RecordItem,
   RecordLink,
@@ -234,3 +235,47 @@ export const recordLinkQuery = (oaiId: string, baseUrl: string, prefix?: string 
     retry: false,
   })
 }
+
+/**
+ * Notificações visíveis para quem pergunta.
+ *
+ * Sem `repository`, a resposta é a caixa de entrada: os recados diretos mais os
+ * dos repositórios que a pessoa gerencia. Com ele, são as de um repositório só
+ * — e aí o backend exige o vínculo.
+ */
+export const notificationsQuery = (
+  opcoes: {
+    repository?: string
+    unread?: boolean
+    sent?: boolean
+  } = {},
+) => {
+  const params = new URLSearchParams()
+  if (opcoes.repository) params.set('repository', opcoes.repository)
+  if (opcoes.unread) params.set('unread', 'true')
+  if (opcoes.sent) params.set('sent', 'true')
+  const query = params.toString()
+
+  return queryOptions({
+    queryKey: [
+      'notifications',
+      'list',
+      opcoes.repository ?? '',
+      opcoes.unread ?? false,
+      opcoes.sent ?? false,
+    ],
+    queryFn: () =>
+      apiGet<Paginated<NotificationItem>>(`/notifications/${query ? `?${query}` : ''}`),
+  })
+}
+
+/**
+ * Só o número do sino.
+ *
+ * Existe para o cabeçalho não baixar a lista inteira a cada tela: o painel só
+ * consulta quando é aberto.
+ */
+export const unreadNotificationsQuery = queryOptions({
+  queryKey: ['notifications', 'unread-count'],
+  queryFn: () => apiGet<{ unread: number }>('/notifications/unread-count/'),
+})
