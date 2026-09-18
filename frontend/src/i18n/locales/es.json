@@ -76,7 +76,13 @@
     "unnamed": "(sin nombre en el origen)",
     "grantedAt": "Asociado el {{date}}",
     "loadingStats": "Cargando repositorios y estadísticas…",
-    "sortedByAge": "ordenados por la recolección más antigua primero",
+    "sort": {
+      "label": "Ordenar por",
+      "recentes-za": "Recolectadas recientemente Z-A",
+      "recentes-az": "Recolectadas recientemente A-Z",
+      "validos-pct": "Porcentaje de validados",
+      "validos-total": "Cantidad total de validados"
+    },
     "openLastHarvest": "Abrir la última recolección",
     "harvestAnalysis": "Análisis de la recolección #{{snapshotId}}",
     "lastHarvestAnalysis": "Análisis de la última recolección",

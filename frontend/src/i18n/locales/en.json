@@ -75,7 +75,13 @@
     "unnamed": "(unnamed at source)",
     "grantedAt": "Linked on {{date}}",
     "loadingStats": "Loading repositories and statistics…",
-    "sortedByAge": "sorted by oldest harvest first",
+    "sort": {
+      "label": "Sort by",
+      "recentes-za": "Recently harvested Z-A",
+      "recentes-az": "Recently harvested A-Z",
+      "validos-pct": "Percentage of valid",
+      "validos-total": "Total number of valid"
+    },
     "openLastHarvest": "Open the last harvest",
     "harvestAnalysis": "Harvest #{{snapshotId}} analysis",
     "lastHarvestAnalysis": "Last harvest analysis",

@@ -1,4 +1,4 @@
-import { BrInput } from '@govbr-ds/react-components'
+import { BrInput, BrSelectStandard } from '@govbr-ds/react-components'
 import { useQuery } from '@tanstack/react-query'
 import { lazy, Suspense, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -58,34 +58,114 @@ export function RepositoriesPage() {
 const DIAS_ATENCAO = 90
 const DIAS_CRITICO = 365
 
+/** Critérios oferecidos no seletor, na ordem em que aparecem. */
+const ORDENS = ['recentes-za', 'recentes-az', 'validos-pct', 'validos-total'] as const
+type Ordem = (typeof ORDENS)[number]
+
 /**
- * Ordena por necessidade de atenção.
+ * O padrão é a coleta mais antiga primeiro — a ordem por necessidade de
+ * atenção, que era a única até aqui e continua sendo o que se vê ao abrir a
+ * tela. O seletor só deu nome a ela e abriu as outras três.
+ */
+const ORDEM_PADRAO: Ordem = 'recentes-za'
+
+/**
+ * Instante da última coleta, para ordenar.
  *
- * A regra é uma só, para o gestor conseguir prever a ordem olhando a lista:
- * coleta mais antiga primeiro. Antes dela vêm os casos que nem dá para avaliar
- * — repositório sem resposta da origem e repositório nunca coletado.
+ * Os dois casos que não têm instante são separados de propósito, e não
+ * empilhados num só: repositório sem resposta da origem (`unavailable`) e
+ * repositório nunca coletado são ausências diferentes, e mantê-las distintas
+ * dá uma ordem estável entre elas.
+ */
+function instanteDaColeta(item: RepositoryAccessSummary): number {
+  if (item.unavailable) return Number.NEGATIVE_INFINITY
+  const fim = item.lastHarvest?.endTime
+  if (!fim) return Number.NEGATIVE_INFINITY + 1
+  const instante = Date.parse(fim.replace(' ', 'T'))
+  return Number.isNaN(instante) ? Number.NEGATIVE_INFINITY + 1 : instante
+}
+
+// Desempate pelo nome: sem ele, duas coletas do mesmo instante — ou dois
+// repositórios com a mesma medida — trocariam de lugar entre renderizações.
+const peloNome = (a: RepositoryAccessSummary, b: RepositoryAccessSummary) =>
+  (a.name ?? '').localeCompare(b.name ?? '')
+
+/**
+ * Ordena pela data da última coleta.
  *
- * A ordem anterior era a da origem, que segue a sigla (UFT, UFT-2, UFT-4…).
- * Sigla é código interno: por ela, o repositório parado há mais tempo caía no
+ * Com a mais antiga primeiro (`recentes-za`) é a ordem por necessidade de
+ * atenção: na frente vêm os casos que nem dá para avaliar — sem resposta da
+ * origem e nunca coletado —, depois o que está parado há mais tempo. A ordem
+ * anterior a ela era a da origem, que segue a sigla (UFT, UFT-2, UFT-4…);
+ * sigla é código interno, e por ela o repositório parado há mais tempo caía no
  * meio da lista e o mais saudável no fim.
  *
- * O contador de inválidos de propósito não entra: neste acervo ele não passa de
- * 0,6% em nenhum repositório, e misturá-lo faria a ordem deixar de ser
- * explicável numa frase.
+ * Com a mais recente primeiro (`recentes-az`) é o espelho exato: quem não tem
+ * coleta passa para o fim, que é o outro extremo da mesma régua.
  */
-function ordenarPorAtencao(itens: RepositoryAccessSummary[]) {
-  const quando = (item: RepositoryAccessSummary) => {
-    if (item.unavailable) return Number.NEGATIVE_INFINITY
-    const fim = item.lastHarvest?.endTime
-    if (!fim) return Number.NEGATIVE_INFINITY + 1
-    const instante = Date.parse(fim.replace(' ', 'T'))
-    return Number.isNaN(instante) ? Number.NEGATIVE_INFINITY + 1 : instante
-  }
-  // Desempate pelo nome: sem ele, duas coletas do mesmo instante trocariam de
-  // lugar entre renderizações.
+function ordenarPorColeta(itens: RepositoryAccessSummary[], recentesPrimeiro: boolean) {
+  const sinal = recentesPrimeiro ? -1 : 1
   return [...itens].sort(
-    (a, b) => quando(a) - quando(b) || (a.name ?? '').localeCompare(b.name ?? ''),
+    (a, b) => sinal * (instanteDaColeta(a) - instanteDaColeta(b)) || peloNome(a, b),
   )
+}
+
+/**
+ * Ordena por uma medida da última coleta, do maior para o menor.
+ *
+ * Quem não tem a medida vai para o fim em vez de valer zero: zero validados é
+ * um resultado ruim, "não avaliado" é ausência de resultado — coleta sem
+ * indexação não passa por validação —, e tratá-los como iguais poria no mesmo
+ * degrau quem falhou e quem nem chegou a ser medido.
+ */
+function ordenarPorMedida(
+  itens: RepositoryAccessSummary[],
+  medida: (item: RepositoryAccessSummary) => number | null,
+) {
+  return [...itens].sort((a, b) => {
+    const va = medida(a)
+    const vb = medida(b)
+    if (va === null || vb === null) {
+      if (va === vb) return peloNome(a, b)
+      return va === null ? 1 : -1
+    }
+    return vb - va || peloNome(a, b)
+  })
+}
+
+/**
+ * Proporção de validados na última coleta.
+ *
+ * Divide por `size`, e não por `validSize + invalidSize`: o total é o que a
+ * origem declara ter coletado, e é sobre ele que a porcentagem da tela é lida.
+ * Coleta vazia não vira 0% — `0/0` não é uma taxa, é ausência de amostra.
+ */
+function percentualValidado(item: RepositoryAccessSummary): number | null {
+  const coleta = item.lastHarvest
+  if (item.unavailable || !coleta?.evaluated) return null
+  const { size, validSize } = coleta
+  if (size === null || validSize === null || size === 0) return null
+  return validSize / size
+}
+
+/** Quantidade absoluta de validados na última coleta. */
+function totalValidado(item: RepositoryAccessSummary): number | null {
+  const coleta = item.lastHarvest
+  if (item.unavailable || !coleta?.evaluated) return null
+  return coleta.validSize
+}
+
+function ordenar(itens: RepositoryAccessSummary[], ordem: Ordem) {
+  switch (ordem) {
+    case 'recentes-az':
+      return ordenarPorColeta(itens, true)
+    case 'validos-pct':
+      return ordenarPorMedida(itens, percentualValidado)
+    case 'validos-total':
+      return ordenarPorMedida(itens, totalValidado)
+    default:
+      return ordenarPorColeta(itens, false)
+  }
 }
 
 /**
@@ -120,6 +200,10 @@ function MyRepositoriesPage() {
   const busca = searchParams.get('q') ?? ''
   const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
   const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
+  const ordemUrl = searchParams.get('ordem')
+  // Um `?ordem=` desconhecido cai no padrão: senão o seletor ficaria vazio e a
+  // lista, numa ordem que ele não sabe nomear.
+  const ordem: Ordem = ORDENS.includes(ordemUrl as Ordem) ? (ordemUrl as Ordem) : ORDEM_PADRAO
 
   /*
    * Busca e paginação acontecem no navegador, e não no servidor.
@@ -135,7 +219,7 @@ function MyRepositoriesPage() {
    * O recorte vive na URL, como o resto da aplicação: sobrevive ao botão voltar
    * e pode ser colado para outra pessoa.
    */
-  const ordenados = useMemo(() => ordenarPorAtencao(data?.results ?? []), [data?.results])
+  const ordenados = useMemo(() => ordenar(data?.results ?? [], ordem), [data?.results, ordem])
 
   const filtrados = useMemo(() => {
     const termo = comparavel(busca.trim())
@@ -171,6 +255,14 @@ function MyRepositoriesPage() {
       else params.delete('page')
     })
 
+  /** Trocar a ordem volta à primeira página: a página 3 mostra outros seis. */
+  const mudarOrdem = (nova: Ordem) =>
+    alterarParams((params) => {
+      if (nova === ORDEM_PADRAO) params.delete('ordem')
+      else params.set('ordem', nova)
+      params.delete('page')
+    })
+
   /** Trocar o tamanho reinicia a paginação: a página 4 de 6 não existe com 100. */
   const mudarTamanho = (novo: number) =>
     alterarParams((params) => {
@@ -199,8 +291,6 @@ function MyRepositoriesPage() {
           <>
             {t('repositories.subtitle', { count: data.count })}
             {busca.trim() ? ` · ${t('repositories.found', { count: filtrados.length })}` : ''}
-            {' · '}
-            {t('repositories.sortedByAge')}
           </>
         }
       />
@@ -211,13 +301,37 @@ function MyRepositoriesPage() {
         campo abaixo de um limiar faz o controle aparecer e desaparecer conforme
         o acervo cresce.
       */}
-      <BrInput
-        id="my-repositories-search"
-        label={t('repositories.search')}
-        value={busca}
-        icon="fas fa-search"
-        onChange={(evento) => buscar(evento.target.value)}
-      />
+      <div
+        id="my-repositories-toolbar"
+        className="d-flex flex-wrap align-items-end"
+        style={{ gap: 'var(--spacing-scale-2x)' }}
+      >
+        {/*
+          A busca cresce e o seletor fica no tamanho do seu conteúdo: o campo de
+          texto é que ganha com a largura, e a lista de critérios tem rótulos
+          longos que o `flex-grow` esticaria à toa.
+        */}
+        <div id="my-repositories-search-field" className="flex-grow-1">
+          <BrInput
+            id="my-repositories-search"
+            label={t('repositories.search')}
+            value={busca}
+            icon="fas fa-search"
+            onChange={(evento) => buscar(evento.target.value)}
+          />
+        </div>
+
+        <BrSelectStandard
+          id="my-repositories-sort"
+          label={t('repositories.sort.label')}
+          value={ordem}
+          onChange={(evento) => mudarOrdem(evento.target.value as Ordem)}
+          options={ORDENS.map((opcao) => ({
+            label: t(`repositories.sort.${opcao}`),
+            value: opcao,
+          }))}
+        />
+      </div>
 
       {filtrados.length === 0 ? (
         <Empty
