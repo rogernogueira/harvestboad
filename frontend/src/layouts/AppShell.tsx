@@ -66,23 +66,17 @@ export function AppShell() {
       <header id="app-shell-header" className="br-header" data-sticky="data-sticky">
         <div id="app-shell-header-inner" className="container-lg">
           <div id="app-shell-header-top" className="header-top">
+            {/*
+              O `header-logo` ficou só com a assinatura do IBICT: a marca do
+              HarvestBoard desceu para o `header-info`. O invólucro continua
+              porque é ele que dá `flex: 1` ao bloco — o que empurra o
+              `header-actions` para a direita — e porque o core só aplica cor e
+              peso ao `.header-sign` dentro dele.
+
+              O `br-divider` saiu junto com a marca: ele separava as duas, e
+              sozinho sobraria um traço vertical abrindo a linha.
+            */}
             <div id="app-shell-header-logo" className="header-logo">
-              {/*
-                Altura explícita no `img`: no exemplo do design system ele é
-                filho direto do `.header-logo`, que é flex. Envolvê-lo no `Link`
-                — necessário para a marca levar à home — cria um item flex sem
-                largura própria, e o SVG colapsava para 0×0. O `max-height` de
-                40px do DS continua valendo por cima.
-              */}
-              <Link id="app-shell-logo-link" to="/" className="d-inline-flex align-items-center">
-                <img
-                  id="app-shell-logo"
-                  src="/logoHB-horizontal.svg"
-                  alt={t('app.name')}
-                  style={{ height: '40px', width: 'auto' }}
-                />
-              </Link>
-              <span className="br-divider vertical" aria-hidden="true" />
               <div id="app-shell-institution-name" className="header-sign">
                 {t('app.institution')}
               </div>
@@ -139,11 +133,41 @@ export function AppShell() {
                   <i className={menuAberto ? 'fas fa-times' : 'fas fa-bars'} aria-hidden="true" />
                 </button>
               </div>
+              {/*
+                Aqui vai só a tagline. O nome do produto já está no lockup do
+                logo, e repeti-lo em texto fazia o cabeçalho anunciar
+                "HarvestBoard" duas vezes seguidas para quem usa leitor de tela
+                — uma vez no `alt` do logo, outra neste bloco.
+
+                Ela fica no `header-title`, e não no `header-subtitle`, porque
+                o core esconde o subtítulo abaixo de 576px: `display: none` na
+                regra base, com `display: block` só a partir do breakpoint. No
+                celular esta linha ficaria com o gatilho do menu e mais nada.
+
+                O `header-info` continua envolvendo um filho só: é ele que
+                carrega o afastamento do gatilho
+                (`.header-menu-trigger + .header-info`) e o `padding-top` dos
+                breakpoints.
+              */}
               <div id="app-shell-header-info" className="header-info">
-                <div id="app-shell-header-title" className="header-title">
-                  {t('app.name')}
-                </div>
-                <div id="app-shell-header-subtitle" className="header-subtitle">
+                {/*
+                  A marca abre o bloco e leva à home. O `alt` é o nome do
+                  produto porque é ele que dá nome acessível ao link — o texto
+                  abaixo é a tagline, não o nome.
+
+                  A altura vem de `#app-shell-logo`, em `index.css`, e não
+                  daqui. Dois motivos somados: o `Link` cria um item sem
+                  largura própria e o SVG colapsa para 0×0 sem altura
+                  explícita; e, fora do `.header-logo`, o `max-height` do core
+                  não alcança mais a imagem. O token `--header-logo-size`
+                  também não resolve solto — o core só o troca para 40px dentro
+                  do próprio `.header-logo`, então aqui ele valeria 24px em
+                  qualquer largura.
+                */}
+                <Link id="app-shell-logo-link" to="/" className="d-inline-flex align-items-center">
+                  <img id="app-shell-logo" src="/logoHB-horizontal.svg" alt={t('app.name')} />
+                </Link>
+                <div id="app-shell-header-tagline" className="header-title">
                   {t('app.tagline')}
                 </div>
               </div>

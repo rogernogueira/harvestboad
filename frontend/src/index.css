@@ -181,6 +181,34 @@
   }
 
   /*
+   * Altura da marca no `header-info`.
+   *
+   * Único seletor de `id` do arquivo, e por um motivo: a marca é peça única do
+   * layout, não um utilitário. Ela mora no `header-info` desde que saiu do
+   * `header-top`, e ali perdeu as duas regras do core que a dimensionavam.
+   *
+   * Reaproveitar o token não resolve: o core declara `--header-logo-size` como
+   * `medium` no `.br-header` e só o troca para `large` dentro do próprio
+   * `.header-logo`, a partir de 576px. Fora dali ele valeria 24px em qualquer
+   * largura. Os dois passos ficam explícitos abaixo, nos mesmos tokens e no
+   * mesmo ponto de quebra que o core aplicava antes da mudança — 24px no
+   * celular, 40px do `sm` para cima.
+   *
+   * A altura também é o que impede o SVG de colapsar para 0×0 dentro do
+   * `Link`, que não tem largura própria.
+   */
+  #app-shell-logo {
+    height: var(--header-logo-medium);
+    width: auto;
+  }
+
+  @media (min-width: 576px) {
+    #app-shell-logo {
+      height: var(--header-logo-large);
+    }
+  }
+
+  /*
    * Texto só para leitor de tela.
    *
    * O design system não tem equivalente: onde ele precisa esconder um rótulo
