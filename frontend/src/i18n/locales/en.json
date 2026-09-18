@@ -60,8 +60,9 @@
     "cancel": "Cancel"
   },
   "pagination": {
-    "page": "Page {{page}} of {{total}}",
     "label": "Pagination",
+    "perPage": "Items per page",
+    "all": "All",
     "goToPage": "Page {{page}}",
     "previous": "Previous",
     "next": "Next"

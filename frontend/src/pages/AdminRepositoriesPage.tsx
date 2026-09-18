@@ -21,9 +21,11 @@ import { Link } from 'react-router'
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
+import { Pagination } from '@/components/Pagination'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UserPlusIcon } from '@/components/UserPlusIcon'
 import { UsersIcon } from '@/components/UsersIcon'
+import { TUDO } from '@/lib/pagination'
 import { repositoryIndexQuery } from '@/lib/queries'
 import type { RepositoryHit } from '@/lib/types'
 
@@ -50,7 +52,15 @@ const features = tableFeatures({
 
 const columnHelper = createColumnHelper<typeof features, RepositoryHit>()
 
+/**
+ * Linhas por página, e o conjunto oferecido no seletor.
+ *
+ * "Tudo" são as ~2.181 linhas do acervo, que já estão em memória: aqui o
+ * seletor não custa requisição, só altura de página. É o que faltava para
+ * achar um repositório distante sem doze cliques em "Próxima".
+ */
 const POR_PAGINA = 25
+const TAMANHOS = [25, 100, 1000, TUDO] as const
 
 /** Situação da coleta agrupada em três baldes, que é como se filtra na prática. */
 type FiltroSituacao = 'todos' | 'valid' | 'error' | 'sem-coleta'
@@ -363,37 +373,27 @@ export function AdminRepositoriesPage() {
             </table>
           </div>
 
-          <div
+          {/*
+            O mesmo `Pagination` das outras três listas, no lugar do par
+            "Anterior/Próxima" que existia aqui: quem faz a conta continua
+            sendo o TanStack, sobre as linhas já em memória — o que se
+            compartilha é o controle, não a estratégia. Uniformizar as duas
+            estratégias é que seria errado; a de registros pagina no servidor
+            por causa das dezenas de milhares de linhas.
+          */}
+          <Pagination
             id="admin-repositories-pagination"
-            className="d-flex flex-wrap align-items-center justify-content-between gap-3 text-base"
-          >
-            <p id="admin-repositories-pagination-status" className="text-gray-70">
-              {t('pagination.page', {
-                page: table.state.pagination.pageIndex + 1,
-                total: Math.max(table.getPageCount(), 1),
-              })}
-            </p>
-            <div id="admin-repositories-pagination-controls" className="d-flex gap-2">
-              <button
-                id="admin-repositories-pagination-previous"
-                type="button"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-                className="br-button secondary small"
-              >
-                {t('pagination.previous')}
-              </button>
-              <button
-                id="admin-repositories-pagination-next"
-                type="button"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-                className="br-button secondary small"
-              >
-                {t('pagination.next')}
-              </button>
-            </div>
-          </div>
+            page={table.state.pagination.pageIndex + 1}
+            totalPages={table.getPageCount()}
+            onChange={(destino) => table.setPageIndex(destino - 1)}
+            tamanho={table.state.pagination.pageSize}
+            tamanhos={TAMANHOS}
+            onTamanho={(novo) => {
+              table.setPageSize(novo)
+              // A página 30 de 25 não existe com 1.000 por página.
+              table.setPageIndex(0)
+            }}
+          />
         </>
       )}
 

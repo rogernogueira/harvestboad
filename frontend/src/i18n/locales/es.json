@@ -60,8 +60,9 @@
     "cancel": "Cancelar"
   },
   "pagination": {
-    "page": "Página {{page}} de {{total}}",
     "label": "Paginación",
+    "perPage": "Elementos por página",
+    "all": "Todo",
     "goToPage": "Página {{page}}",
     "previous": "Anterior",
     "next": "Siguiente"

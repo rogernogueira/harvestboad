@@ -12,6 +12,7 @@ import { Pagination } from '@/components/Pagination'
 import { RepositoryManagersModal } from '@/components/RepositoryManagersModal'
 import { UsersIcon } from '@/components/UsersIcon'
 import { estadoExcepcional } from '@/lib/harvestStatus'
+import { tamanhoDaUrl, tamanhoParaUrl, TUDO } from '@/lib/pagination'
 import { repositoriesSummaryQuery } from '@/lib/queries'
 import type { LastHarvestSummary, RepositoryAccessSummary } from '@/lib/types'
 
@@ -88,14 +89,20 @@ function ordenarPorAtencao(itens: RepositoryAccessSummary[]) {
 }
 
 /**
- * Quantos repositórios por página.
+ * Quantos repositórios por página, e o conjunto oferecido no seletor.
  *
- * Seis, e não vinte: cada linha é um cartão alto — identificação de um lado,
- * quatro indicadores e as regras mais violadas do outro —, e seis já ocupam
- * mais de uma tela. A paginação existe para não obrigar a rolar o acervo
- * inteiro à procura de um repositório.
+ * O padrão segue seis, e não vinte e cinco: cada linha é um cartão alto —
+ * identificação de um lado, quatro indicadores e as regras mais violadas do
+ * outro —, e seis já ocupam mais de uma tela. A paginação existe para não
+ * obrigar a rolar o acervo inteiro à procura de um repositório.
+ *
+ * O seletor abre a saída oposta, para quem quer justamente varrer tudo de uma
+ * vez: como a paginação é no navegador e o acervo já está em memória, "tudo"
+ * aqui não custa requisição nenhuma. Não há 1.000 no meio porque um gestor tem
+ * dezenas de vínculos, não milhares — entre 100 e "tudo" não sobra nada.
  */
 const POR_PAGINA = 6
+const TAMANHOS = [6, 25, 100, TUDO] as const
 
 /** Sem acento e em minúsculas: quem busca "institucao" espera achar "instituição". */
 const comparavel = (texto: string) =>
@@ -112,6 +119,7 @@ function MyRepositoriesPage() {
 
   const busca = searchParams.get('q') ?? ''
   const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
 
   /*
    * Busca e paginação acontecem no navegador, e não no servidor.
@@ -139,9 +147,9 @@ function MyRepositoriesPage() {
     )
   }, [ordenados, busca])
 
-  const totalDePaginas = Math.max(1, Math.ceil(filtrados.length / POR_PAGINA))
+  const totalDePaginas = Math.max(1, Math.ceil(filtrados.length / porPagina))
   const paginaAtual = Math.min(pagina, totalDePaginas)
-  const visiveis = filtrados.slice((paginaAtual - 1) * POR_PAGINA, paginaAtual * POR_PAGINA)
+  const visiveis = filtrados.slice((paginaAtual - 1) * porPagina, paginaAtual * porPagina)
 
   const alterarParams = (mudanca: (params: URLSearchParams) => void) => {
     const params = new URLSearchParams(searchParams)
@@ -161,6 +169,15 @@ function MyRepositoriesPage() {
     alterarParams((params) => {
       if (destino > 1) params.set('page', String(destino))
       else params.delete('page')
+    })
+
+  /** Trocar o tamanho reinicia a paginação: a página 4 de 6 não existe com 100. */
+  const mudarTamanho = (novo: number) =>
+    alterarParams((params) => {
+      const por = tamanhoParaUrl(novo, POR_PAGINA)
+      if (por) params.set('por', por)
+      else params.delete('por')
+      params.delete('page')
     })
 
   if (isPending)
@@ -217,14 +234,21 @@ function MyRepositoriesPage() {
             ))}
           </ul>
 
-          {totalDePaginas > 1 ? (
-            <Pagination
-              id="my-repositories-pagination"
-              page={paginaAtual}
-              totalPages={totalDePaginas}
-              onChange={irParaPagina}
-            />
-          ) : null}
+          {/*
+            Sem o `totalDePaginas > 1` que havia aqui: esconder o bloco inteiro
+            numa página só levava junto o seletor, e quem escolhesse "tudo"
+            ficava sem como voltar a paginar. Quem some agora são só os botões,
+            dentro do componente.
+          */}
+          <Pagination
+            id="my-repositories-pagination"
+            page={paginaAtual}
+            totalPages={totalDePaginas}
+            onChange={irParaPagina}
+            tamanho={porPagina}
+            tamanhos={TAMANHOS}
+            onTamanho={mudarTamanho}
+          />
         </>
       )}
     </div>

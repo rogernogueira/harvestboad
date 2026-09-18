@@ -10,10 +10,21 @@ import { FilterBar } from '@/components/FilterBar'
 import { Pagination } from '@/components/Pagination'
 import { RecordDiagnosisModal } from '@/components/RecordDiagnosisModal'
 import { filtersFromSearch, filtersToParams, type RecordFilters } from '@/lib/filters'
+import { tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
 import { recordsQuery } from '@/lib/queries'
 import type { RecordItem } from '@/lib/types'
 
-const PAGE_SIZE = 20
+/**
+ * Registros por página, e o conjunto oferecido no seletor.
+ *
+ * O teto é 200 porque é o que `parse_pagination` aceita em `count`
+ * (`apps/harvests/views.py`). Não é um número tímido: 200 registros já são
+ * ~108 KB de resposta, e a origem derruba cerca de metade das conexões — uma
+ * página maior passa mais tempo exposta a essa falha, e a repetição só cobre
+ * falha de transporte.
+ */
+const PAGE_SIZE = 25
+const TAMANHOS = [25, 50, 100, 200] as const
 
 /**
  * Registros da coleta.
@@ -31,6 +42,7 @@ export function RecordsPage() {
 
   const filtros = filtersFromSearch(searchParams)
   const page = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, PAGE_SIZE)
 
   /*
    * Um modal por vez, montado só quando há registro escolhido — o mesmo arranjo
@@ -40,28 +52,46 @@ export function RecordsPage() {
   const [registroAberto, setRegistroAberto] = useState<RecordItem | null>(null)
 
   const { data, isPending, isError, error, refetch, isFetching } = useQuery({
-    ...recordsQuery(snapshotId, page, PAGE_SIZE, filtros),
+    ...recordsQuery(snapshotId, page, porPagina, filtros),
     // Mantém a página anterior visível enquanto a próxima carrega: o Harvester
     // é lento e piscar a tabela a cada passo é pior que um leve atraso.
     placeholderData: keepPreviousData,
   })
 
+  /*
+   * Monta a URL da listagem a partir das três coisas que a definem. O tamanho
+   * de página entra aqui porque é preferência de exibição, não filtro: quem
+   * escolheu ver 200 por vez continua vendo 200 depois de mexer no recorte.
+   */
+  const urlDaListagem = useCallback((recorte: RecordFilters, destino: number, tamanho: number) => {
+    const params = filtersToParams(recorte)
+    if (destino > 1) params.set('page', String(destino))
+    const por = tamanhoParaUrl(tamanho, PAGE_SIZE)
+    if (por) params.set('por', por)
+    return params
+  }, [])
+
   /** Mudar filtro volta para a primeira página — a antiga pode não existir mais. */
   const aplicarFiltros = useCallback(
     (novos: RecordFilters) => {
-      const params = filtersToParams(novos)
-      setSearchParams(params, { replace: false })
+      setSearchParams(urlDaListagem(novos, 1, porPagina), { replace: false })
     },
-    [setSearchParams],
+    [porPagina, setSearchParams, urlDaListagem],
   )
 
   const irParaPagina = useCallback(
     (destino: number) => {
-      const params = filtersToParams(filtros)
-      if (destino > 1) params.set('page', String(destino))
-      setSearchParams(params)
+      setSearchParams(urlDaListagem(filtros, destino, porPagina))
     },
-    [filtros, setSearchParams],
+    [filtros, porPagina, setSearchParams, urlDaListagem],
+  )
+
+  /** Trocar o tamanho reinicia a paginação: a página 7 de 25 não existe com 200. */
+  const mudarTamanho = useCallback(
+    (novo: number) => {
+      setSearchParams(urlDaListagem(filtros, 1, novo))
+    },
+    [filtros, setSearchParams, urlDaListagem],
   )
 
   // Os filtros seguem no link do registro para que voltar preserve o recorte.
@@ -200,6 +230,9 @@ export function RecordsPage() {
             page={data.page}
             totalPages={data.totalPages ?? 1}
             onChange={irParaPagina}
+            tamanho={porPagina}
+            tamanhos={TAMANHOS}
+            onTamanho={mudarTamanho}
           />
         </>
       )}

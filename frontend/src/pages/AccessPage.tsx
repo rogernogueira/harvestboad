@@ -10,10 +10,19 @@ import { PageHeader } from '@/components/PageHeader'
 import { Pagination } from '@/components/Pagination'
 import { useDebounced } from '@/hooks/useDebounced'
 import { ApiError, apiDelete, apiPost } from '@/lib/api'
+import { tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
 import { accessesByRepositoryQuery, gestoresQuery, repositorySearchQuery } from '@/lib/queries'
 import type { BulkLinkResult, RepositoryHit } from '@/lib/types'
 
+/**
+ * Resultados por página, e o conjunto oferecido no seletor.
+ *
+ * O teto é 100 porque é o que `/repositories/search/` aceita em `count`
+ * (`apps/repositories/views.py`): pedir mais devolve 100 de qualquer forma, e
+ * o seletor mostraria um número que a tela não cumpre.
+ */
 const POR_PAGINA = 10
+const TAMANHOS = [10, 25, 50, 100] as const
 
 /** Repositório escolhido, guardado com sigla e nome para exibir e gravar. */
 interface Selecionado {
@@ -36,6 +45,7 @@ export function AccessPage() {
 
   const termoUrl = searchParams.get('busca') ?? ''
   const pagina = Math.max(1, Number(searchParams.get('pagina') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
 
   const [termo, setTermo] = useState(termoUrl)
   const termoAtrasado = useDebounced(termo)
@@ -46,7 +56,7 @@ export function AccessPage() {
   // Aqui o objetivo é achar um repositório específico: sem termo não há o que
   // buscar, e o acervo inteiro só atrapalharia.
   const busca = useQuery({
-    ...repositorySearchQuery(termoAtrasado, pagina, POR_PAGINA),
+    ...repositorySearchQuery(termoAtrasado, pagina, porPagina),
     enabled: temTermo,
   })
 
@@ -220,6 +230,13 @@ export function AccessPage() {
                 page={busca.data.page}
                 totalPages={busca.data.totalPages}
                 onChange={(destino) => atualizarUrl({ pagina: String(destino) })}
+                tamanho={porPagina}
+                tamanhos={TAMANHOS}
+                /* Trocar o tamanho volta à primeira página: a de número 7 com
+                   10 por página não existe com 100. */
+                onTamanho={(novo) =>
+                  atualizarUrl({ por: tamanhoParaUrl(novo, POR_PAGINA), pagina: null })
+                }
               />
             </>
           ) : null}
