@@ -574,8 +574,9 @@ function HarvestStats({
           O rótulo e o número da coleta viraram um alvo só. Antes o "Última
           coleta" era texto morto e quem clicava era o `#105828` ao lado — um
           alvo de poucos pixels, feito de um número que só quem conhece o
-          Harvester reconhece. O botão nomeia o destino, carrega o número e dá
-          área de clique.
+          Harvester reconhece. O botão nomeia o destino e dá área de clique; o
+          número saiu do rótulo para o balão, onde identifica a coleta sem
+          disputar a leitura com o nome da ação.
 
           Sem `secondary`: a base do `.br-button` é transparente e sem borda.
           Com o contorno o botão era o elemento mais pesado da linha — 8.226px²,
@@ -591,10 +592,11 @@ function HarvestStats({
         <Link
           id={`${id}-snapshot-link`}
           to={`/coletas/${coleta.snapshotId}`}
+          title={t('repositories.harvestAnalysis', { snapshotId: coleta.snapshotId })}
           className="br-button small px-0"
         >
           <i className="fas fa-file-medical-alt" aria-hidden="true" />
-          {t('repositories.lastHarvest')} #{coleta.snapshotId}
+          {t('repositories.lastHarvestAnalysis')}
         </Link>
         {fimValido ? (
           <IdadeDaColeta id={`${id}-age`} fim={fim} snapshotId={coleta.snapshotId} />

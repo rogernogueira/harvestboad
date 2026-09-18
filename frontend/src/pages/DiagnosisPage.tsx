@@ -322,20 +322,6 @@ export function DiagnosisPage() {
                       que é onde precisa ser único e estável.
                     */}
                     <td id={`diagnosis-page-rule-${regra.ruleId}-name`} className="px-3 py-2">
-                      {/*
-                        O identificador volta à tela, mas antes do nome e em tom
-                        secundário, não em coluna própria: é a chave pela qual a
-                        origem, o suporte e as próprias URLs de filtro
-                        (`invalidRule=110`) chamam a regra, e sem ele não há como
-                        casar o que está aqui com o que se lê lá. O nome
-                        continua sendo o que se lê primeiro.
-                      */}
-                      <span
-                        id={`diagnosis-page-rule-${regra.ruleId}-id`}
-                        className="text-gray-70 mr-1"
-                      >
-                        {regra.ruleId}
-                      </span>
                       <span
                         id={`diagnosis-page-rule-${regra.ruleId}-name-text`}
                         className="text-medium"
