@@ -254,6 +254,13 @@
     "repository": "Repositório",
     "institution": "Instituição",
     "link": {
+      "group": "Abrir no repositório:",
+      "itemPage": "Página do item",
+      "itemPageProbable": "Página do item (provável)",
+      "oai": "OAI-PMH",
+      "oaiHint": "Resposta do verbo GetRecord no OAI-PMH da origem, em XML — o metadado como o Harvester o coletou.",
+      "oaiUnavailable": "OAI-PMH indisponível",
+      "oaiUnavailableHint": "O registro não traz o endereço OAI-PMH da origem.",
       "open": "Abrir no repositório",
       "openProbable": "Abrir no repositório (provável)",
       "probableHint": "Endereço deduzido do identificador. Não foi possível confirmá-lo: o servidor não alcançou o repositório.",

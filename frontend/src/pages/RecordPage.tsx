@@ -7,6 +7,7 @@ import { ValidityBadge } from '@/components/Badges'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import { ErrorState, Loading } from '@/components/Feedback'
 import { RecordLinkButton } from '@/components/RecordLinkButton'
+import { RecordOaiButton } from '@/components/RecordOaiButton'
 import { ApiError } from '@/lib/api'
 import { filtersFromSearch, filtersToParams } from '@/lib/filters'
 import { recordQuery, recordXmlQuery } from '@/lib/queries'
@@ -76,11 +77,33 @@ export function RecordPage() {
           </h1>
           <ValidityBadge id="record-page-validity" valid={r.isValid} />
           {/*
-           * O registro já carrega tudo o que a resolução precisa: `origin` é o
+           * Os dois destinos do mesmo registro ficam num grupo rotulado, e não
+           * como botões soltos: "Página do item" e "OAI-PMH" só se explicam em
+           * relação a "Abrir no repositório", e sem o rótulo comum cada um
+           * teria de repetir a frase inteira.
+           *
+           * O core não tem grupo de botões, então o markup é próprio, como no
+           * `Tabs` e no `Pagination`. O `role="group"` com `aria-labelledby` é
+           * o que leva o rótulo ao leitor de tela: sem ele o rótulo seria um
+           * texto solto ao lado, e cada botão chegaria sem a ação que o
+           * antecede.
+           *
+           * O registro já carrega tudo o que os dois precisam: `origin` é o
            * baseURL OAI de onde ele foi coletado — não o cadastro atual do
            * repositório, que pode ter mudado desde a coleta.
            */}
-          <RecordLinkButton id="record-page-link" record={r} />
+          <div
+            id="record-page-links"
+            role="group"
+            aria-labelledby="record-page-links-label"
+            className="d-flex flex-wrap align-items-center gap-2"
+          >
+            <span id="record-page-links-label" className="text-down-01 text-gray-70">
+              {t('record.link.group')}
+            </span>
+            <RecordLinkButton id="record-page-link" record={r} rotulo="curto" />
+            <RecordOaiButton id="record-page-oai-link" record={r} />
+          </div>
         </div>
       </div>
 

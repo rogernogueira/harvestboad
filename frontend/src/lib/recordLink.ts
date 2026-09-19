@@ -54,3 +54,47 @@ export function preferredUrl(urls: string[]): string | null {
   }
   return urls[0] ?? null
 }
+
+/**
+ * Prefixo assumido quando o registro não declara o seu.
+ *
+ * É o mesmo padrão do backend (`prefix` do `/oai/record-link`), de propósito:
+ * os dois montam o mesmo `GetRecord`, e divergir aqui faria o botão abrir uma
+ * resposta diferente da que o servidor consultou para achar o link.
+ */
+const PREFIXO_PADRAO = 'oai_dc'
+
+/**
+ * Endereço do `GetRecord` deste registro no OAI-PMH da origem.
+ *
+ * Diferente do link para a página do item, este não precisa de resolução: o
+ * registro já traz as três partes que o verbo exige — `origin` é o `baseURL`
+ * que o Harvester coletou, mais o identificador e o prefixo. Por isso o botão
+ * aparece de imediato, sem a espera da consulta ao backend.
+ *
+ * A montagem passa pelo `URL` em vez de concatenar `?`: há origens cujo
+ * `baseURL` já vem com query string, e o identificador OAI tem `:` e `/`, que
+ * precisam ser escapados. `searchParams` resolve os dois casos do mesmo jeito
+ * que o `httpx` do backend.
+ *
+ * Devolve `null` quando não dá para montar — origem ausente, ou um `baseURL`
+ * que não é http(s). Aí a interface mostra o mesmo aviso discreto do outro
+ * botão, em vez de um link quebrado.
+ */
+export function oaiGetRecordUrl(record: RecordItem): string | null {
+  const origem = record.origin?.trim()
+  if (!origem || !record.identifier) return null
+
+  let url: URL
+  try {
+    url = new URL(origem)
+  } catch {
+    return null
+  }
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return null
+
+  url.searchParams.set('verb', 'GetRecord')
+  url.searchParams.set('identifier', record.identifier)
+  url.searchParams.set('metadataPrefix', record.metadataPrefix || PREFIXO_PADRAO)
+  return url.toString()
+}

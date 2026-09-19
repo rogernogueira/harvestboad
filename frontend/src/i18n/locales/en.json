@@ -252,6 +252,13 @@
     "repository": "Repository",
     "institution": "Institution",
     "link": {
+      "group": "Open in the repository:",
+      "itemPage": "Item page",
+      "itemPageProbable": "Item page (probable)",
+      "oai": "OAI-PMH",
+      "oaiHint": "GetRecord response from the source's OAI-PMH, in XML — the metadata as the Harvester collected it.",
+      "oaiUnavailable": "OAI-PMH unavailable",
+      "oaiUnavailableHint": "The record does not carry the source's OAI-PMH address.",
       "open": "Open in repository",
       "openProbable": "Open in repository (likely)",
       "probableHint": "Address inferred from the identifier. It could not be confirmed: the server could not reach the repository.",

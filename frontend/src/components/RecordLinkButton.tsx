@@ -7,6 +7,12 @@ import { recordLinkQuery } from '@/lib/queries'
 import { preferredUrl, urlsFromOccurrences } from '@/lib/recordLink'
 import type { RecordItem } from '@/lib/types'
 
+/** Rótulo do botão por variante, com e sem a ressalva de endereço deduzido. */
+const CHAVES = {
+  completo: { certo: 'record.link.open', provavel: 'record.link.openProbable' },
+  curto: { certo: 'record.link.itemPage', provavel: 'record.link.itemPageProbable' },
+} as const
+
 /**
  * Botão para o registro no site do repositório de origem.
  *
@@ -25,9 +31,17 @@ import type { RecordItem } from '@/lib/types'
 export function RecordLinkButton({
   id = 'record-link-button',
   record,
+  rotulo = 'completo',
 }: {
   id?: string
   record: RecordItem
+  /*
+   * `completo` diz a ação inteira — "Abrir no repositório" —, para quando o
+   * botão aparece sozinho, como no modal de diagnóstico. `curto` diz só o
+   * destino — "Página do item" —, para quando ele está num grupo cujo rótulo
+   * já disse a ação e repeti-la sobraria em cada botão.
+   */
+  rotulo?: 'completo' | 'curto'
 }) {
   const { t } = useTranslation()
 
@@ -56,7 +70,7 @@ export function RecordLinkButton({
         title={provavel ? `${link}\n\n${t('record.link.probableHint')}` : link}
         className="br-button secondary small"
       >
-        {provavel ? t('record.link.openProbable') : t('record.link.open')}
+        {t(CHAVES[rotulo][provavel ? 'provavel' : 'certo'])}
         <ExternalLinkIcon id={`${id}-icon`} />
       </a>
     )
