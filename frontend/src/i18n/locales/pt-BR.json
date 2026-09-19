@@ -313,7 +313,8 @@
     "access": "Acessos",
     "toggleMenu": "Abrir ou fechar o menu",
     "notifications": "Notificações",
-    "admin": "Administração"
+    "admin": "Administração",
+    "demands": "Demandas"
   },
   "access": {
     "eyebrow": "Administração",
@@ -552,5 +553,38 @@
     "stopped": "Interrompida",
     "error": "Erro",
     "indexed": "Indexada"
+  },
+  "demands": {
+    "title": "Demandas de coleta",
+    "subtitleAdmin": "Pedidos de nova coleta abertos pelos gestores",
+    "subtitleManager": "Pedidos de nova coleta dos seus repositórios",
+    "none": "Nenhuma demanda nesta situação.",
+    "all": "Todas",
+    "request": "Solicitar nova coleta",
+    "hint": "O pedido vai para os administradores, que informam o número da coleta ao atender.",
+    "note": "Justificativa (opcional)",
+    "send": "Enviar pedido",
+    "pendingSince": "Coleta solicitada por {{username}} em {{date}}",
+    "lastAttended": "Último pedido atendido — coleta #{{snapshot}}",
+    "lastRefused": "Último pedido recusado — {{reason}}",
+    "attend": "Atender",
+    "refuse": "Recusar",
+    "attendTitle": "Atender a demanda",
+    "refuseTitle": "Recusar a demanda",
+    "snapshotField": "Número da coleta realizada",
+    "reasonField": "Motivo da recusa",
+    "attendedWith": "coleta #{{snapshot}}",
+    "status": {
+      "PENDENTE": "Pendente",
+      "ATENDIDA": "Atendida",
+      "RECUSADA": "Recusada"
+    },
+    "columns": {
+      "repository": "Repositório",
+      "requester": "Solicitante",
+      "openedAt": "Aberta em",
+      "status": "Situação",
+      "actions": "Ações"
+    }
   }
 }

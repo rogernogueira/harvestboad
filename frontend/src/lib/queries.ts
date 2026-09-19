@@ -3,6 +3,7 @@ import { queryOptions } from '@tanstack/react-query'
 import { apiGet, apiGetText } from './api'
 import { filtersToParams, type RecordFilters } from './filters'
 import type {
+  HarvestRequestItem,
   AvailableRepositoryPage,
   Diagnosis,
   HarvestDetail,
@@ -310,3 +311,22 @@ export const unreadNotificationsQuery = queryOptions({
   queryKey: ['notifications', 'unread-count'],
   queryFn: () => apiGet<{ unread: number }>('/notifications/unread-count/'),
 })
+
+/**
+ * Demandas de coleta.
+ *
+ * Sem filtro, o ADMIN recebe todas e o gestor as dos repositórios que gerencia
+ * — o recorte é do backend. `repository` serve ao cartão do repositório, que
+ * mostra só a dele.
+ */
+export const harvestRequestsQuery = (filtros: { repository?: string; status?: string } = {}) => {
+  const params = new URLSearchParams()
+  if (filtros.repository) params.set('repository', filtros.repository)
+  if (filtros.status) params.set('status', filtros.status)
+  const query = params.toString()
+
+  return queryOptions({
+    queryKey: ['demands', filtros.repository ?? '', filtros.status ?? ''],
+    queryFn: () => apiGet<Paginated<HarvestRequestItem>>(`/demands/${query ? `?${query}` : ''}`),
+  })
+}

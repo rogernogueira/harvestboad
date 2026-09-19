@@ -386,3 +386,28 @@ export interface NotificationItem {
    */
   pendingManagers: string[] | null
 }
+
+export type HarvestRequestStatus = 'PENDENTE' | 'ATENDIDA' | 'RECUSADA'
+
+/**
+ * Demanda de nova coleta, do gestor para os administradores.
+ *
+ * É **do repositório**, não de quem clicou: todos os gestores vinculados a ele
+ * a enxergam, e só pode haver uma pendente por vez.
+ */
+export interface HarvestRequestItem {
+  id: number
+  harvesterRepositoryId: string
+  acronym: string
+  requesterUsername: string
+  note: string
+  status: HarvestRequestStatus
+  statusDisplay: string
+  /** Número da coleta realizada. Só em `ATENDIDA`. */
+  snapshotId: string
+  /** Motivo da recusa. Só em `RECUSADA`. */
+  reason: string
+  resolvedByUsername?: string
+  resolvedAt: string | null
+  createdAt: string
+}

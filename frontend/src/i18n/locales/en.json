@@ -309,7 +309,8 @@
     "access": "Access",
     "toggleMenu": "Open or close the menu",
     "notifications": "Notifications",
-    "admin": "Administration"
+    "admin": "Administration",
+    "demands": "Requests"
   },
   "access": {
     "eyebrow": "Administration",
@@ -537,5 +538,38 @@
     "stopped": "Stopped",
     "error": "Error",
     "indexed": "Indexed"
+  },
+  "demands": {
+    "title": "Harvest requests",
+    "subtitleAdmin": "New-harvest requests opened by managers",
+    "subtitleManager": "New-harvest requests for your repositories",
+    "none": "No request in this status.",
+    "all": "All",
+    "request": "Request a new harvest",
+    "hint": "The request goes to the administrators, who inform the harvest number when attending it.",
+    "note": "Justification (optional)",
+    "send": "Send request",
+    "pendingSince": "Harvest requested by {{username}} on {{date}}",
+    "lastAttended": "Last request attended — harvest #{{snapshot}}",
+    "lastRefused": "Last request refused — {{reason}}",
+    "attend": "Attend",
+    "refuse": "Refuse",
+    "attendTitle": "Attend the request",
+    "refuseTitle": "Refuse the request",
+    "snapshotField": "Number of the harvest performed",
+    "reasonField": "Reason for refusal",
+    "attendedWith": "harvest #{{snapshot}}",
+    "status": {
+      "PENDENTE": "Pending",
+      "ATENDIDA": "Attended",
+      "RECUSADA": "Refused"
+    },
+    "columns": {
+      "repository": "Repository",
+      "requester": "Requester",
+      "openedAt": "Opened on",
+      "status": "Status",
+      "actions": "Actions"
+    }
   }
 }

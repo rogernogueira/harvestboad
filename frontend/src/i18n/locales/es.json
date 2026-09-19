@@ -313,7 +313,8 @@
     "access": "Accesos",
     "toggleMenu": "Abrir o cerrar el menú",
     "notifications": "Notificaciones",
-    "admin": "Administración"
+    "admin": "Administración",
+    "demands": "Demandas"
   },
   "access": {
     "eyebrow": "Administración",
@@ -552,5 +553,38 @@
     "stopped": "Interrumpida",
     "error": "Error",
     "indexed": "Indexada"
+  },
+  "demands": {
+    "title": "Demandas de recolección",
+    "subtitleAdmin": "Pedidos de nueva recolección abiertos por los gestores",
+    "subtitleManager": "Pedidos de nueva recolección de sus repositorios",
+    "none": "Ninguna demanda en esta situación.",
+    "all": "Todas",
+    "request": "Solicitar nueva recolección",
+    "hint": "El pedido va a los administradores, que informan el número de la recolección al atender.",
+    "note": "Justificación (opcional)",
+    "send": "Enviar pedido",
+    "pendingSince": "Recolección solicitada por {{username}} el {{date}}",
+    "lastAttended": "Último pedido atendido — recolección #{{snapshot}}",
+    "lastRefused": "Último pedido rechazado — {{reason}}",
+    "attend": "Atender",
+    "refuse": "Rechazar",
+    "attendTitle": "Atender la demanda",
+    "refuseTitle": "Rechazar la demanda",
+    "snapshotField": "Número de la recolección realizada",
+    "reasonField": "Motivo del rechazo",
+    "attendedWith": "recolección #{{snapshot}}",
+    "status": {
+      "PENDENTE": "Pendiente",
+      "ATENDIDA": "Atendida",
+      "RECUSADA": "Rechazada"
+    },
+    "columns": {
+      "repository": "Repositorio",
+      "requester": "Solicitante",
+      "openedAt": "Abierta el",
+      "status": "Situación",
+      "actions": "Acciones"
+    }
   }
 }

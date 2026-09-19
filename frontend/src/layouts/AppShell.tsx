@@ -23,6 +23,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'nav.repositories', icon: 'fas fa-database', end: true },
   { to: '/acessos', label: 'nav.access', icon: 'fas fa-users', end: false, adminOnly: true },
+  { to: '/demandas', label: 'nav.demands', icon: 'fas fa-inbox', end: false },
   {
     to: '/notificacoes',
     label: 'nav.notifications',

@@ -42,6 +42,12 @@ export const router = createBrowserRouter([
             ],
           },
           {
+            // Fora do guarda de ADMIN de propósito: o gestor também abre a
+            // seção, e vê as demandas dos repositórios que gerencia.
+            path: 'demandas',
+            lazy: lazyPage(() => import('@/pages/DemandsPage'), 'DemandsPage'),
+          },
+          {
             path: 'repositorios/:repositoryId',
             lazy: lazyPage(() => import('@/pages/RepositoryPage'), 'RepositoryPage'),
           },

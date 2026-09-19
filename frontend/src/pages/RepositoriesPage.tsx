@@ -8,6 +8,7 @@ import { useAuth } from '@/auth/context'
 import { HarvestStatusBadge, Tag } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
+import { HarvestRequestButton } from '@/components/HarvestRequestButton'
 import { NotificationsButton } from '@/components/NotificationsButton'
 import { NotificationsPanel } from '@/components/NotificationsPanel'
 import { Pagination } from '@/components/Pagination'
@@ -452,6 +453,17 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
               date: new Date(acesso.grantedAt).toLocaleDateString(i18n.resolvedLanguage),
             })}
           </span>
+
+          {/*
+            O pedido de nova coleta fica no cartão do repositório, que é onde o
+            gestor percebe que a coleta está velha — e onde ele acompanha o
+            desfecho, sem precisar abrir outra tela.
+          */}
+          <HarvestRequestButton
+            id={`${id}-harvest-request`}
+            repositoryId={acesso.harvesterRepositoryId}
+            acronym={acesso.acronym}
+          />
 
           <RepositoryManagersModal
             id={`${id}-managers-modal`}
