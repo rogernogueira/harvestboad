@@ -163,17 +163,17 @@
       "rule": "Regra",
       "name": "Descrição",
       "mandatory": "Obrigatória",
-      "validCount": "Atendem",
-      "invalidCount": "Violam",
-      "occurrences": "Ocorrências"
+      "validCount": "Corretos",
+      "invalidCount": "Incorretos",
+      "occurrences": "Preenchimento"
     },
     "columnHints": {
       "rule": "Nome da regra de validação aplicada aos registros desta coleta.",
       "name": "O que a regra exige do metadado.",
       "mandatory": "Se a regra é obrigatória ou apenas opcional na origem.",
-      "validCount": "Quantos registros da coleta atendem à regra. Abre a lista já filtrada.",
-      "invalidCount": "Quantos registros da coleta violam a regra. Abre a lista já filtrada.",
-      "occurrences": "Os valores encontrados no campo da regra e quantas vezes cada um aparece."
+      "validCount": "Quantos registros da coleta preenchem o campo corretamente. Abre a lista já filtrada.",
+      "invalidCount": "Quantos registros da coleta preenchem o campo incorretamente ou não o trazem. Abre a lista já filtrada.",
+      "occurrences": "Como o campo da regra está sendo preenchido nos registros, e quantas vezes cada preenchimento aparece."
     },
     "filters": {
       "name": "Buscar por nome ou identificador",
@@ -189,9 +189,9 @@
       "none": "Nenhuma regra atende ao recorte."
     },
     "occurrences": {
-      "open": "Ver as ocorrências da regra {{rule}}",
-      "openShort": "Ver ocorrências",
-      "title": "Ocorrências da regra {{rule}}",
+      "open": "Ver como o campo da regra {{rule}} está sendo preenchido",
+      "openShort": "Ver preenchimento do campo",
+      "title": "Preenchimento do campo — regra {{rule}}",
       "valid": "Preenchidos corretamente",
       "invalid": "Preenchidos incorretamente ou não encontrados",
       "total": "{{total}} ocorrências",
@@ -294,8 +294,8 @@
     "mandatory": "Obrigatória",
     "optional": "Opcional",
     "quantifier": "Quantificador: {{value}}",
-    "occurrenceValid": "Ocorrência que atende",
-    "occurrenceInvalid": "Ocorrência que viola",
+    "occurrenceValid": "Preenchido corretamente",
+    "occurrenceInvalid": "Preenchido incorretamente",
     "unknownRule": "Regra fora do diagnóstico desta coleta",
     "none": "A origem não registrou avaliação de regras para este registro."
   },

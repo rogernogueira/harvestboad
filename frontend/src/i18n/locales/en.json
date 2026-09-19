@@ -162,17 +162,17 @@
       "rule": "Rule",
       "name": "Description",
       "mandatory": "Mandatory",
-      "validCount": "Pass",
-      "invalidCount": "Fail",
-      "occurrences": "Occurrences"
+      "validCount": "Correct",
+      "invalidCount": "Incorrect",
+      "occurrences": "How filled in"
     },
     "columnHints": {
       "rule": "Name of the validation rule applied to this harvest's records.",
       "name": "What the rule requires of the metadata.",
       "mandatory": "Whether the rule is mandatory or only optional at the source.",
-      "validCount": "How many of the harvest's records meet the rule. Opens the list already filtered.",
-      "invalidCount": "How many of the harvest's records break the rule. Opens the list already filtered.",
-      "occurrences": "The values found in the rule's field and how often each one appears."
+      "validCount": "How many records in the harvest fill in the field correctly. Opens the list already filtered.",
+      "invalidCount": "How many records in the harvest fill in the field incorrectly or do not carry it. Opens the list already filtered.",
+      "occurrences": "How the rule's field is being filled in across the records, and how many times each one appears."
     },
     "filters": {
       "name": "Search by name or identifier",
@@ -188,9 +188,9 @@
       "none": "No rule matches this view."
     },
     "occurrences": {
-      "open": "View occurrences for rule {{rule}}",
-      "openShort": "View occurrences",
-      "title": "Occurrences for rule {{rule}}",
+      "open": "See how the field for rule {{rule}} is filled in",
+      "openShort": "See how it's filled in",
+      "title": "How the field is filled in — rule {{rule}}",
       "valid": "Filled in correctly",
       "invalid": "Filled in incorrectly or not found",
       "total": "{{total}} occurrences",
@@ -290,8 +290,8 @@
     "mandatory": "Mandatory",
     "optional": "Optional",
     "quantifier": "Quantifier: {{value}}",
-    "occurrenceValid": "Passing occurrence",
-    "occurrenceInvalid": "Failing occurrence",
+    "occurrenceValid": "Filled in correctly",
+    "occurrenceInvalid": "Filled in incorrectly",
     "unknownRule": "Rule not present in this harvest diagnosis",
     "none": "The source recorded no rule evaluation for this record."
   },

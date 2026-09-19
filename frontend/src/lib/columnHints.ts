@@ -1,7 +1,7 @@
 /**
  * Dica de cabeçalho de coluna.
  *
- * As quatro tabelas do sistema têm rótulos curtos — "Sigla", "Violam",
+ * As quatro tabelas do sistema têm rótulos curtos — "Sigla", "Conjunto",
  * "Prefixo", "Transformado" — que só são óbvios para quem já conhece o
  * vocabulário do Harvester. A dica diz do que se trata a coluna sem gastar
  * linha na tela.

@@ -163,17 +163,17 @@
       "rule": "Regla",
       "name": "Descripción",
       "mandatory": "Obligatoria",
-      "validCount": "Cumplen",
-      "invalidCount": "Infringen",
-      "occurrences": "Ocurrencias"
+      "validCount": "Correctos",
+      "invalidCount": "Incorrectos",
+      "occurrences": "Completado"
     },
     "columnHints": {
       "rule": "Nombre de la regla de validación aplicada a los registros de esta recolección.",
       "name": "Qué exige la regla del metadato.",
       "mandatory": "Si la regla es obligatoria o solo opcional en el origen.",
-      "validCount": "Cuántos registros de la recolección cumplen la regla. Abre la lista ya filtrada.",
-      "invalidCount": "Cuántos registros de la recolección violan la regla. Abre la lista ya filtrada.",
-      "occurrences": "Los valores encontrados en el campo de la regla y cuántas veces aparece cada uno."
+      "validCount": "Cuántos registros de la recolección completan el campo correctamente. Abre la lista ya filtrada.",
+      "invalidCount": "Cuántos registros de la recolección completan el campo incorrectamente o no lo traen. Abre la lista ya filtrada.",
+      "occurrences": "Cómo se está completando el campo de la regla en los registros, y cuántas veces aparece cada uno."
     },
     "filters": {
       "name": "Buscar por nombre o identificador",
@@ -189,9 +189,9 @@
       "none": "Ninguna regla cumple el recorte."
     },
     "occurrences": {
-      "open": "Ver las ocurrencias de la regla {{rule}}",
-      "openShort": "Ver ocurrencias",
-      "title": "Ocurrencias de la regla {{rule}}",
+      "open": "Ver cómo se completa el campo de la regla {{rule}}",
+      "openShort": "Ver cómo se completa",
+      "title": "Cómo se completa el campo — regla {{rule}}",
       "valid": "Completados correctamente",
       "invalid": "Completados incorrectamente o no encontrados",
       "total": "{{total}} ocurrencias",
@@ -294,8 +294,8 @@
     "mandatory": "Obligatoria",
     "optional": "Opcional",
     "quantifier": "Cuantificador: {{value}}",
-    "occurrenceValid": "Ocurrencia que cumple",
-    "occurrenceInvalid": "Ocurrencia que infringe",
+    "occurrenceValid": "Completado correctamente",
+    "occurrenceInvalid": "Completado incorrectamente",
     "unknownRule": "Regla fuera del diagnóstico de esta recolección",
     "none": "El origen no registró evaluación de reglas para este registro."
   },
