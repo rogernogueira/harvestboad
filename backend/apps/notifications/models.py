@@ -1,6 +1,95 @@
 from django.conf import settings
 from django.db import models
 
+# Idiomas da interface, na ordem em que o projeto os declara. O pt-BR é a
+# reserva: é o único nome obrigatório no cadastro.
+IDIOMA_PADRAO = "pt-BR"
+
+
+class NotificationCategory(models.Model):
+    """Categoria de notificação, cadastrada pelo administrador.
+
+    Era um `TextChoices` de quatro valores fixos. Virou tabela para o
+    administrador manter o catálogo sem depender de quem mexe no código.
+
+    **O nome vem em três idiomas** porque categoria é texto de interface, não
+    dado de origem: ela aparece como selo ao lado do título, e uma tela em
+    inglês com "Comunicação" no selo denunciaria a tradução pela metade. Só o
+    pt-BR é obrigatório — os outros dois caem nele quando vazios, que é melhor
+    do que um selo em branco.
+
+    Não se exclui, desativa-se: as notificações já enviadas continuam
+    apontando para a categoria, e apagá-la levaria junto a informação de avisos
+    que alguém já leu.
+    """
+
+    slug = models.SlugField("código", max_length=32, unique=True)
+    name_pt_br = models.CharField("nome (pt-BR)", max_length=48)
+    name_es = models.CharField("nome (es)", max_length=48, blank=True)
+    name_en = models.CharField("nome (en)", max_length=48, blank=True)
+    active = models.BooleanField("ativa", default=True)
+    created_at = models.DateTimeField("criada em", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "categoria de notificação"
+        verbose_name_plural = "categorias de notificação"
+        ordering = ["name_pt_br"]
+
+    def __str__(self) -> str:
+        return self.name_pt_br
+
+    def name_for(self, idioma: str | None) -> str:
+        """Nome no idioma pedido, caindo no pt-BR quando não houver.
+
+        Aceita tanto `es` quanto `es-AR`: o i18next resolve a variante regional
+        para o idioma base, e aqui o prefixo basta.
+        """
+        base = (idioma or IDIOMA_PADRAO).split("-")[0].lower()
+        if base == "es":
+            return self.name_es or self.name_pt_br
+        if base == "en":
+            return self.name_en or self.name_pt_br
+        return self.name_pt_br
+
+
+class NotificationTemplate(models.Model):
+    """Texto padrão de uma categoria.
+
+    Serve para o administrador não reescrever do zero o aviso que manda toda
+    semana: escolhida a categoria, os modelos dela aparecem e preenchem título
+    e mensagem, que continuam editáveis antes do envio.
+
+    **Não é multilíngue**, ao contrário do nome da categoria, e de propósito: o
+    que ele preenche são o título e a mensagem da notificação, que também não
+    são — o administrador escreve um texto só, para os gestores daquele
+    repositório.
+    """
+
+    category = models.ForeignKey(
+        NotificationCategory,
+        related_name="templates",
+        on_delete=models.CASCADE,
+        verbose_name="categoria",
+    )
+    label = models.CharField("nome do modelo", max_length=60)
+    title = models.CharField("título", max_length=120)
+    message = models.TextField("mensagem")
+    active = models.BooleanField("ativo", default=True)
+    created_at = models.DateTimeField("criado em", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "texto padrão"
+        verbose_name_plural = "textos padrão"
+        ordering = ["category__name_pt_br", "label"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["category", "label"], name="unique_template_por_categoria"
+            )
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.category}: {self.label}"
+
 
 class Notification(models.Model):
     """Aviso do administrador para um repositório ou para um gestor.
@@ -22,15 +111,16 @@ class Notification(models.Model):
     assume a caixa de entrada do repositório, não um histórico pessoal.
     """
 
-    class Category(models.TextChoices):
-        COMUNICACAO = "COMUNICACAO", "Comunicação"
-        NOVIDADES = "NOVIDADES", "Novidades"
-        COLETA = "COLETA", "Coleta"
-        VALIDACAO = "VALIDACAO", "Validação"
-
     title = models.CharField("título", max_length=120)
     message = models.TextField("mensagem")
-    category = models.CharField("categoria", max_length=16, choices=Category.choices)
+    # `PROTECT`: categoria não se exclui, desativa-se — e o banco garante isso
+    # mesmo que alguém tente pelo Django Admin.
+    category = models.ForeignKey(
+        NotificationCategory,
+        related_name="notifications",
+        on_delete=models.PROTECT,
+        verbose_name="categoria",
+    )
 
     # Destino A: um repositório. Vazio quando o destino é uma pessoa.
     harvester_repository_id = models.CharField(
@@ -70,6 +160,12 @@ class Notification(models.Model):
         verbose_name="autor",
     )
     created_at = models.DateTimeField("criada em", auto_now_add=True, db_index=True)
+
+    # Aviso que não se dispensa de passagem: na tela ele exige um botão de
+    # confirmação em vez do clique no corpo do item. O estado continua sendo o
+    # mesmo `read_at` — o visto de um gestor vale para todos, como a leitura —,
+    # e o que muda é o peso do gesto que o registra.
+    requires_acknowledgement = models.BooleanField("exige visto", default=False)
 
     read_at = models.DateTimeField("lida em", null=True, blank=True)
     read_by = models.ForeignKey(
@@ -116,7 +212,7 @@ class Notification(models.Model):
 
     def __str__(self) -> str:
         destino = self.recipient or self.harvester_repository_id
-        return f"{self.get_category_display()} → {destino}: {self.title}"
+        return f"{self.category} → {destino}: {self.title}"
 
     @property
     def is_read(self) -> bool:

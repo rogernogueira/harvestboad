@@ -307,7 +307,9 @@
     "skipToContent": "Skip to content",
     "repositories": "Repositories",
     "access": "Access",
-    "toggleMenu": "Open or close the menu"
+    "toggleMenu": "Open or close the menu",
+    "notifications": "Notifications",
+    "admin": "Administration"
   },
   "access": {
     "eyebrow": "Administration",
@@ -446,12 +448,6 @@
     "markReadHint": "Click to mark as read — this applies to every manager of this repository.",
     "readBy": "Read by {{username}}",
     "alreadyRead": "Already read",
-    "categories": {
-      "COMUNICACAO": "Communication",
-      "NOVIDADES": "News",
-      "COLETA": "Harvest",
-      "VALIDACAO": "Validation"
-    },
     "new": {
       "open": "New notification",
       "openFor": "New notification for {{acronym}}",
@@ -469,12 +465,68 @@
       "category": "Category",
       "titleField": "Title",
       "messageField": "Message",
-      "send": "Send"
+      "send": "Send",
+      "chooseManagers": "Managers",
+      "requiresAcknowledgement": "Require the manager's acknowledgement",
+      "categoryEmpty": "Select a category",
+      "template": "Standard text",
+      "templateEmpty": "Write from scratch",
+      "target_todos_repositorios": "All repositories",
+      "target_todos_gestores": "All managers",
+      "scopeRepositoriesHint": "Goes to every repository that has a manager linked.",
+      "scopeManagersHint": "Goes to every active manager, as a direct message.",
+      "templateNone": "No standard text in this category. Register one under Notifications › Categories and standard texts."
     },
     "validation": {
       "titleRequired": "Enter the title.",
       "messageRequired": "Enter the message.",
       "messageTooLong": "The message is over 2,000 characters."
+    },
+    "requiresTag": "Needs acknowledgement",
+    "requiresHint": "This notice only leaves the screen once you confirm it.",
+    "acknowledge": "Acknowledge",
+    "seenBy": "Acknowledged by {{username}}",
+    "manage": {
+      "title": "Sent notifications",
+      "subtitle": "{{count}} sent by you",
+      "none": "You have not sent any notification yet.",
+      "pending": "Pending",
+      "noManagers": "no manager linked",
+      "toManager": "Message to {{username}}",
+      "delete": "Delete",
+      "deleteOne": "Delete the notification {{title}}",
+      "confirmDelete": "Delete the notification \"{{title}}\"? It leaves every manager's screen.",
+      "columns": {
+        "destination": "Destination",
+        "notification": "Notification",
+        "sentAt": "Sent on",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "headerSubtitle": "Sent notices and category catalogue",
+      "tabSent": "Sent"
+    },
+    "catalog": {
+      "tab": "Categories and standard texts",
+      "none": "No category registered.",
+      "newTitle": "New category",
+      "slug": "Code",
+      "namePtBr": "Name (pt-BR)",
+      "nameEs": "Name (es)",
+      "nameEn": "Name (en)",
+      "add": "Register",
+      "inactive": "inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "templates": "Standard texts",
+      "delete": "Delete",
+      "deleteOne": "Delete the category {{name}}",
+      "confirmDelete": "Delete the category \"{{name}}\"? Only possible if no notification uses it — otherwise, deactivate it.",
+      "noTemplates": "No standard text in this category.",
+      "templateLabel": "Template name",
+      "addTemplate": "Register standard text",
+      "deleteTemplate": "Delete standard text",
+      "deleteTemplateOne": "Delete the standard text {{label}}"
     }
   },
   "harvestStatus": {

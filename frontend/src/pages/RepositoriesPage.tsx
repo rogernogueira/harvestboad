@@ -468,7 +468,6 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
             repositoryId={acesso.harvesterRepositoryId}
             titulo={t('notifications.title')}
             descricao={`${acesso.acronym} · ${nomeRepositorio}`}
-            acronym={acesso.acronym}
           />
         </div>
 

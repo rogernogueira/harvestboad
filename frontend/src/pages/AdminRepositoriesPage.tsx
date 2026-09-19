@@ -20,6 +20,7 @@ import { Link } from 'react-router'
 
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
+import { NewNotificationModal } from '@/components/NewNotificationModal'
 import { NotificationsButton } from '@/components/NotificationsButton'
 import { NotificationsPanel } from '@/components/NotificationsPanel'
 import { PageHeader } from '@/components/PageHeader'
@@ -107,6 +108,7 @@ export function AdminRepositoriesPage() {
   const [gestor, setGestor] = useState<FiltroGestor>('todos')
   const [gestoresDe, setGestoresDe] = useState<RepositoryHit | null>(null)
   const [notificacoesDe, setNotificacoesDe] = useState<RepositoryHit | null>(null)
+  const [novaPara, setNovaPara] = useState<RepositoryHit | null>(null)
 
   const { data, isPending, isError, error, refetch } = useQuery(repositoryIndexQuery)
 
@@ -432,7 +434,24 @@ export function AdminRepositoriesPage() {
           repositoryId={notificacoesDe.harvesterRepositoryId}
           titulo={t('notifications.title')}
           descricao={`${notificacoesDe.acronym} · ${notificacoesDe.name ?? ''}`}
-          acronym={notificacoesDe.acronym ?? notificacoesDe.harvesterRepositoryId}
+          /* Fecha o painel antes de abrir a criação: a diretriz proíbe duas
+             modais abertas ao mesmo tempo. */
+          onNova={() => {
+            setNovaPara(notificacoesDe)
+            setNotificacoesDe(null)
+          }}
+        />
+      ) : null}
+
+      {novaPara ? (
+        <NewNotificationModal
+          id="admin-repositories-new-notification"
+          aberto
+          onFechar={() => setNovaPara(null)}
+          repositorioFixo={{
+            id: novaPara.harvesterRepositoryId,
+            acronym: novaPara.acronym ?? novaPara.harvesterRepositoryId,
+          }}
         />
       ) : null}
 

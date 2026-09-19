@@ -311,7 +311,9 @@
     "skipToContent": "Ir al contenido",
     "repositories": "Repositorios",
     "access": "Accesos",
-    "toggleMenu": "Abrir o cerrar el menú"
+    "toggleMenu": "Abrir o cerrar el menú",
+    "notifications": "Notificaciones",
+    "admin": "Administración"
   },
   "access": {
     "eyebrow": "Administración",
@@ -461,12 +463,6 @@
     "markReadHint": "Haga clic para marcarla como leída — vale para todos los gestores de este repositorio.",
     "readBy": "Leída por {{username}}",
     "alreadyRead": "Ya leída",
-    "categories": {
-      "COMUNICACAO": "Comunicación",
-      "NOVIDADES": "Novedades",
-      "COLETA": "Recolección",
-      "VALIDACAO": "Validación"
-    },
     "new": {
       "open": "Nueva notificación",
       "openFor": "Nueva notificación para {{acronym}}",
@@ -484,12 +480,68 @@
       "category": "Categoría",
       "titleField": "Título",
       "messageField": "Mensaje",
-      "send": "Enviar"
+      "send": "Enviar",
+      "chooseManagers": "Gestores",
+      "requiresAcknowledgement": "Exigir acuse del gestor",
+      "categoryEmpty": "Seleccione una categoría",
+      "template": "Texto predefinido",
+      "templateEmpty": "Escribir desde cero",
+      "target_todos_repositorios": "Todos los repositorios",
+      "target_todos_gestores": "Todos los gestores",
+      "scopeRepositoriesHint": "Va a todos los repositorios que tienen gestor vinculado.",
+      "scopeManagersHint": "Va a todos los gestores activos, como recado directo.",
+      "templateNone": "Ningún texto predefinido en esta categoría. Regístrelo en Notificaciones › Categorías y textos predefinidos."
     },
     "validation": {
       "titleRequired": "Indique el título.",
       "messageRequired": "Indique el mensaje.",
       "messageTooLong": "El mensaje supera los 2.000 caracteres."
+    },
+    "requiresTag": "Requiere acuse",
+    "requiresHint": "Este aviso solo sale de la pantalla con su confirmación.",
+    "acknowledge": "Acusar recibo",
+    "seenBy": "Acusado por {{username}}",
+    "manage": {
+      "title": "Notificaciones enviadas",
+      "subtitle": "{{count}} enviadas por usted",
+      "none": "Aún no ha enviado ninguna notificación.",
+      "pending": "Pendiente",
+      "noManagers": "ningún gestor vinculado",
+      "toManager": "Recado a {{username}}",
+      "delete": "Eliminar",
+      "deleteOne": "Eliminar la notificación {{title}}",
+      "confirmDelete": "¿Eliminar la notificación \"{{title}}\"? Sale de la pantalla de todos los gestores.",
+      "columns": {
+        "destination": "Destino",
+        "notification": "Notificación",
+        "sentAt": "Enviada el",
+        "status": "Situación",
+        "actions": "Acciones"
+      },
+      "headerSubtitle": "Avisos enviados y catálogo de categorías",
+      "tabSent": "Enviadas"
+    },
+    "catalog": {
+      "tab": "Categorías y textos predefinidos",
+      "none": "Ninguna categoría registrada.",
+      "newTitle": "Nueva categoría",
+      "slug": "Código",
+      "namePtBr": "Nombre (pt-BR)",
+      "nameEs": "Nombre (es)",
+      "nameEn": "Nombre (en)",
+      "add": "Registrar",
+      "inactive": "inactiva",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "templates": "Textos predefinidos",
+      "delete": "Eliminar",
+      "deleteOne": "Eliminar la categoría {{name}}",
+      "confirmDelete": "¿Eliminar la categoría \"{{name}}\"? Solo es posible si ninguna notificación la usa — de lo contrario, desactívela.",
+      "noTemplates": "Ningún texto predefinido en esta categoría.",
+      "templateLabel": "Nombre del modelo",
+      "addTemplate": "Registrar texto predefinido",
+      "deleteTemplate": "Eliminar texto predefinido",
+      "deleteTemplateOne": "Eliminar el texto predefinido {{label}}"
     }
   },
   "harvestStatus": {

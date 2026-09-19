@@ -311,7 +311,9 @@
     "skipToContent": "Ir para o conteúdo",
     "repositories": "Repositórios",
     "access": "Acessos",
-    "toggleMenu": "Abrir ou fechar o menu"
+    "toggleMenu": "Abrir ou fechar o menu",
+    "notifications": "Notificações",
+    "admin": "Administração"
   },
   "access": {
     "eyebrow": "Administração",
@@ -461,12 +463,6 @@
     "markReadHint": "Clique para marcar como lida — vale para todos os gestores deste repositório.",
     "readBy": "Lida por {{username}}",
     "alreadyRead": "Já lida",
-    "categories": {
-      "COMUNICACAO": "Comunicação",
-      "NOVIDADES": "Novidades",
-      "COLETA": "Coleta",
-      "VALIDACAO": "Validação"
-    },
     "new": {
       "open": "Nova notificação",
       "openFor": "Nova notificação para {{acronym}}",
@@ -484,12 +480,68 @@
       "category": "Categoria",
       "titleField": "Título",
       "messageField": "Mensagem",
-      "send": "Enviar"
+      "send": "Enviar",
+      "chooseManagers": "Gestores",
+      "requiresAcknowledgement": "Exigir visto do gestor",
+      "categoryEmpty": "Selecione uma categoria",
+      "template": "Texto padrão",
+      "templateEmpty": "Escrever do zero",
+      "target_todos_repositorios": "Todos os repositórios",
+      "target_todos_gestores": "Todos os gestores",
+      "scopeRepositoriesHint": "Vai para todos os repositórios que têm gestor vinculado.",
+      "scopeManagersHint": "Vai para todos os gestores ativos, como recado direto.",
+      "templateNone": "Nenhum texto padrão nesta categoria. Cadastre em Notificações › Categorias e textos padrão."
     },
     "validation": {
       "titleRequired": "Informe o título.",
       "messageRequired": "Informe a mensagem.",
       "messageTooLong": "A mensagem passa de 2.000 caracteres."
+    },
+    "requiresTag": "Exige visto",
+    "requiresHint": "Este aviso só sai da tela com a sua confirmação.",
+    "acknowledge": "Dar visto",
+    "seenBy": "Visto por {{username}}",
+    "manage": {
+      "title": "Notificações enviadas",
+      "subtitle": "{{count}} enviadas por você",
+      "none": "Você ainda não enviou nenhuma notificação.",
+      "pending": "Pendente",
+      "noManagers": "nenhum gestor vinculado",
+      "toManager": "Recado a {{username}}",
+      "delete": "Excluir",
+      "deleteOne": "Excluir a notificação {{title}}",
+      "confirmDelete": "Excluir a notificação \"{{title}}\"? Ela sai da tela de todos os gestores.",
+      "columns": {
+        "destination": "Destino",
+        "notification": "Notificação",
+        "sentAt": "Enviada em",
+        "status": "Situação",
+        "actions": "Ações"
+      },
+      "headerSubtitle": "Avisos enviados e catálogo de categorias",
+      "tabSent": "Enviadas"
+    },
+    "catalog": {
+      "tab": "Categorias e textos padrão",
+      "none": "Nenhuma categoria cadastrada.",
+      "newTitle": "Nova categoria",
+      "slug": "Código",
+      "namePtBr": "Nome (pt-BR)",
+      "nameEs": "Nome (es)",
+      "nameEn": "Nome (en)",
+      "add": "Cadastrar",
+      "inactive": "inativa",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "templates": "Textos padrão",
+      "delete": "Excluir",
+      "deleteOne": "Excluir a categoria {{name}}",
+      "confirmDelete": "Excluir a categoria \"{{name}}\"? Só é possível se nenhuma notificação a usar — do contrário, desative.",
+      "noTemplates": "Nenhum texto padrão nesta categoria.",
+      "templateLabel": "Nome do modelo",
+      "addTemplate": "Cadastrar texto padrão",
+      "deleteTemplate": "Excluir texto padrão",
+      "deleteTemplateOne": "Excluir o texto padrão {{label}}"
     }
   },
   "harvestStatus": {

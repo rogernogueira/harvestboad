@@ -157,6 +157,22 @@
 
 @layer components {
   /*
+   * Três faixas na modal: título fixo no topo, corpo rolável, botões fixos
+   * embaixo — o arranjo que a diretriz de Modal pede quando há rolagem.
+   *
+   * Fica aqui, e não em `style` no componente, por causa de um quadro: o
+   * `showModal()` roda num efeito, depois da pintura, e um `display: flex`
+   * inline venceria o `display: none` que o navegador dá ao `<dialog>` fechado
+   * — a modal apareceria fora da camada superior, sem scrim e fora do centro,
+   * por um quadro. Preso ao `[open]`, o estilo só existe quando o próprio
+   * navegador já abriu o diálogo.
+   */
+  dialog.modal-superficie[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /*
    * Rótulo de seção: caixa alta e tracking alto, separando hierarquia sem
    * depender de tamanho de fonte.
    *

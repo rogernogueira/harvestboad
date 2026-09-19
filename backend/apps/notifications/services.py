@@ -31,6 +31,17 @@ def visiveis_para(user) -> QuerySet[Notification]:
     )
 
 
+def do_autor(user) -> QuerySet[Notification]:
+    """O que esta pessoa enviou.
+
+    É a base da tela de gestão do administrador, e de propósito não passa por
+    `visiveis_para`: quem envia não é destinatário do próprio aviso, então a
+    caixa de entrada esconderia justamente o que ele quer acompanhar. O recorte
+    por autoria já basta como garantia — ninguém alcança o que outro enviou.
+    """
+    return Notification.objects.filter(author=user)
+
+
 def do_repositorio(harvester_repository_id: str) -> QuerySet[Notification]:
     """Notificações de um repositório. Quem pode ver é decidido antes, na view."""
     return Notification.objects.filter(
@@ -75,3 +86,42 @@ def contar_nao_lidas_por_repositorio() -> dict[str, int]:
         .values_list("harvester_repository_id")
         .annotate(total=Count("id"))
     )
+
+
+def destinos_do_alcance(scope: str) -> tuple[list[dict], list]:
+    """Resolve "todos os gestores" e "todos os repositórios" em destinos concretos.
+
+    **"Todos os repositórios" são os que têm gestor vinculado**, e não os ~2.181
+    do acervo. Um aviso para repositório sem ninguém vinculado não tem quem o
+    leia: ele nasceria não lido e ficaria assim para sempre, acendendo o
+    indicador na tela do administrador sem que houvesse ação possível.
+
+    Importa aqui dentro para não criar dependência de módulo entre as apps no
+    carregamento — `repositories` já importa `notifications` para as contagens.
+    """
+    from django.contrib.auth import get_user_model
+
+    from apps.accounts.models import Profile
+    from apps.repositories.models import RepositoryAccess
+
+    if scope == "ALL_MANAGERS":
+        gestores = get_user_model().objects.filter(profile=Profile.GESTOR, is_active=True)
+        return [], list(gestores)
+
+    if scope == "ALL_REPOSITORIES":
+        # Uma linha por repositório, com a sigla de qualquer um dos vínculos —
+        # elas são iguais entre os gestores do mesmo repositório.
+        vistos: dict[str, str] = {}
+        for identificador, sigla in RepositoryAccess.objects.values_list(
+            "harvester_repository_id", "acronym"
+        ):
+            vistos.setdefault(identificador, sigla)
+        return (
+            [
+                {"harvesterRepositoryId": identificador, "acronym": sigla}
+                for identificador, sigla in sorted(vistos.items())
+            ],
+            [],
+        )
+
+    return [], []

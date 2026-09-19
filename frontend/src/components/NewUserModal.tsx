@@ -105,6 +105,18 @@ export function NewUserModal({
     },
   })
 
+  /*
+    Um só caminho de envio para o `<form>` (tecla Enter) e para o botão do
+    rodapé, que a diretriz de Modal manda manter fora do corpo rolável — e
+    portanto fora do `<form>`. Ligar os dois pelo atributo `form` não compila:
+    o `BrButtonProps` estende `HTMLAttributes`, e não `ButtonHTMLAttributes`,
+    então `form` não existe no tipo.
+  */
+  const enviar = (event?: { preventDefault: () => void }) => {
+    event?.preventDefault()
+    void handleSubmit((valores) => criar.mutateAsync(valores).catch(() => undefined))()
+  }
+
   const campos = [
     { name: 'username', label: 'newUser.username', type: 'text', autoComplete: 'off' },
     { name: 'email', label: 'newUser.email', type: 'email', autoComplete: 'off' },
@@ -131,15 +143,31 @@ export function NewUserModal({
       onFechar={onFechar}
       titulo={t('newUser.title')}
       descricao={t('newUser.subtitle')}
+      /*
+        Os botões vão para a faixa fixa do rodapé, fora do corpo rolável — a
+        diretriz de Modal pede que eles fiquem visíveis durante a rolagem. Ficam
+        também fora do `<form>`, então o `form={...}` é o que mantém o submit
+        ligado a ele.
+      */
+      acoes={
+        <>
+          <BrButton id={`${id}-cancel`} type="button" secondary onClick={onFechar}>
+            {t('common.cancel')}
+          </BrButton>
+          <BrButton
+            id={`${id}-submit`}
+            type="button"
+            onClick={enviar}
+            primary
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? t('newUser.creating') : t('newUser.create')}
+          </BrButton>
+        </>
+      }
     >
-      <form
-        id={`${id}-form`}
-        noValidate
-        onSubmit={(event) => {
-          event.preventDefault()
-          void handleSubmit((valores) => criar.mutateAsync(valores).catch(() => undefined))(event)
-        }}
-      >
+      <form id={`${id}-form`} noValidate onSubmit={enviar}>
         <div id={`${id}-fields`} className="row">
           {campos.map((campo) => {
             const erro = errors[campo.name]
@@ -182,25 +210,6 @@ export function NewUserModal({
             className="mt-2"
           />
         ) : null}
-
-        <div
-          id={`${id}-actions`}
-          className="d-flex justify-content-end mt-3"
-          style={{ gap: 'var(--spacing-scale-base)' }}
-        >
-          <BrButton id={`${id}-cancel`} type="button" secondary onClick={onFechar}>
-            {t('common.cancel')}
-          </BrButton>
-          <BrButton
-            id={`${id}-submit`}
-            type="submit"
-            primary
-            loading={isSubmitting}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? t('newUser.creating') : t('newUser.create')}
-          </BrButton>
-        </div>
       </form>
     </Modal>
   )

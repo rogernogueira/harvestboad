@@ -121,6 +121,25 @@ export async function apiPost<T>(
   return (await response.json()) as T
 }
 
+/**
+ * Atualização parcial.
+ *
+ * Chegou junto com o cadastro de categorias, que é a primeira coisa do projeto
+ * que se edita depois de criada — até aqui as escritas eram só criar e apagar.
+ * `PATCH`, e não `PUT`: a tela manda o que mudou, e o backend não precisa
+ * receber o registro inteiro para trocar uma bandeira.
+ */
+export async function apiPatch<T>(
+  path: string,
+  body: unknown,
+  options: RequestOptions = {},
+): Promise<T> {
+  const response = await send(path, { ...options, method: 'PATCH', body })
+  if (!response.ok) await parseError(response)
+  if (response.status === 204) return undefined as T
+  return (await response.json()) as T
+}
+
 export async function apiDelete(path: string): Promise<void> {
   const response = await send(path, { method: 'DELETE' })
   if (!response.ok) await parseError(response)

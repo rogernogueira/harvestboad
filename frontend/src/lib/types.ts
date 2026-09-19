@@ -323,7 +323,32 @@ export interface RecordPage {
   results: RecordItem[]
 }
 
-export type NotificationCategory = 'COMUNICACAO' | 'NOVIDADES' | 'COLETA' | 'VALIDACAO'
+/**
+ * Categoria cadastrada, com os três nomes.
+ *
+ * O backend manda os três e a tela escolhe: quem sabe o idioma ativo é o
+ * i18next, e resolver no servidor obrigaria a propagar `Accept-Language` por
+ * toda chamada. Use `nomeDaCategoria` de `lib/categorias`.
+ */
+export interface NotificationCategoryItem {
+  id: number
+  slug: string
+  namePtBr: string
+  nameEs: string
+  nameEn: string
+  /** Desativada sai do formulário de envio, mas segue nomeando o histórico. */
+  active: boolean
+}
+
+/** Texto padrão de uma categoria. Um idioma só, como o aviso que ele preenche. */
+export interface NotificationTemplateItem {
+  id: number
+  category: number
+  label: string
+  title: string
+  message: string
+  active: boolean
+}
 
 /**
  * Um aviso do administrador.
@@ -339,8 +364,7 @@ export interface NotificationItem {
   id: number
   title: string
   message: string
-  category: NotificationCategory
-  categoryDisplay: string
+  category: NotificationCategoryItem
   harvesterRepositoryId: string
   acronym: string
   recipient: number | null
@@ -351,4 +375,14 @@ export interface NotificationItem {
   read: boolean
   readAt: string | null
   readByUsername?: string
+  /** Não se dispensa de passagem: exige um botão de confirmação na tela. */
+  requiresAcknowledgement: boolean
+  /**
+   * Gestores que ainda não deram o visto. Só vem na listagem do que foi
+   * enviado; nas outras rotas é `null`.
+   *
+   * Como o visto é compartilhado, a lista é tudo ou nada: ou ninguém viu — e
+   * todos os gestores do repositório constam — ou alguém viu e ela é vazia.
+   */
+  pendingManagers: string[] | null
 }

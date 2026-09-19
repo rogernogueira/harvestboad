@@ -7,7 +7,9 @@ import type {
   Diagnosis,
   HarvestDetail,
   HarvestList,
+  NotificationCategoryItem,
   NotificationItem,
+  NotificationTemplateItem,
   Paginated,
   RecordItem,
   RecordLink,
@@ -275,6 +277,35 @@ export const notificationsQuery = (
  * Existe para o cabeçalho não baixar a lista inteira a cada tela: o painel só
  * consulta quando é aberto.
  */
+/**
+ * Catálogo de categorias, ativas e inativas.
+ *
+ * Vem inteiro porque a tela precisa nomear o selo de uma notificação antiga
+ * cuja categoria saiu de circulação; quem filtra por `active` é o formulário de
+ * envio. Muda pouco, então o `staleTime` é longo.
+ */
+export const notificationCategoriesQuery = queryOptions({
+  queryKey: ['notifications', 'categories'],
+  queryFn: () => apiGet<NotificationCategoryItem[]>('/notifications/categories/'),
+  staleTime: 30 * 60_000,
+})
+
+/** Textos padrão de uma categoria. Só consulta depois de escolhida. */
+export const notificationTemplatesQuery = (categoryId: number | null) =>
+  queryOptions({
+    queryKey: ['notifications', 'templates', categoryId ?? 0],
+    queryFn: () =>
+      apiGet<NotificationTemplateItem[]>(`/notifications/templates/?category=${categoryId}`),
+    enabled: categoryId !== null,
+    staleTime: 30 * 60_000,
+  })
+
+/** O que o usuário enviou, para a tela de gestão do administrador. */
+export const sentNotificationsQuery = queryOptions({
+  queryKey: ['notifications', 'sent'],
+  queryFn: () => apiGet<Paginated<NotificationItem>>('/notifications/?sent=true'),
+})
+
 export const unreadNotificationsQuery = queryOptions({
   queryKey: ['notifications', 'unread-count'],
   queryFn: () => apiGet<{ unread: number }>('/notifications/unread-count/'),

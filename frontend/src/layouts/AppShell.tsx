@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/auth/context'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { NotificationsButton } from '@/components/NotificationsButton'
+import { NewNotificationModal } from '@/components/NewNotificationModal'
 import { NotificationsPanel } from '@/components/NotificationsPanel'
 import { unreadNotificationsQuery } from '@/lib/queries'
 
@@ -22,6 +23,13 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'nav.repositories', icon: 'fas fa-database', end: true },
   { to: '/acessos', label: 'nav.access', icon: 'fas fa-users', end: false, adminOnly: true },
+  {
+    to: '/notificacoes',
+    label: 'nav.notifications',
+    icon: 'fas fa-bell',
+    end: false,
+    adminOnly: true,
+  },
 ]
 
 /** Identificador de navegação a partir da rota, para o id sair legível. */
@@ -55,6 +63,7 @@ export function AppShell() {
   const location = useLocation()
   const [menuAberto, setMenuAberto] = useState(false)
   const [notificacoesAbertas, setNotificacoesAbertas] = useState(false)
+  const [novaAberta, setNovaAberta] = useState(false)
 
   // Só o número; a lista fica para quando o painel abrir.
   const naoLidas = useQuery({ ...unreadNotificationsQuery, enabled: Boolean(user) })
@@ -263,6 +272,20 @@ export function AppShell() {
           onFechar={() => setNotificacoesAbertas(false)}
           titulo={t('notifications.title')}
           descricao={t('notifications.inboxSubtitle')}
+          /* Fecha o painel antes de abrir a criação: duas modais abertas ao
+             mesmo tempo é o que a diretriz proíbe. */
+          onNova={() => {
+            setNotificacoesAbertas(false)
+            setNovaAberta(true)
+          }}
+        />
+      ) : null}
+
+      {user ? (
+        <NewNotificationModal
+          id="app-shell-new-notification"
+          aberto={novaAberta}
+          onFechar={() => setNovaAberta(false)}
         />
       ) : null}
     </div>

@@ -2,16 +2,25 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import mixins, permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import ValidationError as DRFValidationError
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from apps.audit.models import AuditLog
 from apps.audit.services import record
+from apps.repositories.models import RepositoryAccess
 from apps.repositories.permissions import IsAdminProfile, assert_can_read_repository
 
 from . import services
 from .models import Notification
-from .serializers import NotificationSerializer, NotificationWriteSerializer
+from .models import NotificationCategory, NotificationTemplate
+from .serializers import (
+    NotificationBulkSerializer,
+    NotificationCategorySerializer,
+    NotificationSerializer,
+    NotificationTemplateSerializer,
+    NotificationWriteSerializer,
+)
 
 RESOURCE = "notification"
 
@@ -19,30 +28,79 @@ RESOURCE = "notification"
 @extend_schema(tags=["notifications"])
 class NotificationViewSet(
     mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
     mixins.ListModelMixin,
     viewsets.GenericViewSet,
 ):
     """Avisos do administrador aos gestores.
 
-    Sem `update` nem `destroy`: uma notificação enviada é um fato, e editá-la
-    depois mudaria por baixo o que alguém já leu.
+    Sem `update`: uma notificação enviada é um fato, e editá-la depois mudaria
+    por baixo o que alguém já leu. A exclusão existe — e é do ADMIN — porque o
+    aviso mandado por engano precisa sair do ar, e apagar é diferente de
+    reescrever.
     """
 
     permission_classes = [permissions.IsAuthenticated]
 
     def get_permissions(self):
-        if self.action == "create":
+        if self.action in {"create", "bulk", "destroy"}:
             return [permissions.IsAuthenticated(), IsAdminProfile()]
         return super().get_permissions()
 
     def get_serializer_class(self):
         if self.action == "create":
             return NotificationWriteSerializer
+        if self.action == "bulk":
+            return NotificationBulkSerializer
         return NotificationSerializer
+
+    def get_serializer_context(self) -> dict:
+        """Leva o mapa de pendentes junto, para a lista não custar N consultas."""
+        contexto = super().get_serializer_context()
+        contexto["pendentes"] = self._pendentes_da_pagina()
+        return contexto
+
+    def _pendentes_da_pagina(self) -> dict[str, list[str]] | None:
+        """Gestores de cada repositório citado nesta resposta, em uma consulta.
+
+        Só a listagem precisa disso, e só quando alguém pergunta pelo que
+        enviou — é a tela de gestão do administrador. Nas outras rotas o
+        serializer recebe `None` e omite o campo em vez de inventá-lo.
+        """
+        if self.action != "list" or self.request.query_params.get("sent") != "true":
+            return None
+
+        identificadores = set(
+            self.filter_queryset(self.get_queryset())
+            .exclude(harvester_repository_id="")
+            .values_list("harvester_repository_id", flat=True)
+        )
+        if not identificadores:
+            return {}
+
+        mapa: dict[str, list[str]] = {}
+        vinculos = RepositoryAccess.objects.filter(
+            harvester_repository_id__in=identificadores
+        ).values_list("harvester_repository_id", "user__username")
+        for repositorio, username in vinculos:
+            mapa.setdefault(repositorio, []).append(username)
+        for nomes in mapa.values():
+            nomes.sort()
+        return mapa
 
     def get_queryset(self):
         repositorio = self.request.query_params.get("repository")
-        if repositorio:
+        enviadas = self.request.query_params.get("sent") == "true"
+
+        if enviadas:
+            # O que eu enviei não passa pela minha caixa de entrada: o
+            # administrador não é destinatário do que manda, e recortar por
+            # `visiveis_para` devolvia lista vazia para ele. O recorte por
+            # autoria já é a garantia — ninguém vê o que outro enviou.
+            queryset = services.do_autor(self.request.user)
+            if repositorio:
+                queryset = queryset.filter(harvester_repository_id=str(repositorio))
+        elif repositorio:
             # Lista de um repositório: aqui sim vale o contrato de autorização,
             # em que `None` libera o ADMIN.
             assert_can_read_repository(self.request.user, repositorio)
@@ -50,17 +108,15 @@ class NotificationViewSet(
         else:
             queryset = services.visiveis_para(self.request.user)
 
-        if self.request.query_params.get("sent") == "true":
-            # O histórico do que o próprio ADMIN enviou. Recorta sobre o que ele
-            # já enxerga, nunca sobre a tabela inteira.
-            queryset = queryset.filter(author=self.request.user)
         if self.request.query_params.get("unread") == "true":
             queryset = queryset.filter(read_at__isnull=True)
         categoria = self.request.query_params.get("category")
         if categoria:
             queryset = queryset.filter(category=categoria)
 
-        return queryset.select_related("recipient", "author", "read_by")
+        # `category` entra aqui porque o serializer a aninha: sem ela, cada linha
+        # da lista custava uma consulta ao catálogo.
+        return queryset.select_related("category", "recipient", "author", "read_by")
 
     @extend_schema(
         parameters=[
@@ -136,6 +192,78 @@ class NotificationViewSet(
         return Response(serializer.data)
 
     @extend_schema(
+        request=NotificationBulkSerializer,
+        responses={200: None},
+        description=(
+            "Envia o mesmo aviso para vários repositórios e/ou vários gestores "
+            "de uma vez. Cada destino vira uma notificação própria. Exclusivo "
+            "do perfil ADMIN."
+        ),
+    )
+    @action(detail=False, methods=["post"], url_path="bulk")
+    def bulk(self, request: Request) -> Response:
+        entrada = self.get_serializer(data=request.data)
+        entrada.is_valid(raise_exception=True)
+        dados = entrada.validated_data
+
+        # O alcance amplo entra junto das escolhas avulsas; a deduplicação por
+        # identificador evita mandar duas vezes para quem já estava marcado.
+        repositorios = list(dados.get("repositories", []))
+        destinatarios = list(dados.get("recipients", []))
+        se_todos, gestores_todos = services.destinos_do_alcance(dados.get("scope") or "")
+
+        ja_escolhidos = {r["harvesterRepositoryId"] for r in repositorios}
+        repositorios += [r for r in se_todos if r["harvesterRepositoryId"] not in ja_escolhidos]
+        destinatarios += [g for g in gestores_todos if g not in destinatarios]
+
+        comum = {
+            "title": dados["title"],
+            "message": dados["message"],
+            "category": dados["category"],
+            "requires_acknowledgement": dados["requiresAcknowledgement"],
+            "author": request.user,
+        }
+
+        # Sem transação, como no lote de vínculos: um destino que falhe não
+        # deve desfazer os avisos que já chegaram aos outros.
+        criadas = []
+        for repositorio in repositorios:
+            criadas.append(
+                Notification.objects.create(
+                    **comum,
+                    harvester_repository_id=repositorio["harvesterRepositoryId"],
+                    acronym=repositorio["acronym"],
+                )
+            )
+        for destinatario in destinatarios:
+            criadas.append(Notification.objects.create(**comum, recipient=destinatario))
+
+        for notificacao in criadas:
+            record(
+                action=AuditLog.Action.CREATE,
+                resource=RESOURCE,
+                resource_id=notificacao.pk,
+                request=request,
+            )
+
+        return Response({"createdCount": len(criadas)})
+
+    def perform_destroy(self, instance: Notification) -> None:
+        """Tira do ar o aviso mandado por engano.
+
+        O `pk` é capturado antes do delete, como faz o `RepositoryAccessViewSet`:
+        depois dele o objeto já não tem identificador para a trilha.
+        """
+        pk = instance.pk
+        instance.delete()
+        record(
+            action=AuditLog.Action.DELETE,
+            resource=RESOURCE,
+            resource_id=pk,
+            request=self.request,
+        )
+
+    @extend_schema(
         responses={200: None},
         description=(
             "Quantas notificações da caixa de entrada seguem sem leitura. "
@@ -167,3 +295,91 @@ class NotificationViewSet(
         if notificacao is None:
             raise NotFound("Notificação inexistente ou fora do seu alcance.")
         return notificacao
+
+
+class _CadastroViewSet(viewsets.ModelViewSet):
+    """Base dos dois cadastros: todos leem, só o ADMIN escreve.
+
+    Leitura aberta a qualquer autenticado porque o gestor precisa do nome da
+    categoria para ler o selo da própria notificação — sem isso a tela dele
+    mostraria um identificador numérico.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+    recurso = ""
+
+    def get_permissions(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            return [permissions.IsAuthenticated()]
+        return [permissions.IsAuthenticated(), IsAdminProfile()]
+
+    def perform_create(self, serializer) -> None:
+        objeto = serializer.save()
+        record(
+            action=AuditLog.Action.CREATE,
+            resource=self.recurso,
+            resource_id=objeto.pk,
+            request=self.request,
+        )
+
+    def perform_update(self, serializer) -> None:
+        objeto = serializer.save()
+        record(
+            action=AuditLog.Action.UPDATE,
+            resource=self.recurso,
+            resource_id=objeto.pk,
+            request=self.request,
+        )
+
+    def perform_destroy(self, instance) -> None:
+        pk = instance.pk
+        instance.delete()
+        record(
+            action=AuditLog.Action.DELETE,
+            resource=self.recurso,
+            resource_id=pk,
+            request=self.request,
+        )
+
+
+@extend_schema(tags=["notifications"])
+class NotificationCategoryViewSet(_CadastroViewSet):
+    """Catálogo de categorias.
+
+    Devolve **todas**, ativas ou não: a tela precisa do nome para desenhar o
+    selo de uma notificação antiga cuja categoria saiu de circulação. Quem
+    filtra por `active` é o formulário de envio.
+
+    A exclusão é possível só enquanto a categoria não tiver sido usada — o
+    `PROTECT` do modelo recusa o resto, e a saída para o catálogo que envelheceu
+    é desativar.
+    """
+
+    queryset = NotificationCategory.objects.all()
+    serializer_class = NotificationCategorySerializer
+    recurso = "notification_category"
+    pagination_class = None
+
+
+@extend_schema(tags=["notifications"])
+class NotificationTemplateViewSet(_CadastroViewSet):
+    """Textos padrão, filtráveis por categoria."""
+
+    serializer_class = NotificationTemplateSerializer
+    recurso = "notification_template"
+    pagination_class = None
+
+    def get_queryset(self):
+        queryset = NotificationTemplate.objects.select_related("category")
+        categoria = self.request.query_params.get("category")
+        if categoria:
+            # Um `?category=null` vindo de um cliente distraído virava
+            # `ValueError` no ORM e subia como 500. Parâmetro malformado é erro
+            # de quem pede.
+            try:
+                queryset = queryset.filter(category_id=int(categoria))
+            except ValueError as exc:
+                raise DRFValidationError(
+                    {"category": "Informe o identificador numérico da categoria."}
+                ) from exc
+        return queryset

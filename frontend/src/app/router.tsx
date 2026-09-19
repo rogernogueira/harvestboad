@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
                 path: 'acessos',
                 lazy: lazyPage(() => import('@/pages/AccessPage'), 'AccessPage'),
               },
+              {
+                path: 'notificacoes',
+                lazy: lazyPage(() => import('@/pages/NotificationsPage'), 'NotificationsPage'),
+              },
             ],
           },
           {
