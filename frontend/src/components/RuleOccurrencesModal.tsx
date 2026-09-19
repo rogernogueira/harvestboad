@@ -13,8 +13,11 @@ import type { Occurrence } from '@/lib/types'
  * Ocorrências de uma regra, agrupadas por valor.
  *
  * É o `openRuleOccrStats` da interface do Harvester: a tabela de regras responde
- * "quantos registros violam", e esta lista responde "com quais valores" — que é
- * o que orienta a correção no repositório de origem.
+ * "quantos registros violam", e esta lista responde "como o campo está sendo
+ * preenchido" — que é o que orienta a correção no repositório de origem. Daí os
+ * títulos falarem de preenchimento, e não de valores que atendem ou violam: o
+ * que está na lista é o conteúdo que o repositório pôs no campo, e é sobre ele
+ * que alguém vai agir na origem.
  *
  * Só consulta quando aberto. São dezenas de regras por coleta e cada uma custa
  * uma ida à origem; buscar todas de antemão pagaria por dados que quase ninguém
