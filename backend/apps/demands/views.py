@@ -67,6 +67,8 @@ class HarvestRequestViewSet(
         parameters=[
             OpenApiParameter("repository", str, description="Só as de um repositório."),
             OpenApiParameter("status", str, description="PENDENTE, ATENDIDA ou RECUSADA."),
+            OpenApiParameter("page", int, description="Página, começando em 1."),
+            OpenApiParameter("count", int, description="Itens por página (máx. 200)."),
         ],
         description=(
             "Demandas visíveis: o ADMIN vê todas — a demanda é única e "

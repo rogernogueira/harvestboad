@@ -709,3 +709,68 @@ class NotificationScopeAPITests(TestCase):
             f"{BASE}/bulk/", self.corpo(scope="ALL_MANAGERS"), format="json"
         )
         self.assertEqual(resposta.status_code, 403)
+
+
+class PaginacaoPadraoTests(TestCase):
+    """O tamanho da página vem em `count`, como nas rotas do Harvester.
+
+    Sem `page_size_query_param`, o DRF ignora o parâmetro em silêncio e devolve
+    sempre o `PAGE_SIZE` do settings — o seletor de itens por página da tela
+    não teria efeito nenhum, e a lista pareceria truncada sem explicação.
+    """
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="admin", password="x", email="a@x.com", profile=Profile.ADMIN
+        )
+        cls.ana = User.objects.create_user(
+            username="ana", password="x", email="ana@x.com", profile=Profile.GESTOR
+        )
+        RepositoryAccess.objects.create(user=cls.ana, harvester_repository_id="1")
+        for i in range(60):
+            Notification.objects.create(
+                title=f"aviso {i}",
+                message="m",
+                category=COLETA(),
+                harvester_repository_id="1",
+                author=cls.admin,
+            )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def test_sem_count_usa_o_padrao_do_settings(self) -> None:
+        resposta = api(self.ana).get(f"{BASE}/")
+        self.assertEqual(resposta.data["count"], 60)
+        self.assertEqual(len(resposta.data["results"]), 50)
+
+    def test_count_define_o_tamanho_da_pagina(self) -> None:
+        resposta = api(self.ana).get(f"{BASE}/?count=10")
+        self.assertEqual(len(resposta.data["results"]), 10)
+        self.assertIsNotNone(resposta.data["next"])
+
+    def test_page_anda_pelas_paginas(self) -> None:
+        primeira = api(self.ana).get(f"{BASE}/?count=25&page=1")
+        terceira = api(self.ana).get(f"{BASE}/?count=25&page=3")
+
+        self.assertEqual(len(primeira.data["results"]), 25)
+        # 60 itens em páginas de 25: a terceira tem o resto.
+        self.assertEqual(len(terceira.data["results"]), 10)
+        self.assertIsNone(terceira.data["next"])
+
+        titulos_da_primeira = {i["title"] for i in primeira.data["results"]}
+        titulos_da_terceira = {i["title"] for i in terceira.data["results"]}
+        self.assertEqual(titulos_da_primeira & titulos_da_terceira, set())
+
+    def test_count_acima_do_teto_e_limitado_e_nao_recusado(self) -> None:
+        """Quem cola `?count=5000` quer a lista, não um 400."""
+        resposta = api(self.ana).get(f"{BASE}/?count=5000")
+        self.assertEqual(resposta.status_code, 200)
+        self.assertEqual(len(resposta.data["results"]), 60)
+
+    def test_catalogo_de_categorias_segue_sem_paginacao(self) -> None:
+        """A tela precisa nomear a categoria de um aviso antigo: vem inteiro."""
+        resposta = api(self.admin).get(f"{BASE}/categories/")
+        self.assertEqual(resposta.status_code, 200)
+        self.assertIsInstance(resposta.data, list)

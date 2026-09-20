@@ -184,7 +184,9 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    # Paginação própria só para aceitar o tamanho da página em `count`, o mesmo
+    # nome das rotas que espelham o Harvester. Ver config/pagination.py.
+    "DEFAULT_PAGINATION_CLASS": "config.pagination.PaginacaoPadrao",
     "PAGE_SIZE": 50,
 }
 

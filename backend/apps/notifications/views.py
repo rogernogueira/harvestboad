@@ -134,6 +134,8 @@ class NotificationViewSet(
             OpenApiParameter(
                 "sent", bool, description="Só as que o próprio usuário enviou."
             ),
+            OpenApiParameter("page", int, description="Página, começando em 1."),
+            OpenApiParameter("count", int, description="Itens por página (máx. 200)."),
         ],
         description="Notificações visíveis para o usuário autenticado.",
     )
