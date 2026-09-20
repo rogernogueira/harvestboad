@@ -504,6 +504,13 @@
         "status": "Status",
         "actions": "Actions"
       },
+      "columnHints": {
+        "destination": "Who receives the notice: a repository — and then every manager linked to it — or a single manager, as a direct message.",
+        "notification": "Title and category of the notice sent.",
+        "sentAt": "Date and time the notice was sent.",
+        "status": "Whether anyone has read it. Reading is shared: the first manager to read counts for the others on the repository.",
+        "actions": "Takes the notice down. A sent notice cannot be edited, so what someone already read does not change underneath them."
+      },
       "headerSubtitle": "Sent notices and category catalogue",
       "tabSent": "Sent"
     },
@@ -570,6 +577,13 @@
       "openedAt": "Opened on",
       "status": "Status",
       "actions": "Actions"
+    },
+    "columnHints": {
+      "repository": "Repository the new harvest was requested for.",
+      "requester": "Who opened the request. The request belongs to the repository: its other managers see it too.",
+      "openedAt": "Date and time the request was opened.",
+      "status": "Pending, attended or refused. A repository can only have one pending request at a time.",
+      "actions": "Attend by entering the number of the harvest run, or refuse with a reason. Either way the requester gets a direct message."
     }
   }
 }

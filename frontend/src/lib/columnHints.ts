@@ -1,18 +1,22 @@
 /**
  * Dica de cabeçalho de coluna.
  *
- * As quatro tabelas do sistema têm rótulos curtos — "Sigla", "Conjunto",
- * "Prefixo", "Transformado" — que só são óbvios para quem já conhece o
- * vocabulário do Harvester. A dica diz do que se trata a coluna sem gastar
- * linha na tela.
+ * As seis tabelas do sistema têm rótulos curtos — "Sigla", "Conjunto",
+ * "Prefixo", "Transformado", "Destino" — que só são óbvios para quem já conhece
+ * o vocabulário do Harvester, ou as regras de alcance das notificações e das
+ * demandas. A dica diz do que se trata a coluna sem gastar linha na tela.
+ *
+ * **Toda coluna de toda tabela tem dica.** Uma tabela em que só parte dos
+ * cabeçalhos responde ao ponteiro ensina que as outras não têm o que explicar,
+ * e aí a ausência vira informação errada.
  *
  * É o `title` nativo, e não o `BrTooltip` do design system, por três motivos
  * lidos no componente (`dist/components/BrTooltip`): ele não aceita `id` nem
  * `className`, como o `BrBreadcrumbs`; ele não liga o gatilho ao texto com
  * `aria-describedby` — o `role="tooltip"` fica solto e o leitor de tela não
  * anuncia nada, que é a mesma falha do `BrTab`; e monta um popper por elemento
- * dentro de um `useEffect`, o que em 26 cabeçalhos custa mais do que a
- * informação vale.
+ * dentro de um `useEffect`, o que nos 36 cabeçalhos das seis tabelas custa mais
+ * do que a informação vale.
  *
  * Com o `title` no `<th>`, o rótulo continua sendo o **nome** acessível da
  * coluna e a dica vira a **descrição** acessível — exatamente a distinção que

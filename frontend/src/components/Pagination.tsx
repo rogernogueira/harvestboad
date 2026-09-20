@@ -20,12 +20,17 @@ function janela(page: number, total: number, maximo = 5): number[] {
 /**
  * Paginação.
  *
- * Um só controle para as quatro listas da aplicação — o que muda entre elas é
- * de onde vêm as páginas, não como se anda por elas. As duas que paginam no
- * servidor (registros, busca de acessos) oferecem tamanhos até o teto que o
- * backend aceita; as duas que paginam no navegador (meus repositórios,
- * administração) já têm o acervo em memória e podem oferecer "tudo". Quem
- * chama decide o conjunto em `tamanhos`; o componente só o apresenta.
+ * Um só controle para todas as listas da aplicação — o que muda entre elas é de
+ * onde vêm as páginas, não como se anda por elas. As que paginam no servidor
+ * (registros, busca de acessos, notificações enviadas, demandas) oferecem
+ * tamanhos até o teto que o backend aceita; as que paginam no navegador (meus
+ * repositórios, administração, regras do diagnóstico, histórico de coletas) já
+ * têm o conjunto em memória e podem oferecer "tudo". Quem chama decide o
+ * conjunto em `tamanhos`; o componente só o apresenta.
+ *
+ * A escolha entre as duas não é de gosto, é de escala e de uso: onde a lista já
+ * chega inteira para alimentar um gráfico ou uma exportação, paginar no
+ * servidor não pouparia requisição nenhuma.
  *
  * O seletor de tamanho existe porque só havia o "Próxima": para ver o 300º de
  * 2.181 repositórios eram doze cliques, cada um recarregando a tabela inteira.

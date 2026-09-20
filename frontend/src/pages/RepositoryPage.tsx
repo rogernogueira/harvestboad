@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useParams } from 'react-router'
+import { Link, useParams, useSearchParams } from 'react-router'
 import {
   CartesianGrid,
   Line,
@@ -17,9 +17,22 @@ import { HarvestStatusBadge } from '@/components/Badges'
 import { CsvDownloadButton } from '@/components/CsvDownloadButton'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { PageHeader } from '@/components/PageHeader'
+import { Pagination } from '@/components/Pagination'
 import { StatCard } from '@/components/StatCard'
 import { dicaDeColuna } from '@/lib/columnHints'
+import { TUDO, tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
 import { repositoryHarvestsQuery, repositoryQuery } from '@/lib/queries'
+
+/**
+ * Itens por página do histórico.
+ *
+ * Com "tudo", como no diagnóstico: o histórico chega inteiro numa requisição —
+ * é o mesmo conjunto que alimenta o gráfico e a exportação —, então a página é
+ * recorte de tela e nada mais. Um repositório antigo acumula dezenas de
+ * coletas; 25 cobre a maioria sem mostrar botão nenhum.
+ */
+const POR_PAGINA = 25
+const TAMANHOS = [10, 25, 50, TUDO] as const
 
 /** Visão geral do repositório e histórico de coletas. */
 /**
@@ -37,8 +50,32 @@ export function RepositoryPage() {
   const { t, i18n } = useTranslation()
   const { repositoryId = '' } = useParams()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const repositorio = useQuery(repositoryQuery(repositoryId))
   const coletas = useQuery(repositoryHarvestsQuery(repositoryId))
+
+  const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
+
+  const alterarParams = (mudanca: (params: URLSearchParams) => void) => {
+    const params = new URLSearchParams(searchParams)
+    mudanca(params)
+    setSearchParams(params, { replace: true })
+  }
+
+  const irParaPagina = (destino: number) =>
+    alterarParams((params) =>
+      destino <= 1 ? params.delete('page') : params.set('page', String(destino)),
+    )
+
+  const mudarTamanho = (tamanho: number) =>
+    alterarParams((params) => {
+      const valor = tamanhoParaUrl(tamanho, POR_PAGINA)
+      if (valor) params.set('por', valor)
+      else params.delete('por')
+      params.delete('page')
+    })
 
   const dataFormat = useMemo(
     () =>
@@ -64,6 +101,16 @@ export function RepositoryPage() {
         invalidos: invalidos(coleta) ?? 0,
       }))
   }, [coletas.data])
+
+  /*
+   * A página é recorte só da tabela. O gráfico acima e o CSV seguem sobre o
+   * histórico inteiro: a série que mostra a evolução do repositório perderia o
+   * sentido se andasse junto com a página da tabela.
+   */
+  const historico = coletas.data?.results ?? []
+  const totalDePaginas = Math.max(1, Math.ceil(historico.length / porPagina))
+  const paginaAtual = Math.min(pagina, totalDePaginas)
+  const coletasVisiveis = historico.slice((paginaAtual - 1) * porPagina, paginaAtual * porPagina)
 
   if (repositorio.isPending) return <Loading id="repository-page-loading" />
   if (repositorio.isError)
@@ -280,7 +327,7 @@ export function RepositoryPage() {
                     </tr>
                   </thead>
                   <tbody id="repository-page-harvests-table-body">
-                    {coletas.data.results.map((coleta) => (
+                    {coletasVisiveis.map((coleta) => (
                       <tr
                         id={`repository-page-harvest-${coleta.snapshotId}`}
                         key={coleta.snapshotId}
@@ -345,6 +392,16 @@ export function RepositoryPage() {
                   </tbody>
                 </table>
               </div>
+
+              <Pagination
+                id="repository-page-harvests-pagination"
+                page={paginaAtual}
+                totalPages={totalDePaginas}
+                onChange={irParaPagina}
+                tamanho={porPagina}
+                tamanhos={TAMANHOS}
+                onTamanho={mudarTamanho}
+              />
             </>
           )
         ) : null}

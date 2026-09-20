@@ -1,5 +1,5 @@
 /**
- * Tamanho de página: o vocabulário compartilhado pelas quatro listas.
+ * Tamanho de página: o vocabulário compartilhado por todas as listas.
  *
  * Fica aqui, e não dentro de `components/Pagination.tsx`, porque exportar
  * constante e função ao lado de um componente quebra o Fast Refresh do Vite —

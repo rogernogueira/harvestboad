@@ -1,17 +1,31 @@
 import { BrButton } from '@govbr-ds/react-components'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router'
 
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { CategoryCatalog } from '@/components/CategoryCatalog'
 import { NewNotificationModal } from '@/components/NewNotificationModal'
 import { PageHeader } from '@/components/PageHeader'
+import { Pagination } from '@/components/Pagination'
 import { Tabs } from '@/components/Tabs'
 import { nomeDaCategoria } from '@/lib/categorias'
 import { ApiError, apiDelete } from '@/lib/api'
+import { dicaDeColuna } from '@/lib/columnHints'
+import { tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
 import { sentNotificationsQuery } from '@/lib/queries'
 import type { NotificationItem } from '@/lib/types'
+
+/**
+ * Itens por página desta tela.
+ *
+ * Sem "tudo": a lista pagina no servidor, e ali o infinito não tem como ser
+ * pedido — o teto de 200 é o mesmo que `config/pagination.py` impõe. O padrão
+ * é 25 para casar com o da tabela de registros.
+ */
+const POR_PAGINA = 25
+const TAMANHOS = [10, 25, 50, 100] as const
 
 /**
  * Gestão das notificações enviadas pelo administrador.
@@ -66,8 +80,41 @@ function Enviadas() {
   const queryClient = useQueryClient()
   const [criando, setCriando] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const { data, isPending, isError, error, refetch } = useQuery(sentNotificationsQuery)
+  const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
+
+  const { data, isPending, isError, error, refetch } = useQuery({
+    ...sentNotificationsQuery(pagina, porPagina),
+    // Mantém a página visível enquanto a próxima carrega, como nos registros.
+    placeholderData: keepPreviousData,
+  })
+
+  const alterarParams = (mudanca: (params: URLSearchParams) => void) => {
+    const params = new URLSearchParams(searchParams)
+    mudanca(params)
+    setSearchParams(params, { replace: true })
+  }
+
+  const irParaPagina = (destino: number) =>
+    alterarParams((params) =>
+      destino <= 1 ? params.delete('page') : params.set('page', String(destino)),
+    )
+
+  /*
+   * Trocar o tamanho volta para a primeira página.
+   *
+   * A página 6 de 10 itens não é a página 6 de 50: manter o número levaria a um
+   * trecho arbitrário da lista, ou a uma página vazia quando o total encolhe.
+   */
+  const mudarTamanho = (tamanho: number) =>
+    alterarParams((params) => {
+      const valor = tamanhoParaUrl(tamanho, POR_PAGINA)
+      if (valor) params.set('por', valor)
+      else params.delete('por')
+      params.delete('page')
+    })
 
   const quando = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
     dateStyle: 'short',
@@ -119,45 +166,60 @@ function Enviadas() {
       {data.results.length === 0 ? (
         <Empty id="notifications-page-empty" label={t('notifications.manage.none')} />
       ) : (
-        <div
-          id="notifications-page-table-wrapper"
-          className="br-table"
-          style={{ overflowX: 'auto' }}
-        >
-          <table id="notifications-page-table">
-            <thead id="notifications-page-table-head">
-              <tr id="notifications-page-table-head-row" className="bg-gray-2 text-left">
-                {(['destination', 'notification', 'sentAt', 'status', 'actions'] as const).map(
-                  (coluna) => (
-                    <th
-                      id={`notifications-page-column-${coluna}`}
-                      key={coluna}
-                      className="px-3 py-2 text-down-01 text-bold"
-                    >
-                      {t(`notifications.manage.columns.${coluna}`)}
-                    </th>
-                  ),
-                )}
-              </tr>
-            </thead>
-            <tbody id="notifications-page-table-body">
-              {data.results.map((item) => (
-                <Linha
-                  key={item.id}
-                  item={item}
-                  quando={quando}
-                  ocupado={excluir.isPending}
-                  onExcluir={() => {
-                    if (
-                      window.confirm(t('notifications.manage.confirmDelete', { title: item.title }))
-                    )
-                      excluir.mutate(item.id)
-                  }}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <>
+          <div
+            id="notifications-page-table-wrapper"
+            className="br-table"
+            style={{ overflowX: 'auto' }}
+          >
+            <table id="notifications-page-table">
+              <thead id="notifications-page-table-head">
+                <tr id="notifications-page-table-head-row" className="bg-gray-2 text-left">
+                  {(['destination', 'notification', 'sentAt', 'status', 'actions'] as const).map(
+                    (coluna) => (
+                      <th
+                        id={`notifications-page-column-${coluna}`}
+                        key={coluna}
+                        className="px-3 py-2 text-down-01 text-bold"
+                        {...dicaDeColuna(t(`notifications.manage.columnHints.${coluna}`))}
+                      >
+                        {t(`notifications.manage.columns.${coluna}`)}
+                      </th>
+                    ),
+                  )}
+                </tr>
+              </thead>
+              <tbody id="notifications-page-table-body">
+                {data.results.map((item) => (
+                  <Linha
+                    key={item.id}
+                    item={item}
+                    quando={quando}
+                    ocupado={excluir.isPending}
+                    onExcluir={() => {
+                      if (
+                        window.confirm(
+                          t('notifications.manage.confirmDelete', { title: item.title }),
+                        )
+                      )
+                        excluir.mutate(item.id)
+                    }}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <Pagination
+            id="notifications-page-pagination"
+            page={pagina}
+            totalPages={Math.max(1, Math.ceil(data.count / porPagina))}
+            onChange={irParaPagina}
+            tamanho={porPagina}
+            tamanhos={TAMANHOS}
+            onTamanho={mudarTamanho}
+          />
+        </>
       )}
 
       <NewNotificationModal

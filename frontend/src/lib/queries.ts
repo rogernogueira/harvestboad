@@ -301,11 +301,19 @@ export const notificationTemplatesQuery = (categoryId: number | null) =>
     staleTime: 30 * 60_000,
   })
 
-/** O que o usuário enviou, para a tela de gestão do administrador. */
-export const sentNotificationsQuery = queryOptions({
-  queryKey: ['notifications', 'sent'],
-  queryFn: () => apiGet<Paginated<NotificationItem>>('/notifications/?sent=true'),
-})
+/**
+ * O que o usuário enviou, para a tela de gestão do administrador.
+ *
+ * Pagina no servidor, como os registros e a busca de acessos: o administrador
+ * que envia em lote acumula centenas de avisos, e a lista não tem outro uso que
+ * pedisse o conjunto inteiro em memória — não alimenta gráfico nem exportação.
+ */
+export const sentNotificationsQuery = (page: number, count: number) =>
+  queryOptions({
+    queryKey: ['notifications', 'sent', page, count],
+    queryFn: () =>
+      apiGet<Paginated<NotificationItem>>(`/notifications/?sent=true&page=${page}&count=${count}`),
+  })
 
 export const unreadNotificationsQuery = queryOptions({
   queryKey: ['notifications', 'unread-count'],
@@ -319,14 +327,28 @@ export const unreadNotificationsQuery = queryOptions({
  * — o recorte é do backend. `repository` serve ao cartão do repositório, que
  * mostra só a dele.
  */
-export const harvestRequestsQuery = (filtros: { repository?: string; status?: string } = {}) => {
+export const harvestRequestsQuery = (
+  filtros: { repository?: string; status?: string; page?: number; count?: number } = {},
+) => {
   const params = new URLSearchParams()
   if (filtros.repository) params.set('repository', filtros.repository)
   if (filtros.status) params.set('status', filtros.status)
+  // Página e tamanho só entram quando a tela os controla. O cartão do
+  // repositório consulta a mesma rota para saber se há demanda pendente, e ali
+  // não há paginação nenhuma a informar — mandar `page=1` fixo mudaria a chave
+  // de cache sem mudar a pergunta.
+  if (filtros.page) params.set('page', String(filtros.page))
+  if (filtros.count) params.set('count', String(filtros.count))
   const query = params.toString()
 
   return queryOptions({
-    queryKey: ['demands', filtros.repository ?? '', filtros.status ?? ''],
+    queryKey: [
+      'demands',
+      filtros.repository ?? '',
+      filtros.status ?? '',
+      filtros.page ?? 0,
+      filtros.count ?? 0,
+    ],
     queryFn: () => apiGet<Paginated<HarvestRequestItem>>(`/demands/${query ? `?${query}` : ''}`),
   })
 }

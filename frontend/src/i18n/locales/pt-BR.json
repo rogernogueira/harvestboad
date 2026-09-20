@@ -519,6 +519,13 @@
         "status": "Situação",
         "actions": "Ações"
       },
+      "columnHints": {
+        "destination": "Quem recebe o aviso: um repositório — e aí todos os gestores vinculados a ele — ou um gestor, em recado direto.",
+        "notification": "Título e categoria do aviso enviado.",
+        "sentAt": "Data e hora em que o aviso foi enviado.",
+        "status": "Se alguém já leu. A leitura é compartilhada: o primeiro gestor que ler vale pelos demais do repositório.",
+        "actions": "Remove o aviso do ar. Um aviso enviado não se edita, para não mudar por baixo o que alguém já leu."
+      },
       "headerSubtitle": "Avisos enviados e catálogo de categorias",
       "tabSent": "Enviadas"
     },
@@ -585,6 +592,13 @@
       "openedAt": "Aberta em",
       "status": "Situação",
       "actions": "Ações"
+    },
+    "columnHints": {
+      "repository": "Repositório para o qual a nova coleta foi pedida.",
+      "requester": "Quem abriu a demanda. A demanda é do repositório: os demais gestores dele também a enxergam.",
+      "openedAt": "Data e hora em que a demanda foi aberta.",
+      "status": "Pendente, atendida ou recusada. Cada repositório só pode ter uma demanda pendente por vez.",
+      "actions": "Atender informando o número da coleta realizada, ou recusar com o motivo. Nos dois casos quem pediu recebe um recado direto."
     }
   }
 }

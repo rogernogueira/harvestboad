@@ -519,6 +519,13 @@
         "status": "Situación",
         "actions": "Acciones"
       },
+      "columnHints": {
+        "destination": "Quién recibe el aviso: un repositorio — y entonces todos los gestores vinculados a él — o un gestor, en mensaje directo.",
+        "notification": "Título y categoría del aviso enviado.",
+        "sentAt": "Fecha y hora en que se envió el aviso.",
+        "status": "Si alguien ya lo leyó. La lectura es compartida: el primer gestor que lea vale por los demás del repositorio.",
+        "actions": "Retira el aviso del aire. Un aviso enviado no se edita, para no cambiar por debajo lo que alguien ya leyó."
+      },
       "headerSubtitle": "Avisos enviados y catálogo de categorías",
       "tabSent": "Enviadas"
     },
@@ -585,6 +592,13 @@
       "openedAt": "Abierta el",
       "status": "Situación",
       "actions": "Acciones"
+    },
+    "columnHints": {
+      "repository": "Repositorio para el cual se pidió la nueva recolección.",
+      "requester": "Quién abrió la solicitud. La solicitud es del repositorio: los demás gestores también la ven.",
+      "openedAt": "Fecha y hora en que se abrió la solicitud.",
+      "status": "Pendiente, atendida o rechazada. Cada repositorio solo puede tener una solicitud pendiente a la vez.",
+      "actions": "Atender informando el número de la recolección realizada, o rechazar con el motivo. En ambos casos quien pidió recibe un mensaje directo."
     }
   }
 }

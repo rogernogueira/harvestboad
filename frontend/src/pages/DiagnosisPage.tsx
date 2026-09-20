@@ -14,11 +14,13 @@ import {
 } from 'recharts'
 
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
+import { Pagination } from '@/components/Pagination'
 import { RuleOccurrencesModal } from '@/components/RuleOccurrencesModal'
 import { RulesFilterBar } from '@/components/RulesFilterBar'
 import { StatCard } from '@/components/StatCard'
 import { dicaDeColuna } from '@/lib/columnHints'
 import { filtersFromSearch, filtersToParams, toggleRule } from '@/lib/filters'
+import { TUDO, tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
 import { diagnosisQuery, rulesQuery } from '@/lib/queries'
 import {
   filterRules,
@@ -27,6 +29,17 @@ import {
   type RuleFilters,
 } from '@/lib/ruleFilters'
 import type { Rule } from '@/lib/types'
+
+/**
+ * Itens por página da tabela de regras.
+ *
+ * Com "tudo" no conjunto, e não por simetria com as outras listas: uma coleta
+ * tem dezenas de regras, não milhares, e ver todas de uma vez é leitura comum
+ * aqui — o custo é altura de página, não requisição. O padrão de 25 deixa a
+ * maioria das coletas numa página só, e aí os botões nem aparecem.
+ */
+const POR_PAGINA = 25
+const TAMANHOS = [10, 25, 50, TUDO] as const
 
 /**
  * Diagnóstico da coleta.
@@ -41,9 +54,39 @@ export function DiagnosisPage() {
   const filtros = filtersFromSearch(searchParams)
   const filtrosDeRegra = ruleFiltersFromSearch(searchParams)
 
-  /** Troca só os parâmetros das regras, preservando o recorte compartilhado. */
-  const aplicarFiltrosDeRegra = (novos: RuleFilters) =>
-    setSearchParams(ruleFiltersToSearch(searchParams, novos), { replace: true })
+  const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
+
+  /**
+   * Troca só os parâmetros das regras, preservando o recorte compartilhado.
+   *
+   * A página volta ao início junto: filtrar encurta a lista, e a página 3 do
+   * conjunto inteiro costuma não existir no que sobrou.
+   */
+  const aplicarFiltrosDeRegra = (novos: RuleFilters) => {
+    const params = ruleFiltersToSearch(searchParams, novos)
+    params.delete('page')
+    setSearchParams(params, { replace: true })
+  }
+
+  const alterarParams = (mudanca: (params: URLSearchParams) => void) => {
+    const params = new URLSearchParams(searchParams)
+    mudanca(params)
+    setSearchParams(params, { replace: true })
+  }
+
+  const irParaPagina = (destino: number) =>
+    alterarParams((params) =>
+      destino <= 1 ? params.delete('page') : params.set('page', String(destino)),
+    )
+
+  const mudarTamanho = (tamanho: number) =>
+    alterarParams((params) => {
+      const valor = tamanhoParaUrl(tamanho, POR_PAGINA)
+      if (valor) params.set('por', valor)
+      else params.delete('por')
+      params.delete('page')
+    })
 
   const diagnostico = useQuery(diagnosisQuery(snapshotId))
   const regras = useQuery(rulesQuery(snapshotId))
@@ -77,6 +120,23 @@ export function DiagnosisPage() {
   const regrasFiltradas = useMemo(
     () => filterRules(regras.data?.results ?? [], filtrosDeRegra),
     [regras.data, filtrosDeRegra],
+  )
+
+  /*
+   * Paginação no navegador, como no painel de repositórios.
+   *
+   * A lista de regras chega inteira numa requisição — é o mesmo `rulesQuery`
+   * que alimenta o gráfico e a barra de filtros —, então paginar no servidor
+   * não pouparia ida nenhuma à origem. Aqui a paginação é só recorte de tela.
+   *
+   * O total de páginas sai de `regrasFiltradas`, e não do conjunto todo: quem
+   * filtra espera que a contagem acompanhe o que sobrou.
+   */
+  const totalDePaginas = Math.max(1, Math.ceil(regrasFiltradas.length / porPagina))
+  const paginaAtual = Math.min(pagina, totalDePaginas)
+  const regrasVisiveis = regrasFiltradas.slice(
+    (paginaAtual - 1) * porPagina,
+    paginaAtual * porPagina,
   )
 
   const grafico = useMemo(() => {
@@ -323,7 +383,7 @@ export function DiagnosisPage() {
                 </tr>
               </thead>
               <tbody id="diagnosis-page-rules-table-body">
-                {regrasFiltradas.map((regra) => (
+                {regrasVisiveis.map((regra) => (
                   <tr id={`diagnosis-page-rule-${regra.ruleId}`} key={regra.ruleId}>
                     {/*
                       A coluna "Regra" leva o nome, não o `ruleID`. O número é
@@ -403,6 +463,18 @@ export function DiagnosisPage() {
               </tbody>
             </table>
           </div>
+        ) : null}
+
+        {regras.data && regrasFiltradas.length > 0 ? (
+          <Pagination
+            id="diagnosis-page-rules-pagination"
+            page={paginaAtual}
+            totalPages={totalDePaginas}
+            onChange={irParaPagina}
+            tamanho={porPagina}
+            tamanhos={TAMANHOS}
+            onTamanho={mudarTamanho}
+          />
         ) : null}
       </section>
 
