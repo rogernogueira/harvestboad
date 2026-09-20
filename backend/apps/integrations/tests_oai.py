@@ -26,15 +26,31 @@ RECEIVED: list[dict] = []
 
 OAI_CONFIG = {"TIMEOUT": 5, "MAX_BYTES": 1024 * 1024, "CACHE_TTL_LINK": 60}
 
+# Raiz do servidor de mentira, preenchida no `setUpClass` — a porta só existe
+# depois que ele sobe. As URLs do metadado precisam apontar para cá: desde que
+# a resolução confere também o endereço vindo do metadado, uma fixture com
+# domínio de verdade faria a suíte bater na rede aberta.
+RAIZ = ""
+
 ENVELOPE = """<?xml version="1.0" encoding="UTF-8"?>
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
   <responseDate>2026-01-01T00:00:00Z</responseDate>
   <request verb="GetRecord">{base}</request>
   <GetRecord><record>
-    <header><identifier>oai:repo.br:artigo/1</identifier></header>
+    <header><identifier>oai:repo.br:artigo/1</identifier>{conjunto}</header>
     <metadata>{metadata}</metadata>
   </record></GetRecord>
 </OAI-PMH>"""
+
+
+def envelope(metadata: str, conjunto: str = "") -> str:
+    """Envelope com as URLs do metadado já apontando para o servidor local."""
+    return ENVELOPE.format(
+        base=BASE_FALSA,
+        conjunto=f"<setSpec>{conjunto}</setSpec>" if conjunto else "",
+        metadata=metadata.format(raiz=RAIZ),
+    )
+
 
 DUBLIN_CORE = """
     <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
@@ -42,8 +58,17 @@ DUBLIN_CORE = """
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.w3.org/2001/XMLSchema">
       <dc:format>application/pdf</dc:format>
-      <dc:identifier>https://revista.br/index.php/rev/article/download/1/2</dc:identifier>
-      <dc:identifier>https://revista.br/index.php/rev/article/view/1</dc:identifier>
+      <dc:identifier>{raiz}/rev/article/download/1/2</dc:identifier>
+      <dc:identifier>{raiz}/rev/article/view/1</dc:identifier>
+    </oai_dc:dc>
+"""
+
+SO_VOCABULARIO = """
+    <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+               xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:rights>https://creativecommons.org/licenses/by/4.0/legalcode</dc:rights>
+      <dc:creator>https://orcid.org/0000-0002-1825-0097</dc:creator>
+      <dc:identifier>10.48323/qc6vn-nr176</dc:identifier>
     </oai_dc:dc>
 """
 
@@ -58,7 +83,28 @@ DSPACE = """
     <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
                xmlns:dc="http://purl.org/dc/elements/1.1/">
       <dc:identifier>https://hdl.handle.net/11612/1234</dc:identifier>
-      <dc:identifier>https://repositorio.uft.edu.br/jspui/handle/11612/1234</dc:identifier>
+      <dc:identifier>{raiz}/jspui/handle/11612/1234</dc:identifier>
+    </oai_dc:dc>
+"""
+
+# A primeira candidata some e a segunda atende — a forma do registro que
+# motivou a conferência das URLs do metadado, onde o `dc:identifier` trazia um
+# DOI nunca registrado antes do endereço bom.
+UMA_SOME_OUTRA_ATENDE = """
+    <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+               xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:identifier>{raiz}/sumido/article/view/9</dc:identifier>
+      <dc:identifier>{raiz}/rev/article/download/9/1</dc:identifier>
+    </oai_dc:dc>
+"""
+
+# O contexto `/index/` do OJS: as duas URLs respondem, as duas mandam para o
+# login. É o `dc:identifier` literal de `oai:revista.esmat.tjto.jus.br:article/120`.
+SO_LEVA_AO_LOGIN = """
+    <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+               xmlns:dc="http://purl.org/dc/elements/1.1/">
+      <dc:identifier>{raiz}/index/article/view/120</dc:identifier>
+      <dc:relation>{raiz}/index/article/view/120/125</dc:relation>
     </oai_dc:dc>
 """
 
@@ -91,24 +137,54 @@ PAGINAS = {
     "/revista/article/view/1315",
     "/dspace/handle/riufs/10820",
     "/canonico/handle/11612/5191",
+    # Endereços que o metadado das fixtures publica, agora que também eles
+    # passam pela conferência.
+    "/rev/article/view/1",
+    "/rev/article/download/9/1",
+    "/jspui/handle/11612/1234",
+    # A página do item no periódico que o `setSpec` nomeia — a única que abre
+    # no repositório cujo baseURL aponta o contexto de site.
+    "/index.php/revista_esmat/article/view/120",
+    "/revista-unica/article/view/1315",
+    # Não é página de item: é onde o OJS despeja quem pede um artigo fechado.
+    # Responde 200, e é isso que torna o status sozinho uma prova fraca.
+    "/index/login",
 }
 
 # Caminho que só responde atrás de um redirecionamento — o equivalente local do
-# `http` cadastrado que o repositório manda para o endereço canônico.
-REDIRECIONAMENTOS = {"/movido/handle/11612/5191": "/canonico/handle/11612/5191"}
+# `http` cadastrado que o repositório manda para o endereço canônico. Os dois de
+# baixo são o redirecionamento que **sai** da rota do item, rumo ao login.
+REDIRECIONAMENTOS = {
+    "/movido/handle/11612/5191": "/canonico/handle/11612/5191",
+    "/index/article/view/120": "/index/login",
+    "/index/article/view/120/125": "/index/login",
+}
 
 # Endpoints OAI e o que cada um responde.
 ROTAS_OAI = {
-    "/oai-vazio": lambda: ENVELOPE.format(base=BASE_FALSA, metadata=SEM_URL),
-    "/oai-datacite": lambda: ENVELOPE.format(base=BASE_FALSA, metadata=DATACITE_DOI_CRU),
-    "/oai-dspace": lambda: ENVELOPE.format(base=BASE_FALSA, metadata=DSPACE),
+    "/oai-vazio": lambda: envelope(SEM_URL),
+    "/oai-datacite": lambda: envelope(DATACITE_DOI_CRU),
+    "/oai-dspace": lambda: envelope(DSPACE),
     "/oai-sem-registro": lambda: ERRO_ID,
     # Derivação: o GetRecord falha, mas a página do item está no ar.
     "/revista/oai": lambda: ERRO_FORMATO_ID,
     "/dspace/oai/request": lambda: ERRO_ID,
     "/perdida/oai": lambda: ERRO_ID,
     "/movido/oai/request": lambda: ERRO_ID,
+    # GetRecord responde, mas o metadado não leva à página do item.
+    "/uma-some/oai": lambda: envelope(UMA_SOME_OUTRA_ATENDE),
+    "/perdido/oai": lambda: envelope(SO_LEVA_AO_LOGIN),
+    "/index.php/index/oai": lambda: envelope(SO_LEVA_AO_LOGIN, "revista_esmat:EDT"),
+    # `setSpec` de instalação com periódico único: só a seção, sem periódico à
+    # esquerda do ":" — a troca de contexto erra e a derivação antiga salva.
+    "/revista-unica/oai": lambda: envelope(SEM_URL, "ART"),
+    "/so-vocabulario/oai": lambda: envelope(SO_VOCABULARIO),
 }
+
+
+def get_records() -> list[dict]:
+    """Só os GetRecord de `RECEIVED` — as conferências também passam por aqui."""
+    return [r for r in RECEIVED if r["query"].get("verb") == ["GetRecord"]]
 
 BASE_FALSA = "http://origem.local/oai"
 
@@ -154,7 +230,7 @@ class _Handler(BaseHTTPRequestHandler):
             # protocolo, e não com 404.
             corpo = ERRO_FORMATO
         else:
-            corpo = ENVELOPE.format(base=BASE_FALSA, metadata=DUBLIN_CORE)
+            corpo = envelope(DUBLIN_CORE)
         return corpo.encode(), 200
 
     def do_GET(self) -> None:  # noqa: N802 (assinatura da stdlib)
@@ -179,6 +255,8 @@ class SuggestedLinkTests(SimpleTestCase):
         cls.thread.start()
         cls.raiz = f"http://127.0.0.1:{cls.server.server_address[1]}"
         cls.base_url = f"{cls.raiz}/oai"
+        global RAIZ
+        RAIZ = cls.raiz
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -200,9 +278,9 @@ class SuggestedLinkTests(SimpleTestCase):
 
     def test_get_record_sai_com_verbo_identificador_e_prefixo(self) -> None:
         suggested_link("oai:repo.br:artigo/1", self.base_url)
-        self.assertEqual(RECEIVED[-1]["path"], "/oai")
+        self.assertEqual(get_records()[-1]["path"], "/oai")
         self.assertEqual(
-            RECEIVED[-1]["query"],
+            get_records()[-1]["query"],
             {
                 "verb": ["GetRecord"],
                 "identifier": ["oai:repo.br:artigo/1"],
@@ -213,9 +291,7 @@ class SuggestedLinkTests(SimpleTestCase):
     def test_pagina_do_item_vence_o_link_de_download(self) -> None:
         """Ordem de preferência, não ordem de aparição: o download vem antes no XML."""
         resultado = suggested_link("oai:repo.br:artigo/1", self.base_url)
-        self.assertEqual(
-            resultado["link"], "https://revista.br/index.php/rev/article/view/1"
-        )
+        self.assertEqual(resultado["link"], f"{self.raiz}/rev/article/view/1")
         self.assertEqual(resultado["source"], "record:ojs")
 
     def test_url_de_namespace_e_do_request_nao_sao_candidatas(self) -> None:
@@ -231,25 +307,30 @@ class SuggestedLinkTests(SimpleTestCase):
         para ela, com um salto a mais e dependente de serviço de terceiros."""
         base = self.base_url.replace("/oai", "/oai-dspace")
         resultado = suggested_link("oai:repo.br:11612/1234", base)
-        self.assertEqual(
-            resultado["link"], "https://repositorio.uft.edu.br/jspui/handle/11612/1234"
-        )
+        self.assertEqual(resultado["link"], f"{self.raiz}/jspui/handle/11612/1234")
         self.assertEqual(resultado["source"], "record:dspace")
         # O resolvedor aparece antes no XML: a escolha é por prioridade, não por ordem.
         self.assertEqual(resultado["candidates"][0], "https://hdl.handle.net/11612/1234")
 
     def test_doi_cru_no_metadado_vira_url(self) -> None:
+        """O que se verifica aqui é a leitura do DOI, não a conferência dele.
+
+        O `_confirmar` sai do caminho porque o único jeito de conferir um DOI é
+        perguntar ao doi.org, e a suíte não fala com a rede aberta. Que um DOI
+        recusado cede a vez à próxima candidata está em
+        `test_candidata_que_a_origem_nega_cede_a_vez`, com endereços locais.
+        """
         base = self.base_url.replace("/oai", "/oai-datacite")
-        resultado = suggested_link("oai:repo.br:deposita/1", base)
-        self.assertEqual(resultado["link"], "https://doi.org/10.48472/deposita/0BYR5E")
+        doi = "https://doi.org/10.48472/deposita/0BYR5E"
+        with patch("apps.integrations.oai._confirmar", return_value=(doi, True)):
+            resultado = suggested_link("oai:repo.br:deposita/1", base)
+        self.assertEqual(resultado["link"], doi)
         self.assertEqual(resultado["source"], "record:doi")
 
     def test_prefixo_recusado_cai_para_oai_dc(self) -> None:
         resultado = suggested_link("oai:repo.br:artigo/1", self.base_url, "oai_datacite")
-        self.assertEqual(
-            resultado["link"], "https://revista.br/index.php/rev/article/view/1"
-        )
-        prefixos = [r["query"]["metadataPrefix"][0] for r in RECEIVED]
+        self.assertEqual(resultado["link"], f"{self.raiz}/rev/article/view/1")
+        prefixos = [r["query"]["metadataPrefix"][0] for r in get_records()]
         self.assertEqual(prefixos, ["oai_datacite", "oai_dc"])
 
     def test_erro_oai_sem_doi_no_id_volta_com_motivo(self) -> None:
@@ -292,6 +373,81 @@ class SuggestedLinkTests(SimpleTestCase):
         self.assertEqual(resultado["link"], f"{self.raiz}/canonico/handle/11612/5191")
         self.assertEqual(resultado["source"], "derived:dspace")
 
+    def test_candidata_que_a_origem_nega_cede_a_vez(self) -> None:
+        """Uma candidata morta não pode esconder a que está logo abaixo dela.
+
+        É a forma do registro que motivou a mudança: o `dc:identifier` trazia um
+        DOI nunca registrado — primeiro na ordem de preferência — e, depois
+        dele, um endereço que abria. A régua antiga escolhia o primeiro que
+        casasse com uma regra e parava ali, entregando o link quebrado.
+        """
+        base = self.base_url.replace("/oai", "/uma-some/oai")
+        resultado = suggested_link("oai:repo.br:article/9", base)
+        self.assertEqual(resultado["link"], f"{self.raiz}/rev/article/download/9/1")
+        self.assertEqual(resultado["source"], "record:download")
+        # A recusada continua listada: é por `candidates` que se enxerga a
+        # decisão sem repetir a consulta à origem.
+        self.assertIn(f"{self.raiz}/sumido/article/view/9", resultado["candidates"])
+
+    def test_redirecionamento_para_o_login_nao_conta_como_pagina_do_item(self) -> None:
+        """200 não basta: o OJS atende o pedido de um artigo fechado com o login.
+
+        O endereço existe, responde e não mostra o item. O que separa um do
+        outro é a rota final — depois do redirecionamento ela não tem mais
+        `/article/view/`.
+        """
+        base = self.base_url.replace("/oai", "/perdido/oai")
+        resultado = suggested_link("oai:host.br:article/120", base)
+        self.assertIsNone(resultado["link"])
+        # Nem "sem endereço no metadado" nem "origem fora do ar": havia
+        # endereços, e todos foram recusados.
+        self.assertEqual(resultado["reason"], "no-reachable-url")
+        self.assertEqual(len(resultado["candidates"]), 2)
+
+    def test_deriva_pelo_setspec_quando_o_dc_identifier_erra_o_periodico(self) -> None:
+        """O caso inteiro de `oai:revista.esmat.tjto.jus.br:article/120`.
+
+        Quem cadastrou a origem apontou o OAI do contexto de site
+        (`/index.php/index/oai`), que lista os artigos de todos os periódicos
+        sem hospedar nenhum — e o OJS publica esse mesmo contexto no
+        `dc:identifier`. O periódico de verdade está no `setSpec` do registro.
+        """
+        base = self.base_url.replace("/oai", "/index.php/index/oai")
+        resultado = suggested_link("oai:revista.br:article/120", base)
+        self.assertEqual(
+            resultado["link"], f"{self.raiz}/index.php/revista_esmat/article/view/120"
+        )
+        self.assertEqual(resultado["source"], "derived:ojs")
+
+    def test_setspec_sem_periodico_nao_atrapalha_a_derivacao_antiga(self) -> None:
+        """Instalação de periódico único: o `setSpec` traz só a seção.
+
+        Trocar o contexto por `ART` inventaria um caminho que não existe. O
+        palpite corrigido vai na frente por ser o caso comum, mas o antigo fica
+        de reserva — errar o primeiro custa uma requisição, não o link.
+        """
+        base = self.base_url.replace("/oai", "/revista-unica/oai")
+        resultado = suggested_link("oai:repo.br:article/1315", base)
+        self.assertEqual(resultado["link"], f"{self.raiz}/revista-unica/article/view/1315")
+        self.assertEqual(resultado["source"], "derived:ojs")
+
+    def test_licenca_e_orcid_nao_sao_pagina_do_item(self) -> None:
+        """Vocabulário que descreve o documento, e que documento nenhum é.
+
+        Enquanto a primeira candidata reconhecida por uma regra sempre vencia,
+        isso ficava escondido; desde que uma candidata pode ser recusada, a fila
+        desce até o desempate por ordem de documento — e um registro do
+        `researchdata.uibk.ac.at` chegou a oferecer o `legalcode` da Creative
+        Commons como página do item.
+        """
+        base = self.base_url.replace("/oai", "/so-vocabulario/oai")
+        with patch("apps.integrations.oai._confirmar", return_value=None) as confirmar:
+            resultado = suggested_link("oai:repo.br:qc6vn", base)
+        # Nem a licença nem o ORCID chegam a ser consideradas.
+        self.assertEqual(resultado["candidates"], ["https://doi.org/10.48323/qc6vn-nr176"])
+        self.assertEqual([c.args[0] for c in confirmar.call_args_list], resultado["candidates"])
+        self.assertIsNone(resultado["link"])
+
     def test_metadado_vence_a_derivacao(self) -> None:
         """A derivação é último recurso; havendo endereço no metadado, ele manda."""
         resultado = suggested_link("oai:repo.br:article/1", self.base_url)
@@ -332,6 +488,14 @@ class SuggestedLinkTests(SimpleTestCase):
 
         existe = f"{self.raiz}/revista/article/view/1315"
         self.assertEqual(_confirmar(existe), (existe, True))
+        # Com gabarito de forma, o 200 fora da rota do item não passa: o
+        # servidor respondeu, mas levou para outro lugar.
+        self.assertIsNone(
+            _confirmar(
+                f"{self.raiz}/index/article/view/120",
+                lambda url: "/article/view/" in url,
+            )
+        )
         # Servidor respondeu que não existe -> palpite descartado.
         self.assertIsNone(_confirmar(f"{self.raiz}/nao-existe"))
         # Não deu para perguntar -> palpite segue, marcado como não verificado.
@@ -355,14 +519,17 @@ class SuggestedLinkTests(SimpleTestCase):
     def test_link_resolvido_e_cacheado(self) -> None:
         suggested_link("oai:repo.br:artigo/1", self.base_url)
         suggested_link("oai:repo.br:artigo/1", self.base_url)
-        self.assertEqual(len(RECEIVED), 1)
+        # O cache guarda o resultado inteiro: a segunda chamada não repete nem o
+        # GetRecord nem a conferência.
+        self.assertEqual(len(get_records()), 1)
+        self.assertEqual(len(RECEIVED), 2)
 
     def test_falha_nao_e_cacheada(self) -> None:
         """Origem instável não pode fixar "sem link" por toda a janela do TTL."""
         base = self.base_url.replace("/oai", "/oai-vazio")
         suggested_link("oai:repo.br:artigo/1", base)
         suggested_link("oai:repo.br:artigo/1", base)
-        self.assertEqual(len(RECEIVED), 2)
+        self.assertEqual(len(get_records()), 2)
 
 
 @override_settings(OAI=OAI_CONFIG)

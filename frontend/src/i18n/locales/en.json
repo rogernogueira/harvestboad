@@ -267,6 +267,7 @@
       "reasons": {
         "unreachable": "The source repository did not respond.",
         "no-usable-url": "The record metadata carries no usable address.",
+        "no-reachable-url": "The record metadata carries addresses, but none of them opens the item page.",
         "oai-error": "The source repository refused the query for this record."
       }
     },

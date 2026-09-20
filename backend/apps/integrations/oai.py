@@ -21,8 +21,37 @@ têm a ver com o documento: o Harvester guarda o identificador como ele era na
 coleta, e repositórios trocam de domínio (o id vira `badArgument`); há origens
 cujo `GetRecord` responde `idDoesNotExist` até para o que elas mesmas listam.
 Em todos esses casos a página do item continua no ar, e o endereço dela segue
-do baseURL e do identificador. Derivação é palpite, então só é devolvida depois
-de confirmada com uma requisição — link quebrado é pior que link nenhum.
+do baseURL e do identificador.
+
+**Nenhum endereço sai daqui sem ter sido conferido**, venha ele do metadado ou
+da derivação. Por muito tempo só a derivação era confirmada, com o argumento de
+que o metadado é declaração da origem e não palpite nosso — mas declarado não é
+sinônimo de vivo. O caso que derrubou esse argumento:
+`oai:revista.esmat.tjto.jus.br:article/120` traz no `dc:identifier` um DOI que
+nunca chegou a ser registrado (404 no resolvedor) e, logo abaixo dele, a URL do
+artigo, que abre. Como o DOI é o primeiro da ordem de preferência, a régua
+antiga parava nele e a tela oferecia o link morto — sem nunca olhar a candidata
+seguinte. Daí `_por_prioridade` devolver a fila inteira, e não o primeiro
+colocado.
+
+A conferência é de forma, e não só de status, porque 200 prova pouco: o OJS
+atende o pedido de um artigo fechado **com a tela de login**, e o DSpace faz o
+mesmo com a capa da coleção. Então, para as regras cuja marca mora na rota do
+próprio item (`/article/view/`, `/handle/`), o endereço final — depois dos
+redirecionamentos — ainda precisa carregar essa marca. Isso não vale para DOI
+nem para `hdl.handle.net`: sair do domínio de origem é o que esses dois fazem
+quando dão certo.
+
+Quando nenhuma candidata do metadado sobrevive, a derivação assume — e para o
+OJS ela lê o periódico no `setSpec` do próprio registro (`revista_esmat:EDT`),
+em vez de confiar no contexto que está no baseURL. Isso cobre a origem
+cadastrada pelo OAI do contexto de site (`/index.php/index/oai`), que lista os
+artigos de todos os periódicos sem hospedar nenhum: derivar dele dá
+`/index/article/view/120`, e é justamente ali que o OJS responde com o login.
+Vale registrar que **não é o que conserta o caso da ESMAT** — o baseURL que o
+Harvester tem cadastrado para ela é o do periódico, e por ele a resolução para
+na candidata do metadado. É prevenção para a forma de cadastro, não para aquele
+registro.
 """
 
 import xml.etree.ElementTree as ET
@@ -45,12 +74,29 @@ USER_AGENT_HEADER = {
 # URLs de namespace e de esquema aparecem em quase todo registro OAI
 # (`xsi:schemaLocation`, `dc:format`). São vocabulário do formato, nunca o
 # endereço do documento.
+#
+# A segunda metade da lista é vocabulário de outra natureza, e entrou depois de
+# um registro do `researchdata.uibk.ac.at` devolver
+# `https://creativecommons.org/licenses/by/4.0/legalcode` como página do item:
+# licença, direito e identificador de pessoa ou instituição descrevem o
+# documento, e nenhum deles **é** o documento. Antes isso ficava escondido
+# porque a primeira candidata reconhecida por uma regra sempre ganhava; desde
+# que a candidata pode ser recusada, a fila desce até o desempate por ordem de
+# documento, e aí uma URL dessas chega ao botão.
 DOMINIOS_DE_ESQUEMA = (
     "openarchives.org",
     "purl.org",
     "w3.org",
     "schema.org",
     "datacite.org",
+    "creativecommons.org",
+    "licensebuttons.net",
+    "opensource.org",
+    "rightsstatements.org",
+    "spdx.org",
+    "orcid.org",
+    "ror.org",
+    "isni.org",
 )
 
 # Ordem de preferência entre as URLs encontradas. DOI primeiro por ser o
@@ -63,13 +109,29 @@ DOMINIOS_DE_ESQUEMA = (
 # `hdl.handle.net` é o resolvedor global, que só redireciona para lá — um salto
 # a mais, dependente de um serviço de terceiros. O resolvedor continua na lista
 # porque em alguns registros ele é o único endereço publicado.
+#
+# A terceira coluna diz se a marca da regra **mora na rota do item**. Quando
+# mora, ela é também o gabarito da conferência: o endereço final, depois dos
+# redirecionamentos, ainda tem de carregá-la. `doi` e `handle` ficam de fora
+# porque os dois são resolvedores — redirecionar para longe do próprio domínio
+# é o que eles fazem quando dão certo.
 REGRAS = (
-    ("doi", lambda url: "doi.org" in url),
-    ("ojs", lambda url: "/article/view/" in url),
-    ("dspace", lambda url: "/handle/" in url),
-    ("handle", lambda url: "hdl.handle.net" in url),
-    ("download", lambda url: "/article/download/" in url),
+    ("doi", lambda url: "doi.org" in url, False),
+    ("ojs", lambda url: "/article/view/" in url, True),
+    ("dspace", lambda url: "/handle/" in url, True),
+    ("handle", lambda url: "hdl.handle.net" in url, False),
+    ("download", lambda url: "/article/download/" in url, True),
 )
+
+# Gabarito de conferência por nome de regra — as que sobrevivem a redirecionamento.
+# Serve às candidatas do metadado e às derivadas, que usam os mesmos nomes de
+# plataforma (`ojs`, `dspace`).
+FORMA_NA_ROTA = {nome: regra for nome, regra, na_rota in REGRAS if na_rota}
+
+# Teto de candidatas conferidas por registro. Cada uma custa uma requisição à
+# origem, e metadado ruim às vezes despeja dezenas de URLs: passado esse ponto a
+# chance de a próxima ser a página do item não paga a espera de quem olha a tela.
+MAX_CONFIRMACOES = 4
 
 
 # Sufixos com que um baseURL OAI costuma terminar. Removê-los devolve a raiz de
@@ -156,6 +218,22 @@ def _escopo_do_metadado(root: ET.Element) -> ET.Element:
     return root
 
 
+def _set_spec(root: ET.Element) -> str | None:
+    """Primeiro `<setSpec>` do cabeçalho do registro.
+
+    No OJS ele é `{periodico}:{secao}`, e o periódico é a única pista confiável
+    de onde o item mora quando o baseURL cadastrado aponta o contexto de site.
+    Um registro pode estar em vários conjuntos; o primeiro basta, porque todos
+    trazem o mesmo periódico à esquerda do ":".
+    """
+    for elem in root.iter():
+        if _localname(elem.tag) == "setSpec":
+            texto = (elem.text or "").strip()
+            if texto:
+                return texto
+    return None
+
+
 def _candidatas(escopo: ET.Element) -> list[str]:
     """URLs do metadado, em ordem de documento e sem repetição.
 
@@ -181,14 +259,26 @@ def _candidatas(escopo: ET.Element) -> list[str]:
     return list(dict.fromkeys(encontradas))
 
 
-def _melhor(candidatas: list[str]) -> tuple[str, str] | None:
-    for nome, regra in REGRAS:
+def _por_prioridade(candidatas: list[str]) -> list[tuple[str, str]]:
+    """Candidatas em ordem de tentativa, cada uma com a regra que a escolheu.
+
+    Antes daqui saía só a primeira colocada. Devolver a fila inteira é o que
+    permite descartar uma candidata que a origem nega e seguir para a seguinte,
+    em vez de desistir do registro — o DOI que nunca foi registrado não pode
+    esconder a URL de artigo que vem logo abaixo dele no mesmo `dc:identifier`.
+
+    As que nenhuma regra reconhece vão para o fim, em ordem de documento, sob o
+    nome `primeira` que já nomeava esse desempate.
+    """
+    fila: list[tuple[str, str]] = []
+    vistas: set[str] = set()
+    for nome, regra, _ in REGRAS:
         for url in candidatas:
-            if regra(url):
-                return url, nome
-    if candidatas:
-        return candidatas[0], "primeira"
-    return None
+            if url not in vistas and regra(url):
+                vistas.add(url)
+                fila.append((url, nome))
+    fila.extend((url, "primeira") for url in candidatas if url not in vistas)
+    return fila
 
 
 def _raiz_do_servico(base_url: str) -> str | None:
@@ -198,25 +288,65 @@ def _raiz_do_servico(base_url: str) -> str | None:
     return None
 
 
-def _url_derivada(oai_id: str, base_url: str) -> tuple[str, str] | None:
-    """Endereço deduzido da forma do identificador, ainda sem confirmação.
+def _contexto_ojs(raiz: str, set_spec: str | None) -> str:
+    """Raiz do OJS com o periódico que o `setSpec` do registro nomeia.
+
+    No OJS o caminho é `{host}/index.php/{periodico}`, e o `setSpec` é
+    `{periodico}:{secao}` — `revista_esmat:EDT`. Quem cadastra a origem costuma
+    apontar o OAI do contexto de site (`/index.php/index/oai`), que lista os
+    artigos de todos os periódicos sem hospedar nenhum: derivar a partir dele dá
+    `/index/article/view/120`, que o OJS responde com a tela de login.
+
+    O `setSpec` vem do próprio registro, e diz de qual periódico ele é. Trocar
+    por ele o último segmento da raiz corrige esse caso e não mexe em nada
+    quando o baseURL já aponta o periódico certo.
+    """
+    if not set_spec:
+        return raiz
+    periodico = set_spec.split(":", 1)[0].strip().strip("/")
+    if not periodico:
+        return raiz
+    partes = urlparse(raiz)
+    segmentos = [s for s in partes.path.split("/") if s]
+    # Sem segmento nenhum não há contexto a trocar, e concatenar produziria um
+    # endereço sem host (`https://revista_esmat`).
+    if not segmentos or segmentos[-1] == periodico:
+        return raiz
+    segmentos[-1] = periodico
+    return f"{partes.scheme}://{partes.netloc}/" + "/".join(segmentos)
+
+
+def _derivadas(
+    oai_id: str, base_url: str, set_spec: str | None = None
+) -> list[tuple[str, str]]:
+    """Endereços deduzidos da forma do identificador, ainda sem confirmação.
 
     A cauda depois do último ":" é o que o repositório usa para nomear o item —
     `article/1315` no OJS, `riufs/10820` no DSpace. Quem manda no domínio é o
     baseURL, não o identificador: é justamente quando o repositório muda de
     endereço que o identificador guardado na coleta envelhece.
+
+    São vários palpites, não um, porque o `setSpec` melhora o caso comum e
+    estraga um caso raro: há instalações de periódico único cujo `setSpec` traz
+    só a seção (`ART`), e aí a troca de contexto inventa um caminho que não
+    existe. O palpite corrigido vai na frente e o antigo fica de reserva — como
+    os dois passam pela confirmação, errar o primeiro custa uma requisição, não
+    o link.
     """
     raiz = _raiz_do_servico(base_url)
     cauda = oai_id.rsplit(":", 1)[-1].strip().strip("/")
     if not raiz or "/" not in cauda:
-        return None
-    if cauda.startswith("article/"):
-        return f"{raiz}/article/view/{cauda.removeprefix('article/')}", "ojs"
-    return f"{raiz}/handle/{cauda}", "dspace"
+        return []
+    if not cauda.startswith("article/"):
+        return [(f"{raiz}/handle/{cauda}", "dspace")]
+
+    numero = cauda.removeprefix("article/")
+    raizes = dict.fromkeys([_contexto_ojs(raiz, set_spec), raiz])
+    return [(f"{r}/article/view/{numero}", "ojs") for r in raizes]
 
 
-def _confirmar(url: str) -> tuple[str, bool] | None:
-    """Verifica a URL derivada. Devolve `(endereço, verificada)` ou `None`.
+def _confirmar(url: str, forma=None) -> tuple[str, bool] | None:
+    """Verifica um endereço. Devolve `(endereço, verificada)` ou `None`.
 
     Os três desfechos são diferentes e não podem ser confundidos:
 
@@ -231,9 +361,23 @@ def _confirmar(url: str) -> tuple[str, bool] | None:
       sobre o link: diz que este servidor não alcança aquela rede. Quem abrir
       pode muito bem alcançar, então o palpite vai adiante — marcado.
 
+    `forma` é o gabarito que o endereço **final** precisa satisfazer, para as
+    regras cuja marca mora na rota do item. Sem ele, um 200 seria prova fraca
+    demais: o OJS responde 200 mandando para a tela de login, e o DSpace faz o
+    mesmo com a capa da coleção. Redirecionar para fora da rota do item é o
+    servidor dizendo que não vai mostrar o item.
+
     HEAD basta e não baixa a página. Servidores que não o implementam respondem
     405/501, e aí vale um GET, de que só interessa o status.
     """
+
+    def desfecho(status: int, final: str) -> tuple[str, bool] | None:
+        if status >= 400:
+            return None
+        if forma is not None and not forma(final):
+            return None
+        return final, True
+
     try:
         with httpx.Client(
             timeout=_config("TIMEOUT"), follow_redirects=True, headers=USER_AGENT_HEADER
@@ -241,8 +385,8 @@ def _confirmar(url: str) -> tuple[str, bool] | None:
             resposta = client.head(url)
             if resposta.status_code in (405, 501):
                 with client.stream("GET", url) as resposta:
-                    return (str(resposta.url), True) if resposta.status_code < 400 else None
-            return (str(resposta.url), True) if resposta.status_code < 400 else None
+                    return desfecho(resposta.status_code, str(resposta.url))
+            return desfecho(resposta.status_code, str(resposta.url))
     except httpx.HTTPError:
         return url, False
 
@@ -267,8 +411,14 @@ def _sem_registro(
     motivo: str,
     candidatas: list[str] | None = None,
     confirmar: bool = True,
+    set_spec: str | None = None,
 ) -> dict:
-    """Últimos recursos, quando o `GetRecord` não produziu endereço.
+    """Últimos recursos, quando o `GetRecord` não produziu endereço utilizável.
+
+    "Não produziu" cobre dois casos: o `GetRecord` falhou, e aí não há `setSpec`
+    a passar; ou ele respondeu, mas nenhuma das URLs do metadado sobreviveu à
+    conferência — e aí o `setSpec` do registro vem junto, porque é ele que diz
+    em qual periódico do OJS o item mora.
 
     O DOI vem antes da derivação por ser um identificador declarado, não
     deduzido. `motivo` só aparece quando nenhum dos dois resolve — ou junto de
@@ -285,14 +435,17 @@ def _sem_registro(
     if doi:
         return _resultado(doi, "identifier", candidatas=candidatas)
 
-    derivada = _url_derivada(oai_id, base_url)
-    if derivada:
-        palpite, plataforma = derivada
-        if not confirmar:
-            return _resultado(
-                palpite, f"derived-unverified:{plataforma}", motivo, candidatas
-            )
-        conferida = _confirmar(palpite)
+    derivadas = _derivadas(oai_id, base_url, set_spec)
+    if derivadas and not confirmar:
+        # Sem como conferir, sai o palpite antigo — o que não depende do
+        # `setSpec`. A correção de contexto é boa quando se pode testá-la; num
+        # endereço que já vai marcado como provável, empilhar uma segunda
+        # dedução seria adivinhar duas vezes e avisar uma só.
+        palpite, plataforma = derivadas[-1]
+        return _resultado(palpite, f"derived-unverified:{plataforma}", motivo, candidatas)
+
+    for palpite, plataforma in derivadas:
+        conferida = _confirmar(palpite, FORMA_NA_ROTA.get(plataforma))
         if conferida:
             url, verificada = conferida
             prefixo = "derived" if verificada else "derived-unverified"
@@ -331,12 +484,27 @@ def _resolver(oai_id: str, base_url: str, prefix: str) -> dict:
         return _sem_registro(oai_id, base_url, f"oai-error:{codigo}")
 
     candidatas = _candidatas(_escopo_do_metadado(root))
-    escolha = _melhor(candidatas)
-    if escolha is None:
-        return _sem_registro(oai_id, base_url, "no-usable-url", candidatas)
+    set_spec = _set_spec(root)
+    if not candidatas:
+        return _sem_registro(
+            oai_id, base_url, "no-usable-url", candidatas, set_spec=set_spec
+        )
 
-    url, regra = escolha
-    return _resultado(url, f"record:{regra}", candidatas=candidatas)
+    # Desce a fila até uma candidata que a origem confirme. Só a recusa
+    # explícita — 4xx/5xx, ou um redirecionamento que sai da rota do item —
+    # descarta uma candidata; não conseguir perguntar devolve o endereço mesmo
+    # assim, que é o que `_confirmar` já fazia pela derivação.
+    for url, regra in _por_prioridade(candidatas)[:MAX_CONFIRMACOES]:
+        conferida = _confirmar(url, FORMA_NA_ROTA.get(regra))
+        if conferida:
+            final, _ = conferida
+            return _resultado(final, f"record:{regra}", candidatas=candidatas)
+
+    # O metadado trazia endereços e a origem negou todos: é diferente de não
+    # trazer nenhum, e a tela explica as duas coisas de formas diferentes.
+    return _sem_registro(
+        oai_id, base_url, "no-reachable-url", candidatas, set_spec=set_spec
+    )
 
 
 def suggested_link(oai_id: str, base_url: str, prefix: str = "oai_dc") -> dict:

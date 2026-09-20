@@ -269,6 +269,7 @@
       "reasons": {
         "unreachable": "O repositório de origem não respondeu.",
         "no-usable-url": "O metadado do registro não traz um endereço utilizável.",
+        "no-reachable-url": "O metadado do registro traz endereços, mas nenhum deles abre a página do item.",
         "oai-error": "O repositório de origem recusou a consulta a este registro."
       }
     },
