@@ -104,7 +104,7 @@ class NotificationViewSet(
             # Lista de um repositório: aqui sim vale o contrato de autorização,
             # em que `None` libera o ADMIN.
             assert_can_read_repository(self.request.user, repositorio)
-            queryset = services.do_repositorio(repositorio)
+            queryset = services.do_repositorio(repositorio, self.request.user)
         else:
             queryset = services.visiveis_para(self.request.user)
 
@@ -192,6 +192,33 @@ class NotificationViewSet(
             notificacao, context=self.get_serializer_context()
         )
         return Response(serializer.data)
+
+    @extend_schema(
+        request=None,
+        responses={200: None},
+        description=(
+            "Tira o aviso da caixa de quem pede, **sem apagá-lo**. A "
+            "notificação continua inteira para os demais gestores do "
+            "repositório e na lista de quem a enviou.\n\n"
+            "Existe porque a notificação não tem estado por usuário: excluí-la "
+            "para arrumar a própria caixa levaria junto o aviso dos colegas. "
+            "Repetir a chamada é inócuo."
+        ),
+    )
+    @action(detail=True, methods=["post"], url_path="dismiss")
+    def dismiss(self, request: Request, pk: str | None = None) -> Response:
+        notificacao = self.get_object()
+
+        # Só registra na trilha quando esta chamada foi a que dispensou, como
+        # em `read`: reclique não é fato novo e encheria a auditoria de ruído.
+        if services.dispensar(notificacao.pk, request.user):
+            record(
+                action=AuditLog.Action.UPDATE,
+                resource=f"{RESOURCE}.dismiss",
+                resource_id=notificacao.pk,
+                request=request,
+            )
+        return Response({"dismissed": True})
 
     @extend_schema(
         request=NotificationBulkSerializer,
@@ -287,12 +314,16 @@ class NotificationViewSet(
 
         Devolve **404**, e não 403, como já faz o `RepositoryAccessViewSet` com
         vínculo alheio: a existência do registro alheio não é informação a dar.
+
+        O recorte é `alcancaveis_por`, e não `visiveis_para`: quem dispensou o
+        aviso tirou-o da própria caixa, mas continua alcançando-o — senão o
+        segundo clique em "dispensar" viraria 404 em vez de não fazer nada.
         """
         pk = self.kwargs["pk"]
         if self.request.user.is_admin:
             notificacao = Notification.objects.filter(pk=pk).first()
         else:
-            notificacao = services.visiveis_para(self.request.user).filter(pk=pk).first()
+            notificacao = services.alcancaveis_por(self.request.user).filter(pk=pk).first()
 
         if notificacao is None:
             raise NotFound("Notificação inexistente ou fora do seu alcance.")

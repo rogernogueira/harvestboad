@@ -26,6 +26,11 @@ import type { NotificationItem } from '@/lib/types'
  * aparece em dois recipientes — a modal do sino e a aba "Caixa de entrada" da
  * seção de notificações. Duplicar o item faria as três formas divergirem
  * justamente no que distingue "lida" de "exige visto".
+ *
+ * Com `onDispensar`, ganha o botão de tirar da caixa **ao lado** do conteúdo, e
+ * não dentro dele: na forma comum e não lida o item inteiro já é um `<button>`,
+ * e um botão dentro de outro é HTML inválido — o navegador desfaz o aninhamento
+ * e o clique passa a cair no alvo errado.
  */
 export function NotificationEntry({
   id,
@@ -33,12 +38,15 @@ export function NotificationEntry({
   quando,
   ocupado,
   onMarcar,
+  onDispensar,
 }: {
   id: string
   item: NotificationItem
   quando: Intl.DateTimeFormat
   ocupado: boolean
   onMarcar: () => void
+  /** Ausente, o item não oferece o botão — é o caso da modal do sino. */
+  onDispensar?: () => void
 }) {
   const { t, i18n } = useTranslation()
   const criada = new Date(item.createdAt)
@@ -86,60 +94,88 @@ export function NotificationEntry({
     </>
   )
 
-  if (item.read) {
+  const formaDoItem = () => {
+    if (item.read) {
+      return (
+        <div id={`${id}-read`} className="br-item p-2">
+          {corpo}
+          <span id={`${id}-read-by`} className="d-block text-down-01 text-gray-70">
+            {item.readByUsername
+              ? t(item.requiresAcknowledgement ? 'notifications.seenBy' : 'notifications.readBy', {
+                  username: item.readByUsername,
+                })
+              : t('notifications.alreadyRead')}
+          </span>
+        </div>
+      )
+    }
+
+    if (item.requiresAcknowledgement) {
+      return (
+        <div id={`${id}-pending`} className="br-item p-2">
+          {corpo}
+          <span
+            id={`${id}-requires`}
+            className="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-2"
+          >
+            <span id={`${id}-requires-hint`} className="text-down-01 text-gray-70">
+              {t('notifications.requiresHint')}
+            </span>
+            <BrButton
+              id={`${id}-acknowledge`}
+              type="button"
+              primary
+              size="small"
+              disabled={ocupado}
+              onClick={onMarcar}
+            >
+              {t('notifications.acknowledge')}
+            </BrButton>
+          </span>
+        </div>
+      )
+    }
+
     return (
-      <div id={`${id}-read`} className="br-item p-2">
+      <button
+        id={`${id}-mark`}
+        type="button"
+        onClick={onMarcar}
+        disabled={ocupado}
+        aria-label={t('notifications.markRead', { title: item.title })}
+        className="br-item p-2 text-left w-100"
+      >
         {corpo}
-        <span id={`${id}-read-by`} className="d-block text-down-01 text-gray-70">
-          {item.readByUsername
-            ? t(item.requiresAcknowledgement ? 'notifications.seenBy' : 'notifications.readBy', {
-                username: item.readByUsername,
-              })
-            : t('notifications.alreadyRead')}
+        <span id={`${id}-hint`} className="d-block text-down-01 text-gray-70">
+          {t('notifications.markReadHint')}
         </span>
-      </div>
+      </button>
     )
   }
 
-  if (item.requiresAcknowledgement) {
-    return (
-      <div id={`${id}-pending`} className="br-item p-2">
-        {corpo}
-        <span
-          id={`${id}-requires`}
-          className="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-2"
-        >
-          <span id={`${id}-requires-hint`} className="text-down-01 text-gray-70">
-            {t('notifications.requiresHint')}
-          </span>
-          <BrButton
-            id={`${id}-acknowledge`}
-            type="button"
-            primary
-            size="small"
-            disabled={ocupado}
-            onClick={onMarcar}
-          >
-            {t('notifications.acknowledge')}
-          </BrButton>
-        </span>
-      </div>
-    )
-  }
+  if (!onDispensar) return formaDoItem()
 
   return (
-    <button
-      id={`${id}-mark`}
-      type="button"
-      onClick={onMarcar}
-      disabled={ocupado}
-      aria-label={t('notifications.markRead', { title: item.title })}
-      className="br-item p-2 text-left w-100"
-    >
-      {corpo}
-      <span id={`${id}-hint`} className="d-block text-down-01 text-gray-70">
-        {t('notifications.markReadHint')}
-      </span>
-    </button>
+    <div id={`${id}-row`} className="d-flex align-items-start gap-1">
+      <div id={`${id}-content`} className="flex-grow-1" style={{ minWidth: 0 }}>
+        {formaDoItem()}
+      </div>
+      {/*
+        Um X, e não uma lixeira: a notificação não é apagada — ela continua
+        inteira para os outros gestores do repositório e na lista de quem a
+        enviou. A lixeira prometeria uma destruição que não acontece.
+      */}
+      <button
+        id={`${id}-dismiss`}
+        type="button"
+        onClick={onDispensar}
+        disabled={ocupado}
+        title={t('notifications.dismiss.action')}
+        aria-label={t('notifications.dismiss.one', { title: item.title })}
+        className="br-button circle small flex-shrink-0"
+      >
+        <i className="fas fa-times" aria-hidden="true" />
+      </button>
+    </div>
   )
 }

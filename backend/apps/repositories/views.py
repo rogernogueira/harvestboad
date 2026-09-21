@@ -284,7 +284,7 @@ class MyRepositoriesSummaryView(HarvesterBackedAPIView):
         if not request.user.is_admin:
             queryset = queryset.filter(user=request.user)
 
-        resumos = services.access_summaries(queryset)
+        resumos = services.access_summaries(queryset, request.user)
         return Response({"count": len(resumos), "results": resumos})
 
 

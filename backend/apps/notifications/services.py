@@ -7,7 +7,7 @@ notificações de cada repositório continuam sem leitura.
 from django.db.models import Count, Q, QuerySet
 from django.utils import timezone
 
-from .models import Notification
+from .models import Notification, NotificationDismissal
 
 
 def visiveis_para(user) -> QuerySet[Notification]:
@@ -23,12 +23,36 @@ def visiveis_para(user) -> QuerySet[Notification]:
     dele; o que não gerencia nenhum vê só os recados diretos. Gestor sem vínculo
     nenhum cai em `__in=[]`, que não casa nada — sem precisar de ramo extra.
     """
+    return alcancaveis_por(user).exclude(pk__in=dispensadas_por(user))
+
+
+def alcancaveis_por(user) -> QuerySet[Notification]:
+    """O que é desta pessoa, dispensado ou não.
+
+    Separado de `visiveis_para` por causa das ações sobre um item só. Quem
+    dispensa sai da própria caixa, mas continua sendo o dono da dispensa: se a
+    busca do objeto usasse a caixa já filtrada, o segundo clique em "dispensar"
+    encontraria 404 em vez de ser inócuo — medido, e era exatamente o que
+    acontecia.
+
+    É este o recorte que autoriza agir; `visiveis_para` é o que se lê.
+    """
     meus_repositorios = user.repository_accesses.values_list(
         "harvester_repository_id", flat=True
     )
     return Notification.objects.filter(
         Q(recipient=user) | Q(harvester_repository_id__in=meus_repositorios)
     )
+
+
+def dispensadas_por(user):
+    """Ids que esta pessoa tirou da própria caixa.
+
+    Subconsulta, e não lista materializada: quem chama já está montando um
+    `QuerySet`, e resolver isto antes custaria uma ida a mais ao banco para
+    devolver ids que o próprio `EXCLUDE` sabe pedir.
+    """
+    return NotificationDismissal.objects.filter(user=user).values("notification_id")
 
 
 def do_autor(user) -> QuerySet[Notification]:
@@ -42,11 +66,20 @@ def do_autor(user) -> QuerySet[Notification]:
     return Notification.objects.filter(author=user)
 
 
-def do_repositorio(harvester_repository_id: str) -> QuerySet[Notification]:
-    """Notificações de um repositório. Quem pode ver é decidido antes, na view."""
-    return Notification.objects.filter(
+def do_repositorio(harvester_repository_id: str, user=None) -> QuerySet[Notification]:
+    """Notificações de um repositório. Quem pode ver é decidido antes, na view.
+
+    Com `user`, some o que essa pessoa dispensou. É o mesmo aviso que sumiu da
+    caixa dela: o painel é aberto pelo sino da linha dela, e reaparecer ali
+    desfaria a dispensa aos olhos de quem a fez. Sem `user`, a lista é a do
+    repositório inteiro.
+    """
+    queryset = Notification.objects.filter(
         harvester_repository_id=str(harvester_repository_id)
     )
+    if user is not None:
+        queryset = queryset.exclude(pk__in=dispensadas_por(user))
+    return queryset
 
 
 def marcar_lida(notificacao_id: int, user) -> bool:
@@ -68,7 +101,21 @@ def marcar_lida(notificacao_id: int, user) -> bool:
     )
 
 
-def contar_nao_lidas_por_repositorio() -> dict[str, int]:
+def dispensar(notificacao_id: int, user) -> bool:
+    """Tira o aviso da caixa desta pessoa. Devolve se foi esta chamada que tirou.
+
+    `get_or_create` em vez de `create`: dispensar duas vezes é o mesmo fato, e a
+    restrição única do modelo transformaria o segundo clique em `IntegrityError`
+    — erro 500 para quem só clicou de novo. O retorno serve à auditoria, que não
+    precisa de uma entrada por clique repetido, como já faz `marcar_lida`.
+    """
+    _, criada = NotificationDismissal.objects.get_or_create(
+        notification_id=notificacao_id, user=user
+    )
+    return criada
+
+
+def contar_nao_lidas_por_repositorio(user=None) -> dict[str, int]:
     """Não lidas de cada repositório, em uma consulta.
 
     Sem receber a lista de identificadores da página, ao contrário de
@@ -77,12 +124,18 @@ def contar_nao_lidas_por_repositorio() -> dict[str, int]:
     página pode ter 2.181 repositórios desde que a tela passou a oferecer
     "tudo" — e aí o `IN` custaria mais que a varredura.
 
-    Sem parâmetro de usuário também de propósito: o estado de leitura é
-    compartilhado, então a contagem é a mesma para quem quer que pergunte.
+    O `user` é opcional, e as duas formas têm leitores diferentes. Sem ele, a
+    contagem é a do repositório: é o que a tabela do ADMIN mostra, onde o número
+    significa "nenhum gestor leu ainda" e não depende de quem pergunta — a
+    leitura é compartilhada. Com ele, sai também o que essa pessoa dispensou,
+    que é o que o sino do cartão dela precisa dizer para não contar aviso que
+    já não está na caixa.
     """
+    queryset = Notification.objects.filter(read_at__isnull=True)
+    if user is not None:
+        queryset = queryset.exclude(pk__in=dispensadas_por(user))
     return dict(
-        Notification.objects.filter(read_at__isnull=True)
-        .exclude(harvester_repository_id="")
+        queryset.exclude(harvester_repository_id="")
         .values_list("harvester_repository_id")
         .annotate(total=Count("id"))
     )

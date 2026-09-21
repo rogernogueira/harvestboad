@@ -506,6 +506,12 @@
     "direct": "recado directo",
     "markRead": "Marcar como leída: {{title}}",
     "markReadHint": "Haga clic para marcarla como leída — vale para todos los gestores de este repositorio.",
+    "dismiss": {
+      "action": "Quitar de mi bandeja",
+      "title": "Quitar de su bandeja",
+      "one": "Quitar de mi bandeja: {{title}}",
+      "body": "El aviso \"{{title}}\" sale de su bandeja de entrada. Sigue para los demás gestores del repositorio y en la lista de quien lo envió. No se puede recuperar."
+    },
     "readBy": "Leída por {{username}}",
     "alreadyRead": "Ya leída",
     "new": {

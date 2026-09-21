@@ -125,6 +125,7 @@ function CaixaDeEntrada() {
   const { t, i18n } = useTranslation()
   const queryClient = useQueryClient()
   const [searchParams, setSearchParams] = useSearchParams()
+  const [paraDispensar, setParaDispensar] = useState<NotificationItem | null>(null)
 
   const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
   const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
@@ -152,6 +153,24 @@ function CaixaDeEntrada() {
         Harvester, e aguardá-lo manteria os botões desabilitados muito depois
         de a leitura já ter sido registrada.
       */
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] })
+      void queryClient.invalidateQueries({ queryKey: ['repositories', 'summary'] })
+      void queryClient.invalidateQueries({ queryKey: ['repositories', 'index'] })
+    },
+  })
+
+  /*
+   * Tirar da caixa não apaga: o backend grava uma dispensa por pessoa, e a
+   * notificação segue inteira para os outros gestores do repositório e na
+   * lista de quem a enviou. As invalidações são as mesmas da leitura, porque
+   * o que muda é o mesmo conjunto — a caixa e a contagem do sino de cada
+   * cartão, que agora desconta o que esta pessoa dispensou.
+   */
+  const dispensar = useMutation({
+    mutationFn: (notificacaoId: number) =>
+      apiPost<{ dismissed: boolean }>(`/notifications/${notificacaoId}/dismiss/`, {}),
+    onSettled: () => {
+      setParaDispensar(null)
       void queryClient.invalidateQueries({ queryKey: ['notifications'] })
       void queryClient.invalidateQueries({ queryKey: ['repositories', 'summary'] })
       void queryClient.invalidateQueries({ queryKey: ['repositories', 'index'] })
@@ -192,13 +211,16 @@ function CaixaDeEntrada() {
         {t('notifications.inbox.subtitle', { count: data.count })}
       </p>
 
-      {marcar.isError ? (
+      {marcar.isError || dispensar.isError ? (
         <p
           id="notifications-page-inbox-warning"
           role="alert"
           className="text-base text-red-vivid-50 mb-0"
         >
-          {marcar.error instanceof ApiError ? marcar.error.detail : t('common.error')}
+          {(() => {
+            const erro = marcar.error ?? dispensar.error
+            return erro instanceof ApiError ? erro.detail : t('common.error')
+          })()}
         </p>
       ) : null}
 
@@ -213,8 +235,9 @@ function CaixaDeEntrada() {
                   id={`notifications-page-inbox-item-${item.id}`}
                   item={item}
                   quando={quando}
-                  ocupado={marcar.isPending}
+                  ocupado={marcar.isPending || dispensar.isPending}
                   onMarcar={() => marcar.mutate(item.id)}
+                  onDispensar={() => setParaDispensar(item)}
                 />
               </li>
             ))}
@@ -231,6 +254,23 @@ function CaixaDeEntrada() {
           />
         </>
       )}
+
+      {/*
+        Sem `destrutivo`: o vermelho aqui prometeria estrago que não há — nada
+        é apagado, e o aviso continua para os outros. O que a mensagem precisa
+        dizer é o que de fato não se desfaz: a saída da caixa de quem clicou.
+      */}
+      <ConfirmModal
+        id="notifications-page-dismiss-confirm"
+        aberto={paraDispensar !== null}
+        titulo={t('notifications.dismiss.title')}
+        rotuloConfirmar={t('notifications.dismiss.action')}
+        onConfirmar={() => paraDispensar && dispensar.mutate(paraDispensar.id)}
+        onCancelar={() => setParaDispensar(null)}
+        ocupado={dispensar.isPending}
+      >
+        {t('notifications.dismiss.body', { title: paraDispensar?.title ?? '' })}
+      </ConfirmModal>
     </div>
   )
 }

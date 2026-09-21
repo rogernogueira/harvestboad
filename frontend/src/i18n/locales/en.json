@@ -490,6 +490,12 @@
     "direct": "direct message",
     "markRead": "Mark as read: {{title}}",
     "markReadHint": "Click to mark as read — this applies to every manager of this repository.",
+    "dismiss": {
+      "action": "Remove from my inbox",
+      "title": "Remove from your inbox",
+      "one": "Remove from my inbox: {{title}}",
+      "body": "The notice \"{{title}}\" leaves your inbox. It stays for the other repository managers and in the sender's list. It cannot be brought back."
+    },
     "readBy": "Read by {{username}}",
     "alreadyRead": "Already read",
     "new": {

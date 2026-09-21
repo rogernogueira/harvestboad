@@ -266,7 +266,7 @@ def _com_regras(resumo: dict, snapshot_id: str, client: HarvesterClient) -> dict
     return resumo
 
 
-def access_summaries(accesses) -> list[dict]:
+def access_summaries(accesses, user=None) -> list[dict]:
     """Vínculos do usuário enriquecidos com as estatísticas da última coleta.
 
     Cada repositório é independente: se o Harvester falhar para um, os demais
@@ -279,7 +279,11 @@ def access_summaries(accesses) -> list[dict]:
     # Uma consulta para o painel inteiro, fora do laço. Dentro dele seria um
     # N+1 difícil de notar: o laço já faz N idas à origem, e o custo do banco
     # desapareceria no meio da espera de rede.
-    nao_lidas = contar_nao_lidas_por_repositorio()
+    # Com `user`, a contagem desconta o que ele dispensou: este é o sino do
+    # cartão dele, e acender por aviso que já saiu da caixa seria mentira. A
+    # tabela do ADMIN usa a outra forma, sem usuário, onde o número significa
+    # "nenhum gestor leu ainda".
+    nao_lidas = contar_nao_lidas_por_repositorio(user)
 
     for acesso in accesses:
         repository_id = acesso.harvester_repository_id

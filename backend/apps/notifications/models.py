@@ -217,3 +217,57 @@ class Notification(models.Model):
     @property
     def is_read(self) -> bool:
         return self.read_at is not None
+
+
+class NotificationDismissal(models.Model):
+    """Notificação que uma pessoa tirou da própria caixa.
+
+    Existe porque a `Notification` não tem estado por usuário: uma linha serve
+    todos os gestores do repositório, e até a leitura é compartilhada — o
+    `read_at` é um só para todo mundo. Apagar a linha para arrumar a própria
+    caixa levaria junto o aviso dos colegas e a linha do relatório de quem
+    enviou.
+
+    Então a linha fica e o que se guarda é a dispensa: quem dispensou, e quando.
+    O aviso some da caixa de quem dispensou e continua inteiro para os demais.
+
+    **A dispensa não se desfaz pela API.** É o mesmo princípio da leitura, que
+    também é mão única: a tela não oferece "desdispensar", e o caminho para
+    rever o que saiu é o painel do repositório. Se um dia isso mudar, a linha
+    aqui é que sai — o modelo não precisa de campo novo.
+    """
+
+    notification = models.ForeignKey(
+        Notification,
+        on_delete=models.CASCADE,
+        related_name="dismissals",
+        verbose_name="notificação",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notification_dismissals",
+        verbose_name="dispensada por",
+    )
+    dismissed_at = models.DateTimeField("dispensada em", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "dispensa de notificação"
+        verbose_name_plural = "dispensas de notificação"
+        ordering = ["-dismissed_at"]
+        constraints = [
+            # Dispensar duas vezes é o mesmo fato. Sem isto, um duplo clique
+            # gravaria duas linhas e a subconsulta de exclusão passaria a
+            # devolver repetidos.
+            models.UniqueConstraint(
+                fields=["notification", "user"], name="dispensa_unica_por_pessoa"
+            ),
+        ]
+        indexes = [
+            # A caixa de entrada filtra sempre por pessoa, e é o único acesso
+            # quente desta tabela.
+            models.Index(fields=["user"], name="dispensa_por_usuario"),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.user} dispensou {self.notification_id}"

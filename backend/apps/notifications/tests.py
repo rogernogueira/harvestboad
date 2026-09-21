@@ -16,6 +16,7 @@ from apps.audit.models import AuditLog
 from apps.notifications.models import (
     Notification,
     NotificationCategory,
+    NotificationDismissal,
     NotificationTemplate,
 )
 from apps.repositories.models import RepositoryAccess
@@ -774,3 +775,110 @@ class PaginacaoPadraoTests(TestCase):
         resposta = api(self.admin).get(f"{BASE}/categories/")
         self.assertEqual(resposta.status_code, 200)
         self.assertIsInstance(resposta.data, list)
+
+
+class NotificationDismissAPITests(TestCase):
+    """Dispensa: tira da caixa de quem pede, sem tocar na de ninguém mais.
+
+    É o contraponto da leitura, que é compartilhada de propósito. Aqui o que se
+    verifica é justamente que o efeito **não** vaza: o aviso segue inteiro para
+    o outro gestor do mesmo repositório e para quem o enviou.
+    """
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.ana = User.objects.create_user(
+            username="ana", email="ana@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        cls.bruno = User.objects.create_user(
+            username="bruno", email="bru@ibict.br", password="x", profile=Profile.GESTOR
+        )
+        cls.admin = User.objects.create_user(
+            username="adm", email="adm@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        RepositoryAccess.objects.create(user=cls.ana, harvester_repository_id="1", acronym="A")
+        RepositoryAccess.objects.create(user=cls.bruno, harvester_repository_id="1", acronym="A")
+
+    def setUp(self) -> None:
+        cache.clear()
+        self.aviso = Notification.objects.create(
+            title="do 1",
+            message="m",
+            category=COLETA(),
+            harvester_repository_id="1",
+            acronym="A",
+            author=self.admin,
+        )
+
+    def _dispensar(self, user):
+        return api(user).post(f"{BASE}/{self.aviso.pk}/dismiss/", {}, format="json")
+
+    def test_dispensa_tira_da_caixa_de_quem_dispensou(self) -> None:
+        self.assertEqual(self._dispensar(self.ana).status_code, 200)
+        self.assertEqual(api(self.ana).get(f"{BASE}/").json()["count"], 0)
+
+    def test_dispensa_de_um_gestor_nao_afeta_o_outro(self) -> None:
+        """O oposto da leitura: aqui o efeito é de quem dispensou, e só dele."""
+        self._dispensar(self.ana)
+        self.assertEqual(api(self.bruno).get(f"{BASE}/").json()["count"], 1)
+
+    def test_dispensa_nao_apaga_a_notificacao(self) -> None:
+        self._dispensar(self.ana)
+        self.assertTrue(Notification.objects.filter(pk=self.aviso.pk).exists())
+
+    def test_dispensada_continua_na_lista_de_quem_enviou(self) -> None:
+        """O relatório do administrador não pode encolher porque alguém arrumou
+        a própria caixa."""
+        self._dispensar(self.ana)
+        enviadas = api(self.admin).get(f"{BASE}/?sent=true").json()
+        self.assertEqual(enviadas["count"], 1)
+
+    def test_dispensa_some_do_contador_do_sino(self) -> None:
+        self._dispensar(self.ana)
+        self.assertEqual(api(self.ana).get(f"{BASE}/unread-count/").json()["unread"], 0)
+        self.assertEqual(api(self.bruno).get(f"{BASE}/unread-count/").json()["unread"], 1)
+
+    def test_dispensa_some_do_painel_do_repositorio(self) -> None:
+        """O painel é aberto pelo sino da linha dela; reaparecer ali desfaria a
+        dispensa aos olhos de quem a fez."""
+        self._dispensar(self.ana)
+        self.assertEqual(api(self.ana).get(f"{BASE}/?repository=1").json()["count"], 0)
+        self.assertEqual(api(self.bruno).get(f"{BASE}/?repository=1").json()["count"], 1)
+
+    def test_dispensar_duas_vezes_nao_e_erro(self) -> None:
+        """Duplo clique é o mesmo fato — a restrição única viraria 500."""
+        self.assertEqual(self._dispensar(self.ana).status_code, 200)
+        self.assertEqual(self._dispensar(self.ana).status_code, 200)
+        self.assertEqual(
+            NotificationDismissal.objects.filter(notification=self.aviso, user=self.ana).count(),
+            1,
+        )
+
+    def test_reclique_nao_duplica_auditoria(self) -> None:
+        self._dispensar(self.ana)
+        self._dispensar(self.ana)
+        self.assertEqual(
+            AuditLog.objects.filter(resource="notification.dismiss").count(), 1
+        )
+
+    def test_gestor_nao_dispensa_aviso_que_nao_enxerga(self) -> None:
+        """404, e não 403: a existência do registro alheio não é informação a
+        dar — o mesmo que `read` já faz."""
+        de_outro = Notification.objects.create(
+            title="do 9", message="m", category=COLETA(),
+            harvester_repository_id="9", acronym="C",
+        )
+        resposta = api(self.ana).post(f"{BASE}/{de_outro.pk}/dismiss/", {}, format="json")
+        self.assertEqual(resposta.status_code, 404)
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(
+            api().post(f"{BASE}/{self.aviso.pk}/dismiss/", {}, format="json").status_code, 401
+        )
+
+    def test_dispensa_some_com_a_conta(self) -> None:
+        """Conta removida não deixa dispensa órfã segurando nada."""
+        self._dispensar(self.ana)
+        self.ana.delete()
+        self.assertFalse(NotificationDismissal.objects.exists())
+        self.assertTrue(Notification.objects.filter(pk=self.aviso.pk).exists())

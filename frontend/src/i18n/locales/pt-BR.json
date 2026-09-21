@@ -506,6 +506,12 @@
     "direct": "recado direto",
     "markRead": "Marcar como lida: {{title}}",
     "markReadHint": "Clique para marcar como lida — vale para todos os gestores deste repositório.",
+    "dismiss": {
+      "action": "Tirar da minha caixa",
+      "title": "Tirar da sua caixa",
+      "one": "Tirar da minha caixa: {{title}}",
+      "body": "O aviso \"{{title}}\" sai da sua caixa de entrada. Ele continua para os outros gestores do repositório e na lista de quem o enviou. Não há como trazê-lo de volta."
+    },
     "readBy": "Lida por {{username}}",
     "alreadyRead": "Já lida",
     "new": {
