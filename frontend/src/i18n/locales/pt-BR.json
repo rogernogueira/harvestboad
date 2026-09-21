@@ -343,7 +343,7 @@
     "toggleMenu": "Abrir ou fechar o menu",
     "notifications": "Notificações",
     "admin": "Administração",
-    "demands": "Demandas"
+    "demands": "Solicitações"
   },
   "access": {
     "eyebrow": "Administração",
@@ -613,10 +613,10 @@
     "indexed": "Indexada"
   },
   "demands": {
-    "title": "Demandas de coleta",
+    "title": "Solicitações de coleta",
     "subtitleAdmin": "Pedidos de nova coleta abertos pelos gestores",
     "subtitleManager": "Pedidos de nova coleta dos seus repositórios",
-    "none": "Nenhuma demanda nesta situação.",
+    "none": "Nenhuma solicitação nesta situação.",
     "all": "Todas",
     "request": "Solicitar nova coleta",
     "hint": "O pedido vai para os administradores, que informam o número da coleta ao atender.",
@@ -627,8 +627,8 @@
     "lastRefused": "Último pedido recusado — {{reason}}",
     "attend": "Atender",
     "refuse": "Recusar",
-    "attendTitle": "Atender a demanda",
-    "refuseTitle": "Recusar a demanda",
+    "attendTitle": "Atender a solicitação",
+    "refuseTitle": "Recusar a solicitação",
     "snapshotField": "Número da coleta realizada",
     "reasonField": "Motivo da recusa",
     "attendedWith": "coleta #{{snapshot}}",
@@ -646,9 +646,9 @@
     },
     "columnHints": {
       "repository": "Repositório para o qual a nova coleta foi pedida.",
-      "requester": "Quem abriu a demanda. A demanda é do repositório: os demais gestores dele também a enxergam.",
-      "openedAt": "Data e hora em que a demanda foi aberta.",
-      "status": "Pendente, atendida ou recusada. Cada repositório só pode ter uma demanda pendente por vez.",
+      "requester": "Quem abriu a solicitação. A solicitação é do repositório: os demais gestores dele também a enxergam.",
+      "openedAt": "Data e hora em que a solicitação foi aberta.",
+      "status": "Pendente, atendida ou recusada. Cada repositório só pode ter uma solicitação pendente por vez.",
       "actions": "Atender informando o número da coleta realizada, ou recusar com o motivo. Nos dois casos quem pediu recebe um recado direto."
     }
   }
