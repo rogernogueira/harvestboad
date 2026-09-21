@@ -20,9 +20,11 @@ export function ProtectedRoute() {
     return <Navigate to="/entrar" replace state={{ from: location }} />
   }
 
-  // Troca obrigatória de senha bloqueia o resto da aplicação.
-  if (user?.mustChangePassword && location.pathname !== '/trocar-senha') {
-    return <Navigate to="/trocar-senha" replace />
+  // Troca obrigatória de senha bloqueia o resto da aplicação. O destino é o
+  // perfil, que abriga o formulário de senha — a outra metade da tela, o
+  // cadastro, fica visível junto e não atrapalha: só a troca levanta o bloqueio.
+  if (user?.mustChangePassword && location.pathname !== '/perfil') {
+    return <Navigate to="/perfil" replace />
   }
 
   return <Outlet />

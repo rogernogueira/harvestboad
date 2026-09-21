@@ -16,6 +16,14 @@ const schema = z
     email: z.email('newUser.validation.emailInvalid'),
     first_name: z.string(),
     last_name: z.string(),
+    phone: z.string().max(32, 'newUser.validation.phoneTooLong'),
+    institution: z.string().max(200, 'newUser.validation.institutionTooLong'),
+    // Opcional: vale vazio, e o formato só é cobrado de quem digitou.
+    departmentEmail: z
+      .string()
+      .refine((valor) => valor === '' || z.email().safeParse(valor).success, {
+        message: 'newUser.validation.emailInvalid',
+      }),
     password: z.string().min(8, 'newUser.validation.tooShort'),
     confirmPassword: z.string().min(1, 'newUser.validation.passwordRequired'),
   })
@@ -59,6 +67,9 @@ export function NewUserModal({
       email: '',
       first_name: '',
       last_name: '',
+      phone: '',
+      institution: '',
+      departmentEmail: '',
       password: '',
       confirmPassword: '',
     },
@@ -76,6 +87,9 @@ export function NewUserModal({
         email: valores.email.trim(),
         first_name: valores.first_name.trim(),
         last_name: valores.last_name.trim(),
+        phone: valores.phone.trim(),
+        institution: valores.institution.trim(),
+        departmentEmail: valores.departmentEmail.trim(),
         profile: 'GESTOR',
         password: valores.password,
       }),
@@ -89,7 +103,7 @@ export function NewUserModal({
       if (error instanceof ApiError && error.payload && typeof error.payload === 'object') {
         const payload = error.payload as Record<string, unknown>
         let atribuido = false
-        for (const campo of ['username', 'email', 'password'] as const) {
+        for (const campo of ['username', 'email', 'departmentEmail', 'password'] as const) {
           const mensagens = payload[campo]
           if (Array.isArray(mensagens) && mensagens.length) {
             setError(campo, { message: String(mensagens[0]) })
@@ -122,6 +136,14 @@ export function NewUserModal({
     { name: 'email', label: 'newUser.email', type: 'email', autoComplete: 'off' },
     { name: 'first_name', label: 'newUser.firstName', type: 'text', autoComplete: 'off' },
     { name: 'last_name', label: 'newUser.lastName', type: 'text', autoComplete: 'off' },
+    { name: 'phone', label: 'newUser.phone', type: 'tel', autoComplete: 'off' },
+    { name: 'institution', label: 'newUser.institution', type: 'text', autoComplete: 'off' },
+    {
+      name: 'departmentEmail',
+      label: 'newUser.departmentEmail',
+      type: 'email',
+      autoComplete: 'off',
+    },
     {
       name: 'password',
       label: 'newUser.password',
@@ -172,7 +194,13 @@ export function NewUserModal({
           {campos.map((campo) => {
             const erro = errors[campo.name]
             return (
-              <div id={`${id}-field-${campo.name}`} key={campo.name} className="col-sm-6">
+              // O e-mail do setor ocupa a linha inteira porque são nove
+              // campos: emparelhado, ele separaria a senha da confirmação.
+              <div
+                id={`${id}-field-${campo.name}`}
+                key={campo.name}
+                className={campo.name === 'departmentEmail' ? 'col-12' : 'col-sm-6'}
+              >
                 <BrInput
                   id={`${id}-field-${campo.name}-input`}
                   label={t(campo.label)}
@@ -194,6 +222,15 @@ export function NewUserModal({
             )
           })}
         </div>
+
+        {/*
+          Telefone e instituição entram aqui para o ADMIN já registrar o
+          contato de quem ele cadastra; opcionais porque nem sempre ele tem o
+          dado à mão, e o dono da conta completa o que faltar em `/perfil`.
+        */}
+        <p id={`${id}-optional-hint`} className="text-down-01 text-gray-70 mb-2">
+          {t('newUser.optionalContact')}
+        </p>
 
         <BrMessage
           id={`${id}-provisional-hint`}

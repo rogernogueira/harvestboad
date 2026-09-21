@@ -7,7 +7,7 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    profileDisplay = serializers.CharField(source="get_profile_display", read_only=True)
+    departmentEmail = serializers.EmailField(source="department_email", read_only=True)
     mustChangePassword = serializers.BooleanField(source="must_change_password", read_only=True)
     lastLogin = serializers.DateTimeField(source="last_login", read_only=True)
 
@@ -19,8 +19,10 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
+            "phone",
+            "institution",
+            "departmentEmail",
             "profile",
-            "profileDisplay",
             "mustChangePassword",
             "lastLogin",
         ]
@@ -48,9 +50,16 @@ class UserCreateSerializer(serializers.ModelSerializer):
     A senha é definida por quem cria e validada pelos validadores do Django. A
     conta nasce com `must_change_password=True`: quem entrar pela primeira vez é
     obrigado a trocar, então a senha provisória não continua valendo.
+
+    Telefone e instituição são opcionais aqui: quem cadastra nem sempre tem o
+    contato da pessoa à mão, e o dono da conta completa o que faltar no próprio
+    perfil (`ProfileUpdateSerializer`).
     """
 
     password = serializers.CharField(write_only=True, style={"input_type": "password"})
+    departmentEmail = serializers.EmailField(
+        source="department_email", required=False, allow_blank=True
+    )
 
     class Meta:
         model = User
@@ -60,6 +69,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
+            "phone",
+            "institution",
+            "departmentEmail",
             "profile",
             "password",
         ]
@@ -82,6 +94,44 @@ class UserCreateSerializer(serializers.ModelSerializer):
         user.set_password(senha)
         user.save()
         return user
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    """Atualização do próprio cadastro, pelo dono da conta.
+
+    `username`, `profile` e `is_active` ficam de fora de propósito: o usuário
+    identifica a si mesmo no login e não decide o próprio nível de acesso —
+    isso é da administração, em `UserListCreateView`.
+    """
+
+    # `validators=[]` desliga o UniqueValidator que o ModelSerializer montaria
+    # a partir do `unique=True`: ele compara caixa a caixa, então deixaria
+    # passar "MARIA@" contra "maria@" e ainda daria duas mensagens diferentes
+    # para o mesmo engano. A checagem abaixo resolve os dois casos com uma só.
+    email = serializers.EmailField(validators=[])
+    # `allow_blank` porque o setor é opcional: apagar o que está lá é uma
+    # resposta legítima, e um `EmailField` recusaria a string vazia.
+    departmentEmail = serializers.EmailField(
+        source="department_email", required=False, allow_blank=True
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "institution",
+            "departmentEmail",
+        ]
+
+    def validate_email(self, value: str) -> str:
+        # Exclui a própria conta: salvar o cadastro sem mexer no e-mail é o
+        # caso comum, e ele não pode colidir consigo mesmo.
+        if User.objects.filter(email__iexact=value).exclude(pk=self.instance.pk).exists():
+            raise serializers.ValidationError("Já existe uma conta com este e-mail.")
+        return value
 
 
 class ChangePasswordSerializer(serializers.Serializer):

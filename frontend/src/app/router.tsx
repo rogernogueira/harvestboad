@@ -23,8 +23,8 @@ export const router = createBrowserRouter([
             lazy: lazyPage(() => import('@/pages/RepositoriesPage'), 'RepositoriesPage'),
           },
           {
-            path: 'trocar-senha',
-            lazy: lazyPage(() => import('@/pages/ChangePasswordPage'), 'ChangePasswordPage'),
+            path: 'perfil',
+            lazy: lazyPage(() => import('@/pages/ProfilePage'), 'ProfilePage'),
           },
           {
             // Administração: o guarda é conveniência de navegação; quem barra

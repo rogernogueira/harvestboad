@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { Modal } from '@/components/Modal'
+import { CHAVE_DO_PERFIL } from '@/lib/profiles'
 import { repositoryManagersQuery } from '@/lib/queries'
 
 /**
@@ -77,7 +78,7 @@ export function RepositoryManagersModal({
                   className="eyebrow"
                   style={{ color: 'var(--blue-warm-vivid-80)' }}
                 >
-                  {gestor.profileDisplay}
+                  {t(CHAVE_DO_PERFIL[gestor.profile])}
                 </span>
                 {!gestor.isActive ? (
                   <span

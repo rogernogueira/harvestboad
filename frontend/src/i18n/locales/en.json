@@ -40,6 +40,34 @@
       "mismatch": "Passwords do not match."
     }
   },
+  "profile": {
+    "eyebrow": "My account",
+    "title": "Update profile",
+    "subtitle": "Review your registered details and keep your contact information current.",
+    "account": "Registered details",
+    "accountHint": "These details identify you in the system and are used to reach you.",
+    "username": "Username",
+    "usernameFixed": "Set when the account is created; contact the administrators to change it.",
+    "profileLabel": "Access profile",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "E-mail",
+    "phone": "Contact phone",
+    "institution": "Institution",
+    "departmentEmail": "Department/unit e-mail",
+    "save": "Save changes",
+    "saved": "Registered details updated.",
+    "passwordHint": "The new password must be at least 8 characters long.",
+    "validation": {
+      "emailInvalid": "Enter a valid e-mail address.",
+      "phoneTooLong": "The phone number can have at most 32 characters.",
+      "institutionTooLong": "The institution can have at most 200 characters."
+    }
+  },
+  "roles": {
+    "admin": "Administrator",
+    "manager": "Manager"
+  },
   "common": {
     "loading": "Loading…",
     "error": "Could not load the data.",
@@ -373,9 +401,13 @@
     "email": "E-mail",
     "firstName": "First name",
     "lastName": "Last name",
+    "phone": "Contact phone",
+    "institution": "Institution",
+    "departmentEmail": "Department/unit e-mail",
     "password": "Temporary password",
     "confirmPassword": "Confirm password",
     "provisionalPassword": "On first sign-in, the person must set a new password.",
+    "optionalContact": "Phone, institution and unit e-mail are optional — the person can fill them in on their own profile.",
     "create": "Create account",
     "creating": "Creating…",
     "validation": {
@@ -383,7 +415,9 @@
       "emailInvalid": "Enter a valid e-mail.",
       "passwordRequired": "Enter the password.",
       "tooShort": "Password must be at least 8 characters.",
-      "mismatch": "Passwords do not match."
+      "mismatch": "Passwords do not match.",
+      "phoneTooLong": "The phone number can have at most 32 characters.",
+      "institutionTooLong": "The institution can have at most 200 characters."
     }
   },
   "adminRepositories": {

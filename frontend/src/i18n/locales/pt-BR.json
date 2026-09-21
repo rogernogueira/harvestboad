@@ -40,6 +40,34 @@
       "mismatch": "As senhas não conferem."
     }
   },
+  "profile": {
+    "eyebrow": "Minha conta",
+    "title": "Atualizar perfil",
+    "subtitle": "Confira os dados cadastrados e mantenha o contato em dia.",
+    "account": "Dados cadastrais",
+    "accountHint": "Estes dados identificam você no sistema e são usados para contato.",
+    "username": "Nome de usuário",
+    "usernameFixed": "Definido no cadastro da conta; para alterá-lo, procure a administração.",
+    "profileLabel": "Perfil de acesso",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "email": "E-mail",
+    "phone": "Telefone para contato",
+    "institution": "Instituição",
+    "departmentEmail": "E-mail do departamento/setor",
+    "save": "Salvar alterações",
+    "saved": "Dados cadastrais atualizados.",
+    "passwordHint": "A nova senha precisa ter ao menos 8 caracteres.",
+    "validation": {
+      "emailInvalid": "Informe um e-mail válido.",
+      "phoneTooLong": "O telefone pode ter no máximo 32 caracteres.",
+      "institutionTooLong": "A instituição pode ter no máximo 200 caracteres."
+    }
+  },
+  "roles": {
+    "admin": "Administrador",
+    "manager": "Gestor"
+  },
   "common": {
     "loading": "Carregando…",
     "error": "Não foi possível carregar os dados.",
@@ -382,9 +410,13 @@
     "email": "E-mail",
     "firstName": "Nome",
     "lastName": "Sobrenome",
+    "phone": "Telefone para contato",
+    "institution": "Instituição",
+    "departmentEmail": "E-mail do departamento/setor",
     "password": "Senha provisória",
     "confirmPassword": "Confirmar senha",
     "provisionalPassword": "No primeiro acesso, a pessoa será obrigada a definir uma nova senha.",
+    "optionalContact": "Telefone, instituição e e-mail do setor são opcionais — a pessoa pode completá-los no próprio perfil.",
     "create": "Criar conta",
     "creating": "Criando…",
     "validation": {
@@ -392,7 +424,9 @@
       "emailInvalid": "Informe um e-mail válido.",
       "passwordRequired": "Informe a senha.",
       "tooShort": "A senha precisa ter ao menos 8 caracteres.",
-      "mismatch": "As senhas não conferem."
+      "mismatch": "As senhas não conferem.",
+      "phoneTooLong": "O telefone pode ter no máximo 32 caracteres.",
+      "institutionTooLong": "A instituição pode ter no máximo 200 caracteres."
     }
   },
   "adminRepositories": {

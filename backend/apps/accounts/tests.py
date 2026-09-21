@@ -13,6 +13,7 @@ from .models import Profile
 User = get_user_model()
 
 USERS = "/api/v1/accounts/users/"
+ME = "/api/v1/auth/me/"
 
 
 class UserListTests(TestCase):
@@ -157,9 +158,179 @@ class UserCreateTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("email", response.data)
 
+    def test_admin_cadastra_contato_do_gestor(self) -> None:
+        self.api(self.admin).post(
+            USERS,
+            self.payload(
+                phone="(61) 3217-6360 r. 214",
+                institution="IBICT",
+                departmentEmail="ridi@ibict.br",
+            ),
+            format="json",
+        )
+        criado = User.objects.get(username="novo")
+        self.assertEqual(criado.phone, "(61) 3217-6360 r. 214")
+        self.assertEqual(criado.institution, "IBICT")
+        self.assertEqual(criado.department_email, "ridi@ibict.br")
+
+    def test_contato_do_gestor_e_opcional(self) -> None:
+        """Quem cadastra nem sempre tem o contato à mão; o dono completa depois."""
+        response = self.api(self.admin).post(USERS, self.payload(), format="json")
+        self.assertEqual(response.status_code, 201)
+        criado = User.objects.get(username="novo")
+        self.assertEqual(criado.phone, "")
+        self.assertEqual(criado.institution, "")
+        self.assertEqual(criado.department_email, "")
+
+    def test_email_do_setor_invalido_e_recusado(self) -> None:
+        response = self.api(self.admin).post(
+            USERS, self.payload(departmentEmail="setor-arroba-ibict"), format="json"
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("departmentEmail", response.data)
+        self.assertFalse(User.objects.filter(username="novo").exists())
+
+    def test_email_do_setor_pode_repetir(self) -> None:
+        """O endereço é do setor: a equipe toda declara o mesmo."""
+        self.gestor.department_email = "ridi@ibict.br"
+        self.gestor.save(update_fields=["department_email"])
+
+        response = self.api(self.admin).post(
+            USERS, self.payload(departmentEmail="ridi@ibict.br"), format="json"
+        )
+        self.assertEqual(response.status_code, 201)
+
     def test_criacao_gera_registro_de_auditoria(self) -> None:
         from apps.audit.models import AuditLog
 
         self.api(self.admin).post(USERS, self.payload(), format="json")
         log = AuditLog.objects.get(action=AuditLog.Action.CREATE, resource="user")
         self.assertEqual(log.user, self.admin)
+
+
+
+class ProfileUpdateTests(TestCase):
+    """Atualização do próprio cadastro em `PATCH /auth/me/`."""
+
+    def setUp(self) -> None:
+        self.gestor = User.objects.create_user(
+            username="gestor",
+            email="gestor@ibict.br",
+            password="x",
+            profile=Profile.GESTOR,
+            first_name="Maria",
+            last_name="Silva",
+        )
+        self.outro = User.objects.create_user(
+            username="outro", email="outro@ibict.br", password="x", profile=Profile.GESTOR
+        )
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().patch(ME, {"phone": "61"}, format="json").status_code, 401)
+
+    def test_leitura_traz_o_contato(self) -> None:
+        self.gestor.phone = "(61) 3217-6360"
+        self.gestor.institution = "IBICT"
+        self.gestor.department_email = "ridi@ibict.br"
+        self.gestor.save(update_fields=["phone", "institution", "department_email"])
+
+        response = self.api(self.gestor).get(ME)
+        self.assertEqual(response.data["phone"], "(61) 3217-6360")
+        self.assertEqual(response.data["institution"], "IBICT")
+        self.assertEqual(response.data["departmentEmail"], "ridi@ibict.br")
+
+    def test_gestor_atualiza_o_proprio_cadastro(self) -> None:
+        response = self.api(self.gestor).patch(
+            ME,
+            {
+                "first_name": "Maria Clara",
+                "email": "maria@ibict.br",
+                "phone": "(61) 3217-6360 r. 214",
+                "institution": "Universidade Federal do Tocantins",
+                "departmentEmail": "biblioteca@uft.edu.br",
+            },
+            format="json",
+        )
+        self.assertEqual(response.status_code, 200)
+
+        self.gestor.refresh_from_db()
+        self.assertEqual(self.gestor.first_name, "Maria Clara")
+        self.assertEqual(self.gestor.email, "maria@ibict.br")
+        self.assertEqual(self.gestor.phone, "(61) 3217-6360 r. 214")
+        self.assertEqual(self.gestor.institution, "Universidade Federal do Tocantins")
+        self.assertEqual(self.gestor.department_email, "biblioteca@uft.edu.br")
+
+    def test_email_do_setor_pode_ser_apagado(self) -> None:
+        """Deixar o campo em branco é resposta legítima, não erro de formato."""
+        self.gestor.department_email = "ridi@ibict.br"
+        self.gestor.save(update_fields=["department_email"])
+
+        response = self.api(self.gestor).patch(ME, {"departmentEmail": ""}, format="json")
+        self.assertEqual(response.status_code, 200)
+        self.gestor.refresh_from_db()
+        self.assertEqual(self.gestor.department_email, "")
+
+    def test_email_do_setor_invalido_e_recusado(self) -> None:
+        response = self.api(self.gestor).patch(
+            ME, {"departmentEmail": "setor-arroba-ibict"}, format="json"
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("departmentEmail", response.data)
+
+    def test_resposta_traz_o_usuario_inteiro(self) -> None:
+        """O frontend troca a sessão pelo que voltou, sem uma segunda ida."""
+        response = self.api(self.gestor).patch(ME, {"phone": "61 99999-0000"}, format="json")
+        self.assertEqual(response.data["username"], "gestor")
+        self.assertEqual(response.data["profile"], Profile.GESTOR)
+        self.assertEqual(response.data["phone"], "61 99999-0000")
+
+    def test_parcial_nao_apaga_o_que_nao_veio(self) -> None:
+        self.api(self.gestor).patch(ME, {"phone": "61 99999-0000"}, format="json")
+        self.gestor.refresh_from_db()
+        self.assertEqual(self.gestor.first_name, "Maria")
+
+    def test_manter_o_proprio_email_e_aceito(self) -> None:
+        """A checagem de duplicidade não pode barrar a própria conta."""
+        response = self.api(self.gestor).patch(ME, {"email": "gestor@ibict.br"}, format="json")
+        self.assertEqual(response.status_code, 200)
+
+    def test_email_de_outra_conta_e_recusado_sem_diferenciar_caixa(self) -> None:
+        for email in ("outro@ibict.br", "OUTRO@IBICT.BR"):
+            with self.subTest(email=email):
+                response = self.api(self.gestor).patch(ME, {"email": email}, format="json")
+                self.assertEqual(response.status_code, 400)
+                # A mesma mensagem nos dois casos: o engano é o mesmo, e a do
+                # UniqueValidator só apareceria no que difere na caixa.
+                self.assertEqual(
+                    [str(m) for m in response.data["email"]],
+                    ["Já existe uma conta com este e-mail."],
+                )
+        self.gestor.refresh_from_db()
+        self.assertEqual(self.gestor.email, "gestor@ibict.br")
+
+    def test_usuario_e_perfil_nao_mudam(self) -> None:
+        """Quem decide perfil é a administração; usuário é a identidade do login."""
+        self.api(self.gestor).patch(
+            ME, {"username": "chefe", "profile": Profile.ADMIN}, format="json"
+        )
+        self.gestor.refresh_from_db()
+        self.assertEqual(self.gestor.username, "gestor")
+        self.assertEqual(self.gestor.profile, Profile.GESTOR)
+
+    def test_senha_nao_muda_por_aqui(self) -> None:
+        self.api(self.gestor).patch(ME, {"password": "outra-senha"}, format="json")
+        self.gestor.refresh_from_db()
+        self.assertTrue(self.gestor.check_password("x"))
+
+    def test_atualizacao_gera_registro_de_auditoria(self) -> None:
+        from apps.audit.models import AuditLog
+
+        self.api(self.gestor).patch(ME, {"institution": "IBICT"}, format="json")
+        log = AuditLog.objects.get(action=AuditLog.Action.UPDATE, resource="user.profile")
+        self.assertEqual(log.user, self.gestor)
+        self.assertEqual(log.resource_id, str(self.gestor.pk))

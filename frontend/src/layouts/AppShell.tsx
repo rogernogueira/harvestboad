@@ -10,6 +10,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { NotificationsButton } from '@/components/NotificationsButton'
 import { NewNotificationModal } from '@/components/NewNotificationModal'
 import { NotificationsPanel } from '@/components/NotificationsPanel'
+import { CHAVE_DO_PERFIL } from '@/lib/profiles'
 import { unreadNotificationsQuery } from '@/lib/queries'
 
 interface NavItem {
@@ -131,15 +132,15 @@ export function AppShell() {
                         {user.username}
                       </p>
                       <p id="app-shell-user-profile" className="eyebrow mb-0">
-                        {user.profileDisplay}
+                        {t(CHAVE_DO_PERFIL[user.profile])}
                       </p>
                     </div>
                     <Link
-                      id="app-shell-change-password"
-                      to="/trocar-senha"
+                      id="app-shell-profile"
+                      to="/perfil"
                       className="br-button secondary small d-none d-sm-inline-flex mr-2"
                     >
-                      {t('auth.changePassword')}
+                      {t('profile.title')}
                     </Link>
                     <button
                       id="app-shell-logout"

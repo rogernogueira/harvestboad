@@ -40,6 +40,34 @@
       "mismatch": "Las contraseñas no coinciden."
     }
   },
+  "profile": {
+    "eyebrow": "Mi cuenta",
+    "title": "Actualizar perfil",
+    "subtitle": "Revise los datos registrados y mantenga el contacto al día.",
+    "account": "Datos registrados",
+    "accountHint": "Estos datos lo identifican en el sistema y se usan para contacto.",
+    "username": "Nombre de usuario",
+    "usernameFixed": "Se define al crear la cuenta; para cambiarlo, contacte a la administración.",
+    "profileLabel": "Perfil de acceso",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "phone": "Teléfono de contacto",
+    "institution": "Institución",
+    "departmentEmail": "Correo electrónico del departamento/sector",
+    "save": "Guardar cambios",
+    "saved": "Datos registrados actualizados.",
+    "passwordHint": "La nueva contraseña debe tener al menos 8 caracteres.",
+    "validation": {
+      "emailInvalid": "Indique un correo electrónico válido.",
+      "phoneTooLong": "El teléfono puede tener como máximo 32 caracteres.",
+      "institutionTooLong": "La institución puede tener como máximo 200 caracteres."
+    }
+  },
+  "roles": {
+    "admin": "Administrador",
+    "manager": "Gestor"
+  },
   "common": {
     "loading": "Cargando…",
     "error": "No fue posible cargar los datos.",
@@ -382,9 +410,13 @@
     "email": "Correo",
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "phone": "Teléfono de contacto",
+    "institution": "Institución",
+    "departmentEmail": "Correo electrónico del departamento/sector",
     "password": "Contraseña provisional",
     "confirmPassword": "Confirmar contraseña",
     "provisionalPassword": "En el primer acceso, la persona deberá definir una nueva contraseña.",
+    "optionalContact": "El teléfono, la institución y el correo del sector son opcionales — la persona puede completarlos en su propio perfil.",
     "create": "Crear cuenta",
     "creating": "Creando…",
     "validation": {
@@ -392,7 +424,9 @@
       "emailInvalid": "Indique un correo válido.",
       "passwordRequired": "Indique la contraseña.",
       "tooShort": "La contraseña debe tener al menos 8 caracteres.",
-      "mismatch": "Las contraseñas no coinciden."
+      "mismatch": "Las contraseñas no coinciden.",
+      "phoneTooLong": "El teléfono puede tener como máximo 32 caracteres.",
+      "institutionTooLong": "La institución puede tener como máximo 200 caracteres."
     }
   },
   "adminRepositories": {

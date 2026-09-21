@@ -6,8 +6,10 @@ export interface User {
   email: string
   first_name: string
   last_name: string
+  phone: string
+  institution: string
+  departmentEmail: string
   profile: Profile
-  profileDisplay: string
   mustChangePassword: boolean
   lastLogin: string | null
 }
@@ -46,7 +48,6 @@ export interface RepositoryManager {
   fullName: string
   email: string | null
   profile: Profile
-  profileDisplay: string
   isActive: boolean
   grantedAt: string
 }

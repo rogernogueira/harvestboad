@@ -14,6 +14,7 @@ from .models import Profile, User
 from .serializers import (
     ChangePasswordSerializer,
     MonitorTokenObtainPairSerializer,
+    ProfileUpdateSerializer,
     UserCreateSerializer,
     UserSerializer,
 )
@@ -46,6 +47,32 @@ class MeView(APIView):
     @extend_schema(responses=UserSerializer)
     def get(self, request: Request) -> Response:
         return Response(UserSerializer(request.user).data)
+
+    @extend_schema(
+        request=ProfileUpdateSerializer,
+        responses={200: UserSerializer},
+        description=(
+            "Atualiza o cadastro da própria conta: nome, e-mail, telefone de "
+            "contato e instituição. Não muda usuário, perfil nem senha."
+        ),
+    )
+    def patch(self, request: Request) -> Response:
+        serializer = ProfileUpdateSerializer(
+            request.user, data=request.data, partial=True, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        record(
+            action=AuditLog.Action.UPDATE,
+            resource="user.profile",
+            resource_id=user.pk,
+            request=request,
+        )
+        # Devolve o usuário inteiro, no mesmo formato do GET: a resposta do
+        # PATCH é só um subconjunto do cadastro, e a tela precisa dos campos de
+        # leitura (perfil, último acesso) para redesenhar a sessão.
+        return Response(UserSerializer(user).data)
 
 
 class UserListCreateView(generics.ListCreateAPIView):

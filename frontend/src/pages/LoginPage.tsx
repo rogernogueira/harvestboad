@@ -105,7 +105,7 @@ export function LoginPage() {
     try {
       const user = await login(values.username, values.password)
       const destino = user.mustChangePassword
-        ? '/trocar-senha'
+        ? '/perfil'
         : ((location.state as { from?: { pathname: string } } | null)?.from?.pathname ?? '/')
       void navigate(destino, { replace: true })
     } catch (error) {

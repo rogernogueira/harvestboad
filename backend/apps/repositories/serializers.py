@@ -120,9 +120,6 @@ class RepositoryManagerSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
     fullName = serializers.SerializerMethodField()
     profile = serializers.CharField(source="user.profile", read_only=True)
-    profileDisplay = serializers.CharField(
-        source="user.get_profile_display", read_only=True
-    )
     isActive = serializers.BooleanField(source="user.is_active", read_only=True)
     grantedAt = serializers.DateTimeField(source="granted_at", read_only=True)
     email = serializers.SerializerMethodField()
@@ -136,7 +133,6 @@ class RepositoryManagerSerializer(serializers.ModelSerializer):
             "fullName",
             "email",
             "profile",
-            "profileDisplay",
             "isActive",
             "grantedAt",
         ]
