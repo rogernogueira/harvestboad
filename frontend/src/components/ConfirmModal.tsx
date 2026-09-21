@@ -17,8 +17,11 @@ import { Modal } from '@/components/Modal'
  * que exige visto, onde as duas saídas registram escolhas diferentes e nenhuma
  * pode ser o padrão.
  *
- * "Cancelar" vem primeiro no DOM, o que o torna o primeiro foco do `<dialog>`:
- * quem confirma com Enter sem ler está desistindo, não apagando.
+ * O primeiro foco do `<dialog>` é o **botão de fechar do cabeçalho**, que o
+ * `Modal` renderiza antes do corpo e do rodapé — medido no DOM, não deduzido da
+ * ordem das `acoes`. Serve ao mesmo fim: quem aperta Enter sem ler desiste, em
+ * vez de apagar. "Cancelar" ainda vem antes de "Excluir" no rodapé, para que a
+ * tabulação chegue à ação destrutiva por último.
  *
  * Com `destrutivo`, o botão de confirmação leva `primary` **e** `danger`: as
  * duas são classes simples sobre `.br-button`, e no `core-lite.min.css` a
