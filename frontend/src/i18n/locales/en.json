@@ -476,6 +476,14 @@
     "title": "Notifications",
     "open": "See notifications",
     "inboxSubtitle": "Notices from your repositories and messages for you",
+    "inbox": {
+      "tab": "Inbox",
+      "subtitle_one": "{{count}} notification received",
+      "subtitle_other": "{{count}} notifications received"
+    },
+    "page": {
+      "adminSubtitle": "Your inbox, sent notices and the category catalogue"
+    },
     "unread_one": "{{count}} unread notification",
     "unread_other": "{{count}} unread notifications",
     "none": "No notifications here.",
@@ -521,9 +529,15 @@
     "requiresTag": "Needs acknowledgement",
     "requiresHint": "This notice only leaves the screen once you confirm it.",
     "acknowledge": "Acknowledge",
+    "mustAcknowledge": {
+      "title": "Notice requiring acknowledgement",
+      "later": "Read later",
+      "hint": "This notice keeps coming back until someone acknowledges it. The acknowledgement counts for every manager of the repository.",
+      "remaining_one": "{{count}} notice awaiting acknowledgement",
+      "remaining_other": "{{count}} notices awaiting acknowledgement"
+    },
     "seenBy": "Acknowledged by {{username}}",
     "manage": {
-      "title": "Sent notifications",
       "subtitle": "{{count}} sent by you",
       "none": "You have not sent any notification yet.",
       "pending": "Pending",
@@ -546,7 +560,6 @@
         "status": "Whether anyone has read it. Reading is shared: the first manager to read counts for the others on the repository.",
         "actions": "Takes the notice down. A sent notice cannot be edited, so what someone already read does not change underneath them."
       },
-      "headerSubtitle": "Sent notices and category catalogue",
       "tabSent": "Sent"
     },
     "catalog": {

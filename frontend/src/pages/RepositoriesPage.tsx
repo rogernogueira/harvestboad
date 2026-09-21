@@ -414,14 +414,22 @@ function RepositoryRow({ acesso }: { acesso: RepositoryAccessSummary }) {
             {/*
               O sino vem antes do ícone de gestores, e como irmão dele: são dois
               alvos de clique distintos, e um dentro do outro seria HTML
-              inválido. Só aparece quando há notificação sem leitura — aceso com
-              "0" em toda linha ele deixaria de chamar atenção.
+              inválido.
+
+              `sempreVisivel` porque aqui ele é o único caminho para as
+              notificações **deste** repositório: sumindo com a caixa lida, o
+              gestor perdia o histórico do que já tinha visto — e o cartão só
+              oferecia o assunto quando havia pendência. O painel do gestor tem
+              uma linha por repositório dele, não as 2.181 do acervo, então o
+              sino apagado não vira ruído como viraria na tabela do
+              administrador.
             */}
             <span id={`${id}-actions`} className="d-flex align-items-center gap-2">
               <NotificationsButton
                 id={`${id}-unread`}
                 count={acesso.unreadNotificationCount}
                 onAbrir={() => setNotificacoesAbertas(true)}
+                sempreVisivel
                 className="br-button circle small"
               />
               <button

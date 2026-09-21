@@ -490,6 +490,15 @@
     "title": "Notificações",
     "open": "Ver notificações",
     "inboxSubtitle": "Avisos dos seus repositórios e recados para você",
+    "inbox": {
+      "tab": "Caixa de entrada",
+      "subtitle_one": "{{count}} notificação recebida",
+      "subtitle_other": "{{count}} notificações recebidas",
+      "subtitle_many": "{{count}} notificações recebidas"
+    },
+    "page": {
+      "adminSubtitle": "Sua caixa de entrada, os avisos enviados e o catálogo de categorias"
+    },
     "unread_one": "{{count}} notificação não lida",
     "unread_other": "{{count}} notificações não lidas",
     "unread_many": "{{count}} notificações não lidas",
@@ -536,9 +545,16 @@
     "requiresTag": "Exige visto",
     "requiresHint": "Este aviso só sai da tela com a sua confirmação.",
     "acknowledge": "Dar visto",
+    "mustAcknowledge": {
+      "title": "Aviso que exige visto",
+      "later": "Ler depois",
+      "hint": "Este aviso volta a aparecer até alguém dar o visto. A confirmação vale para todos os gestores do repositório.",
+      "remaining_one": "{{count}} aviso aguardando visto",
+      "remaining_other": "{{count}} avisos aguardando visto",
+      "remaining_many": "{{count}} avisos aguardando visto"
+    },
     "seenBy": "Visto por {{username}}",
     "manage": {
-      "title": "Notificações enviadas",
       "subtitle": "{{count}} enviadas por você",
       "none": "Você ainda não enviou nenhuma notificação.",
       "pending": "Pendente",
@@ -561,7 +577,6 @@
         "status": "Se alguém já leu. A leitura é compartilhada: o primeiro gestor que ler vale pelos demais do repositório.",
         "actions": "Remove o aviso do ar. Um aviso enviado não se edita, para não mudar por baixo o que alguém já leu."
       },
-      "headerSubtitle": "Avisos enviados e catálogo de categorias",
       "tabSent": "Enviadas"
     },
     "catalog": {

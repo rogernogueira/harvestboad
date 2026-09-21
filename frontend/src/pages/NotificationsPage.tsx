@@ -4,17 +4,20 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
+import { useAuth } from '@/auth/context'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { CategoryCatalog } from '@/components/CategoryCatalog'
 import { NewNotificationModal } from '@/components/NewNotificationModal'
+import { NotificationEntry } from '@/components/NotificationEntry'
 import { PageHeader } from '@/components/PageHeader'
 import { Pagination } from '@/components/Pagination'
 import { Tabs } from '@/components/Tabs'
+import type { Aba } from '@/components/Tabs'
 import { nomeDaCategoria } from '@/lib/categorias'
-import { ApiError, apiDelete } from '@/lib/api'
+import { ApiError, apiDelete, apiPost } from '@/lib/api'
 import { dicaDeColuna } from '@/lib/columnHints'
 import { tamanhoDaUrl, tamanhoParaUrl } from '@/lib/pagination'
-import { sentNotificationsQuery } from '@/lib/queries'
+import { inboxNotificationsQuery, sentNotificationsQuery } from '@/lib/queries'
 import type { NotificationItem } from '@/lib/types'
 
 /**
@@ -28,48 +31,205 @@ const POR_PAGINA = 25
 const TAMANHOS = [10, 25, 50, 100] as const
 
 /**
- * Gestão das notificações enviadas pelo administrador.
+ * Seção de notificações.
  *
- * A listagem vem de `?sent=true`, que recorta por autoria e **não** pela caixa
- * de entrada: quem envia não é destinatário do próprio aviso, e filtrar pela
- * caixa devolvia lista vazia justamente para quem quer acompanhar o que mandou.
+ * Tem dois públicos na mesma rota, e o que muda entre eles é quantas abas
+ * existem — não qual tela se abre. Todo mundo tem caixa de entrada, inclusive o
+ * administrador, que também gerencia repositórios e recebe recado direto; só o
+ * administrador tem o que enviou e o catálogo, porque criar, excluir e manter
+ * categorias é `IsAdminProfile` no backend.
  *
- * A coluna de pendentes diz o que o modelo permite dizer. Como o visto é
- * compartilhado — o primeiro gestor que confirmar vale pelos demais —, não há
- * pendência por pessoa: ou ninguém viu, e aí todos os gestores do repositório
- * constam, ou alguém viu e não sobra pendência para ninguém.
+ * O guarda de perfil aqui é conveniência de navegação: o gestor que digitasse a
+ * rota das outras abas esbarraria no 403, que é quem recusa de fato.
+ *
+ * A aba do administrador abre em "Enviadas", que era a tela inteira antes da
+ * caixa de entrada existir — quem já usava a seção continua caindo onde caía.
  */
 export function NotificationsPage() {
   const { t } = useTranslation()
-  const [aba, setAba] = useState('enviadas')
+  const { user } = useAuth()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const admin = user?.profile === 'ADMIN'
+  const [aba, setAba] = useState(admin ? 'enviadas' : 'caixa')
+
+  const abas: Aba[] = [
+    {
+      chave: 'caixa',
+      rotulo: t('notifications.inbox.tab'),
+      conteudo: <CaixaDeEntrada />,
+    },
+  ]
+  if (admin)
+    abas.push(
+      { chave: 'enviadas', rotulo: t('notifications.manage.tabSent'), conteudo: <Enviadas /> },
+      {
+        chave: 'catalogo',
+        rotulo: t('notifications.catalog.tab'),
+        conteudo: <CategoryCatalog id="notifications-page-catalog" />,
+      },
+    )
+
+  /*
+   * Trocar de aba zera a paginação da URL.
+   *
+   * As duas listas paginam no servidor e dividem `page`/`por` — só a aba ativa
+   * é montada, então nunca disputam os parâmetros ao mesmo tempo. Sem este
+   * zeramento, porém, quem estivesse na página 6 das enviadas caía na página 6
+   * da caixa de entrada, que é um trecho arbitrário de outra lista — ou uma
+   * página vazia, quando a caixa é menor.
+   */
+  const trocarAba = (chave: string) => {
+    setAba(chave)
+    const params = new URLSearchParams(searchParams)
+    params.delete('page')
+    params.delete('por')
+    setSearchParams(params, { replace: true })
+  }
 
   return (
     <div id="notifications-page" className="d-flex flex-column gap-4">
       <PageHeader
         id="notifications-page-header"
-        eyebrow={t('nav.admin')}
-        title={t('notifications.manage.title')}
-        description={t('notifications.manage.headerSubtitle')}
+        eyebrow={admin ? t('nav.admin') : undefined}
+        title={t('notifications.title')}
+        description={t(admin ? 'notifications.page.adminSubtitle' : 'notifications.inboxSubtitle')}
       />
 
       {/*
-        Duas abas no `Tabs` próprio do projeto, que emite `role="tablist"` e
+        Abas no `Tabs` próprio do projeto, que emite `role="tablist"` e
         navegação por seta — o `BrTab` do pacote React não emite nenhum dos
         dois, e o `tab.js` do core varre o `document` no import.
+
+        Com uma aba só, a barra continua: ela nomeia o que está na tela e
+        mantém o mesmo desenho para os dois perfis.
       */}
-      <Tabs
-        id="notifications-page-tabs"
-        ativa={aba}
-        onTrocar={setAba}
-        abas={[
-          { chave: 'enviadas', rotulo: t('notifications.manage.tabSent'), conteudo: <Enviadas /> },
-          {
-            chave: 'catalogo',
-            rotulo: t('notifications.catalog.tab'),
-            conteudo: <CategoryCatalog id="notifications-page-catalog" />,
-          },
-        ]}
+      <Tabs id="notifications-page-tabs" ativa={aba} onTrocar={trocarAba} abas={abas} />
+    </div>
+  )
+}
+
+/**
+ * Aba da caixa de entrada: o que chegou para quem está vendo.
+ *
+ * Mesma lista do sino do cabeçalho — recados diretos mais os avisos dos
+ * repositórios que a pessoa gerencia —, com duas diferenças que justificam a
+ * tela existir além da modal: pagina, e por isso alcança o que já foi lido; e
+ * cabe na página inteira, onde a mensagem de várias linhas não disputa altura
+ * com o resto do conteúdo.
+ *
+ * O item é o `NotificationEntry` compartilhado com o painel, para que "lida",
+ * "exige visto" e "comum" não divirjam entre os dois lugares.
+ */
+function CaixaDeEntrada() {
+  const { t, i18n } = useTranslation()
+  const queryClient = useQueryClient()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
+  const porPagina = tamanhoDaUrl(searchParams.get('por'), TAMANHOS, POR_PAGINA)
+
+  const { data, isPending, isError, error, refetch } = useQuery({
+    ...inboxNotificationsQuery(pagina, porPagina),
+    placeholderData: keepPreviousData,
+  })
+
+  const quando = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  })
+
+  const marcar = useMutation({
+    mutationFn: (notificacaoId: number) =>
+      apiPost<NotificationItem>(`/notifications/${notificacaoId}/read/`, {}),
+    onSuccess: () => {
+      /*
+        Mesmas invalidações do painel: as notificações e as duas listas de
+        repositório, que carregam a contagem do sino de cada linha.
+        `['repositories']` inteiro derrubaria também o índice, de ~960 KB.
+
+        Sem `await`: o `summary` recompõe o painel do gestor contra o
+        Harvester, e aguardá-lo manteria os botões desabilitados muito depois
+        de a leitura já ter sido registrada.
+      */
+      void queryClient.invalidateQueries({ queryKey: ['notifications'] })
+      void queryClient.invalidateQueries({ queryKey: ['repositories', 'summary'] })
+      void queryClient.invalidateQueries({ queryKey: ['repositories', 'index'] })
+    },
+  })
+
+  const irParaPagina = (destino: number) => {
+    const params = new URLSearchParams(searchParams)
+    if (destino <= 1) params.delete('page')
+    else params.set('page', String(destino))
+    setSearchParams(params, { replace: true })
+  }
+
+  /* Trocar o tamanho volta para a primeira página, pelo mesmo motivo das
+     enviadas: a página 6 de 10 itens não é a página 6 de 50. */
+  const mudarTamanho = (tamanho: number) => {
+    const params = new URLSearchParams(searchParams)
+    const valor = tamanhoParaUrl(tamanho, POR_PAGINA)
+    if (valor) params.set('por', valor)
+    else params.delete('por')
+    params.delete('page')
+    setSearchParams(params, { replace: true })
+  }
+
+  if (isPending) return <Loading id="notifications-page-inbox-loading" />
+  if (isError)
+    return (
+      <ErrorState
+        id="notifications-page-inbox-error"
+        error={error}
+        onRetry={() => void refetch()}
       />
+    )
+
+  return (
+    <div id="notifications-page-inbox" className="d-flex flex-column gap-3">
+      <p id="notifications-page-inbox-count" className="text-gray-70 mb-0">
+        {t('notifications.inbox.subtitle', { count: data.count })}
+      </p>
+
+      {marcar.isError ? (
+        <p
+          id="notifications-page-inbox-warning"
+          role="alert"
+          className="text-base text-red-vivid-50 mb-0"
+        >
+          {marcar.error instanceof ApiError ? marcar.error.detail : t('common.error')}
+        </p>
+      ) : null}
+
+      {data.results.length === 0 ? (
+        <Empty id="notifications-page-inbox-empty" label={t('notifications.none')} />
+      ) : (
+        <>
+          <ul id="notifications-page-inbox-list" className="plain-list d-flex flex-column gap-2">
+            {data.results.map((item) => (
+              <li id={`notifications-page-inbox-item-${item.id}`} key={item.id}>
+                <NotificationEntry
+                  id={`notifications-page-inbox-item-${item.id}`}
+                  item={item}
+                  quando={quando}
+                  ocupado={marcar.isPending}
+                  onMarcar={() => marcar.mutate(item.id)}
+                />
+              </li>
+            ))}
+          </ul>
+
+          <Pagination
+            id="notifications-page-inbox-pagination"
+            page={pagina}
+            totalPages={Math.max(1, Math.ceil(data.count / porPagina))}
+            onChange={irParaPagina}
+            tamanho={porPagina}
+            tamanhos={TAMANHOS}
+            onTamanho={mudarTamanho}
+          />
+        </>
+      )}
     </div>
   )
 }

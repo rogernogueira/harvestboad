@@ -35,10 +35,6 @@ export const router = createBrowserRouter([
                 path: 'acessos',
                 lazy: lazyPage(() => import('@/pages/AccessPage'), 'AccessPage'),
               },
-              {
-                path: 'notificacoes',
-                lazy: lazyPage(() => import('@/pages/NotificationsPage'), 'NotificationsPage'),
-              },
             ],
           },
           {
@@ -46,6 +42,14 @@ export const router = createBrowserRouter([
             // seção, e vê as demandas dos repositórios que gerencia.
             path: 'demandas',
             lazy: lazyPage(() => import('@/pages/DemandsPage'), 'DemandsPage'),
+          },
+          {
+            // Fora do guarda pelo mesmo motivo das demandas: a seção tem uma
+            // aba para cada perfil. O gestor abre a caixa de entrada; as abas
+            // de envio e de catálogo só o administrador monta, e quem as
+            // recusa de fato é o backend, com 403.
+            path: 'notificacoes',
+            lazy: lazyPage(() => import('@/pages/NotificationsPage'), 'NotificationsPage'),
           },
           {
             path: 'repositorios/:repositoryId',

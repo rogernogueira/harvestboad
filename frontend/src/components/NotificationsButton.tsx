@@ -9,11 +9,16 @@ import { BellIcon } from '@/components/BellIcon'
  * duas informações da linha se leiam como um par, e não como controles de
  * origens diferentes.
  *
- * **Some quando não há nada sem ler.** Nas linhas de repositório o sino é um
- * sinal, não um controle permanente: aceso o tempo todo com "0", ele viraria
- * ruído em 2.181 linhas e deixaria de chamar atenção justamente onde importa.
- * No cabeçalho é o contrário — ali `sempreVisivel` mantém a porta de entrada
- * das notificações, que precisa existir mesmo com a caixa vazia.
+ * **Some quando não há nada sem ler**, e quem decide é quem o usa. Na tabela do
+ * administrador o sino é um sinal, não um controle permanente: aceso o tempo
+ * todo com "0", ele viraria ruído em 2.181 linhas e deixaria de chamar atenção
+ * justamente onde importa.
+ *
+ * Nos outros dois lugares ele é porta de entrada, e aí `sempreVisivel`: no
+ * cabeçalho, para as notificações existirem mesmo com a caixa vazia; e no
+ * cartão do painel do gestor, onde é o único caminho para o histórico daquele
+ * repositório — ali são as poucas linhas dos repositórios da pessoa, não o
+ * acervo inteiro.
  *
  * O número não é a única pista: o `title` e o `aria-label` dizem quantas são,
  * por extenso, e a cor não carrega significado sozinha.

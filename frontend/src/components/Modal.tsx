@@ -36,6 +36,18 @@ import { useTranslation } from 'react-i18next'
  *   quebrando, como já faz o XML do registro.
  * - **Botão terciário de fechar no canto superior direito**, com os
  *   espaçamentos externos da tabela de Escala.
+ *
+ * ## A modal que não tem fecho neutro
+ *
+ * Com `obrigatorio`, as três saídas de graça do `<dialog>` — Esc, clique no
+ * scrim e o terciário do topo — são retiradas, e só restam os botões de `acoes`.
+ * É o caso do aviso que exige visto: as duas saídas dele ("Dar visto" e "Ler
+ * depois") registram escolhas diferentes, e um Esc no meio equivaleria a
+ * escolher por quem não escolheu.
+ *
+ * A diretriz do Padrão Digital admite isso — a modal de ação "exige que o
+ * usuário tome uma decisão". O que ela não admite é modal sem saída nenhuma,
+ * e por isso `obrigatorio` só faz sentido acompanhado de `acoes`.
  */
 export function Modal({
   id = 'modal',
@@ -48,6 +60,7 @@ export function Modal({
    * quebra em quase toda linha, e o que se quer ler ali é a indentação.
    */
   tamanho = 'padrao',
+  obrigatorio = false,
   acoes,
   children,
 }: {
@@ -57,6 +70,8 @@ export function Modal({
   titulo: string
   descricao?: string
   tamanho?: 'padrao' | 'largo'
+  /** Retira Esc, clique fora e o botão de fechar: só as `acoes` saem daqui. */
+  obrigatorio?: boolean
   /**
    * Botões da modal, numa faixa fixa no rodapé.
    *
@@ -135,11 +150,21 @@ export function Modal({
     <dialog
       id={id}
       ref={ref}
-      // `close` cobre o Esc, que fecha o diálogo sem passar pelo botão.
+      /*
+        `close` cobre o Esc, que fecha o diálogo sem passar pelo botão.
+
+        Em `obrigatorio` o Esc é barrado antes disso, no `cancel`: é o evento
+        que o `<dialog>` dispara **antes** de fechar, e o único cancelável dos
+        dois. Barrar só o `close` não adianta — quando ele chega, o diálogo já
+        fechou, e reabri-lo no efeito produziria um pisca.
+      */
+      onCancel={(event) => {
+        if (obrigatorio) event.preventDefault()
+      }}
       onClose={onFechar}
       // Clique no backdrop: o alvo é o próprio dialog, não o conteúdo.
       onClick={(event) => {
-        if (event.target === ref.current) onFechar()
+        if (!obrigatorio && event.target === ref.current) onFechar()
       }}
       aria-labelledby={`${id}-titulo`}
       className="br-card modal-superficie p-0"
@@ -206,16 +231,18 @@ export function Modal({
             </p>
           ) : null}
         </div>
-        <button
-          id={`${id}-close`}
-          type="button"
-          onClick={onFechar}
-          aria-label={t('common.close')}
-          className="br-button circle small"
-          style={{ flex: '0 0 auto' }}
-        >
-          <i className="fas fa-times" aria-hidden="true" />
-        </button>
+        {obrigatorio ? null : (
+          <button
+            id={`${id}-close`}
+            type="button"
+            onClick={onFechar}
+            aria-label={t('common.close')}
+            className="br-button circle small"
+            style={{ flex: '0 0 auto' }}
+          >
+            <i className="fas fa-times" aria-hidden="true" />
+          </button>
+        )}
       </div>
 
       <div

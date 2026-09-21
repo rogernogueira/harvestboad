@@ -302,6 +302,25 @@ export const notificationTemplatesQuery = (categoryId: number | null) =>
   })
 
 /**
+ * A caixa de entrada de quem pergunta, paginada.
+ *
+ * Mesmo recorte de `notificationsQuery()` sem argumento — recados diretos mais
+ * os avisos dos repositórios que a pessoa gerencia —, só que com página: a
+ * modal do sino mostra a primeira leva e basta, enquanto a aba da seção é onde
+ * se procura o que já foi lido, e aí a lista cresce sem teto.
+ *
+ * A chave é separada da de `['notifications', 'list', …]` de propósito: as duas
+ * consultam a mesma rota, mas com recortes diferentes de página, e compartilhar
+ * a chave faria uma servir o cache da outra truncado.
+ */
+export const inboxNotificationsQuery = (page: number, count: number) =>
+  queryOptions({
+    queryKey: ['notifications', 'inbox', page, count],
+    queryFn: () =>
+      apiGet<Paginated<NotificationItem>>(`/notifications/?page=${page}&count=${count}`),
+  })
+
+/**
  * O que o usuário enviou, para a tela de gestão do administrador.
  *
  * Pagina no servidor, como os registros e a busca de acessos: o administrador
@@ -314,6 +333,23 @@ export const sentNotificationsQuery = (page: number, count: number) =>
     queryFn: () =>
       apiGet<Paginated<NotificationItem>>(`/notifications/?sent=true&page=${page}&count=${count}`),
   })
+
+/**
+ * Avisos que exigem visto e seguem sem leitura.
+ *
+ * Alimenta a modal que o gestor não consegue dispensar de passagem, e por isso
+ * pede a lista, não só o número: é o conteúdo do aviso que vai à tela.
+ *
+ * O recorte por `requiresAcknowledgement` acontece no cliente porque a rota não
+ * oferece o filtro — e cabe: o conjunto de não lidas é pequeno por construção,
+ * já que a leitura é compartilhada e zera o item para todos os gestores do
+ * repositório de uma vez. O `count=200` é o teto da rota, e existe como
+ * salvaguarda para o caso de a caixa crescer, não como expectativa.
+ */
+export const pendingAcknowledgementQuery = queryOptions({
+  queryKey: ['notifications', 'pending-ack'],
+  queryFn: () => apiGet<Paginated<NotificationItem>>('/notifications/?unread=true&count=200'),
+})
 
 export const unreadNotificationsQuery = queryOptions({
   queryKey: ['notifications', 'unread-count'],

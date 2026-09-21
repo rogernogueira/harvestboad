@@ -490,6 +490,15 @@
     "title": "Notificaciones",
     "open": "Ver notificaciones",
     "inboxSubtitle": "Avisos de sus repositorios y recados para usted",
+    "inbox": {
+      "tab": "Bandeja de entrada",
+      "subtitle_one": "{{count}} notificación recibida",
+      "subtitle_other": "{{count}} notificaciones recibidas",
+      "subtitle_many": "{{count}} notificaciones recibidas"
+    },
+    "page": {
+      "adminSubtitle": "Su bandeja de entrada, los avisos enviados y el catálogo de categorías"
+    },
     "unread_one": "{{count}} notificación sin leer",
     "unread_other": "{{count}} notificaciones sin leer",
     "unread_many": "{{count}} notificaciones sin leer",
@@ -536,9 +545,16 @@
     "requiresTag": "Requiere acuse",
     "requiresHint": "Este aviso solo sale de la pantalla con su confirmación.",
     "acknowledge": "Acusar recibo",
+    "mustAcknowledge": {
+      "title": "Aviso que exige confirmación",
+      "later": "Leer después",
+      "hint": "Este aviso vuelve a aparecer hasta que alguien lo confirme. La confirmación vale para todos los gestores del repositorio.",
+      "remaining_one": "{{count}} aviso esperando confirmación",
+      "remaining_other": "{{count}} avisos esperando confirmación",
+      "remaining_many": "{{count}} avisos esperando confirmación"
+    },
     "seenBy": "Acusado por {{username}}",
     "manage": {
-      "title": "Notificaciones enviadas",
       "subtitle": "{{count}} enviadas por usted",
       "none": "Aún no ha enviado ninguna notificación.",
       "pending": "Pendiente",
@@ -561,7 +577,6 @@
         "status": "Si alguien ya lo leyó. La lectura es compartida: el primer gestor que lea vale por los demás del repositorio.",
         "actions": "Retira el aviso del aire. Un aviso enviado no se edita, para no cambiar por debajo lo que alguien ya leyó."
       },
-      "headerSubtitle": "Avisos enviados y catálogo de categorías",
       "tabSent": "Enviadas"
     },
     "catalog": {

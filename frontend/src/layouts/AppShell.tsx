@@ -10,6 +10,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { NotificationsButton } from '@/components/NotificationsButton'
 import { NewNotificationModal } from '@/components/NewNotificationModal'
 import { NotificationsPanel } from '@/components/NotificationsPanel'
+import { PendingAcknowledgementModal } from '@/components/PendingAcknowledgementModal'
 import { CHAVE_DO_PERFIL } from '@/lib/profiles'
 import { unreadNotificationsQuery } from '@/lib/queries'
 
@@ -25,13 +26,9 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'nav.repositories', icon: 'fas fa-database', end: true },
   { to: '/acessos', label: 'nav.access', icon: 'fas fa-users', end: false, adminOnly: true },
   { to: '/demandas', label: 'nav.demands', icon: 'fas fa-inbox', end: false },
-  {
-    to: '/notificacoes',
-    label: 'nav.notifications',
-    icon: 'fas fa-bell',
-    end: false,
-    adminOnly: true,
-  },
+  // Sem `adminOnly`: a seção tem caixa de entrada para todo mundo, e as abas
+  // de envio e catálogo só aparecem para o administrador.
+  { to: '/notificacoes', label: 'nav.notifications', icon: 'fas fa-bell', end: false },
 ]
 
 /** Identificador de navegação a partir da rota, para o id sair legível. */
@@ -289,6 +286,18 @@ export function AppShell() {
           aberto={novaAberta}
           onFechar={() => setNovaAberta(false)}
         />
+      ) : null}
+
+      {/*
+        O aviso que exige visto sobe sozinho, sobre qualquer tela da moldura —
+        é o único jeito de ele não depender de alguém abrir o sino.
+
+        Fica de fora enquanto a senha provisória não for trocada: ali o
+        `ProtectedRoute` já prende a pessoa no formulário de senha, e uma modal
+        obrigatória por cima esconderia justamente o que destrava o resto.
+      */}
+      {user && !user.mustChangePassword ? (
+        <PendingAcknowledgementModal id="app-shell-pending-acknowledgement" />
       ) : null}
     </div>
   )
