@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router'
 import { useAuth } from '@/auth/context'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { CategoryCatalog } from '@/components/CategoryCatalog'
+import { ConfirmModal } from '@/components/ConfirmModal'
 import { NewNotificationModal } from '@/components/NewNotificationModal'
 import { NotificationEntry } from '@/components/NotificationEntry'
 import { PageHeader } from '@/components/PageHeader'
@@ -240,6 +241,9 @@ function Enviadas() {
   const queryClient = useQueryClient()
   const [criando, setCriando] = useState(false)
   const [aviso, setAviso] = useState<string | null>(null)
+  // A notificação inteira, e não só o id: a confirmação mostra o título dela, e
+  // guardar só o id obrigaria a procurá-la de novo na página para escrevê-lo.
+  const [paraExcluir, setParaExcluir] = useState<NotificationItem | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
 
   const pagina = Math.max(1, Number(searchParams.get('page') ?? 1))
@@ -285,13 +289,20 @@ function Enviadas() {
     mutationFn: (id: number) => apiDelete(`/notifications/${id}/`),
     onSuccess: () => {
       setAviso(null)
+      setParaExcluir(null)
       // Sem `await`: o resumo do gestor é lento (recompõe contra o Harvester) e
       // aguardá-lo travaria o botão de excluir depois de a linha já ter saído.
       void queryClient.invalidateQueries({ queryKey: ['notifications'] })
       void queryClient.invalidateQueries({ queryKey: ['repositories', 'summary'] })
       void queryClient.invalidateQueries({ queryKey: ['repositories', 'index'] })
     },
-    onError: (erro) => setAviso(erro instanceof ApiError ? erro.detail : t('common.error')),
+    onError: (erro) => {
+      // Fecha a confirmação também no erro: a mensagem vai para a faixa da
+      // página, que fica visível com a tabela — dentro da modal ela sumiria
+      // junto com ela no próximo passo.
+      setParaExcluir(null)
+      setAviso(erro instanceof ApiError ? erro.detail : t('common.error'))
+    },
   })
 
   if (isPending) return <Loading id="notifications-page-loading" />
@@ -356,14 +367,7 @@ function Enviadas() {
                     item={item}
                     quando={quando}
                     ocupado={excluir.isPending}
-                    onExcluir={() => {
-                      if (
-                        window.confirm(
-                          t('notifications.manage.confirmDelete', { title: item.title }),
-                        )
-                      )
-                        excluir.mutate(item.id)
-                    }}
+                    onExcluir={() => setParaExcluir(item)}
                   />
                 ))}
               </tbody>
@@ -387,6 +391,25 @@ function Enviadas() {
         aberto={criando}
         onFechar={() => setCriando(false)}
       />
+
+      {/*
+        Uma modal só para toda a tabela, e não uma por linha como faz o painel
+        do gestor: ali cada cartão carrega a sua porque o alvo é fixo, aqui só
+        existe uma exclusão em curso por vez, e montar 25 modais por página
+        encheria o documento de diálogos que ninguém abre.
+      */}
+      <ConfirmModal
+        id="notifications-page-delete-confirm"
+        aberto={paraExcluir !== null}
+        titulo={t('notifications.manage.confirmDeleteTitle')}
+        rotuloConfirmar={t('notifications.manage.delete')}
+        onConfirmar={() => paraExcluir && excluir.mutate(paraExcluir.id)}
+        onCancelar={() => setParaExcluir(null)}
+        ocupado={excluir.isPending}
+        destrutivo
+      >
+        {t('notifications.manage.confirmDeleteBody', { title: paraExcluir?.title ?? '' })}
+      </ConfirmModal>
     </div>
   )
 }

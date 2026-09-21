@@ -562,7 +562,8 @@
       "toManager": "Recado a {{username}}",
       "delete": "Excluir",
       "deleteOne": "Excluir a notificação {{title}}",
-      "confirmDelete": "Excluir a notificação \"{{title}}\"? Ela sai da tela de todos os gestores.",
+      "confirmDeleteTitle": "Excluir notificação",
+      "confirmDeleteBody": "O aviso \"{{title}}\" sai da tela de todos os gestores do repositório. Não há como desfazer.",
       "columns": {
         "destination": "Destino",
         "notification": "Notificação",

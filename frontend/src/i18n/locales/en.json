@@ -545,7 +545,8 @@
       "toManager": "Message to {{username}}",
       "delete": "Delete",
       "deleteOne": "Delete the notification {{title}}",
-      "confirmDelete": "Delete the notification \"{{title}}\"? It leaves every manager's screen.",
+      "confirmDeleteTitle": "Delete notification",
+      "confirmDeleteBody": "The notice \"{{title}}\" disappears from every repository manager's screen. This cannot be undone.",
       "columns": {
         "destination": "Destination",
         "notification": "Notification",
