@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useParams, useSearchParams } from 'react-router'
 
 import { ValidityBadge } from '@/components/Badges'
+import { ColumnFilterSelect } from '@/components/ColumnFilterSelect'
 import { ExportButton } from '@/components/ExportButton'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { FilterBar } from '@/components/FilterBar'
@@ -184,6 +185,72 @@ export function RecordsPage() {
                   >
                     {t('records.columns.details')}
                   </th>
+                </tr>
+
+                {/*
+                  Linha de filtros do cabeçalho: cada controle fica sob o nome da
+                  coluna que recorta, e o valor escolhido vai para a URL como
+                  qualquer outro filtro — é o que mantém o recorte ao voltar pelo
+                  navegador e ao compartilhar o link.
+
+                  Só duas colunas têm controle porque só duas são filtráveis. O
+                  índice do Harvester aceita filtro em `record_is_valid`,
+                  `record_is_transformed`, `valid_rules`, `invalid_rules` e `id`
+                  (`list_record_validation_results`, em
+                  `apps/integrations/harvester.py`). Identificador, origem,
+                  prefixo e conjunto não são indexados: `identifier` com aspas
+                  responde 500, com dois-pontos escapados 400, e a "/" do
+                  identificador OAI faz o Tomcat recusar o caminho. Recortar essas
+                  quatro no navegador filtraria só a página corrente e faria o
+                  total acima da tabela discordar das linhas — a mesma ilusão de
+                  ordenar 25 linhas entre 26 mil. Por isso ficam vazias, com o
+                  motivo na dica do cabeçalho.
+
+                  As células são `<td>`, e não `<th>`, para o leitor de tela não
+                  anunciar a linha inteira como um segundo cabeçalho de coluna.
+                */}
+                <tr id="records-page-table-filter-row">
+                  <td id="records-page-filter-identifier" />
+                  <td id="records-page-filter-valid">
+                    <ColumnFilterSelect
+                      id="records-page-filter-valid-select"
+                      rotulo={t('records.filterValidity')}
+                      valor={filtros.valid ?? ''}
+                      onMudar={(valor) =>
+                        aplicarFiltros({
+                          ...filtros,
+                          valid: (valor || undefined) as RecordFilters['valid'],
+                        })
+                      }
+                      opcoes={[
+                        { label: t('records.anyValidity'), value: '' },
+                        { label: t('records.valid'), value: 'true' },
+                        { label: t('records.invalid'), value: 'false' },
+                      ]}
+                    />
+                  </td>
+                  <td id="records-page-filter-transformed">
+                    <ColumnFilterSelect
+                      id="records-page-filter-transformed-select"
+                      rotulo={t('records.filterTransformed')}
+                      valor={filtros.transformed ?? ''}
+                      onMudar={(valor) =>
+                        aplicarFiltros({
+                          ...filtros,
+                          transformed: (valor || undefined) as RecordFilters['transformed'],
+                        })
+                      }
+                      opcoes={[
+                        { label: t('records.anyTransformed'), value: '' },
+                        { label: t('records.transformed'), value: 'true' },
+                        { label: t('records.notTransformed'), value: 'false' },
+                      ]}
+                    />
+                  </td>
+                  <td id="records-page-filter-origin" />
+                  <td id="records-page-filter-prefix" />
+                  <td id="records-page-filter-set" />
+                  <td id="records-page-filter-details" />
                 </tr>
               </thead>
               <tbody id="records-page-table-body">

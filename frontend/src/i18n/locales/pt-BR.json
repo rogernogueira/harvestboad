@@ -263,10 +263,10 @@
       "prefix": "Prefixo"
     },
     "columnHints": {
-      "identifier": "Identificador do registro na origem. Abre o registro.",
+      "identifier": "Identificador do registro na origem. Abre o registro. O índice da coleta não filtra por identificador — para chegar a um registro específico, use o link.",
       "valid": "Se o registro foi aprovado ou reprovado na validação desta coleta.",
       "transformed": "Se o metadado passou pela transformação da coleta.",
-      "set": "Conjunto declarado pela origem a que o registro pertence.",
+      "set": "Conjunto declarado pela origem a que o registro pertence. Boa parte das origens não declara nenhum, e aí a coluna fica vazia; o índice da coleta também não filtra por ele.",
       "details": "Abre a validação do registro, regra a regra, e o XML transformado.",
       "origin": "Endereço OAI de onde este registro veio. Pode diferir do cadastro atual do repositório, quando ele mudou de endereço.",
       "prefix": "Formato de metadados em que o registro foi coletado (ex.: oai_dc)."

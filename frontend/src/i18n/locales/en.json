@@ -261,10 +261,10 @@
       "prefix": "Prefix"
     },
     "columnHints": {
-      "identifier": "The record's identifier at the source. Opens the record.",
+      "identifier": "The record's identifier at the source. Opens the record. The harvest index does not filter by identifier — to reach a specific record, use the link.",
       "valid": "Whether the record passed or failed validation in this harvest.",
       "transformed": "Whether the metadata went through the harvest's transformation.",
-      "set": "Set declared by the source that the record belongs to.",
+      "set": "Set declared by the source that the record belongs to. Many sources declare none, which leaves the column empty; the harvest index does not filter by it either.",
       "details": "Opens the record's rule-by-rule validation and the transformed XML.",
       "origin": "The OAI address this record came from. It may differ from the repository's current registration, when the address changed.",
       "prefix": "Metadata format the record was harvested in (e.g. oai_dc)."

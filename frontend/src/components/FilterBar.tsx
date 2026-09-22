@@ -1,4 +1,3 @@
-import { BrSelectStandard } from '@govbr-ds/react-components'
 import { useTranslation } from 'react-i18next'
 
 import { countActiveFilters, EMPTY_FILTERS, type RecordFilters } from '@/lib/filters'
@@ -10,14 +9,21 @@ import { countActiveFilters, EMPTY_FILTERS, type RecordFilters } from '@/lib/fil
  * o que está aplicado — senão uma lista de 12 registros entre 26 mil parece
  * um erro.
  *
- * Os seletores usam `BrSelectStandard`, o `<select>` nativo do design system, e
- * não o `BrSelect`: este último devolve o valor cru em `onChange`, em vez do
- * evento, e traz busca e seleção múltipla que aqui não servem. O rótulo agora é
- * visível — antes existia só como `aria-label`, invisível para quem enxerga.
+ * **Só mostra, não escolhe.** Os seletores de validade e transformação moravam
+ * aqui e passaram para a linha de filtros do cabeçalho da tabela
+ * (`RecordsPage`): um seletor rotulado "Filtrar por validade" longe da coluna
+ * "Validade" obriga a adivinhar a que coluna ele se refere, e ter o mesmo
+ * filtro nos dois lugares seria pior. O que sobra é o que a coluna não consegue
+ * mostrar: as fichas das regras, que vêm do diagnóstico e não têm coluna
+ * própria, e o botão que limpa tudo de uma vez.
  *
  * As fichas de filtro não usam `BrTag type="interaction"`: aquele tipo emite
  * `id="tag"` fixo no código da biblioteca, e como há uma ficha por filtro a
  * página sairia com ids repetidos.
+ *
+ * O `<div>` continua sendo emitido mesmo sem nenhuma ficha porque é ele que
+ * empurra o botão de exportar para a direita no `justify-content-between` da
+ * barra de ferramentas; vazio, não ocupa altura.
  */
 export function FilterBar({
   id = 'filter-bar',
@@ -71,43 +77,9 @@ export function FilterBar({
   return (
     <div
       id={id}
-      className="d-flex flex-wrap align-items-end"
+      className="d-flex flex-wrap align-items-center"
       style={{ gap: 'var(--spacing-scale-base)' }}
     >
-      <BrSelectStandard
-        id={`${id}-valid`}
-        label={t('records.filterValidity')}
-        value={filters.valid ?? ''}
-        onChange={(event) =>
-          onChange({
-            ...filters,
-            valid: (event.target.value || undefined) as RecordFilters['valid'],
-          })
-        }
-        options={[
-          { label: t('records.anyValidity'), value: '' },
-          { label: t('records.valid'), value: 'true' },
-          { label: t('records.invalid'), value: 'false' },
-        ]}
-      />
-
-      <BrSelectStandard
-        id={`${id}-transformed`}
-        label={t('records.filterTransformed')}
-        value={filters.transformed ?? ''}
-        onChange={(event) =>
-          onChange({
-            ...filters,
-            transformed: (event.target.value || undefined) as RecordFilters['transformed'],
-          })
-        }
-        options={[
-          { label: t('records.anyTransformed'), value: '' },
-          { label: t('records.transformed'), value: 'true' },
-          { label: t('records.notTransformed'), value: 'false' },
-        ]}
-      />
-
       {chips.map((chip) => (
         <button
           id={`${id}-chip-${chip.key}`}
