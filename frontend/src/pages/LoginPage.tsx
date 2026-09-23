@@ -104,9 +104,19 @@ export function LoginPage() {
     setErro(null)
     try {
       const user = await login(values.username, values.password)
+      // Volta ao endereço inteiro, e não só ao caminho: busca, ordem, página e
+      // filtros vivem na query string, e quem caía no login com a sessão
+      // expirada voltava ao painel com o recorte zerado. O `from` vem do estado
+      // do roteador, gravado pelo `ProtectedRoute` — não da URL —, então não há
+      // como alguém de fora apontar o destino para outro site.
+      const origem = (
+        location.state as { from?: { pathname: string; search?: string; hash?: string } } | null
+      )?.from
       const destino = user.mustChangePassword
         ? '/perfil'
-        : ((location.state as { from?: { pathname: string } } | null)?.from?.pathname ?? '/')
+        : origem
+          ? `${origem.pathname}${origem.search ?? ''}${origem.hash ?? ''}`
+          : '/'
       void navigate(destino, { replace: true })
     } catch (error) {
       // 401 aqui é credencial errada, não sessão expirada.
