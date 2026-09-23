@@ -1,0 +1,184 @@
+@import 'tailwindcss';
+
+/*
+ * Tipografia e cor do Padrão Digital de Governo, alinhadas ao frontend.
+ *
+ * Este painel não importa o `@govbr-ds/core`: ele não usa nenhum componente
+ * `br-*`, e as 16 mil linhas do core entrariam só para brigar com o Preflight
+ * do Tailwind. O que vem de lá são os **valores** — os mesmos literais que
+ * `frontend/src/index.css` declara, com o nome oficial do token ao lado, para
+ * que os dois arquivos possam ser comparados linha a linha.
+ *
+ * Fundo escuro: não há. O frontend também não tem, e a função "fundo escuro"
+ * do padrão (`--background-dark`) existe para peças invertidas — cabeçalho,
+ * rodapé, botão — e não para a superfície inteira de uma aplicação. Derivar um
+ * tema escuro completo dali seria acrescentar cores à paleta, o que o padrão
+ * condiciona a teste de acessibilidade e aprovação da equipe do DS.
+ */
+:root {
+  /* Função Container — fundo claro */
+  --superficie: #ffffff; /* --pure-0, principal */
+  --superficie-alt: #f8f8f8; /* --gray-2, alternativa */
+
+  /* Função Leitura — fundo claro */
+  --conteudo: #333333; /* --gray-80 — 12,63 sobre a principal */
+  --conteudo-fraco: #555555; /* --gray-70 — 7,02 sobre a alternativa */
+
+  /* Função Interação */
+  --marca: #1351b4; /* --blue-warm-vivid-70 — 7,33 sobre a principal */
+
+  /*
+   * Função Feedback — par principal (P) e alternativo (A).
+   *
+   * O par P sobre A é seguro como componente, não como texto pequeno. Por isso
+   * as fichas deste painel seguem o `.br-tag`: fundo na cor do estado e texto
+   * na função Leitura ou em branco, medido em `componentes/Basicos.tsx`.
+   */
+  --info: #155bcb; /* --blue-warm-vivid-60 */
+  --info-alt: #d4e5ff; /* --blue-warm-vivid-10 */
+  --ok: #168821; /* --green-cool-vivid-50 */
+  --ok-alt: #e3f5e1; /* --green-cool-vivid-5 */
+  --alerta: #ffcd07; /* --yellow-vivid-20 */
+  --alerta-alt: #fff5c2; /* --yellow-vivid-5 */
+  --erro: #e52207; /* --red-vivid-50 */
+  --erro-alt: #fde0db; /* --red-vivid-10 */
+
+  /* Bordas e divisórias, da escala neutra */
+  --borda: #e6e6e6; /* --gray-10 */
+  --borda-forte: #cccccc; /* --gray-20 */
+
+  /*
+   * Cores de elemento gráfico.
+   *
+   * O padrão enquadra gráfico na regra do texto grande, 3:1. Sobre a
+   * superfície principal: sucesso 4,59, erro 4,60, interação 7,33 — todas
+   * passam e são as mesmas da função Feedback.
+   *
+   * O amarelo de Alerta **não** passa: #ffcd07 dá 1,50 sobre branco e 1,41
+   * sobre a alternativa. Ele serve como fundo de ficha, onde o contraste é do
+   * texto contra ele, e não como traço ou barra. No lugar dele entra
+   * `--orange-vivid-50`, da mesma paleta, que dá 4,59.
+   */
+  --grafico-alerta: #c05600; /* --orange-vivid-50 — 4,59 sobre a principal */
+  --grafico-neutro: #636363; /* --gray-60 — 6,01 sobre a principal */
+}
+
+@theme inline {
+  --color-superficie: var(--superficie);
+  --color-superficie-alt: var(--superficie-alt);
+  --color-conteudo: var(--conteudo);
+  --color-conteudo-fraco: var(--conteudo-fraco);
+  --color-marca: var(--marca);
+  --color-info: var(--info);
+  --color-info-alt: var(--info-alt);
+  --color-ok: var(--ok);
+  --color-ok-alt: var(--ok-alt);
+  --color-alerta: var(--alerta);
+  --color-alerta-alt: var(--alerta-alt);
+  --color-erro: var(--erro);
+  --color-erro-alt: var(--erro-alt);
+  --color-borda: var(--borda);
+  --color-borda-forte: var(--borda-forte);
+  --color-grafico-alerta: var(--grafico-alerta);
+  --color-grafico-neutro: var(--grafico-neutro);
+
+  /*
+   * Uma família só, com fallback do próprio core.
+   *
+   * O padrão adota a Rawline e o princípio de Experiência Única dispensa uma
+   * segunda família: a variedade de pesos dela basta. Saíram daqui as famílias
+   * monoespaçada e serifada que este painel usava — número agora é Rawline com
+   * `tabular-nums`, que é o que mantinha a coluna alinhada, não a monoespaçada.
+   */
+  --font-sans: rawline, Raleway, sans-serif;
+
+  /* Escala Minor Third do padrão, base 14px. Nenhum tamanho fora dela. */
+  --text-down-02: 9.716px;
+  --text-down-01: 11.662px;
+  --text-base: 14px;
+  --text-up-01: 16.8px;
+  --text-up-02: 20.16px;
+  --text-up-03: 24.192px;
+  --text-up-04: 29.036px;
+
+  --leading-low: 1.15;
+  --leading-medium: 1.45;
+  --leading-high: 1.85;
+}
+
+@layer base {
+  html {
+    background-color: var(--superficie-alt);
+    color: var(--conteudo);
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-medium);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * Todo número alinha em coluna. Era isto que a monoespaçada garantia; a
+   * Rawline entrega o mesmo por `tabular-nums`, sem uma segunda família.
+   */
+  .num,
+  table td,
+  table th,
+  dd {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* O navegador recua `<dd>` em 40px e o padrão não reseta. As listas de
+     definição daqui são estrutura de dado com rótulo ao lado, nunca texto
+     corrido — o recuo não serve a nenhuma delas. */
+  dd {
+    margin-inline-start: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    line-height: var(--leading-low);
+  }
+
+  /*
+   * Foco sempre visível, nos mesmos tokens do core: 4px tracejado na cor de
+   * Interação. `dashed` não é descuido — é o estilo que o padrão define, e usar
+   * `solid` daria dois anéis diferentes numa interface que se pretende a mesma.
+   */
+  :focus-visible {
+    outline: 4px dashed var(--marca);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--info-alt);
+  }
+}
+
+/*
+ * Rótulo de seção: caixa alta e tracking alto, separando hierarquia sem
+ * depender de tamanho. Mesma especificação do `.eyebrow` do frontend — passo
+ * `down-01` da escala, 0,18em, cor da função Leitura fraca.
+ */
+@utility rotulo {
+  font-size: var(--text-down-01);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--conteudo-fraco);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

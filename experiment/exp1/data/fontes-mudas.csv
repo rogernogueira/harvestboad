@@ -1,0 +1,143 @@
+source_id,host,identify,detalhe,source_name_raw,institution_name,subdivision_code,platform_product,source_status,harvest_endpoint_url
+1268,centrodeestudosdedireito.com.br,http-403,,Revista de Direito Público Contemporâneo,Universidade Federal Rural do Rio de Janeiro (UFRRJ),BR-RJ,OJS,TEMPORARILY_UNAVAILABLE,https://centrodeestudosdedireito.com.br/revistas/index.php/rdpc/oai
+1938,data.scielo.org,http-403,,SciELO Data,Scientific Electronic Library Online (SCIELO),BR-SP,DATAVERSE,TEMPORARILY_UNAVAILABLE,https://data.scielo.org/oai
+1919,epistemologia.com.br,http-403,,Revista Epistemologia,Publicação independente,BR-GO,OJS,TEMPORARILY_UNAVAILABLE,https://epistemologia.com.br/academico/index.php/epistemologia/oai
+757,es.mpsp.mp.br,http-403,,Revista Jurídica da Escola Superior do Ministério Público de São Paulo,Escola Superior do Ministério Público de São Paulo (ESMP),BR-SP,OJS,TEMPORARILY_UNAVAILABLE,https://es.mpsp.mp.br/revista_esmp/index.php/RJESMPSP/oai
+736,fesar.com.br,http-403,,Revista de Administração do Sul do Pará (REASP),Faculdade de Ensino Superior da Amazônia Reunida (FESAR),,OJS,TEMPORARILY_UNAVAILABLE,http://fesar.com.br/reasp/index.php/REASP/oai
+2134,ijet-pdvl.institutoidv.org,http-403,,International Journal Education and Teaching,Instituto Internacional Despertando Vocações (IIDV),BR-PE,OJS,TEMPORARILY_UNAVAILABLE,https://ijet-pdvl.institutoidv.org/index.php/pdvl/oai
+2468,meioambientebrasil.com.br,http-403,,Meio Ambiente (Brasil),Editora Reativar Ambiental,BR-PE,OJS,TEMPORARILY_UNAVAILABLE,https://meioambientebrasil.com.br/index.php/MABRA/oai
+1345,periodicos.unicesumar.edu.br,http-403,,Revista Jurídica Cesumar - Mestrado (Online),Centro Universitário de Maringá (UNICESUMAR),BR-PR,OJS,TEMPORARILY_UNAVAILABLE,https://periodicos.unicesumar.edu.br/index.php/revjuridica/oai
+2270,periodicos.unicesumar.edu.br,http-403,,Revista em Agronegócio e Meio Ambiente (Online),Centro Universitário de Maringá (UniCesumar),BR-PR,OJS,TEMPORARILY_UNAVAILABLE,https://periodicos.unicesumar.edu.br/index.php/rama/oai
+792,periodicos.unicesumar.edu.br,http-403,,Saúde e Pesquisa (Online),Cesumar Diretoria de Pesquisa,BR-PR,OJS,TEMPORARILY_UNAVAILABLE,https://periodicos.unicesumar.edu.br/index.php/saudpesq/oai
+715,repositorio.fjp.mg.gov.br,http-403,,Repositório Institucional da Fundação João Pinheiro,Fundação João Pinheiro (FJP),BR-MG,DSPACE,TEMPORARILY_UNAVAILABLE,https://repositorio.fjp.mg.gov.br/server/oai/request
+1190,repositorio.unp.br,http-403,,Juris Rationis,Universidade Potiguar (UNP),BR-RN,OJS,TEMPORARILY_UNAVAILABLE,https://repositorio.unp.br/index.php/juris/oai
+2496,residenciapediatrica.com.br,http-403,,Residência Pediátrica,Sociedade Brasileira de Pediatria (SBP),BR-RJ,UNKNOWN,TEMPORARILY_UNAVAILABLE,https://residenciapediatrica.com.br/oai
+1040,revista.uniandrade.br,http-403,,Scripta Alumni (Online),Centro Universitário Campos de Andrade (UNIANDRADE),BR-PR,OJS,TEMPORARILY_UNAVAILABLE,https://revista.uniandrade.br/index.php/ScriptaAlumni/oai
+2256,revista.uniandrade.br,http-403,,Scripta Uniandrade (Online),Centro Universitário Campos de Andrade (UNIANDRADE),BR-PR,OJS,TEMPORARILY_UNAVAILABLE,https://revista.uniandrade.br/index.php/ScriptaUniandrade/oai
+2210,revistaabalf.com.br,http-403,,Revista Brasileira de Alfabetização (Online),Associação Brasileira de Alfabetização (ABAlf),BR-SC,OJS,TEMPORARILY_UNAVAILABLE,https://revistaabalf.com.br/index.html/index.php/rabalf/oai
+2096,revistacedigma.cedigma.com.br,http-403,,Revista Cedigma,Cedigma,BR-MA,OJS,TEMPORARILY_UNAVAILABLE,https://revistacedigma.cedigma.com.br/index.php/cedigma/oai
+2823,revistaeletronica.fab.mil.br,http-403,,Revista Defesa e Segurança,Força Aérea Brasileira (FAB),BR-SP,OJS,TEMPORARILY_UNAVAILABLE,https://revistaeletronica.fab.mil.br/index.php/afa/oai
+835,revistageintec.net,http-403,,Revista GEINTEC - Gestão Inovação e Tecnologias,Ensino Superior do Piauí (AESPI),BR-SE,OJS,TEMPORARILY_UNAVAILABLE,https://revistageintec.net/index.php/journal/oai
+716,revistahermes.com.br,http-403,,Revista Científica Hermes,Instituto Paulista de Ensino (FIPEN),BR-SP,OJS,TEMPORARILY_UNAVAILABLE,https://revistahermes.com.br/index.php/hermes1/oai
+122,tede.unigranrio.edu.br,http-403,,Biblioteca Digital de Teses e Dissertações da UNIGRANRIO,Universidade do Grande Rio (UNIGRANRIO),BR-RJ,DSPACE,TEMPORARILY_UNAVAILABLE,https://tede.unigranrio.edu.br/oai/request
+1829,www.entomobrasilis.org,http-403,,EntomoBrasilis,Sociedade Entomológica do Brasil (SEB),BR-RJ,OJS,TEMPORARILY_UNAVAILABLE,https://www.entomobrasilis.org/index.php/ebras/oai
+2502,www.entomologicalcommunications.org,http-403,,Entomological Communications,Sociedade Entomológica do Brasil,BR-AM,OJS,TEMPORARILY_UNAVAILABLE,https://www.entomologicalcommunications.org/index.php/index/oai
+2299,www.entomologybeginners.org,http-403,,Entomology Beginners,Entomologistas do Brasil,BR-RJ,OJS,TEMPORARILY_UNAVAILABLE,https://www.entomologybeginners.org/index.php/eb/oai
+2324,www.gvaa.com.br,http-403,,Acta Apicola Brasilica,Grupo Verde de Agroecologia e Abelhas (GVAA),BR-PB,OJS,TEMPORARILY_UNAVAILABLE,https://www.gvaa.com.br/revista/index.php/APB/oai
+684,www.gvaa.com.br,http-403,,Revista Verde de Agroecologia e Desenvolvimento Sustentavel,Grupo Verde de Agroecologia e Abelhas (GVAA),BR-PB,OJS,TEMPORARILY_UNAVAILABLE,https://www.gvaa.com.br/revista/index.php/RVADS/oai
+685,www.gvaa.com.br,http-403,,Revista Brasileira de Educação e Saúde,Grupo Verde de Agroecologia e Abelhas (GVAA),BR-PB,OJS,TEMPORARILY_UNAVAILABLE,https://www.gvaa.com.br/revista/index.php/REBES/oai
+1046,www.redap.com.br,http-403,,Revista de Direito da Administração Pública (Universidade Federal Fluminense),Universidade Federal Fluminense (UFF),BR-RJ,OJS,TEMPORARILY_UNAVAILABLE,http://www.redap.com.br/index.php/redap/oai
+2467,www.revistabrasileirademeioambiente.com,http-403,,Revista Brasileira de Meio Ambiente,Editora Reativar Ambiental,BR-PE,OJS,TEMPORARILY_UNAVAILABLE,https://www.revistabrasileirademeioambiente.com/index.php/RVBMA/oai
+2817,zenodo.org,http-403,,Portal História da Psicologia,Universidade Federal Fluminense (UFF),BR-RJ,UNKNOWN,TEMPORARILY_UNAVAILABLE,https://zenodo.org/oai2d
+2145,centrodeeconomiapolitica.org.br,http-404,,Revista de Economia Política,EDITORA 34,BR-SP,OJS,UNKNOWN,https://centrodeeconomiapolitica.org.br/repojs/index.php/journal/oai
+2387,periodicos.ifpr.edu.br,http-404,,Revista Mundi Saúde e Biológicas,"Instituto Federal de Educação, Ciência e Tecnologia do Paraná (IFPR)",BR-PR,OJS,UNKNOWN,https://periodicos.ifpr.edu.br/index.php/MundiSB/oai
+2388,periodicos.ifpr.edu.br,http-404,,Revista Mundi Sociais e Humanidades,"Instituto Federal de Educação, Ciência e Tecnologia do Paraná (IFPR)",BR-PR,OJS,UNKNOWN,https://periodicos.ifpr.edu.br/index.php/MundiSH/oai
+1130,periodicos.sbu.unicamp.br,http-404,,Urbana (Campinas),Universidade Estadual de Campinas (UNICAMP),BR-SP,OJS,UNKNOWN,https://periodicos.sbu.unicamp.br/ojs/index.php/urbana/oai
+1034,periodicos.ufac.br,http-404,,Muiraquitã (Online),Universidade Federal do Acre (UFAC),BR-AC,OJS,UNKNOWN,https://periodicos.ufac.br/revista/index.php/mui/oai
+134,periodicos.unifap.br,http-404,,Biota Amazônia,Universidade Federal do Amapá (UNIFAP),BR-AP,OJS,UNKNOWN,https://periodicos.unifap.br/index.php/biota/oai
+166,revista.uniabeu.edu.br,http-404,,Revista UNIABEU (2010),Uniabeu Centro Universitário (UNIABEU),BR-RJ,OJS,UNKNOWN,https://revista.uniabeu.edu.br/index.php/RU/oai
+167,revista.uniabeu.edu.br,http-404,,E-scrita,Uniabeu Centro Universitário (UNIABEU),BR-RJ,OJS,UNKNOWN,https://revista.uniabeu.edu.br/index.php/RE/oai
+168,revista.uniabeu.edu.br,http-404,,Recôncavo,Uniabeu Centro Universitário (UNIABEU),BR-RJ,OJS,UNKNOWN,https://revista.uniabeu.edu.br/index.php/reconcavo/oai
+527,rvq.sbq.org.br,http-404,,Revista Virtual de Química,Sociedade Brasileira de Química (SBQ),BR-RJ,OJS,UNKNOWN,http://rvq.sbq.org.br/index.php/rvq/oai
+2394,seer.ines.gov.br,http-404,,Revista Fórum (Instituto Nacional de Educação de Surdos. Online),Instituto Nacional de Educação de Surdos (Ines),BR-RJ,OJS,UNKNOWN,https://seer.ines.gov.br/index.php/revista-forum/oai
+1538,www.bdtd.ueg.br,http-404,,Biblioteca Digital Brasileira de Teses e Dissertações da UEG,Universidade Estadual de Goiás (UEG),BR-GO,DSPACE,UNKNOWN,https://www.bdtd.ueg.br/oai/request
+2092,www.direito.ufmg.br,http-404,,Revista da Faculdade de Direito da Universidade Federal de Minas Gerais (Online),Universidade Federal de Minas Gerais (UFMG),BR-MG,OJS,UNKNOWN,https://www.direito.ufmg.br/revista/index.php/revista/oai
+805,www.eoftalmo.org.br,http-404,,e-Oftalmo.CBO: Revista Digital de Oftalmologia,Conselho Brasileiro de Oftalmologia (CBO),BR-SP,UNKNOWN,UNKNOWN,http://www.eoftalmo.org.br/cbo/oai
+1100,www.metodista.br,http-404,,Revista da Faculdade de Odontologia de Lins (Online),Universidade Metodista de Piracicaba (UNIMEP),BR-SP,OJS,UNKNOWN,https://www.metodista.br/revistas/revistas-unimep/index.php/Fol/oai
+1145,www.metodista.br,http-404,,Comunicações,Universidade Metodista de São Paulo (METODISTA),BR-SP,OJS,UNKNOWN,https://www.metodista.br/revistas/revistas-unimep/index.php/comunicacoes/oai
+2491,www.sbgf.org.br,http-404,,Brazilian Journal of Geophysics,Sociedade Brasileira de Geofísica (SBGf),BR-RJ,OJS,UNKNOWN,https://www.sbgf.org.br/revista/index.php/rbgf/oai
+746,www.fafit.com.br,http-410,,Revista Eletrônica Fafit/Facic,Faculdades Integradas de Itararé (Fafit),,OJS,TEMPORARILY_UNAVAILABLE,http://www.fafit.com.br/revista/index.php/fafit/oai
+1029,abarriguda.org.br,http-429,,A Barriguda,Centro Interdisciplinar de Pesquisa em Educação e Direito (CIPED),,OJS,TEMPORARILY_UNAVAILABLE,http://abarriguda.org.br/revista/index.php/revistaabarrigudaarepb/oai
+337,guaiaca.ufpel.edu.br,http-468,,Repositório Institucional da UFPel - Guaiaca,Universidade Federal de Pelotas (UFPEL),BR-RS,DSPACE,TEMPORARILY_UNAVAILABLE,https://guaiaca.ufpel.edu.br/oai/request
+585,repositorio.pucsp.br,http-468,,Repositório Institucional da PUC_SP,Pontifícia Universidade Católica de São Paulo (PUC-SP),BR-SP,DSPACE,TEMPORARILY_UNAVAILABLE,https://repositorio.pucsp.br/oai/request
+426,repositorio.ufba.br,http-468,,Repositório Institucional da UFBA,Universidade Federal da Bahia (UFBA),BR-BA,DSPACE,TEMPORARILY_UNAVAILABLE,https://repositorio.ufba.br/oai/request
+2052,costalima.ufrrj.br,http-500,,Boletim GEPEM (Online),Universidade Federal Rural do Rio de Janeiro (UFRRJ),BR-RJ,OJS,TEMPORARILY_UNAVAILABLE,https://costalima.ufrrj.br/index.php/gepem/oai
+1897,dadosdepesquisa.fiocruz.br,http-500,,Arca Dados (Fiocruz),Fundação Oswaldo Cruz (Fiocruz),BR-RJ,DATAVERSE,TEMPORARILY_UNAVAILABLE,https://dadosdepesquisa.fiocruz.br/oai
+1220,revistas-old.fapas.edu.br,http-500,,Revista Palotina de Administração,Faculdade Palotina (FAPAS),BR-RS,OJS,TEMPORARILY_UNAVAILABLE,https://revistas-old.fapas.edu.br/revpalotinaadm/oai
+508,tede.ucpel.edu.br:8080,http-500,,Biblioteca Digital de Teses e Dissertações do UCpel,Universidade Católica de Pelotas (UCPEL),BR-RS,DSPACE,TEMPORARILY_UNAVAILABLE,http://tede.ucpel.edu.br:8080/oai/request
+724,www.fics.edu.br,http-500,,Augusto Guzzo Revista Acadêmica (Online),Faculdades Integradas Campos Salles (FICSALLES),,OJS,TEMPORARILY_UNAVAILABLE,http://www.fics.edu.br/index.php/augusto_guzzo/oai
+1003,portalrevistas.ucb.br,http-502,,Economic Analysis of law Review,Universidade Católica de Brasília (UCB),BR-DF,OJS,TEMPORARILY_UNAVAILABLE,https://portalrevistas.ucb.br/index.php/ealr/oai
+513,portalrevistas.ucb.br,http-502,,Esferas - Revista Interprogramas de Pós-graduação em Comunicação do Centro-Oeste,Universidade Católica de Brasília (UCB),BR-DF,OJS,TEMPORARILY_UNAVAILABLE,https://portalrevistas.ucb.br/index.php/esf/oai
+514,portalrevistas.ucb.br,http-502,,Comunicologia,Universidade Católica de Brasília (UCB),BR-DF,OJS,TEMPORARILY_UNAVAILABLE,https://portalrevistas.ucb.br/index.php/RCEUCB/oai
+515,portalrevistas.ucb.br,http-502,,Revista Brasileira de Ciência e Movimento (Online),Universidade Católica de Brasília (UCB),BR-DF,OJS,TEMPORARILY_UNAVAILABLE,https://portalrevistas.ucb.br/index.php/RBCM/oai
+1568,dataverse.ufabc.edu.br,http-503,,Repositório de Dados de Pesquisa da UFABC,Universidade Federal do ABC (UFABC),BR-SP,DATAVERSE,TEMPORARILY_UNAVAILABLE,https://dataverse.ufabc.edu.br/oai
+341,repositorio.ufpe.br,http-503,,Repositório Institucional da UFPE,Universidade Federal de Pernambuco (UFPE),BR-PE,DSPACE,TEMPORARILY_UNAVAILABLE,https://repositorio.ufpe.br/oai/request
+1396,tede.fecap.br,http-503,,Biblioteca Digital de Teses e Dissertações do FECAP,Fundação Escola de Comércio Álvares Penteado (FECAP),BR-SP,DSPACE,TEMPORARILY_UNAVAILABLE,https://tede.fecap.br/oai/request
+1399,union.ndltd.org,http-503,,Networked Digital Library of Theses and Dissertations (NDLTD),Networked Digital Library of Theses and Dissertations (NDLTD),,UNKNOWN,TEMPORARILY_UNAVAILABLE,http://union.ndltd.org/OAI-PMH/
+99,seer.uniritter.edu.br,http-522,,Nonada (Online),Centro Universitário Ritter dos Reis (UNIRITTER),,OJS,TEMPORARILY_UNAVAILABLE,http://seer.uniritter.edu.br/index.php/nonada/oai
+828,sitios.anhembi.br,http-522,,Biblioteca Digital de Teses e Dissertações do ANHEMBI,Universidade Anhembi Morumbi (ANHEMBI),BR-SP,DSPACE,TEMPORARILY_UNAVAILABLE,http://sitios.anhembi.br/oai/request
+1874,172.16.16.114:8080,rede,ConnectTimeout,LattesData,Conselho Nacional de Desenvolvimento Científico e Tecnológico - CNPq,BR-DF,DATAVERSE,INACTIVE,http://172.16.16.114:8080/oai
+2028,172.16.16.119,rede,ConnectTimeout,Deposita Dados (Repositório Comum de Dados de Pesquisa do Ibict),Instituto Brasileiro de Informação em Ciência e Tecnologia (Ibict),BR-DF,DATAVERSE,INACTIVE,http://172.16.16.119/oai
+745,200.223.150.195,rede,ConnectTimeout,Ciência & DEsenvolvimento,Faculdade Independente do Nordeste (FAINOR),BR-BA,OJS,INACTIVE,http://200.223.150.195/revista/index.php/memorias/oai
+322,acervodigital.ufpr.br,rede,ReadTimeout,Repositório Institucional da UFPR,Universidade Federal do Paraná (UFPR),BR-PR,DSPACE,INACTIVE,https://acervodigital.ufpr.br/oai/request
+1572,arandu.ufrpe.br,rede,ReadTimeout,Arandu - Repositório da Universidade Federal Rural de Pernambuco,Universidade Federal Rural de Pernambuco (UFRPE),BR-PE,DSPACE,INACTIVE,https://arandu.ufrpe.br/server/oai/request
+2516,bell.unochapeco.edu.br,rede,ConnectError,Cadernos do CEOM (Online),Universidade Comunitária da Região de Chapecó (Unochapecó),BR-SC,OJS,INACTIVE,http://bell.unochapeco.edu.br/revistas/index.php/rcc/oai
+2517,bell.unochapeco.edu.br,rede,ConnectError,Acta Ambiental Catarinense (Online),Universidade Comunitária da Região de Chapecó (Unochapecó),BR-SC,OJS,INACTIVE,http://bell.unochapeco.edu.br/revistas/index.php/acta/oai
+732,bibliotecadigital.fgv.br,rede,ConnectError,Revista de Administração de Empresas,Fundação Getulio Vargas (FGV),BR-SP,OJS,INACTIVE,https://bibliotecadigital.fgv.br/ojs/index.php/rae/oai
+1256,bibliotecadigital.unec.edu.br,rede,ConnectTimeout,Biblioteca Digital de Teses e Dissertações da UNEC,Centro Universitário de Caratinga (UNEC),BR-MG,TEDE_LEGACY,INACTIVE,http://bibliotecadigital.unec.edu.br/bdtdunec/tde_oai/oai2.php
+671,carpedien.ien.gov.br,rede,ConnectTimeout,Repositório Institucional do IEN,Instituto de Engenharia Nuclear (IEN),BR-RJ,DSPACE,INACTIVE,http://carpedien.ien.gov.br/oai/request
+1569,cedapdados.ufrgs.br,rede,ConnectTimeout,Comunidade Dados de Pesquisa do Repositório CEDAP da UFRGS,Universidade Federal do Rio Grande do Sul (UFRGS),BR-RS,DSPACE,INACTIVE,https://cedapdados.ufrgs.br//oai/request
+1532,dadosabertos.rnp.br,rede,ConnectError,Repositório de Dados Científicos da RNP,Rede Nacional de Ensino e Pesquisa (RNP),BR-DF,DATAVERSE,INACTIVE,http://dadosabertos.rnp.br/oai
+1634,geoinfo.cnpm.embrapa.br,rede,ConnectError,GeoInfo - Infraestrutura de Dados Espaciais da Embrapa,Empresa Brasileira de Pesquisa Agropecuária (Embrapa),BR-DF,UNKNOWN,INACTIVE,http://geoinfo.cnpm.embrapa.br/catalogue/csw?mode=oaipmh
+1750,oai.rmmg.org,rede,ConnectTimeout,Revista Médica de Minas Gerais (Online),Associação Médica de Minas Gerais (AMMG),BR-MG,UNKNOWN,INACTIVE,http://oai.rmmg.org/
+437,ojs.uespi.br,rede,ConnectError,Letras em Revista (Teresina. Online),Universidade Estadual do Piauí (UESPI),BR-PI,OJS,INACTIVE,https://ojs.uespi.br/index.php/ler/oai
+2785,ojs.univas.edu.br,rede,ConnectTimeout,Argumentos Pró-Educação,Universidade do Vale do Sapucaí (UNIVÁS),BR-MG,OJS,INACTIVE,http://ojs.univas.edu.br/index.php?journal=argumentosproeducacao&page=oai
+2786,ojs.univas.edu.br,rede,ConnectTimeout,Revista DisSoL,Universidade do Vale do Sapucaí (UNIVÁS),BR-MG,OJS,INACTIVE,http://ojs.univas.edu.br/index.php?journal=revistadissol&page=oai
+1630,pegasus.unochapeco.edu.br,rede,ConnectError,Grifos (Chapecó. Online),Universidade Comunitária da Região de Chapecó (UNOCHAPECÓ),BR-RS,OJS,INACTIVE,http://pegasus.unochapeco.edu.br/revistas/index.php/grifos/oai
+2101,portal.periodicos.faipe.edu.br,rede,ConnectError,Revista FAIPE,Faculdade de Tecnologia do Instituto de Pesquisa e Ensino - FAIPE,BR-MT,OJS,INACTIVE,https://portal.periodicos.faipe.edu.br/ojs/index.php/rfaipe/oai
+2260,publicacoesacademicas.unicatolicaquixada.edu.br,rede,ConnectError,Revista Expressão Católica Saúde (Online),Centro Universitário Católica de Quixadá (Unicatólica),BR-CE,OJS,INACTIVE,http://publicacoesacademicas.unicatolicaquixada.edu.br/index.php/recsaude/oai
+2247,raled.comunidadaled.org,rede,ConnectError,ALED: Revista Latino-Americana de Estudos do Discurso,Associação Latino-Americana de Estudos do Discurso,BR-DF,OJS,INACTIVE,https://raled.comunidadaled.org/index.php/raled/oai
+681,rbsp.sesab.ba.gov.br,rede,ConnectError,Revista Baiana de Saúde Pública (Online),Secretaria da Saúde do Estado da Bahia (Sesab),BR-BA,OJS,INACTIVE,https://rbsp.sesab.ba.gov.br/index.php/rbsp/oai
+640,repositorio-api.ipen.br,rede,ConnectError,Repositório Institucional do IPEN,Instituto de Pesquisas Energéticas e Nucleares (IPEN),BR-SP,DSPACE,INACTIVE,https://repositorio-api.ipen.br/server/oai/
+781,repositorio.cti.gov.br:8080,rede,ConnectTimeout,Repositório Institucional do CTI,Centro de Tecnologia da Informação Renato Archer (CTI),BR-SP,DSPACE,INACTIVE,http://repositorio.cti.gov.br:8080/oai/request
+1269,repositorio.facimed.edu.br,rede,ConnectError,Repositório Institucional da FACIMED,Faculdade de Ciências Biomédicas de Cacoal (FACIMED),BR-RO,DSPACE,INACTIVE,http://repositorio.facimed.edu.br/oai/request
+2018,repositorio.gasparvianna.pa.gov.br:8080,rede,ConnectError,Repositório Fundação Hospital de Clínicas Gaspar Vianna,Fundação Hospital de Clínicas Gaspar Vianna (FHCGV),BR-PA,DSPACE,INACTIVE,http://repositorio.gasparvianna.pa.gov.br:8080/server/oai/request
+2022,repositorio.ifpa.edu.br,rede,ReadTimeout,"Repositório Institucional do Instituto Federal de Educação, Ciência e Tecnologia do Pará (IFPA)","Instituto Federal de Educação, Ciência e Tecnologia do Pará (IFPA)",BR-PA,DSPACE,INACTIVE,https://repositorio.ifpa.edu.br/oai/request
+649,repositorio.inpa.gov.br,rede,ReadTimeout,Repositório Institucional do INPA,Instituto Nacional de Pesquisas da Amazônia (INPA),BR-AM,DSPACE,INACTIVE,https://repositorio.inpa.gov.br/oai/request
+645,repositorio.int.gov.br:8080,rede,ConnectTimeout,Repositório Institucional do INT (Repositório Institucional - Instituto Nacional de Tecnologia Ri - INT),Instituto Nacional de Tecnologia (INT),BR-RJ,DSPACE,INACTIVE,http://repositorio.int.gov.br:8080/oai/request
+1713,repositorio.ufopa.edu.br,rede,ConnectTimeout,Repositório Institucional da Universidade Federal do Oeste do Pará (UFOPA),Universidade Federal do Oeste do Pará (UFOPA),BR-PA,DSPACE,INACTIVE,https://repositorio.ufopa.edu.br/server/oai/request
+2132,repositorio.ufpi.br:8080,rede,ConnectError,Repositório Institucional da Universidade Federal do Piauí (UFPI),Universidade Federal do Piauí (UFPI),BR-PI,DSPACE,INACTIVE,http://repositorio.ufpi.br:8080/oai/request
+1486,repositorio.ufrr.br:8080,rede,ConnectError,Repositório Institucional da UFRR,Universidade Federal de Roraima (UFRR),BR-RR,DSPACE,INACTIVE,http://repositorio.ufrr.br:8080/oai/request
+1511,repositorio.unilab.edu.br,rede,ReadTimeout,Repositório Institucional da UNILAB,Universidade da Integração Internacional da Lusofonia Afro-Brasileira (UNILAB),BR-CE,DSPACE,INACTIVE,https://repositorio.unilab.edu.br/oai/request
+1500,repositorio.unitau.br,rede,ConnectError,Repositório Institucional da UNITAU,Universidade de Taubaté (UNITAU),BR-SP,DSPACE,INACTIVE,http://repositorio.unitau.br/oai/request
+1088,repositorio.utfpr.edu.br:8080,rede,ConnectTimeout,Repositório Institucional da UTFPR (da Universidade Tecnológica Federal do Paraná (RIUT)),Universidade Tecnológica Federal do Paraná (UTFPR),BR-PR,DSPACE,INACTIVE,http://repositorio.utfpr.edu.br:8080/oai/request
+1483,repositoriosenaiba.fieb.org.br,rede,ConnectTimeout,Repositório da Produção Científica e Intelectual do SENAI CIMATEC,Serviço Nacional de Aprendizagem Industrial Campus Integrado de Manufatura e Tecnologia (SENAI CIMATEC),BR-BA,DSPACE,INACTIVE,http://repositoriosenaiba.fieb.org.br/oai/request
+1911,revista.cers.com.br,rede,ConnectTimeout,Revista Científica Disruptiva,Centro de Ensino Renato Saraiva (CERS),BR-PE,OJS,INACTIVE,http://revista.cers.com.br/ojs/index.php/revista/oai
+1959,revista.escoladesaude.pr.gov.br,rede,ConnectTimeout,Revista de Saúde Pública do Paraná (Online),Escola de Saúde Pública do Paraná (ESPP),BR-PR,OJS,INACTIVE,http://revista.escoladesaude.pr.gov.br/index.php/rspp/oai
+2603,revista.ufrr.br,rede,ConnectError,"Revista Educação, Pesquisa e Inclusão",Universidade Federal de Roraima (UFRR),BR-RR,OJS,INACTIVE,https://revista.ufrr.br/repi/oai
+2604,revista.ufrr.br,rede,ConnectError,Revista geográfica acadêmica,Universidade Federal de Roraima (UFRR),BR-RR,OJS,INACTIVE,https://revista.ufrr.br/rga/oai
+275,revista.ufrr.br,rede,ConnectError,Revista de Administração de Roraima - RARR,Universidade Federal de Roraima (UFRR),BR-RR,OJS,INACTIVE,https://revista.ufrr.br/adminrr/oai
+276,revista.ufrr.br,rede,ConnectError,Acta Geográfica (Online),Universidade Federal de Roraima (UFRR),BR-RR,OJS,INACTIVE,http://revista.ufrr.br/index.php/actageo/oai
+277,revista.ufrr.br,rede,ConnectError,Agro@mbiente on-line,Universidade Federal de Roraima (UFRR),BR-RR,OJS,INACTIVE,https://revista.ufrr.br/index.php/agroambiente/oai
+278,revista.ufrr.br,rede,ConnectError,Textos & Debates (Online),Universidade Federal de Roraima (UFRR),BR-RR,OJS,INACTIVE,https://revista.ufrr.br/textosedebates/oai
+1813,revistaintellector.cenegri.org.br,rede,ConnectError,Intellector (Online),Centro de Estudos em Geopolítica e Relações Internacionais (CENEGRI),BR-RS,OJS,INACTIVE,https://revistaintellector.cenegri.org.br/index.php/intellector/oai
+1006,revistas.ufpi.br,rede,ConnectTimeout,Revista Brasileira de História da Mídia (Online),Universidade Federal do Piauí (UFPI),BR-SP,OJS,INACTIVE,https://revistas.ufpi.br/index.php/rbhm/oai
+2429,revistas.ufpi.br,rede,ConnectTimeout,Jornal Interdisciplinar de Biociências,Universidade Federal do Piauí (UFPI),BR-PI,OJS,INACTIVE,https://revistas.ufpi.br/index.php/jibi/oai
+336,revistas.ufpi.br,rede,ConnectTimeout,Revista de Gestão e Contabilidade da UFPI (G_Cont),Universidade Federal do Piauí (UFPI),BR-PI,OJS,INACTIVE,https://revistas.ufpi.br/index.php/gecont/oai
+1722,rnhb.com.br,rede,ConnectError,Revista Nordestina de História do Brasil (Online),Universidade Federal do Recôncavo da Bahia (UFRB),BR-BA,OJS,INACTIVE,https://rnhb.com.br/index.php/revista/oai
+1,site.veracruz.edu.br:8087,rede,ConnectError,Revista Veras,Instituto Superior de Educação Vera Cruz (VeraCruz),BR-SP,OJS,INACTIVE,http://site.veracruz.edu.br:8087/instituto/revistaveras/index.php/revistaveras/oai
+209,tede.unaerp.br,rede,RemoteProtocolError,Biblioteca Digital de Teses e Dissertações da UNAERP,Universidade de Ribeirão Preto (UNAERP),BR-SP,DSPACE,INACTIVE,http://tede.unaerp.br/tde_oai/oai3.php
+135,tede.unifacs.br,rede,ConnectError,Biblioteca Digital de Teses e Dissertações da UNIFACS,Universidade Salvador (UNIFACS),BR-BA,DSPACE,INACTIVE,https://tede.unifacs.br/oai/request
+2,tede.utp.br:8080,rede,ConnectTimeout,Biblioteca Digital de Teses e Dissertações do UTP,Universidade Tuiuti do Paraná (UTP),BR-PR,TEDE_LEGACY,INACTIVE,http://tede.utp.br:8080/oai/request
+497,tede2.uefs.br:8080,rede,ReadTimeout,Biblioteca Digital de Teses e Dissertações da UEFS,Universidade Estadual de Feira de Santana (UEFS),BR-BA,DSPACE,INACTIVE,http://tede2.uefs.br:8080/oai/request
+58,tede2.usc.br:8080,rede,ConnectTimeout,Biblioteca Digital de Teses e Dissertações da USC,Universidade do Sagrado Coração (USC),BR-SP,TEDE_LEGACY,INACTIVE,http://tede2.usc.br:8080/oai/request
+15,teses.usp.br,rede,ConnectTimeout,Biblioteca Digital de Teses e Dissertações da USP,Universidade de São Paulo (USP),BR-SP,UNKNOWN,INACTIVE,https://teses.usp.br/oai
+2077,ws2.institutoivoti.com.br,rede,ConnectError,Revista Acadêmica Licencia&acturas (Online),Instituto Ivoti,BR-RS,OJS,INACTIVE,https://ws2.institutoivoti.com.br/ojs/index.php/licenciaeacturas/oai
+443,www.bdtd.uerj.br:8080,rede,ConnectTimeout,Biblioteca Digital de Teses e Dissertações da UERJ,Universidade do Estado do Rio de Janeiro (UERJ),BR-RJ,DSPACE,INACTIVE,http://www.bdtd.uerj.br:8080/oai/request
+274,www.bdtd.ufrr.br,rede,ConnectError,Biblioteca Digital de Teses e Dissertações da UFRR,Universidade Federal de Roraima (UFRR),BR-RR,UNKNOWN,INACTIVE,http://www.bdtd.ufrr.br/tde_oai/oai3.php
+1144,www.cadtecmpa.com.br,rede,ConnectError,Caderno Profissional de Administração da Universidade Metodista de Piracicaba,Universidade Metodista de Piracicaba (UNIMEP),BR-SP,OJS,INACTIVE,https://www.cadtecmpa.com.br/ojs/index.php/index/oai
+763,www.ensp.fiocruz.br,rede,ConnectTimeout,Repositório Institucional de Produção Científica da ENSP,Escola Nacional de Saúde Pública Sergio Arouca (ENSP),BR-RJ,UNKNOWN,INACTIVE,https://www.ensp.fiocruz.br/repositorio/oai
+1045,www.entrepalavras.ufc.br,rede,ConnectError,Entrepalavras,Universidade Federal do Ceará (UFC),BR-CE,OJS,INACTIVE,http://www.entrepalavras.ufc.br/revista/index.php/Revista/oai
+743,www.fasb.edu.br,rede,ConnectError,Campo Jurídico (Online),Faculdade São Francisco de Barreiras (FASB),BR-SP,OJS,INACTIVE,http://www.fasb.edu.br/revista/index.php/campojuridico/oai
+1867,www.fnde.gov.br,rede,ReadError,Cadernos do FNDE,Fundo Nacional de Desenvolvimento da Educação (FNDE),BR-DF,OJS,INACTIVE,https://www.fnde.gov.br/publicacoes/index.php/cadernosFNDE/oai
+1042,www.geosaberes.ufc.br,rede,ConnectError,Geosaberes,Universidade Federal do Ceará (UFC),BR-CE,OJS,INACTIVE,http://www.geosaberes.ufc.br/geosaberes/oai
+422,www.higieneanimal.ufc.br,rede,ConnectError,Revista brasileira de higiene e sanidade animal,Universidade Federal do Ceará (UFC),BR-CE,OJS,INACTIVE,http://www.higieneanimal.ufc.br/seer/index.php/higieneanimal/oai
+2660,www.periodicos.letras.ufmg.br,rede,ConnectError,Revista de Estudos da Linguagem (Online),Universidade Federal de Minas Gerais (UFMG),BR-MG,OJS,INACTIVE,http://www.periodicos.letras.ufmg.br/index.php/relin/oai
+367,www.periodicos.letras.ufmg.br,rede,ConnectTimeout,Revista Brasileira de Lingüística Aplicada (Online),Universidade Federal de Minas Gerais (UFMG),BR-MG,OJS,INACTIVE,http://www.periodicos.letras.ufmg.br/index.php/rbla/oai
+707,www.repositorium.fsa.br:8080,rede,ConnectError,Repositório Institucional da FSA,Faculdade Santo Agostinho (FSA),BR-BA,DSPACE,INACTIVE,http://www.repositorium.fsa.br:8080/oai/request
+1319,www.revista.direitofranca.br,rede,ConnectError,Revista Eletrônica da Faculdade de Direito de Franca,Faculdade de Direito de Franca (FDF),BR-SP,OJS,INACTIVE,https://www.revista.direitofranca.br/index.php/refdf/oai
+2220,www.revista.universo.edu.br,rede,ConnectError,Revista Intercontinental de Gestão Desportiva,Universidade Salgado de Oliveira (UNIVERSO),BR-RJ,OJS,INACTIVE,http://www.revista.universo.edu.br/index.php?journal=gestaoesportiva&page/oai/request.php
+1331,www.revistamosaicum.org,rede,ConnectError,Revista mosaicum (Online),Faculdade do Sul da Bahia (FASB),,UNKNOWN,INACTIVE,https://www.revistamosaicum.org/mosaicum/oai
+1126,www.revistasg.uff.br,rede,ConnectError,Sistemas & Gestão,Universidade Federal Fluminense (UFF),BR-RJ,OJS,INACTIVE,https://www.revistasg.uff.br/sg/oai
+519,www.sorbi.org.br,rede,ConnectError,Revista da SORBI,Sociedade Rio-Grandense de Bioética (SORBI),,OJS,INACTIVE,http://www.sorbi.org.br/revista/index.php/index/oai
+1840,www.uemanet.uema.br,rede,ConnectError,TICs & EaD em Foco,Núcleo de Tecnologias para Educação (UEMAnet),BR-MA,OJS,INACTIVE,https://www.uemanet.uema.br/revista/index.php/ticseadfoco/oai

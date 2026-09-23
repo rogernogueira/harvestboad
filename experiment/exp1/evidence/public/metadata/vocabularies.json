@@ -1,0 +1,538 @@
+{
+  "CV14": {
+    "field": "FinsLucrativos",
+    "terms": [
+      {
+        "code": "S",
+        "label": "Sim"
+      },
+      {
+        "code": "N",
+        "label": "Não"
+      }
+    ]
+  },
+  "CV09": {
+    "field": "harvest_protocol",
+    "terms": [
+      {
+        "code": "OAI_PMH",
+        "label": "OAI-PMH"
+      },
+      {
+        "code": "REST_API",
+        "label": "API REST"
+      },
+      {
+        "code": "OTHER_API",
+        "label": "Outra API estruturada"
+      },
+      {
+        "code": "STATIC_XML",
+        "label": "XML disponibilizado estaticamente"
+      },
+      {
+        "code": "CUSTOM",
+        "label": "Integração específica"
+      },
+      {
+        "code": "OTHER",
+        "label": "Outro protocolo"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Não determinado"
+      }
+    ]
+  },
+  "CV10": {
+    "field": "harvest_scope",
+    "terms": [
+      {
+        "code": "ALL_RECORDS",
+        "label": "Todos os registros expostos"
+      },
+      {
+        "code": "SINGLE_SET",
+        "label": "Um setSpec específico"
+      },
+      {
+        "code": "MULTIPLE_SETS",
+        "label": "Vários sets definidos"
+      },
+      {
+        "code": "CUSTOM_FILTER",
+        "label": "Outro critério de filtragem"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Não conhecido"
+      }
+    ]
+  },
+  "CV16": {
+    "field": "index_status",
+    "terms": [
+      {
+        "code": "INDEXED",
+        "label": "Indexado"
+      },
+      {
+        "code": "FAILED",
+        "label": "Indexação falhou"
+      },
+      {
+        "code": "SEM_INDICE",
+        "label": "Nunca indexado"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Estado do índice não informado"
+      }
+    ]
+  },
+  "CV01": {
+    "field": "institution_type",
+    "terms": [
+      {
+        "code": "FEDERAL_UNIVERSITY",
+        "label": "Universidade federal"
+      },
+      {
+        "code": "STATE_UNIVERSITY",
+        "label": "Universidade estadual"
+      },
+      {
+        "code": "MUNICIPAL_UNIVERSITY",
+        "label": "Universidade municipal"
+      },
+      {
+        "code": "PRIVATE_UNIVERSITY",
+        "label": "Universidade/instituição privada"
+      },
+      {
+        "code": "FEDERAL_INSTITUTE",
+        "label": "Instituto Federal/CEFET"
+      },
+      {
+        "code": "RESEARCH_INSTITUTE",
+        "label": "Instituto ou centro de pesquisa"
+      },
+      {
+        "code": "GOVERNMENT_AGENCY",
+        "label": "Órgão ou entidade governamental"
+      },
+      {
+        "code": "SCIENTIFIC_SOCIETY",
+        "label": "Sociedade/associação científica"
+      },
+      {
+        "code": "PUBLISHER",
+        "label": "Editora"
+      },
+      {
+        "code": "LIBRARY",
+        "label": "Biblioteca não enquadrada acima"
+      },
+      {
+        "code": "OTHER",
+        "label": "Outra natureza conhecida"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Não foi possível determinar"
+      }
+    ]
+  },
+  "CV13": {
+    "field": "metadata_profile",
+    "terms": [
+      {
+        "code": "OAI_DC",
+        "label": "OAI Dublin Core"
+      },
+      {
+        "code": "XOAI",
+        "label": "XOAI/DSpace"
+      },
+      {
+        "code": "DATACITE",
+        "label": "DataCite Metadata Schema"
+      },
+      {
+        "code": "OPENAIRE",
+        "label": "Perfil OpenAIRE"
+      },
+      {
+        "code": "DRIVER",
+        "label": "DRIVER"
+      },
+      {
+        "code": "BDTD",
+        "label": "Perfil utilizado pela BDTD"
+      },
+      {
+        "code": "CUSTOM",
+        "label": "Perfil específico"
+      },
+      {
+        "code": "OTHER",
+        "label": "Outro padrão reconhecido"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Não determinado"
+      }
+    ]
+  },
+  "CV11": {
+    "field": "oai_deleted_record_policy",
+    "terms": [
+      {
+        "code": "no",
+        "label": "Não mantém informação sobre exclusões"
+      },
+      {
+        "code": "transient",
+        "label": "Mantém temporariamente"
+      },
+      {
+        "code": "persistent",
+        "label": "Mantém permanentemente"
+      }
+    ]
+  },
+  "CV12": {
+    "field": "oai_granularity",
+    "terms": [
+      {
+        "code": "YYYY-MM-DD",
+        "label": "Granularidade de dia"
+      },
+      {
+        "code": "YYYY-MM-DDThh:mm:ssZ",
+        "label": "Granularidade de segundo"
+      }
+    ]
+  },
+  "CV06": {
+    "field": "platform_analysis_group",
+    "terms": [
+      {
+        "code": "DSPACE",
+        "label": "DSpace e TEDE2"
+      },
+      {
+        "code": "OJS",
+        "label": "OJS e instalações historicamente identificadas como SEER"
+      },
+      {
+        "code": "DATAVERSE",
+        "label": "Dataverse"
+      },
+      {
+        "code": "SCIELO",
+        "label": "SciELO"
+      },
+      {
+        "code": "OTHER",
+        "label": "Demais tecnologias conhecidas"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Tecnologia não identificada"
+      }
+    ]
+  },
+  "CV08": {
+    "field": "platform_confidence",
+    "terms": [
+      {
+        "code": "UNKNOWN",
+        "label": "Sem classificação confiável"
+      },
+      {
+        "code": "LOW",
+        "label": "Inferência indireta"
+      },
+      {
+        "code": "MEDIUM",
+        "label": "Uma evidência técnica forte"
+      },
+      {
+        "code": "HIGH",
+        "label": "Duas ou mais evidências técnicas independentes concordantes"
+      },
+      {
+        "code": "CONFIRMED",
+        "label": "Evidência explícita do próprio sistema ou documentação oficial"
+      }
+    ]
+  },
+  "CV07": {
+    "field": "platform_detection_method",
+    "terms": [
+      {
+        "code": "PLATFORM_API",
+        "label": "Informação retornada por API da plataforma"
+      },
+      {
+        "code": "OAI_IDENTIFY",
+        "label": "Evidência no Identify"
+      },
+      {
+        "code": "OAI_DESCRIPTION",
+        "label": "Informação no elemento description"
+      },
+      {
+        "code": "HTML_META_GENERATOR",
+        "label": "<meta name=\"generator\">"
+      },
+      {
+        "code": "HTTP_HEADER",
+        "label": "Cabeçalhos HTTP"
+      },
+      {
+        "code": "HTML_SIGNATURE",
+        "label": "Elementos inequívocos da interface"
+      },
+      {
+        "code": "OFFICIAL_DOCUMENTATION",
+        "label": "Documentação oficial da instituição"
+      },
+      {
+        "code": "SOURCE_CODE_SIGNATURE",
+        "label": "Assinatura técnica no código"
+      },
+      {
+        "code": "MANUAL_TECHNICAL_INSPECTION",
+        "label": "Inspeção técnica manual"
+      },
+      {
+        "code": "SERVICE_ENDPOINT",
+        "label": "Endpoint de um serviço conhecido, pelo domínio e rota"
+      },
+      {
+        "code": "SOURCE_REGISTRY",
+        "label": "Declaração de software no cadastro do agregador"
+      },
+      {
+        "code": "OAI_METADATA_FORMATS",
+        "label": "Conjunto de prefixos em ListMetadataFormats"
+      },
+      {
+        "code": "OAI_SETS",
+        "label": "Forma dos setSpec em ListSets"
+      },
+      {
+        "code": "MULTIPLE_EVIDENCE",
+        "label": "Duas ou mais evidências concordantes"
+      },
+      {
+        "code": "URL_PATTERN_ONLY",
+        "label": "Inferência somente pela URL"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Sem evidência suficiente"
+      }
+    ]
+  },
+  "CV05": {
+    "field": "platform_product",
+    "terms": [
+      {
+        "code": "DSPACE",
+        "label": "DSpace"
+      },
+      {
+        "code": "TEDE2",
+        "label": "TEDE2 baseado em DSpace"
+      },
+      {
+        "code": "TEDE_LEGACY",
+        "label": "TEDE anterior ao TEDE2"
+      },
+      {
+        "code": "OJS",
+        "label": "Open Journal Systems"
+      },
+      {
+        "code": "DATAVERSE",
+        "label": "Dataverse"
+      },
+      {
+        "code": "SCIELO",
+        "label": "Plataforma/ecossistema SciELO"
+      },
+      {
+        "code": "PERGAMUM",
+        "label": "Pergamum"
+      },
+      {
+        "code": "SOPHIA",
+        "label": "SophiA"
+      },
+      {
+        "code": "OMEKA",
+        "label": "Omeka"
+      },
+      {
+        "code": "EPRINTS",
+        "label": "EPrints"
+      },
+      {
+        "code": "INVENIO_RDM",
+        "label": "InvenioRDM"
+      },
+      {
+        "code": "FEDORA_ISLANDORA",
+        "label": "Fedora/Islandora"
+      },
+      {
+        "code": "CKAN",
+        "label": "CKAN"
+      },
+      {
+        "code": "CUSTOM",
+        "label": "Sistema desenvolvido especificamente pela instituição"
+      },
+      {
+        "code": "OTHER_IDENTIFIED",
+        "label": "Produto identificado, fora do vocabulário"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Não foi possível identificar"
+      }
+    ]
+  },
+  "CV15": {
+    "field": "snapshot_status",
+    "terms": [
+      {
+        "code": "VALID",
+        "label": "Coleta concluída e válida"
+      },
+      {
+        "code": "HARVESTING_FINISHED_VALID",
+        "label": "Coleta terminada com resultado válido"
+      },
+      {
+        "code": "HARVESTING_FINISHED_ERROR",
+        "label": "Coleta terminada com erro"
+      },
+      {
+        "code": "HARVESTING",
+        "label": "Coleta em andamento"
+      },
+      {
+        "code": "SEM_COLETA",
+        "label": "Nunca houve coleta"
+      }
+    ]
+  },
+  "CV02": {
+    "field": "source_status",
+    "terms": [
+      {
+        "code": "ACTIVE",
+        "label": "Fonte operacional"
+      },
+      {
+        "code": "TEMPORARILY_UNAVAILABLE",
+        "label": "Temporariamente indisponível"
+      },
+      {
+        "code": "INACTIVE",
+        "label": "Fonte não operacional"
+      },
+      {
+        "code": "REMOVED_FROM_OASISBR",
+        "label": "Removida/descredenciada"
+      },
+      {
+        "code": "MIGRATED",
+        "label": "Fonte substituída por outra instalação"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Situação indeterminada"
+      }
+    ]
+  },
+  "CV04": {
+    "field": "source_type_detail",
+    "terms": [
+      {
+        "code": "MONOGRAPH_DIGITAL_LIBRARY",
+        "label": "Biblioteca digital de monografias"
+      },
+      {
+        "code": "ETD_DIGITAL_LIBRARY",
+        "label": "Biblioteca digital de teses e dissertações"
+      },
+      {
+        "code": "SCIENTIFIC_CONFERENCE",
+        "label": "Conferência científica"
+      },
+      {
+        "code": "AGGREGATOR_PORTAL",
+        "label": "Portal agregador"
+      },
+      {
+        "code": "BOOK_PORTAL",
+        "label": "Portal de livros"
+      },
+      {
+        "code": "RESEARCH_DATA_REPOSITORY",
+        "label": "Repositório de dados de pesquisa"
+      },
+      {
+        "code": "PUBLICATION_REPOSITORY",
+        "label": "Repositório de publicações"
+      },
+      {
+        "code": "SCIENTIFIC_JOURNAL",
+        "label": "Revista científica"
+      },
+      {
+        "code": "PREPRINT_SERVER",
+        "label": "Servidor de preprints"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Ainda não classificada"
+      }
+    ]
+  },
+  "CV03": {
+    "field": "source_type_macro",
+    "terms": [
+      {
+        "code": "SCIENTIFIC_JOURNAL",
+        "label": "Revista científica"
+      },
+      {
+        "code": "PUBLICATION_REPOSITORY",
+        "label": "Repositório de publicações"
+      },
+      {
+        "code": "RESEARCH_DATA_REPOSITORY",
+        "label": "Repositório de dados de pesquisa"
+      },
+      {
+        "code": "ETD_LIBRARY",
+        "label": "Biblioteca digital de teses e dissertações"
+      },
+      {
+        "code": "OTHER_SCIENTIFIC_SOURCE",
+        "label": "Fonte científica fora dos quatro macrogrupos"
+      },
+      {
+        "code": "UNKNOWN",
+        "label": "Não classificada"
+      }
+    ]
+  }
+}

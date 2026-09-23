@@ -1,0 +1,46 @@
+campo,tipo,dtype,obrigatoriedade,vocabulario,termos,condicao,tamanho
+source_observation_id,texto,str,M,,,,
+source_id,texto,str,M,,,,20
+oasisbr_source_id,texto,str,C,,,"source_status not in ['REMOVED_FROM_OASISBR', 'UNKNOWN']",100
+observed_at,carimbo,"datetime64[us, UTC]",M,,,,
+source_name_raw,texto,str,M,,,,
+source_name_normalized,texto,str,M,,,,
+institution_name,texto,str,M,,,,
+institution_acronym,texto,str,O,,,,30
+institution_type,categoria,category[CV01],O,CV01,12,,40
+FinsLucrativos,categoria,category[CV14],O,CV14,2,,1
+Comunitaria,categoria,category[CV14],O,CV14,2,,1
+country_code,texto,str,M,,,,
+subdivision_code,texto,str,O,,,,10
+source_url,texto,str,M,,,,
+harvest_endpoint_url,texto,str,M,,,,
+source_status,categoria,category[CV02],M,CV02,6,,30
+source_type_macro,categoria,category[CV03],M,CV03,6,,50
+source_type_detail,categoria,category[CV04],M,CV04,10,,60
+platform_name_raw,texto,str,C,,,"platform_product in ['OTHER_IDENTIFIED', 'CUSTOM']",
+platform_product,categoria,category[CV05],M,CV05,16,,40
+platform_analysis_group,categoria,category[CV06],M,CV06,6,,20
+platform_version_raw,texto,str,O,,,,100
+platform_version,texto,str,O,,,,30
+platform_detection_method,categoria,category[CV07],M,CV07,16,,50
+platform_confidence,categoria,category[CV08],M,CV08,5,,20
+harvest_protocol,categoria,category[CV09],M,CV09,7,,30
+harvest_scope,categoria,category[CV10],M,CV10,5,,30
+oai_protocol_version,texto,str,C,,,harvest_protocol == 'OAI_PMH',10
+oai_repository_name,texto,str,C,,,harvest_protocol == 'OAI_PMH',
+oai_earliest_datestamp,carimbo,"datetime64[us, UTC]",C,,,harvest_protocol == 'OAI_PMH',
+oai_deleted_record_policy,categoria,category[CV11],C,CV11,3,harvest_protocol == 'OAI_PMH',20
+oai_granularity,categoria,category[CV12],C,CV12,2,harvest_protocol == 'OAI_PMH',30
+harvest_metadata_prefix,texto,str,C,,,harvest_protocol == 'OAI_PMH',100
+metadata_profile,categoria,category[CV13],C,CV13,9,harvest_protocol == 'OAI_PMH',30
+harvest_set_spec,texto,str,O,,,,
+snapshot_id,texto,str,C,,,snapshot_status != 'SEM_COLETA',20
+snapshot_date,carimbo,"datetime64[us, UTC]",C,,,snapshot_status != 'SEM_COLETA',
+snapshot_status,categoria,category[CV15],C,CV15,5,source_id == source_id,30
+size,inteiro,Int64,C,,,snapshot_status != 'SEM_COLETA',
+valid_size,inteiro,Int64,C,,,snapshot_status != 'SEM_COLETA',
+transformed_size,inteiro,Int64,C,,,snapshot_status != 'SEM_COLETA',
+index_status,categoria,category[CV16],C,CV16,4,source_id == source_id,20
+classification_evidence_id,texto,str,M,,,,
+identify_sha256,texto,str,O,,,,
+notes,texto,str,O,,,,

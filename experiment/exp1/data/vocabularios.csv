@@ -1,0 +1,117 @@
+campo,vocabulario,codigo,significado,ordem
+institution_type,CV01,FEDERAL_UNIVERSITY,Universidade federal,0
+institution_type,CV01,STATE_UNIVERSITY,Universidade estadual,1
+institution_type,CV01,MUNICIPAL_UNIVERSITY,Universidade municipal,2
+institution_type,CV01,PRIVATE_UNIVERSITY,Universidade/instituição privada,3
+institution_type,CV01,FEDERAL_INSTITUTE,Instituto Federal/CEFET,4
+institution_type,CV01,RESEARCH_INSTITUTE,Instituto ou centro de pesquisa,5
+institution_type,CV01,GOVERNMENT_AGENCY,Órgão ou entidade governamental,6
+institution_type,CV01,SCIENTIFIC_SOCIETY,Sociedade/associação científica,7
+institution_type,CV01,PUBLISHER,Editora,8
+institution_type,CV01,LIBRARY,Biblioteca não enquadrada acima,9
+institution_type,CV01,OTHER,Outra natureza conhecida,10
+institution_type,CV01,UNKNOWN,Não foi possível determinar,11
+source_status,CV02,ACTIVE,Fonte operacional,0
+source_status,CV02,TEMPORARILY_UNAVAILABLE,Temporariamente indisponível,1
+source_status,CV02,INACTIVE,Fonte não operacional,2
+source_status,CV02,REMOVED_FROM_OASISBR,Removida/descredenciada,3
+source_status,CV02,MIGRATED,Fonte substituída por outra instalação,4
+source_status,CV02,UNKNOWN,Situação indeterminada,5
+source_type_macro,CV03,SCIENTIFIC_JOURNAL,Revista científica,0
+source_type_macro,CV03,PUBLICATION_REPOSITORY,Repositório de publicações,1
+source_type_macro,CV03,RESEARCH_DATA_REPOSITORY,Repositório de dados de pesquisa,2
+source_type_macro,CV03,ETD_LIBRARY,Biblioteca digital de teses e dissertações,3
+source_type_macro,CV03,OTHER_SCIENTIFIC_SOURCE,Fonte científica fora dos quatro macrogrupos,4
+source_type_macro,CV03,UNKNOWN,Não classificada,5
+source_type_detail,CV04,MONOGRAPH_DIGITAL_LIBRARY,Biblioteca digital de monografias,0
+source_type_detail,CV04,ETD_DIGITAL_LIBRARY,Biblioteca digital de teses e dissertações,1
+source_type_detail,CV04,SCIENTIFIC_CONFERENCE,Conferência científica,2
+source_type_detail,CV04,AGGREGATOR_PORTAL,Portal agregador,3
+source_type_detail,CV04,BOOK_PORTAL,Portal de livros,4
+source_type_detail,CV04,RESEARCH_DATA_REPOSITORY,Repositório de dados de pesquisa,5
+source_type_detail,CV04,PUBLICATION_REPOSITORY,Repositório de publicações,6
+source_type_detail,CV04,SCIENTIFIC_JOURNAL,Revista científica,7
+source_type_detail,CV04,PREPRINT_SERVER,Servidor de preprints,8
+source_type_detail,CV04,UNKNOWN,Ainda não classificada,9
+platform_product,CV05,DSPACE,DSpace,0
+platform_product,CV05,TEDE2,TEDE2 baseado em DSpace,1
+platform_product,CV05,TEDE_LEGACY,TEDE anterior ao TEDE2,2
+platform_product,CV05,OJS,Open Journal Systems,3
+platform_product,CV05,DATAVERSE,Dataverse,4
+platform_product,CV05,SCIELO,Plataforma/ecossistema SciELO,5
+platform_product,CV05,PERGAMUM,Pergamum,6
+platform_product,CV05,SOPHIA,SophiA,7
+platform_product,CV05,OMEKA,Omeka,8
+platform_product,CV05,EPRINTS,EPrints,9
+platform_product,CV05,INVENIO_RDM,InvenioRDM,10
+platform_product,CV05,FEDORA_ISLANDORA,Fedora/Islandora,11
+platform_product,CV05,CKAN,CKAN,12
+platform_product,CV05,CUSTOM,Sistema desenvolvido especificamente pela instituição,13
+platform_product,CV05,OTHER_IDENTIFIED,"Produto identificado, fora do vocabulário",14
+platform_product,CV05,UNKNOWN,Não foi possível identificar,15
+platform_analysis_group,CV06,DSPACE,DSpace e TEDE2,0
+platform_analysis_group,CV06,OJS,OJS e instalações historicamente identificadas como SEER,1
+platform_analysis_group,CV06,DATAVERSE,Dataverse,2
+platform_analysis_group,CV06,SCIELO,SciELO,3
+platform_analysis_group,CV06,OTHER,Demais tecnologias conhecidas,4
+platform_analysis_group,CV06,UNKNOWN,Tecnologia não identificada,5
+platform_detection_method,CV07,PLATFORM_API,Informação retornada por API da plataforma,0
+platform_detection_method,CV07,OAI_IDENTIFY,Evidência no Identify,1
+platform_detection_method,CV07,OAI_DESCRIPTION,Informação no elemento description,2
+platform_detection_method,CV07,HTML_META_GENERATOR,"<meta name=""generator"">",3
+platform_detection_method,CV07,HTTP_HEADER,Cabeçalhos HTTP,4
+platform_detection_method,CV07,HTML_SIGNATURE,Elementos inequívocos da interface,5
+platform_detection_method,CV07,OFFICIAL_DOCUMENTATION,Documentação oficial da instituição,6
+platform_detection_method,CV07,SOURCE_CODE_SIGNATURE,Assinatura técnica no código,7
+platform_detection_method,CV07,MANUAL_TECHNICAL_INSPECTION,Inspeção técnica manual,8
+platform_detection_method,CV07,SERVICE_ENDPOINT,"Endpoint de um serviço conhecido, pelo domínio e rota",9
+platform_detection_method,CV07,SOURCE_REGISTRY,Declaração de software no cadastro do agregador,10
+platform_detection_method,CV07,OAI_METADATA_FORMATS,Conjunto de prefixos em ListMetadataFormats,11
+platform_detection_method,CV07,OAI_SETS,Forma dos setSpec em ListSets,12
+platform_detection_method,CV07,MULTIPLE_EVIDENCE,Duas ou mais evidências concordantes,13
+platform_detection_method,CV07,URL_PATTERN_ONLY,Inferência somente pela URL,14
+platform_detection_method,CV07,UNKNOWN,Sem evidência suficiente,15
+platform_confidence,CV08,UNKNOWN,Sem classificação confiável,0
+platform_confidence,CV08,LOW,Inferência indireta,1
+platform_confidence,CV08,MEDIUM,Uma evidência técnica forte,2
+platform_confidence,CV08,HIGH,Duas ou mais evidências técnicas independentes concordantes,3
+platform_confidence,CV08,CONFIRMED,Evidência explícita do próprio sistema ou documentação oficial,4
+harvest_protocol,CV09,OAI_PMH,OAI-PMH,0
+harvest_protocol,CV09,REST_API,API REST,1
+harvest_protocol,CV09,OTHER_API,Outra API estruturada,2
+harvest_protocol,CV09,STATIC_XML,XML disponibilizado estaticamente,3
+harvest_protocol,CV09,CUSTOM,Integração específica,4
+harvest_protocol,CV09,OTHER,Outro protocolo,5
+harvest_protocol,CV09,UNKNOWN,Não determinado,6
+harvest_scope,CV10,ALL_RECORDS,Todos os registros expostos,0
+harvest_scope,CV10,SINGLE_SET,Um setSpec específico,1
+harvest_scope,CV10,MULTIPLE_SETS,Vários sets definidos,2
+harvest_scope,CV10,CUSTOM_FILTER,Outro critério de filtragem,3
+harvest_scope,CV10,UNKNOWN,Não conhecido,4
+oai_deleted_record_policy,CV11,no,Não mantém informação sobre exclusões,0
+oai_deleted_record_policy,CV11,transient,Mantém temporariamente,1
+oai_deleted_record_policy,CV11,persistent,Mantém permanentemente,2
+oai_granularity,CV12,YYYY-MM-DD,Granularidade de dia,0
+oai_granularity,CV12,YYYY-MM-DDThh:mm:ssZ,Granularidade de segundo,1
+metadata_profile,CV13,OAI_DC,OAI Dublin Core,0
+metadata_profile,CV13,XOAI,XOAI/DSpace,1
+metadata_profile,CV13,DATACITE,DataCite Metadata Schema,2
+metadata_profile,CV13,OPENAIRE,Perfil OpenAIRE,3
+metadata_profile,CV13,DRIVER,DRIVER,4
+metadata_profile,CV13,BDTD,Perfil utilizado pela BDTD,5
+metadata_profile,CV13,CUSTOM,Perfil específico,6
+metadata_profile,CV13,OTHER,Outro padrão reconhecido,7
+metadata_profile,CV13,UNKNOWN,Não determinado,8
+snapshot_status,CV15,VALID,Coleta concluída e válida,0
+snapshot_status,CV15,HARVESTING_FINISHED_VALID,Coleta terminada com resultado válido,1
+snapshot_status,CV15,HARVESTING_FINISHED_ERROR,Coleta terminada com erro,2
+snapshot_status,CV15,HARVESTING,Coleta em andamento,3
+snapshot_status,CV15,SEM_COLETA,Nunca houve coleta,4
+index_status,CV16,INDEXED,Indexado,0
+index_status,CV16,FAILED,Indexação falhou,1
+index_status,CV16,SEM_INDICE,Nunca indexado,2
+index_status,CV16,UNKNOWN,Estado do índice não informado,3
+FinsLucrativos,CV14,S,Sim,0
+FinsLucrativos,CV14,N,Não,1
+Comunitaria,CV14,S,Sim,0
+Comunitaria,CV14,N,Não,1

@@ -1,0 +1,100 @@
+{
+  "dataset_id": "HB-EVIDENCE-2026-09-20-v1.4.0",
+  "title": "HarvestBoard Evidence - Oasisbr",
+  "subtitle": "Base 1: fontes de acesso aberto do Oasisbr",
+  "exported_at": "2026-09-23T18:00:00Z",
+  "reference_date": "2026-09-20",
+  "repositories": 2183,
+  "records_last_snapshot": 4970249,
+  "valid_records_last_snapshot": 4245255,
+  "transformed_records_last_snapshot": 4829817,
+  "snapshots_total": 42358,
+  "records_sampled": 318953,
+  "dataset_status": "FROZEN",
+  "schema_version": "1.4.0",
+  "version": "1.4.0",
+  "publisher": "IBICT — Instituto Brasileiro de Informação em Ciência e Tecnologia",
+  "license": "CC-BY-4.0",
+  "spatial_coverage": "BR",
+  "unit_of_observation": "fonte de metadados registrada no Oasisbr",
+  "tables": [
+    {
+      "name": "repositories",
+      "rows": 2183,
+      "columns": 37,
+      "bytes": 289362
+    },
+    {
+      "name": "snapshots",
+      "rows": 42358,
+      "columns": 14,
+      "bytes": 1120432
+    },
+    {
+      "name": "platforms",
+      "rows": 53,
+      "columns": 6,
+      "bytes": 4966
+    },
+    {
+      "name": "platform_evidence",
+      "rows": 10374,
+      "columns": 12,
+      "bytes": 384521
+    },
+    {
+      "name": "harvest_metrics",
+      "rows": 2183,
+      "columns": 21,
+      "bytes": 96228
+    },
+    {
+      "name": "repository_summary",
+      "rows": 2183,
+      "columns": 52,
+      "bytes": 361564
+    },
+    {
+      "name": "records",
+      "rows": 318953,
+      "columns": 31,
+      "bytes": 6801560
+    },
+    {
+      "name": "record_values",
+      "rows": 1890705,
+      "columns": 5,
+      "bytes": 3603955
+    },
+    {
+      "name": "record_metrics",
+      "rows": 1573,
+      "columns": 28,
+      "bytes": 51259
+    },
+    {
+      "name": "record_harvest",
+      "rows": 2183,
+      "columns": 16,
+      "bytes": 80737
+    },
+    {
+      "name": "metadata_rules",
+      "rows": 15,
+      "columns": 8,
+      "bytes": 6994
+    },
+    {
+      "name": "record_metadata",
+      "rows": 4434900,
+      "columns": 8,
+      "bytes": 4809306
+    },
+    {
+      "name": "record_metadata_values",
+      "rows": 6207487,
+      "columns": 7,
+      "bytes": 52928729
+    }
+  ]
+}

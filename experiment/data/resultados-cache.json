@@ -1,0 +1,276 @@
+{
+  "rodadoEm": "2026-09-20T10:59:11+00:00",
+  "fonte": "cache",
+  "itensPorRepositorio": 3,
+  "timeout": 5.0,
+  "resumo": {
+    "repositorios": 2,
+    "repositoriosQueListaram": 2,
+    "registros": 6,
+    "paginaDoItem": {
+      "nova": {
+        "ok": 3,
+        "rede": 3
+      },
+      "antiga": {
+        "http-4xx": 3,
+        "rede": 3
+      }
+    },
+    "oaiPmh": {
+      "ok": 6
+    },
+    "errosDeListagem": {},
+    "ganhos": 3,
+    "perdas": 0,
+    "enganosos": {
+      "nova": 0,
+      "antiga": 3
+    }
+  },
+  "repositorios": [
+    {
+      "id": "esmat",
+      "nome": "Revista ESMAT (TJTO)",
+      "baseUrl": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai",
+      "plataforma": "ojs",
+      "metadataPrefix": "oai_dc",
+      "nota": "caso de origem: o DOI do dc:identifier nunca foi registrado (404)",
+      "registros": [
+        {
+          "identifier": "oai:revista.esmat.tjto.jus.br:article/2",
+          "candidates": [
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/2",
+            "https://doi.org/10.34060/reesmat.v6i7.2",
+            "https://doi.org/10.34060/reesmat.v6i7",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/2/1",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/2/2"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/2",
+              "source": "record:ojs",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/2"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34060/reesmat.v6i7.2",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "http-4xx",
+                "status": 404,
+                "final": "https://esmat.tjto.jus.br/publicacoes/index.php/revista_esmat/article/view/2"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F2&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F2&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:revista.esmat.tjto.jus.br:article/3",
+          "candidates": [
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/3",
+            "https://doi.org/10.34060/reesmat.v6i7.3",
+            "https://doi.org/10.34060/reesmat.v6i7",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/3/3",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/3/4"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/3",
+              "source": "record:ojs",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/3"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34060/reesmat.v6i7.3",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "http-4xx",
+                "status": 404,
+                "final": "https://esmat.tjto.jus.br/publicacoes/index.php/revista_esmat/article/view/3"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F3&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F3&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:revista.esmat.tjto.jus.br:article/4",
+          "candidates": [
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/4",
+            "https://doi.org/10.34060/reesmat.v6i7.4",
+            "https://doi.org/10.34060/reesmat.v6i7",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/4/5",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/4/6"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/4",
+              "source": "record:ojs",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/4"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34060/reesmat.v6i7.4",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "http-4xx",
+                "status": 404,
+                "final": "https://esmat.tjto.jus.br/publicacoes/index.php/revista_esmat/article/view/4"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F4&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F4&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "cache-1",
+      "nome": "repositorio.pgsscogna.com.br",
+      "baseUrl": "https://repositorio.pgsscogna.com.br/oai/request.",
+      "plataforma": "dspace",
+      "metadataPrefix": "xoai",
+      "registros": [
+        {
+          "identifier": "oai:repositorio.pgsscogna.com.br:123456789/47597",
+          "candidates": [
+            "https://repositorio.pgsskroton.com//handle/123456789/47597",
+            "https://repositorio.pgsscogna.com.br//bitstream/123456789/47597/1/%5bMODELO_PRODUCAO%5d%20Trabalho%20Completo.doc",
+            "https://repositorio.pgsscogna.com.br//bitstream/123456789/47597/2/license.txt"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repositorio.pgsskroton.com//handle/123456789/47597",
+              "source": "record:dspace",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectTimeout"
+              }
+            },
+            "antiga": {
+              "link": "https://repositorio.pgsskroton.com//handle/123456789/47597",
+              "source": "record:dspace",
+              "regra": "dspace",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectTimeout"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repositorio.pgsscogna.com.br/oai/request.?verb=GetRecord&identifier=oai%3Arepositorio.pgsscogna.com.br%3A123456789%2F47597&metadataPrefix=xoai",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repositorio.pgsscogna.com.br/oai/request.?verb=GetRecord&identifier=oai%3Arepositorio.pgsscogna.com.br%3A123456789%2F47597&metadataPrefix=xoai"
+            }
+          }
+        },
+        {
+          "identifier": "oai:repositorio.pgsscogna.com.br:123456789/20500",
+          "candidates": [
+            "https://repositorio.pgsskroton.com/handle/123456789/20500",
+            "https://repositorio.pgsscogna.com.br//bitstream/123456789/20500/1/O%20DISCURSO%20POLITICO%20DA%20D%c3%89CADA%20DE%2080%20PRESENTE%20NAS%20M%c3%9aSICAS_QUE%20PA%c3%8dS%20%c3%89%20ESSE_%20E%20VOSSA%20EXCEL%c3%8aNCIA.pdf",
+            "https://repositorio.pgsscogna.com.br//bitstream/123456789/20500/2/license.txt"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repositorio.pgsskroton.com/handle/123456789/20500",
+              "source": "record:dspace",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectTimeout"
+              }
+            },
+            "antiga": {
+              "link": "https://repositorio.pgsskroton.com/handle/123456789/20500",
+              "source": "record:dspace",
+              "regra": "dspace",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectTimeout"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repositorio.pgsscogna.com.br/oai/request.?verb=GetRecord&identifier=oai%3Arepositorio.pgsscogna.com.br%3A123456789%2F20500&metadataPrefix=xoai",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repositorio.pgsscogna.com.br/oai/request.?verb=GetRecord&identifier=oai%3Arepositorio.pgsscogna.com.br%3A123456789%2F20500&metadataPrefix=xoai"
+            }
+          }
+        },
+        {
+          "identifier": "oai:repositorio.pgsscogna.com.br:123456789/7483",
+          "candidates": [
+            "https://repositorio.pgsskroton.com/handle/123456789/7483",
+            "https://repositorio.pgsscogna.com.br//bitstream/123456789/7483/1/INFORMA%c3%87%c3%95ES%20GEOGR%c3%81FICAS%20NA%20WEB.pdf",
+            "https://repositorio.pgsscogna.com.br//bitstream/123456789/7483/2/license.txt"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repositorio.pgsskroton.com/handle/123456789/7483",
+              "source": "record:dspace",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectTimeout"
+              }
+            },
+            "antiga": {
+              "link": "https://repositorio.pgsskroton.com/handle/123456789/7483",
+              "source": "record:dspace",
+              "regra": "dspace",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectTimeout"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repositorio.pgsscogna.com.br/oai/request.?verb=GetRecord&identifier=oai%3Arepositorio.pgsscogna.com.br%3A123456789%2F7483&metadataPrefix=xoai",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repositorio.pgsscogna.com.br/oai/request.?verb=GetRecord&identifier=oai%3Arepositorio.pgsscogna.com.br%3A123456789%2F7483&metadataPrefix=xoai"
+            }
+          }
+        }
+      ],
+      "erro": null
+    }
+  ]
+}

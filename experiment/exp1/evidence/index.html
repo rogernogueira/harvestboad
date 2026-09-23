@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HarvestBoard Evidence</title>
+    <meta name="description" content="Dataset científico congelado das fontes de acesso aberto do Oasisbr, consultado por DuckDB no navegador." />
+    <!--
+      Rawline é a fonte do Padrão Digital de Governo e não vem em pacote npm:
+      o core só declara `--font-family-base` e nenhum @font-face. Sem este link
+      tudo cai no sans-serif do sistema e as métricas do design saem erradas.
+    -->
+    <link rel="preconnect" href="https://cdngovbr-ds.estaleiro.serpro.gov.br" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline/css/rawline.css"
+    />
+  </head>
+  <body>
+    <div id="raiz"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+{
+  "source": {
+    "type": "Harvester do Oasisbr (REST)",
+    "client": "apps.integrations.harvester.HarvesterClient",
+    "executed_in": "container harvestboard_api",
+    "cache": "ignorado (cliente cru, não apps.harvests.services)",
+    "page_size": 500,
+    "producer": "coletar_historico.py / coletar_cadastro.py"
+  },
+  "extraction": {
+    "exported_at": "2026-09-23T18:00:00Z",
+    "script": "congelar.py",
+    "script_version": "1.4.0",
+    "git_commit": "8a6d013ac7f447bcaa18c59731b25c4eb816ff5f",
+    "engine": "pandas 3.0.6 · pyarrow 25.0.1"
+  },
+  "collected_at": {
+    "harvester_registry": "2026-09-21",
+    "harvester_history": "2026-09-21",
+    "oai_identify": "2026-09-20",
+    "oai_records": "2026-09-22",
+    "platform_probes": "2026-09-21",
+    "emec_crosscheck": "2026-09-20"
+  },
+  "sources": [
+    {
+      "name": "Harvester do Oasisbr",
+      "kind": "API REST",
+      "provides": "cadastro das fontes, histórico de coletas, diagnóstico",
+      "note": "repository_detail expõe o endpoint em originURL, não em oaiSource; e repository_harvests trunca o histórico em 20 por página (padrão do Spring Data REST) — ambos contornados na coleta."
+    },
+    {
+      "name": "Endpoints OAI-PMH das próprias fontes",
+      "kind": "OAI-PMH",
+      "provides": "Identify, ListMetadataFormats, ListSets, ListRecords (oai_dc)"
+    },
+    {
+      "name": "Páginas HTML das fontes",
+      "kind": "HTTP",
+      "provides": "meta generator, cookies, marcadores e rota final"
+    },
+    {
+      "name": "Exportações do e-MEC",
+      "kind": "CSV",
+      "provides": "conferência de natureza jurídica das instituições de ensino",
+      "note": "289 instituições casadas por sigla+UF com token distintivo, 0 divergências."
+    }
+  ],
+  "pipeline": [
+    {
+      "step": "coleta",
+      "scripts": [
+        "coletar_repositorios.py",
+        "coletar_cadastro.py",
+        "coletar_historico.py",
+        "coletar_identify.py",
+        "coletar_sondas.py",
+        "coletar_registros.py"
+      ]
+    },
+    {
+      "step": "classificação",
+      "scripts": [
+        "sondas.py",
+        "instituicoes.py",
+        "verificar_emec.py"
+      ]
+    },
+    {
+      "step": "montagem",
+      "scripts": [
+        "base_fontes.py",
+        "gerar.py"
+      ]
+    },
+    {
+      "step": "congelamento",
+      "scripts": [
+        "congelar.py"
+      ]
+    }
+  ],
+  "limitations": [
+    "oaiSource ausente no cadastro: repository_detail expõe o endpoint em originURL — 597 endpoints só foram recuperados depois de corrigir o campo lido.",
+    "baseURL OAI de parte das fontes foi recuperado dos registros já coletados, não declarado pelo cadastro.",
+    "repository_harvests trunca o histórico em 20 por página; a série completa exigiu o cliente cru com 500 por página.",
+    "Desenho observacional: plataforma, tipo de fonte e operador responsável andam juntos e nenhum teste desta base os separa.",
+    "size, valid_size e transformed_size são resultados da coleta, não propriedades declaradas pela fonte.",
+    "216 fontes estão cadastradas contra endpoints de agregador desativados (212 old.scielo.br, 3 www.scielo.br, 1 BDTD).",
+    "Todas as 2.183 fontes compartilham o cron * 0 0 29 2 * (29 de fevereiro): ele dispara só em ano bissexto — 358 fontes varridas em 2020-02-29, 3 em 2024-02-29 — e no intervalo as coletas são lotes manuais.",
+    "ListRecords: 251 das 2.178 origens com endpoint não foram pedidas — o disjuntor por host abriu depois de falhas seguidas no mesmo servidor; o desfecho delas é disjuntor, não falha da fonte.",
+    "index_status UNKNOWN em 574 fontes é ausência de informação do Harvester, não falha de indexação."
+  ],
+  "reproducibility": {
+    "invariant": "byte-identical regeneration from the same inputs",
+    "verify": "python exp1/congelar.py && sha256sum -c metadata/checksums.sha256"
+  }
+}

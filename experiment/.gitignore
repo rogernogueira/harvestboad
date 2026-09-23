@@ -1,0 +1,21 @@
+__pycache__/
+.venv/
+.ruff_cache/
+.playwright-mcp/
+
+# Painel Evidence: dependências e build, refeitos por `npm install && npm run build`
+exp1/evidence/node_modules/
+exp1/evidence/dashboard/
+exp1/evidence/tsconfig.tsbuildinfo
+
+# Cópias de serviço que `congelar.py` deriva dos Parquet canônicos — a base64
+# de cada tabela e a partição de record_metadata_values por fonte. Os Parquet
+# em si, conferidos por checksums.sha256, continuam versionados.
+exp1/evidence/public/data/*.parquet.txt
+exp1/evidence/public/data/valores/
+
+# Respostas cruas da coleta, entrada de `congelar.py`. O registros-v2 tem 119 MB,
+# acima do limite de 100 MB por arquivo do GitHub; ficam só na máquina, e o
+# dataset congelado que sai deles é o que vai para o repositório.
+exp1/data/registros.json.gz
+exp1/data/registros-v2.json.gz

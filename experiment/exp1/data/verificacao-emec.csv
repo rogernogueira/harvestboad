@@ -1,0 +1,756 @@
+institution_name,nosso_tipo,uf,fontes,como,recorte,mec_nome,mec_categoria,mec_natureza,esperado,confere
+Universidade de São Paulo (USP),STATE_UNIVERSITY,SP,87,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DE SÃO PAULO (USP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade de Brasília (UnB),FEDERAL_UNIVERSITY,DF,43,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DE BRASÍLIA (UNB),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Conselho Nacional de Pesquisa e Pós-graduação em Direito (CONPEDI),SCIENTIFIC_SOCIETY,SC,41,não casou,,,,,,
+Universidade Federal de Santa Catarina (UFSC),FEDERAL_UNIVERSITY,SC,41,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SANTA CATARINA (UFSC),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Estadual de Campinas (UNICAMP),STATE_UNIVERSITY,SP,40,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE CAMPINAS (UNICAMP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade do Estado do Rio de Janeiro (UERJ),STATE_UNIVERSITY,RJ,40,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DO ESTADO DO RIO DE JANEIRO (UERJ),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal de Goiás (UFG),FEDERAL_UNIVERSITY,GO,38,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE GOIÁS (UFG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Rio Grande do Sul (UFRGS),FEDERAL_UNIVERSITY,RS,36,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO RIO GRANDE DO SUL (UFRGS),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Estadual Paulista (UNESP),STATE_UNIVERSITY,SP,34,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL PAULISTA JÚLIO DE MESQUITA FILHO (UNESP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal de Minas Gerais (UFMG),FEDERAL_UNIVERSITY,MG,33,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE MINAS GERAIS (UFMG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Paraná (UFPR),FEDERAL_UNIVERSITY,PR,29,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO PARANÁ (UFPR),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Santa Maria (UFSM),FEDERAL_UNIVERSITY,RS,28,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SANTA MARIA (UFSM),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal Fluminense (UFF),FEDERAL_UNIVERSITY,RJ,26,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL FLUMINENSE (UFF),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Uberlândia (UFU),FEDERAL_UNIVERSITY,MG,25,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE UBERLÂNDIA (UFU),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Rio de Janeiro (UFRJ),FEDERAL_UNIVERSITY,RJ,25,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO RIO DE JANEIRO (UFRJ),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Pontifícia Universidade Católica de São Paulo (PUC-SP),PRIVATE_UNIVERSITY,SP,24,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DE SÃO PAULO (PUCSP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Pontifícia Universidade Católica do Rio Grande do Sul (PUCRS),PRIVATE_UNIVERSITY,RS,21,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO GRANDE DO SUL (PUCRS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Estadual de Maringá (UEM),STATE_UNIVERSITY,PR,19,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE MARINGÁ (UEM),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal da Bahia (UFBA),FEDERAL_UNIVERSITY,BA,19,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DA BAHIA (UFBA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Ceará (UFC),FEDERAL_UNIVERSITY,CE,19,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO CEARÁ (UFC),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Estadual de Londrina (UEL),STATE_UNIVERSITY,PR,17,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE LONDRINA (UEL),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal do Espírito Santo (UFES),FEDERAL_UNIVERSITY,ES,16,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO ESPÍRITO SANTO (UFES),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade do Estado de Santa Catarina (UDESC),STATE_UNIVERSITY,SC,16,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE DO ESTADO DE SANTA CATARINA (UDESC),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal da Paraíba (UFPB),FEDERAL_UNIVERSITY,PB,15,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DA PARAÍBA (UFPB),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Pernambuco (UFPE),FEDERAL_UNIVERSITY,PE,15,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE PERNAMBUCO (UFPE),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Maranhão (UFMA),FEDERAL_UNIVERSITY,MA,15,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO MARANHÃO (UFMA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Centro de Ensino de Brasília (UNICEUB),PRIVATE_UNIVERSITY,DF,14,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO DE BRASÍLIA (UNICEUB),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Pontifícia Universidade Católica de Minas Gerais (PUC Minas),PRIVATE_UNIVERSITY,MG,14,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DE MINAS GERAIS (PUC MINAS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+"Universidade Estadual Paulista ""Júlio de Mesquita Filho"" (UNESP)",STATE_UNIVERSITY,SP,14,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL PAULISTA JÚLIO DE MESQUITA FILHO (UNESP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal de Juiz de Fora (UFJF),FEDERAL_UNIVERSITY,MG,14,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE JUIZ DE FORA (UFJF),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Instituto Brasileiro de Informação em Ciência e Tecnologia (Ibict),GOVERNMENT_AGENCY,DF,13,não casou,,,,,,
+Universidade Estadual do Sudoeste da Bahia (UESB),STATE_UNIVERSITY,BA,13,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO SUDOESTE DA BAHIA (UESB),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal da Grande Dourados (UFGD),FEDERAL_UNIVERSITY,MS,13,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE FEDERAL DA GRANDE DOURADOS (UFGD),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Sergipe (UFS),FEDERAL_UNIVERSITY,SE,13,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SERGIPE (UFS),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Rio Grande (FURG),FEDERAL_UNIVERSITY,RS,13,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO RIO GRANDE (FURG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Tecnológica Federal do Paraná (UTFPR),FEDERAL_UNIVERSITY,PR,13,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ (UTFPR),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade de Santa Cruz do Sul (UNISC),PRIVATE_UNIVERSITY,RS,13,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE SANTA CRUZ DO SUL (UNISC),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Fundação Getulio Vargas (FGV),PRIVATE_UNIVERSITY,SP,12,razão social (mantenedora),dados privadas sem fins lucrativos.csv,EPGE Escola Brasileira de Economia e Finanças (FGV EPGE),Privada sem fins lucrativos,Privada sem fins lucrativos,,
+Universidade Federal de Viçosa (UFV),FEDERAL_UNIVERSITY,MG,12,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE VIÇOSA (UFV),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Nove de Julho (UNINOVE),PRIVATE_UNIVERSITY,SP,12,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE NOVE DE JULHO (UNINOVE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade do Estado da Bahia (UNEB),STATE_UNIVERSITY,BA,12,"sigla, e-MEC sem UF",Publicas estaduais e federais.csv,UNIVERSIDADE DO ESTADO DA BAHIA (UNEB),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal do Pará (UFPA),FEDERAL_UNIVERSITY,PA,11,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO PARÁ (UFPA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Piauí (UFPI),FEDERAL_UNIVERSITY,PI,11,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO PIAUÍ (UFPI),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Rio Grande do Norte (UFRN),FEDERAL_UNIVERSITY,RN,11,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO RIO GRANDE DO NORTE (UFRN),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Fundação Oswaldo Cruz (Fiocruz),RESEARCH_INSTITUTE,RJ,10,sigla+UF,Publicas estaduais e federais.csv,Fundação Oswaldo Cruz (Fiocruz),Pública Federal,Pessoa Jurídica de Direito Público - Federal,GOVERNMENT_AGENCY | RESEARCH_INSTITUTE,True
+Universidade Estadual de Ponta Grossa (UEPG),STATE_UNIVERSITY,PR,10,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE PONTA GROSSA (UEPG),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Ceará (UECE),STATE_UNIVERSITY,CE,10,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO CEARÁ (UECE),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade de Caxias do Sul (UCS),PRIVATE_UNIVERSITY,RS,10,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE CAXIAS DO SUL (UCS),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade de Passo Fundo (UPF),PRIVATE_UNIVERSITY,RS,10,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE PASSO FUNDO (UPF),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Pontifícia Universidade Católica de Goiás (PUC-GO),PRIVATE_UNIVERSITY,GO,9,nome exato,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DE GOIÁS (PUC GOIÁS),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Publicação independente,OTHER,RJ,9,não casou,,,,,,
+Sociedade Brasileira de Computação (SBC),SCIENTIFIC_SOCIETY,RS,9,não casou,,,,,,
+Universidade Federal de Alagoas (UFAL),FEDERAL_UNIVERSITY,AL,9,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE ALAGOAS (UFAL),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Lavras (UFLA),FEDERAL_UNIVERSITY,MG,9,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE LAVRAS (UFLA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Mato Grosso (UFMT),FEDERAL_UNIVERSITY,MT,9,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE MATO GROSSO (UFMT),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Mato Grosso do Sul (UFMS),FEDERAL_UNIVERSITY,MS,9,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE MATO GROSSO DO SUL (UFMS),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Estadual do Oeste do Paraná (UNIOESTE),STATE_UNIVERSITY,PR,8,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO OESTE DO PARANÁ (UNIOESTE),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal de Pelotas (UFPEL),FEDERAL_UNIVERSITY,RS,8,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE PELOTAS (UFPEL),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Roraima (UFRR),FEDERAL_UNIVERSITY,RR,8,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE RORAIMA (UFRR),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de São Paulo (UNIFESP),FEDERAL_UNIVERSITY,SP,8,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SÃO PAULO (UNIFESP),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Tocantins (UFT),FEDERAL_UNIVERSITY,TO,8,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE FEDERAL DO TOCANTINS (UFT),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade do Estado do Rio Grande do Norte (UERN),STATE_UNIVERSITY,RN,8,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DO ESTADO DO RIO GRANDE DO NORTE (UERN),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Empresa Brasileira de Pesquisa Agropecuária (Embrapa),RESEARCH_INSTITUTE,DF,7,não casou,,,,,,
+Pontifícia Universidade Católica do Paraná (PUC-PR),PRIVATE_UNIVERSITY,PR,7,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DO PARANÁ (PUCPR),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Estadual de Montes Claros (UNIMONTES),STATE_UNIVERSITY,MG,7,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE MONTES CLAROS (UNIMONTES),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal Rural do Rio de Janeiro (UFRRJ),FEDERAL_UNIVERSITY,RJ,7,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL RURAL DO RIO DE JANEIRO (UFRRJ),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade La Salle (UNILASALLE),PRIVATE_UNIVERSITY,RS,7,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE LA SALLE (UNILASALLE),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Vale do Rio dos Sinos (UNISINOS),PRIVATE_UNIVERSITY,RS,7,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO VALE DO RIO DOS SINOS (UNISINOS),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Católica de Brasília (UCB),PRIVATE_UNIVERSITY,DF,6,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DE BRASÍLIA (UCB),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Federal de Campina Grande (UFCG),FEDERAL_UNIVERSITY,PB,6,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE CAMPINA GRANDE (UFCG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de São Carlos (UFSCAR),FEDERAL_UNIVERSITY,SP,6,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SÃO CARLOS (UFSCAR),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Regional Integrada do Alto Uruguai e das Missões (URI),PRIVATE_UNIVERSITY,RS,6,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE REGIONAL INTEGRADA DO ALTO URUGUAI E DAS MISSÕES (URI),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Regional do Noroeste do Estado do Rio Grande do Sul (UNIJUI),PRIVATE_UNIVERSITY,RS,6,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE REGIONAL DO NOROESTE DO ESTADO DO RIO GRANDE DO SUL (UNIJUI),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Oeste de Santa Catarina (UNOESC),PRIVATE_UNIVERSITY,SC,6,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO OESTE DE SANTA CATARINA (UNOESC),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade Meridional (IMED),PRIVATE_UNIVERSITY,RS,5,não casou,,,,,,
+Universidade Federal do Estado do Rio de Janeiro (UNIRIO),FEDERAL_UNIVERSITY,RJ,5,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO ESTADO DO RIO DE JANEIRO (UNIRIO),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Feevale (Feevale),PRIVATE_UNIVERSITY,RS,5,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE FEEVALE (FEEVALE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Municipal de São Caetano do Sul (USCS),MUNICIPAL_UNIVERSITY,SP,5,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE MUNICIPAL DE SÃO CAETANO DO SUL (USCS),Especial,Pessoa Jurídica de Direito Público - Municipal,GOVERNMENT_AGENCY | LIBRARY | MUNICIPAL_UNIVERSITY | OTHER | RESEARCH_INSTITUTE,True
+Universidade Regional de Blumenau (FURB),MUNICIPAL_UNIVERSITY,SC,5,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE REGIONAL DE BLUMENAU (FURB),Especial,Pessoa Jurídica de Direito Público - Municipal,GOVERNMENT_AGENCY | LIBRARY | MUNICIPAL_UNIVERSITY | OTHER | RESEARCH_INSTITUTE,True
+Universidade de Fortaleza (UNIFOR),PRIVATE_UNIVERSITY,CE,5,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE FORTALEZA (UNIFOR),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Estado de Mato Grosso (UNEMAT),STATE_UNIVERSITY,MT,5,sigla+UF,Publicas estaduais e federais.csv,Universidade do Estado de Mato Grosso Carlos Alberto Reyes Maldonado - UNEMAT (UNEMAT),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade do Estado de Minas Gerais (UEMG),STATE_UNIVERSITY,MG,5,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DO ESTADO DE MINAS GERAIS (UEMG),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade do Oeste Paulista (UNOESTE),PRIVATE_UNIVERSITY,SP,5,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO OESTE PAULISTA (UNOESTE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Sociedade,PRIVATE_UNIVERSITY,True
+Universidade do Sul de Santa Catarina (UNISUL),PRIVATE_UNIVERSITY,SC,5,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE DO SUL DE SANTA CATARINA (UNISUL),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Escola Superior de Propaganda e Marketing (ESPM),PRIVATE_UNIVERSITY,SP,4,não casou,,,,,,
+Instituto Brasileiro de Ensino e Pesquisa em Fisiologia do Exercício (IBPEFEX),RESEARCH_INSTITUTE,SP,4,não casou,,,,,,
+Instituto Federal da Paraíba (IFPB),FEDERAL_INSTITUTE,PB,4,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DA PARAÍBA (IFPB)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul (IFRS)",FEDERAL_INSTITUTE,RS,4,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO GRANDE DO SUL (IFRS)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Pontifícia Universidade Católica de Campinas (PUC-CAMPINAS),PRIVATE_UNIVERSITY,SP,4,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DE CAMPINAS (PUC-CAMPINAS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Pontifícia Universidade Católica do Rio de Janeiro (PUC-RIO),PRIVATE_UNIVERSITY,RJ,4,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO (PUC-RIO),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Estadual da Paraíba (UEPB),STATE_UNIVERSITY,PB,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DA PARAÍBA (UEPB),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Centro-Oeste (UNICENTRO),STATE_UNIVERSITY,PR,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO CENTRO OESTE (UNICENTRO),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Paraná (UNESPAR),STATE_UNIVERSITY,PR,4,sigla+UF,Publicas estaduais e federais.csv,Universidade Estadual do Paraná (UNESPAR),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal Rural de Pernambuco (UFRPE),FEDERAL_UNIVERSITY,PE,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL RURAL DE PERNAMBUCO (UFRPE),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal Rural do Semi-Árido (UFERSA),FEDERAL_UNIVERSITY,RN,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL RURAL DO SEMI-ÁRIDO (UFERSA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal da Integração Latino-Americana (UNILA),FEDERAL_UNIVERSITY,PR,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DA INTEGRAÇÃO LATINO-AMERICANA (UNILA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Ouro Preto (UFOP),FEDERAL_UNIVERSITY,MG,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE OURO PRETO (UFOP),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Rondônia (UNIR),FEDERAL_UNIVERSITY,RO,4,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE FEDERAL DE RONDÔNIA (UNIR),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Amapá (UNIFAP),FEDERAL_UNIVERSITY,AP,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO AMAPÁ (UNIFAP),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Recôncavo da Bahia (UFRB),FEDERAL_UNIVERSITY,BA,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO RECÔNCAVO DA BAHIA (UFRB),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Triangulo Mineiro (UFTM),FEDERAL_UNIVERSITY,MG,4,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO TRIÂNGULO MINEIRO (UFTM),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Presbiteriana Mackenzie (UPM),PRIVATE_UNIVERSITY,SP,4,nome exato,dados privadas sem fins lucrativos.csv,UNIVERSIDADE PRESBITERIANA MACKENZIE (MACKENZIE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Salvador (UNIFACS),PRIVATE_UNIVERSITY,BA,4,"sigla, e-MEC sem UF",privadas com fins lucrativos.csv,UNIVERSIDADE SALVADOR (UNIFACS),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Tiradentes (UNIT),PRIVATE_UNIVERSITY,SE,4,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE TIRADENTES (UNIT),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Associação Brasileira de Engenharia de Produção (ABEPRO),SCIENTIFIC_SOCIETY,RJ,3,não casou,,,,,,
+Associação Nacional de História (ANPUH),SCIENTIFIC_SOCIETY,SP,3,não casou,,,,,,
+Centro Universitário Christus (Unichristus),PRIVATE_UNIVERSITY,CE,3,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE CHRISTUS (UNICHRISTUS),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Internacional (UNINTER),PRIVATE_UNIVERSITY,PR,3,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO INTERNACIONAL (UNINTER),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário La Salle (Unilasalle),PRIVATE_UNIVERSITY,RS,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE LA SALLE (UNILASALLE),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Colégio Pedro II,FEDERAL_INSTITUTE,RJ,3,nome exato,Publicas estaduais e federais.csv,COLÉGIO PEDRO II (CP II),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Faculdade Santo Agostinho (FSA),PRIVATE_UNIVERSITY,PI,3,não casou,,,,,,
+Faculdades EST,PRIVATE_UNIVERSITY,RS,3,nome exato,dados privadas sem fins lucrativos.csv,Faculdades EST (EST),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Grupo Verde de Agroecologia e Abelhas (GVAA),SCIENTIFIC_SOCIETY,PB,3,não casou,,,,,,
+"Instituto Federal de Educação, Ciência e Tecnologia Catarinense (IFC)",FEDERAL_INSTITUTE,SC,3,nome exato,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA CATARINENSE (IF Catarinense)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de São Paulo (IFSP)",FEDERAL_INSTITUTE,SP,3,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SÃO PAULO (IFSP)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Amazonas (IFAM)",FEDERAL_INSTITUTE,AM,3,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO AMAZONAS (IFAM)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Instituto Federal do Rio Grande do Norte (IFRN),FEDERAL_INSTITUTE,RN,3,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO GRANDE DO NORTE (IFRN)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Instituto de Ensino e Pesquisa Periodicojs,OTHER,PB,3,não casou,,,,,,
+Pontifícia Universidade Católica de Campinas (PUC-Campinas),PRIVATE_UNIVERSITY,SP,3,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DE CAMPINAS (PUC-CAMPINAS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Scientific Electronic Library Online (SCIELO),LIBRARY,SP,3,não casou,,,,,,
+Sociedade Brasileira de Química (SBQ),SCIENTIFIC_SOCIETY,DF,3,não casou,,,,,,
+Sociedade Entomológica do Brasil (SEB),SCIENTIFIC_SOCIETY,GO,3,não casou,,,,,,
+Uniabeu Centro Universitário (UNIABEU),PRIVATE_UNIVERSITY,RJ,3,não casou,,,,,,
+Universidade Anhembi Morumbi (ANHEMBI),PRIVATE_UNIVERSITY,SP,3,nome exato,privadas com fins lucrativos.csv,UNIVERSIDADE ANHEMBI MORUMBI (UAM),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Comunitária da Região de Chapecó (UNOCHAPECÓ),PRIVATE_UNIVERSITY,SC,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE COMUNITÁRIA DA REGIÃO DE CHAPECÓ (UNOCHAPECÓ),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Estadual de Alagoas (UNEAL),STATE_UNIVERSITY,AL,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE ALAGOAS - UNEAL (UNEAL),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual de Campinas (Unicamp),STATE_UNIVERSITY,SP,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE CAMPINAS (UNICAMP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual de Santa Cruz (UESC),STATE_UNIVERSITY,BA,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE SANTA CRUZ (UESC),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Norte do Paraná (UENP),STATE_UNIVERSITY,PR,3,sigla+UF,Publicas estaduais e federais.csv,Universidade Estadual do Norte do Paraná (UENP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade FUMEC,PRIVATE_UNIVERSITY,MG,3,nome exato,dados privadas sem fins lucrativos.csv,UNIVERSIDADE FUMEC (FUMEC),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Federal da Fronteira Sul (UFFS),FEDERAL_UNIVERSITY,SC,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DA FRONTEIRA SUL (UFFS),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Acre (UFAC),FEDERAL_UNIVERSITY,AC,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO ACRE (UFAC),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Amazonas (UFAM),FEDERAL_UNIVERSITY,AM,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO AMAZONAS (UFAM),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Santo Amaro (UNISA),PRIVATE_UNIVERSITY,SP,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE SANTO AMARO (UNISA),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Vale do Rio Verde (UNINCOR),PRIVATE_UNIVERSITY,MG,3,não casou,,,,,,
+Universidade de Ribeirão Preto (UNAERP),PRIVATE_UNIVERSITY,SP,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE RIBEIRÃO PRETO (UNAERP),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade de Taubaté (UNITAU),MUNICIPAL_UNIVERSITY,SP,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE TAUBATÉ (UNITAU),Especial,Pessoa Jurídica de Direito Público - Municipal,GOVERNMENT_AGENCY | LIBRARY | MUNICIPAL_UNIVERSITY | OTHER | RESEARCH_INSTITUTE,True
+Universidade do Contestado (UNC),PRIVATE_UNIVERSITY,SC,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO CONTESTADO (UNC),Especial,Privada sem fins lucrativos,MUNICIPAL_UNIVERSITY | PRIVATE_UNIVERSITY,True
+Universidade do Estado do Pará (UEPA),STATE_UNIVERSITY,PA,3,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DO ESTADO DO PARÁ (UEPA),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade do Extremo Sul Catarinense (Unesc),PRIVATE_UNIVERSITY,SC,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO EXTREMO SUL CATARINENSE (UNESC),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade do Vale do Itajaí (UNIVALI),PRIVATE_UNIVERSITY,SC,3,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO VALE DO ITAJAÍ (UNIVALI),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Associação Brasileira de Engenharia Sanitária e Ambiental (ABES),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Associação Brasileira de Engenharia e Ciências Mecânicas (ABCM),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Associação Brasileira de Estudos e Pesquisas em Moda (Abepem),SCIENTIFIC_SOCIETY,GO,2,não casou,,,,,,
+Associação Brasileira de Otorrinolaringologia e Cirurgia Cérvico-Facial (ABORL-CCF),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Associação Brasileira de Psiquiatria (ABP),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Associação Brasileira de Saúde Coletiva (ABRASCO),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Associação Brasileira de Tecnologia de Sementes (ABRATES),SCIENTIFIC_SOCIETY,PR,2,não casou,,,,,,
+Associação Nacional de Pós-Graduação e Pesquisa em Administração (ANPAD),SCIENTIFIC_SOCIETY,GO,2,não casou,,,,,,
+Associação Nacional de Pós-Graduação e Pesquisa em Letras e Lingüística (ANPOLL),SCIENTIFIC_SOCIETY,GO,2,não casou,,,,,,
+Centro Universitário Campos de Andrade (UNIANDRADE),PRIVATE_UNIVERSITY,PR,2,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO CAMPOS DE ANDRADE (UNIANDRADE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Centro Universitário Católica de Quixadá (Unicatólica),PRIVATE_UNIVERSITY,CE,2,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO CATÓLICA DE QUIXADÁ (UNICATÓLICA),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Centro Universitário Curitiba (UNICURITIBA),PRIVATE_UNIVERSITY,PR,2,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO CURITIBA (UNICURITIBA),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário FIAM-FAAM,PRIVATE_UNIVERSITY,SP,2,não casou,,,,,,
+Centro Universitário ICESP,PRIVATE_UNIVERSITY,DF,2,nome exato,privadas com fins lucrativos.csv,Centro Universitário ICESP (Unicesp),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Salesiano de São Paulo (UNISAL),PRIVATE_UNIVERSITY,SP,2,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO SALESIANO DE SÃO PAULO (UNISAL),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Centro Universitário Uningá,PRIVATE_UNIVERSITY,PR,2,não casou,,,,,,
+Centro Universitário Univates (UNIVATES),PRIVATE_UNIVERSITY,RS,2,não casou,,,,,,
+Centro Universitário de Anápolis (UniEVANGÉLICA),PRIVATE_UNIVERSITY,GO,2,não casou,,,,,,
+Centro Universitário de Belo Horizonte (UNIBH),PRIVATE_UNIVERSITY,MG,2,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO DE BELO HORIZONTE (UNI-BH),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário de Maringá (UNICESUMAR),PRIVATE_UNIVERSITY,PR,2,não casou,,,,,,
+Centro Universitário de Maringá (UniCesumar),PRIVATE_UNIVERSITY,PR,2,não casou,,,,,,
+Centro de Estudos Educação e Sociedade (CEDES),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Conselho Brasileiro de Oftalmologia (CBO),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Editora Reativar Ambiental,PUBLISHER,PE,2,não casou,,,,,,
+Escola Superior de Teologia (EST),PRIVATE_UNIVERSITY,RS,2,não casou,,,,,,
+Escola da Magistratura do Estado do Rio de Janeiro (EMERJ),GOVERNMENT_AGENCY,RJ,2,"sigla, e-MEC sem UF",Publicas estaduais e federais.csv,Escola de Magistratura do Estado do Rio de Janeiro (EMERJ),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,GOVERNMENT_AGENCY | RESEARCH_INSTITUTE,True
+Faculdade Aldete Maria Alves (FAMA),PRIVATE_UNIVERSITY,MG,2,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE ALDETE MARIA ALVES (FAMA),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Processus (DF),PRIVATE_UNIVERSITY,DF,2,não casou,,,,,,
+Faculdade de Medicina de São José do Rio Preto (FAMERP),STATE_UNIVERSITY,SP,2,sigla+UF,Publicas estaduais e federais.csv,FACULDADE DE MEDICINA DE SÃO JOSÉ DO RIO PRETO (FAMERP),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE | STATE_UNIVERSITY,True
+Faculdades Metropolitanas Unidas (FMU),PRIVATE_UNIVERSITY,SP,2,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO DAS FACULDADES METROPOLITANAS UNIDAS (FMU),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Fundação Carlos Chagas (FCC),OTHER,SP,2,não casou,,,,,,
+Fundação Cesgranrio,OTHER,RJ,2,razão social (mantenedora),dados privadas sem fins lucrativos.csv,Faculdade Cesgranrio (FACESGRANRIO),Privada sem fins lucrativos,Privada sem fins lucrativos,,
+Fundação Escola de Comércio Álvares Penteado (FECAP),PRIVATE_UNIVERSITY,SP,2,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO ÁLVARES PENTEADO (FECAP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Fundação Instituto de Administração (FIA),OTHER,SP,2,razão social (mantenedora),dados privadas sem fins lucrativos.csv,FACULDADE FIA DE ADMINISTRAÇÃO E NEGÓCIOS (FFIA),Privada sem fins lucrativos,Privada sem fins lucrativos,,
+Fundação Joaquim Nabuco (FUNDAJ),GOVERNMENT_AGENCY,PE,2,não casou,,,,,,
+Fundação Zoobotânica do Rio Grande do Sul (FZB/RS),RESEARCH_INSTITUTE,RS,2,não casou,,,,,,
+"Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa (IDP)",OTHER,DF,2,não casou,,,,,,
+Instituto Brasileiro de Relações Internacionais (IBRI),SCIENTIFIC_SOCIETY,DF,2,não casou,,,,,,
+Instituto Chico Mendes de Conservação da Biodiversidade (ICMBIO),GOVERNMENT_AGENCY,DF,2,razão social (mantenedora),Publicas estaduais e federais.csv,CENTRO DE FORMAÇÃO EM CONSERVAÇÃO DA BIODIVERSIDADE (ACADEBio),Pública Federal,Pessoa Jurídica de Direito Público - Federal,,
+Instituto Evandro Chagas (IEC),RESEARCH_INSTITUTE,PA,2,não casou,,,,,,
+"Instituto Federal de Educação, Ciência e Tecnologia Farroupilha (IFFAR)",FEDERAL_INSTITUTE,RS,2,nome exato,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA FARROUPILHA (IFFarroupilha)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia Sul-Rio-Grandense (IFSul)",FEDERAL_INSTITUTE,RS,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA SUL-RIO-GRANDENSE (IFSul)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de Goiás (IFG)",FEDERAL_INSTITUTE,GO,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE GOIÁS (IFG)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de Mato Grosso (IFMT)",FEDERAL_INSTITUTE,MT,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO (IFMT)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de Minas Gerais (IFMG)",FEDERAL_INSTITUTE,MG,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MINAS GERAIS (IFMG)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Amapá (IFAP)",FEDERAL_INSTITUTE,AP,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO AMAPÁ (IFAP)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Espírito Santo (IFES)",FEDERAL_INSTITUTE,ES,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO ESPÍRITO SANTO (IFES)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Paraná (IFPR)",FEDERAL_INSTITUTE,PR,2,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PARANÁ (IFPR)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Instituto Internacional de Ecologia (IIE),OTHER,SP,2,não casou,,,,,,
+Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (INEP),RESEARCH_INSTITUTE,DF,2,não casou,,,,,,
+Instituto Nacional de Pesquisas da Amazônia (INPA),RESEARCH_INSTITUTE,AM,2,não casou,,,,,,
+Instituto Oceanográfico da Universidade de São Paulo (IOUSP),STATE_UNIVERSITY,SP,2,não casou,,,,,,
+Instituto Persona de Educação Superior,OTHER,DF,2,não casou,,,,,,
+Instituto de Tecnologia de Alimentos (ITAL),RESEARCH_INSTITUTE,SP,2,não casou,,,,,,
+Laboratório Nacional de Computação Científica (LNCC),RESEARCH_INSTITUTE,RJ,2,não casou,,,,,,
+Marinha do Brasil (MB),GOVERNMENT_AGENCY,RJ,2,não casou,,,,,,
+Museu Paraense Emílio Goeldi (MPEG),RESEARCH_INSTITUTE,PA,2,não casou,,,,,,
+Sociedade Brasileira de Cardiologia (SBC),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+"Sociedade Brasileira de Educação Matemática, Brasília (SBEM-DF)",SCIENTIFIC_SOCIETY,DF,2,não casou,,,,,,
+Sociedade Brasileira de Endocrinologia e Metabologia (SBEM),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de Engenharia Biomédica (SBEB),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Sociedade Brasileira de Fisiologia Vegetal (SBFV),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Sociedade Brasileira de Fonoaudiologia (SBF),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de Física (SBF),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de Genética (SBG),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de História da Matemática (SBHMat),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de Microbiologia (SBM),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de Ortopedia e Traumatologia (SBOT),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade Brasileira de Pediatria (SBP),SCIENTIFIC_SOCIETY,RJ,2,não casou,,,,,,
+Sociedade Brasileira de Zoologia (SBZ),SCIENTIFIC_SOCIETY,PR,2,não casou,,,,,,
+Sociedade Brasileira para o Estudo da Dor (SBED),SCIENTIFIC_SOCIETY,SP,2,não casou,,,,,,
+Sociedade de Psiquiatria do Rio Grande do Sul (SPRGS),SCIENTIFIC_SOCIETY,RS,2,não casou,,,,,,
+Universidade Católica Dom Bosco (UCDB),PRIVATE_UNIVERSITY,MS,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DOM BOSCO (UCDB),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Católica de Pelotas (UCPEL),PRIVATE_UNIVERSITY,RS,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DE PELOTAS (UCPEL),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Católica de Pernambuco (UNICAP),PRIVATE_UNIVERSITY,PE,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DE PERNAMBUCO (UNICAP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Católica de Petrópolis (UCP),PRIVATE_UNIVERSITY,RJ,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DE PETRÓPOLIS (UCP),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Católica de Santos (UNISANTOS),PRIVATE_UNIVERSITY,SP,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DE SANTOS (UNISANTOS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Comunitária da Região de Chapecó (Unochapecó),PRIVATE_UNIVERSITY,SC,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE COMUNITÁRIA DA REGIÃO DE CHAPECÓ (UNOCHAPECÓ),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Estadual Vale do Acaraú (UVA),STATE_UNIVERSITY,CE,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL VALE DO ACARAÚ (UVA),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual de Feira de Santana (UEFS),STATE_UNIVERSITY,BA,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA (UEFS),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual de Goiás (UEG),STATE_UNIVERSITY,GO,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE GOIÁS (UEG),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual de Mato Grosso do Sul (UEMS),STATE_UNIVERSITY,MS,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE MATO GROSSO DO SUL (UEMS),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Maranhão (UEMA),STATE_UNIVERSITY,MA,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO MARANHÃO (UEMA),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal Fronteira do Sul (UFFS),FEDERAL_UNIVERSITY,SC,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DA FRONTEIRA SUL (UFFS),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal Rural da Amazônia (UFRA),FEDERAL_UNIVERSITY,PA,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL RURAL DA AMAZÔNIA (UFRA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de Itajubá (UNIFEI),FEDERAL_UNIVERSITY,MG,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE ITAJUBÁ - UNIFEI (UNIFEI),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do ABC (UFABC),FEDERAL_UNIVERSITY,SP,2,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE FEDERAL DO ABC (UFABC),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Oeste do Pará (UFOPA),FEDERAL_UNIVERSITY,PA,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO OESTE DO PARÁ (UFOPA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Vale do São Francisco (Univasf),FEDERAL_UNIVERSITY,PE,2,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE FEDERAL DO VALE DO SÃO FRANCISCO (UNIVASF),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal dos Vales do Jequitinhonha e Mucuri (UFVJM),FEDERAL_UNIVERSITY,MG,2,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DOS VALES DO JEQUITINHONHA E MUCURI (UFVJM),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Luterana do Brasil (ULBRA),PRIVATE_UNIVERSITY,RS,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE LUTERANA DO BRASIL (ULBRA),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Sociedade,PRIVATE_UNIVERSITY,True
+Universidade Metodista de Piracicaba (UNIMEP),PRIVATE_UNIVERSITY,SP,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE METODISTA DE PIRACICABA (UNIMEP),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Metodista de São Paulo (METODISTA),PRIVATE_UNIVERSITY,SP,2,nome exato,dados privadas sem fins lucrativos.csv,UNIVERSIDADE METODISTA DE SÃO PAULO (UMESP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Presbiteriana Mackenzie (MACKENZIE),PRIVATE_UNIVERSITY,SP,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE PRESBITERIANA MACKENZIE (MACKENZIE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade São Francisco (USF),PRIVATE_UNIVERSITY,SP,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE SÃO FRANCISCO (USF),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade São Judas Tadeu,PRIVATE_UNIVERSITY,SP,2,nome exato,privadas com fins lucrativos.csv,UNIVERSIDADE SÃO JUDAS TADEU (USJT),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Tuiuti do Paraná (UTP),PRIVATE_UNIVERSITY,PR,2,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE TUIUTI DO PARANÁ (UTP),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Grande Rio (UNIGRANRIO),PRIVATE_UNIVERSITY,RJ,2,sigla+UF,privadas com fins lucrativos.csv,Afya Universidade Unigranrio (UNIGRANRIO),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Vale do Sapucaí (UNIVÁS),PRIVATE_UNIVERSITY,MG,2,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO VALE DO SAPUCAÍ (UNIVÁS),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+A.C.Camargo Cancer Center,OTHER,SP,1,não casou,,,,,,
+ABClima,SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Academia Brasileira de Audiologia (ABAU),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Academia Brasileira de Ciências (ABC),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Academia Brasileira de Ciências Contábeis (Abracicon),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Academia Brasileira de Neurologia,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Academia Militar das Agulhas Negras (AMAN),GOVERNMENT_AGENCY,RJ,1,sigla+UF,Publicas estaduais e federais.csv,Academia Militar das Agulhas Negras (AMAN),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY | GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE,True
+Academia Nacional de Polícia (ANP),GOVERNMENT_AGENCY,DF,1,sigla+UF,Publicas estaduais e federais.csv,ACADEMIA NACIONAL DE POLÍCIA - ANP (ANP),Pública Federal,Pessoa Jurídica de Direito Público - Federal,GOVERNMENT_AGENCY | RESEARCH_INSTITUTE,True
+Academia Paulista de Psicologia (APPSICO),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Advocacia-Geral da União (AGU),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Antônio Meneghetti Faculdade (AMF),PRIVATE_UNIVERSITY,RS,1,sigla+UF,privadas com fins lucrativos.csv,FACULDADE ANTÔNIO MENEGHETTI (AMF),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Arquivo Nacional (AN),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Art Style Comunicação & Edições,PUBLISHER,SP,1,não casou,,,,,,
+Asociación Latinoamericana de Investigadores de la Comunicación (ALAIC),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Asociación de Educación e Investigación en Ciencia de la Información de Iberoamérica y el Caribe (EDICIC),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Associação Brasileira de Nutrologia (ABRAN),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Alfabetização (ABAlf),SCIENTIFIC_SOCIETY,SC,1,não casou,,,,,,
+Associação Brasileira de Antropologia,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Brasileira de Ciência Política (ABCP),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Associação Brasileira de Custos (ABC),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação Brasileira de Divulgação Científica (ABDC),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Educação Médica (ABEM),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Brasileira de Educação a Distância (ABED),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Educação em Ciência da Informação (ABECIN),SCIENTIFIC_SOCIETY,SE,1,não casou,,,,,,
+Associação Brasileira de Eletrônica de Potência (SOBRAEP),SCIENTIFIC_SOCIETY,SC,1,não casou,,,,,,
+Associação Brasileira de Enfermagem (ABEN),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Brasileira de Engenharia Agrícola (SBEA),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Engenharia Química (ABEQ),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Ensino Odontológico (ABENO),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação Brasileira de Ensino de Biologia (SBEnBio),SCIENTIFIC_SOCIETY,BA,1,não casou,,,,,,
+Associação Brasileira de Ensino e Pesquisa em Serviço Social,SCIENTIFIC_SOCIETY,ES,1,não casou,,,,,,
+Associação Brasileira de Ensino em Jornalismo (ABEJ),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Brasileira de Estudos Canadenses (ABECAN),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Estudos Populacionais (ABEP),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Associação Brasileira de Estudos Regionais e Urbano (ABER),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Associação Brasileira de Estudos do Quaternário (ABEQUA),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Associação Brasileira de Harmonização Orofacial (ABRAHOF),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação Brasileira de Hematologia e Hemoterapia e Terapia Celular (ABHHTC),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Hispanistas,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de História das Religiões (ABHR),SCIENTIFIC_SOCIETY,RN,1,não casou,,,,,,
+Associação Brasileira de Horticultura (ABH),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Brasileira de Limnologia (ABL),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Associação Brasileira de Linguística (ABRALIN),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Literatura Comparada (ABRALIC),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Associação Brasileira de Nutrição (ASBRAN),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Odontologia (ABO),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Associação Brasileira de Pesquisa (Auto)Biográfica (BIOgraph),SCIENTIFIC_SOCIETY,BA,1,não casou,,,,,,
+Associação Brasileira de Pesquisa Bíblica (ABIB),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Pesquisa e Pós-Graduação em Fisioterapia (ABRAPG-FT),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Pesquisa em Educação em Ciências (ABRAPEC),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Associação Brasileira de Pesquisadores em Comunicação e Política (Compolítica),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Associação Brasileira de Pesquisadores em Educação Especial (ABPEE),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Associação Brasileira de Pesquisadores em História Econômica (ABPHE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Pesquisadores em Jornalismo (SBPJor),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Brasileira de Pesquisadores em Sociologia do Direito (ABraSD),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Polímeros (ABPol),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Psicologia Escolar e Educacional (ABRAPEE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Psicologia Social (ABRAPSO),SCIENTIFIC_SOCIETY,PE,1,não casou,,,,,,
+Associação Brasileira de Recursos Hídricos (ABRH),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação Brasileira de Relações Internacionais (ABRI),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Associação Brasileira de Soldagem (ABS),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Associação Brasileira de Transplante de Órgãos (ABTO),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Brasileira de Águas Subterrâneas,SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Associação Direitos Humanos em Rede,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Estudos em Design,SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Associação Latino-Americana de Estudos do Discurso,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Médica Brasileira (AMB),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Médica de Minas Gerais (AMMG),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Associação Nacional de Estudos em Empreendedorismo e Gestão de Pequenas Empresas (ANEGEPE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Nacional de Pesquisa e Pós-Graduação em Ciência da Informação (ANCIB),SCIENTIFIC_SOCIETY,PB,1,não casou,,,,,,
+Associação Nacional de Pesquisa e Pós-Graduação em Turismo (ANPTUR),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Nacional de Política e Administração da Educação (ANPAE),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Nacional de Pós-Graduação e Pesquisa em Ciências Sociais (ANPOCS),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Nacional de Pós-Graduação e Pesquisa em Educação (ANPEd),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Associação Nacional de Pós-graduação e Pesquisa em Geografia (ANPEGE),SCIENTIFIC_SOCIETY,GO,1,não casou,,,,,,
+Associação Nacional de Pós-graduação e Pesquisa em Planejamento Urbano e Regional (ANPUR),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Nacional de Tecnologia do Ambiente Construído (ANTAC),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação Nacional dos Cursos de Graduação em Administração (ANGRAD),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Nacional dos Procuradores e Advogados Públicos Federais (ANPPREV),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Nacional dos Programas de Pós-Graduação em Comunicação,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Associação Paulista de Homeopatia (APH),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação Paulista de Medicina,SCIENTIFIC_SOCIETY,SP,1,razão social (mantenedora),dados privadas sem fins lucrativos.csv,Faculdade da Associação Médica Paulista (APM),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,,
+Associação Sul-Rio-Grandense de Pesquisadores em História da Educação (ANPUH-RS),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação Universitária de Pesquisa em Psicopatologia Fundamental (AUPPF),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação de Criminalistas do Estado de Minas Gerais (ACEMG),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Associação de Medicina Intensiva Brasileira (AMIB),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação de Neurologia Cognitiva e do Comportamento (ANCC),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação dos Geógrafos Brasileiros (AGB),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Associação dos Geógrafos Brasileiros - Seção São Paulo,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Associação para Promoção de Ações e Projetos Interdisciplinares em Educação e Pesquisa,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Banco Nacional de Desenvolvimento Econômico e Social (BNDES),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Brazilian Journals Publicações de Periódicos e Editora Ltda,PUBLISHER,PR,1,não casou,,,,,,
+Brazilian Society of Infectious Diseases (BSID),SCIENTIFIC_SOCIETY,BA,1,não casou,,,,,,
+Casa de Hiram,PUBLISHER,SC,1,não casou,,,,,,
+Cedigma,PUBLISHER,MA,1,não casou,,,,,,
+Centro Brasileiro de Análise e Planejamento (CEBRAP),RESEARCH_INSTITUTE,,1,não casou,,,,,,
+Centro Brasileiro de Estudos de Saude,OTHER,RJ,1,não casou,,,,,,
+Centro Educacional Fasipe,PRIVATE_UNIVERSITY,MT,1,não casou,,,,,,
+Centro Federal de Educação Tecnológica Celso Suckow da Fonseca (CEFET/RJ),FEDERAL_INSTITUTE,RJ,1,sigla+UF,Publicas estaduais e federais.csv,CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA CELSO SUCKOW DA FONSECA (CEFET/RJ),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Centro Federal de Educação Tecnológica de Campos dos Goytacazes,FEDERAL_INSTITUTE,RJ,1,não casou,,,,,,
+Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG),FEDERAL_INSTITUTE,MG,1,sigla+UF,Publicas estaduais e federais.csv,CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE MINAS GERAIS (CEFET/MG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Centro Interdisciplinar de Pesquisa em Educação e Direito (CIPED),OTHER,,1,não casou,,,,,,
+Centro Latino-Americano de Estudos em Cultura (CLAEC),OTHER,PR,1,não casou,,,,,,
+Centro Paula Souza,STATE_UNIVERSITY,SP,1,não casou,,,,,,
+Centro Scalabriniano de Estudos Migratórios (CSEM),OTHER,DF,1,não casou,,,,,,
+Centro Universitário Adventista de Ensino do Nordeste (UNIAENE),PRIVATE_UNIVERSITY,BA,1,sigla+UF,dados privadas sem fins lucrativos.csv,Centro Universitário Adventista de Ensino do Nordeste (Uniaene ),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Centro Universitário Adventista de São Paulo (Unasp),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO ADVENTISTA DE SÃO PAULO (UNASP),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Centro Universitário Autônomo do Brasil (UniBrasil),PRIVATE_UNIVERSITY,PR,1,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO AUTÔNOMO DO BRASIL (UNIBRASIL),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Barão  de Mauá (CBM),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO BARÃO DE MAUÁ (CBM),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Fundação,PRIVATE_UNIVERSITY,True
+Centro Universitário Braz Cubas (CUB),PRIVATE_UNIVERSITY,SP,1,nome exato,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO BRAZ CUBAS,Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário CESMAC,PRIVATE_UNIVERSITY,AL,1,nome exato,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO CESMAC (CESMAC),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Eniac,PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Centro Universitário Euro-Americano (Unieuro),PRIVATE_UNIVERSITY,DF,1,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO EURO-AMERICANO (UNIEURO),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Integrado,PRIVATE_UNIVERSITY,PR,1,não casou,,,,,,
+Centro Universitário Lusíada (UNILUS),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO LUSÍADA (UNILUS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Fundação,PRIVATE_UNIVERSITY,True
+Centro Universitário Maria Milza (UNIMAM),PRIVATE_UNIVERSITY,BA,1,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO MARIA MILZA (UNIMAM),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Ritter dos Reis (UNIRITTER),PRIVATE_UNIVERSITY,,1,sigla,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO RITTER DOS REIS (UNIRITTER),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário São Camilo,PRIVATE_UNIVERSITY,SP,1,nome exato,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO SÃO CAMILO (SAO CAMILO),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Centro Universitário São José de Itaperuna (UNIFSJ),PRIVATE_UNIVERSITY,RJ,1,nome exato,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO SÃO JOSÉ DE ITAPERUNA,Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário UniAraguaia,PRIVATE_UNIVERSITY,GO,1,não casou,,,,,,
+Centro Universitário UniFG (UniFG),PRIVATE_UNIVERSITY,BA,1,sigla+UF,privadas com fins lucrativos.csv,Centro Universitário FG (UNIFG),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário Unifafibe (UNIFAFIBE),PRIVATE_UNIVERSITY,SP,1,nome exato,dados privadas sem fins lucrativos.csv,Centro Universitário UNIFAFIBE (FAFIBE),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário UnirG,PRIVATE_UNIVERSITY,TO,1,não casou,,,,,,
+Centro Universitário da Fundação Educacional Inaciana (FEI),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO DA FUNDAÇÃO EDUCACIONAL INACIANA PE SABÓIA DE MEDEIROS (FEI),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário das Faculdades Metropolitanas Unidas,PRIVATE_UNIVERSITY,SP,1,nome exato,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO DAS FACULDADES METROPOLITANAS UNIDAS (FMU),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário de Brusque (UNIFEBE),MUNICIPAL_UNIVERSITY,SC,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO DE BRUSQUE (UNIFEBE),Privada sem fins lucrativos,Fundação Pública de Direito Privado Municipal,GOVERNMENT_AGENCY | LIBRARY | MUNICIPAL_UNIVERSITY | OTHER | RESEARCH_INSTITUTE,True
+Centro Universitário de Caratinga (UNEC),PRIVATE_UNIVERSITY,MG,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO DE CARATINGA (UNEC),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário de João Pessoa (UNIPÊ),PRIVATE_UNIVERSITY,PB,1,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO DE JOÃO PESSOA (UNIPÊ),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário de Sete Lagoas (UNIFEMM),PRIVATE_UNIVERSITY,MG,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO DE SETE LAGOAS (UNIFEMM),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário do Espírito Santo (Unesc),PRIVATE_UNIVERSITY,ES,1,sigla+UF,dados privadas sem fins lucrativos.csv,CENTRO UNIVERSITÁRIO DO ESPÍRITO SANTO UNESC (UNESC),Privada sem fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro Universitário do Vale do Araguaia (Univar),PRIVATE_UNIVERSITY,MT,1,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO DO VALE DO ARAGUAIA (UNIVAR),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Centro de Capacitação Física do Exército (CCFEX),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Centro de Desenvolvimento da Tecnologia Nuclear (CDTN),RESEARCH_INSTITUTE,MG,1,sigla+UF,Publicas estaduais e federais.csv,CENTRO DE DESENVOLVIMENTO DA TECNOLOGIA NUCLEAR (CDTN),Pública Federal,Pessoa Jurídica de Direito Público - Federal,GOVERNMENT_AGENCY | RESEARCH_INSTITUTE,True
+"Centro de Empreendedorismo, Inovação e Tecnologia (CEIT)",OTHER,SP,1,não casou,,,,,,
+Centro de Ensino Renato Saraiva (CERS),PRIVATE_UNIVERSITY,PE,1,não casou,,,,,,
+Centro de Especialização em Fonoaudiologia Clínica (CEFAC),OTHER,SP,1,não casou,,,,,,
+Centro de Estudos Interdisciplinares - CEEINTER,OTHER,SC,1,não casou,,,,,,
+Centro de Estudos de Cultura Contemporânea (CEDEC),OTHER,SP,1,não casou,,,,,,
+"Centro de Estudos e Pesquisa em Educação, Cultura e Ação Comunitária (CENPEC)",OTHER,SP,1,não casou,,,,,,
+Centro de Estudos em Geopolítica e Relações Internacionais (CENEGRI),OTHER,RS,1,não casou,,,,,,
+Centro de Tecnologia da Informação Renato Archer (CTI),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Cesumar Diretoria de Pesquisa,PRIVATE_UNIVERSITY,PR,1,não casou,,,,,,
+Colégio Brasileiro de Cirurgia Digestiva (CBCD),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Colégio Brasileiro de Cirurgiões (CBC),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Colégio Brasileiro de Ciências do Esporte (CBCE),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Colégio Brasileiro de Parasitologia Veterinária (CBPV),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Colégio Brasileiro de Patologia Animal (CBPA),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Colégio Brasileiro de Radiologia e Diagnóstico por Imagem (CBR),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Companhia Brasileira de Produção Científica (CBPC),PUBLISHER,SE,1,não casou,,,,,,
+Companhia de Pesquisa de Recursos Minerais (CPRM),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Confederação Nacional dos Trabalhadores em Educação (CNTE),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Administrativo de Defesa Econômica (Cade),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Federal de Biblioteconomia (CFB),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Federal de Farmácia - CFF,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Federal de Medicina (CFM),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Federal de Psicologia (CFP),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Nacional de Desenvolvimento Científico e Tecnológico - CNPq,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Nacional de Justiça (CNJ),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Conselho Nacional de Pesquisa e Pós-Graduação em Direito (CONPEDI),SCIENTIFIC_SOCIETY,SC,1,não casou,,,,,,
+Conselho Regional de Contabilidade de Santa Catarina (CRCSC),SCIENTIFIC_SOCIETY,SC,1,não casou,,,,,,
+Conselho Regional de Odontologia do Rio de Janeiro (CRO-RJ),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Corpo de Bombeiros Militar de Minas Gerais (CBM MG),GOVERNMENT_AGENCY,MG,1,razão social (mantenedora),Publicas estaduais e federais.csv,ACADEMIA DE BOMBEIROS MILITAR (ABM),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,,
+Cortez Editora Ltda,PUBLISHER,SP,1,não casou,,,,,,
+Defensoria Pública da União (DPU),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Defensoria Pública do Distrito Federal (DPDF),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Defensoria Pública do Estado do Rio Grande do Sul,GOVERNMENT_AGENCY,RS,1,não casou,,,,,,
+Dental Press Editora (DPE),PUBLISHER,PR,1,não casou,,,,,,
+Dental Press International (DPI),PUBLISHER,PR,1,não casou,,,,,,
+Departamento de Ciência e Tecnologia Aeroespacial (DCTA),GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+EDITORA 34,PUBLISHER,SP,1,não casou,,,,,,
+Editora Autêntica,PUBLISHER,MG,1,não casou,,,,,,
+Editora Coleta,PUBLISHER,MG,1,não casou,,,,,,
+Editora Fórum,PUBLISHER,PR,1,não casou,,,,,,
+Editora Gama Filho (EGF),PUBLISHER,RJ,1,não casou,,,,,,
+Editora JRG,PUBLISHER,DF,1,não casou,,,,,,
+Empresa de Pesquisa Agropecuária de Minas Gerais (EPAMIG),GOVERNMENT_AGENCY,MG,1,não casou,,,,,,
+Empresa de Pesquisa Agropecuária e Extensão Rural de Santa Catarina (Epagri),GOVERNMENT_AGENCY,SC,1,não casou,,,,,,
+Ensino Superior do Piauí (AESPI),PRIVATE_UNIVERSITY,SE,1,não casou,,,,,,
+Entomologistas do Brasil,SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Environmental Smoke,OTHER,PB,1,não casou,,,,,,
+Escola Bahiana de Medicina e Saúde Pública (EBM),PRIVATE_UNIVERSITY,BA,1,nome exato,dados privadas sem fins lucrativos.csv,ESCOLA BAHIANA DE MEDICINA E SAÚDE PÚBLICA (EBMSP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Escola Nacional de Administração Pública (ENAP),GOVERNMENT_AGENCY,DF,1,sigla+UF,Publicas estaduais e federais.csv,ESCOLA NACIONAL DE ADMINISTRAÇÃO PÚBLICA (ENAP),Pública Federal,Pessoa Jurídica de Direito Público - Federal,GOVERNMENT_AGENCY | RESEARCH_INSTITUTE,True
+Escola Nacional de Saúde Pública Sergio Arouca (ENSP),RESEARCH_INSTITUTE,RJ,1,não casou,,,,,,
+Escola Superior Dom Helder Câmara (ESDHC),PRIVATE_UNIVERSITY,MG,1,não casou,,,,,,
+Escola Superior da Magistratura Tocantinense (ESMAT); Tribunal de Justiça do Estado do Tocantins (TJTO),GOVERNMENT_AGENCY,TO,1,não casou,,,,,,
+Escola Superior da Magistratura do Maranhão (ESMAM),GOVERNMENT_AGENCY,AM,1,não casou,,,,,,
+Escola Superior de Agricultura Luiz de Queiroz (ESALQ-USP),STATE_UNIVERSITY,SP,1,não casou,,,,,,
+Escola Superior de Ciências da Santa Casa de Misericórdia de Vitória (Emescam),PRIVATE_UNIVERSITY,ES,1,sigla+UF,dados privadas sem fins lucrativos.csv,ESCOLA SUPERIOR DE CIÊNCIAS DA SANTA CASA DE MISERICÓRDIA DE VITÓRIA (EMESCAM),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Escola Superior de Ciências da Saúde (ESCS),PRIVATE_UNIVERSITY,DF,1,não casou,,,,,,
+Escola Superior de Guerra (ESG),GOVERNMENT_AGENCY,RJ,1,"sigla, e-MEC sem UF",Publicas estaduais e federais.csv,ESCOLA SUPERIOR DE GUERRA (ESG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY | GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE,True
+Escola Superior do Ministério Público de São Paulo (ESMP),GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+Escola da Magistratura do Rio Grande do Norte (ESMARN),GOVERNMENT_AGENCY,RN,1,não casou,,,,,,
+Escola de Guerra Naval (EGN),GOVERNMENT_AGENCY,RJ,1,"sigla, e-MEC sem UF",Publicas estaduais e federais.csv,ESCOLA DE GUERRA NAVAL (EGN),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY | GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE,True
+Escola de Minas,FEDERAL_UNIVERSITY,,1,não casou,,,,,,
+Escola de Saúde Pública do Paraná (ESPP),GOVERNMENT_AGENCY,PR,1,não casou,,,,,,
+Exército Brasileiro (EB),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+FAESA Centro Universitário,PRIVATE_UNIVERSITY,ES,1,não casou,,,,,,
+"FCCN, serviços digitais da FCT – Fundação para a Ciência e a Tecnologia",GOVERNMENT_AGENCY,,1,não casou,,,,,,
+FILOSOFIA CAPITAL (FC),PRIVATE_UNIVERSITY,MA,1,não casou,,,,,,
+Faculdade Autônoma de Direito (FADISP),PRIVATE_UNIVERSITY,SP,1,sigla+UF,privadas com fins lucrativos.csv,FACULDADE AUTÔNOMA DE DIREITO (FADISP),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade Batista Pioneira (FBP),PRIVATE_UNIVERSITY,RS,1,nome exato,dados privadas sem fins lucrativos.csv,FACULDADE BATISTA PIONEIRA,Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Boas Novas,PRIVATE_UNIVERSITY,AM,1,não casou,,,,,,
+Faculdade Católica de Fortaleza,PRIVATE_UNIVERSITY,CE,1,nome exato,dados privadas sem fins lucrativos.csv,FACULDADE CATÓLICA DE FORTALEZA (FCF),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Cenecista Ilha do Governador (FACIG),PRIVATE_UNIVERSITY,RJ,1,não casou,,,,,,
+Faculdade Cenecista de Campo Largo (FACECLA),PRIVATE_UNIVERSITY,PR,1,não casou,,,,,,
+Faculdade Evangélica de Valparaíso (Facev),PRIVATE_UNIVERSITY,GO,1,sigla+UF,privadas com fins lucrativos.csv,Faculdade Evangélica de Valparaíso (FACEV),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade Independente do Nordeste (FAINOR),PRIVATE_UNIVERSITY,BA,1,sigla+UF,privadas com fins lucrativos.csv,FACULDADE INDEPENDENTE DO NORDESTE (FAINOR),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade Jesuíta de Filosofia e Teologia (FAJE),PRIVATE_UNIVERSITY,MG,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE JESUÍTA DE FILOSOFIA E TEOLOGIA (FAJE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Luterana de Teologia,PRIVATE_UNIVERSITY,SC,1,nome exato,dados privadas sem fins lucrativos.csv,FACULDADE LUTERANA DE TEOLOGIA (FLT),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Palotina (FAPAS),PRIVATE_UNIVERSITY,RS,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE PALOTINA (FAPAS),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Patos de Minas (FPM),PRIVATE_UNIVERSITY,MG,1,não casou,,,,,,
+Faculdade Paulus de Tecnologia e Comunicação (FAPCOM),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE PAULUS DE TECNOLOGIA E COMUNICAÇÃO (FAPCOM),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade Pio Décimo (FPD),PRIVATE_UNIVERSITY,SE,1,não casou,,,,,,
+Faculdade Social da Bahia (FSBA),PRIVATE_UNIVERSITY,BA,1,não casou,,,,,,
+Faculdade Sul Fluminense (FASF),PRIVATE_UNIVERSITY,RJ,1,sigla+UF,privadas com fins lucrativos.csv,FACULDADE SUL FLUMINENSE (FASF),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade São Basílio Magno (FASBAM),PRIVATE_UNIVERSITY,PR,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE SÃO BASÍLIO MAGNO (FASBAM),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade São Francisco de Barreiras (FASB),PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Faculdade São Leopoldo Mandic,PRIVATE_UNIVERSITY,SP,1,nome exato,privadas com fins lucrativos.csv,FACULDADE SÃO LEOPOLDO MANDIC,Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade São Leopoldo Mandic (FSLM),PRIVATE_UNIVERSITY,,1,nome exato,privadas com fins lucrativos.csv,FACULDADE SÃO LEOPOLDO MANDIC,Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade Teológica Sul-Americana (FTSA),PRIVATE_UNIVERSITY,PR,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE TEOLÓGICA SUL AMERICANA (FTSA),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade Unida (UNIDA),PRIVATE_UNIVERSITY,ES,1,não casou,,,,,,
+Faculdade de Ciências Biomédicas de Cacoal (FACIMED),PRIVATE_UNIVERSITY,RO,1,não casou,,,,,,
+Faculdade de Ciências Médicas da Paraíba (Afya),PRIVATE_UNIVERSITY,PB,1,nome exato,privadas com fins lucrativos.csv,Faculdade de Ciências Médicas da Paraíba (FCM-PB),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade de Ciências Médicas da Santa Casa de São Paulo,PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Faculdade de Direito de Franca (FDF),MUNICIPAL_UNIVERSITY,SP,1,sigla+UF,municipais_mec.csv,FACULDADE DE DIREITO DE FRANCA (FDF),Pública Municipal,Pessoa Jurídica de Direito Público - Municipal,GOVERNMENT_AGENCY | LIBRARY | MUNICIPAL_UNIVERSITY | OTHER | RESEARCH_INSTITUTE,True
+Faculdade de Direito de Vitória (FDV),PRIVATE_UNIVERSITY,ES,1,sigla+UF,privadas com fins lucrativos.csv,FACULDADE DE DIREITO DE VITÓRIA (FDV),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade de Direito do Sul de Minas (FDSM),PRIVATE_UNIVERSITY,MG,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE DE DIREITO DO SUL DE MINAS (FDSM),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade de Educação e Meio Ambiente (FAEMA),PRIVATE_UNIVERSITY,RO,1,não casou,,,,,,
+Faculdade de Ensino Superior da Amazônia Reunida (FESAR),PRIVATE_UNIVERSITY,,1,não casou,,,,,,
+"Faculdade de Filosofia, Ciências e Letras de Mandaguari (FAFIMAN)",MUNICIPAL_UNIVERSITY,PR,1,sigla+UF,municipais_mec.csv,FUNDAÇÃO FACULDADE DE FILOSOFIA CIÊNCIAS E LETRAS DE MANDAGUARI (FAFIMAN),Pública Municipal,Pessoa Jurídica de Direito Público - Municipal,GOVERNMENT_AGENCY | LIBRARY | MUNICIPAL_UNIVERSITY | OTHER | RESEARCH_INSTITUTE,True
+Faculdade de Medicina Veterinária e Zootecnia da Universidade de São Paulo (FMVZ-USP),PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Faculdade de Medicina de Campos (FMC),PRIVATE_UNIVERSITY,RJ,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE DE MEDICINA DE CAMPOS (FMC),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade de Medicina de Olinda (FMO),PRIVATE_UNIVERSITY,PE,1,sigla+UF,privadas com fins lucrativos.csv,Faculdade de Medicina de Olinda (FMO),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdade de Medicina do ABC (FMABC),MUNICIPAL_UNIVERSITY,SP,1,não casou,,,,,,
+Faculdade de Medicina em São José do Rio Preto (Faceres),PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Faculdade de São Bento (FSB),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADE DE SÃO BENTO (FSB),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdade de Tecnologia da Baixada Santista - Rubens Lara (FATECRL),PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Faculdade de Tecnologia da Zona Sul (FATEC Zona Sul),STATE_UNIVERSITY,SP,1,sigla+UF,Publicas estaduais e federais.csv,FACULDADE DE TECONOLOGIA DA ZONA SUL (FATEC ZONASUL),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE | STATE_UNIVERSITY,True
+Faculdade de Tecnologia de Osasco (FATEC),STATE_UNIVERSITY,SP,1,sigla+UF,Publicas estaduais e federais.csv,Faculdade de Tecnologia de Bauru (FATEC),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE | STATE_UNIVERSITY,True
+Faculdade de Tecnologia do Instituto de Pesquisa e Ensino - FAIPE,RESEARCH_INSTITUTE,MT,1,não casou,,,,,,
+Faculdade do Sul da Bahia (FASB),PRIVATE_UNIVERSITY,,1,nome exato,dados privadas sem fins lucrativos.csv,FACULDADE DO SUL DA BAHIA (FASB),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdades ICESP,PRIVATE_UNIVERSITY,DF,1,não casou,,,,,,
+Faculdades Integradas Campos Salles (FICSALLES),PRIVATE_UNIVERSITY,,1,nome exato,dados privadas sem fins lucrativos.csv,FACULDADES INTEGRADAS CAMPOS SALLES (FICS),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdades Integradas de Itararé (Fafit),PRIVATE_UNIVERSITY,,1,não casou,,,,,,
+Faculdades Integradas de Taquara (FACCAT),PRIVATE_UNIVERSITY,RS,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADES INTEGRADAS DE TAQUARA (FACCAT),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Faculdades Integradas do Norte de Minas (FUNORTE),PRIVATE_UNIVERSITY,MG,1,não casou,,,,,,
+Faculdades Pequeno Príncipe (FPP),PRIVATE_UNIVERSITY,PR,1,sigla+UF,dados privadas sem fins lucrativos.csv,FACULDADES PEQUENO PRÍNCIPE (FPP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Faculdades de Tecnologia do Estado de São Paulo (Fatec),STATE_UNIVERSITY,SP,1,sigla+UF,Publicas estaduais e federais.csv,Faculdade de Tecnologia de Bauru (FATEC),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE | STATE_UNIVERSITY,True
+Federação Brasileira das Sociedades de Ginecologia e Obstetrícia (FEBRASGO),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+"Federação Brasileira de Associações de Bibliotecários, Cientistas da Informação e Instituições (FEBAB)",SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Federação Brasileira de Psicodrama (Febrap),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Federação das Indústrias do Estado do Paraná (FIEP),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Força Aérea Brasileira (FAB),GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+Fucape Business School (FBS),PRIVATE_UNIVERSITY,ES,1,não casou,,,,,,
+Fundação APINCO de Ciência e Tecnologia Avícolas (FACTA),OTHER,SP,1,não casou,,,,,,
+Fundação Alexandre de Gusmão - FUNAG,GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Fundação Casa de Rui Barbosa (FCRB),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Fundação Centro de Ciências e Educação Superior a Distância do Estado do Rio de Janeiro (CECIERJ),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Fundação Escola Técnica Liberato Salzano Vieira da Cunha (Liberato),OTHER,RS,1,não casou,,,,,,
+Fundação Gorceix (FG),OTHER,MG,1,não casou,,,,,,
+Fundação Hospital de Clínicas Gaspar Vianna (FHCGV),OTHER,PA,1,não casou,,,,,,
+Fundação Jorge Duprat Figueiredo de Segurança e Medicina do Trabalho (FUNDACENTRO),GOVERNMENT_AGENCY,,1,não casou,,,,,,
+Fundação João Pinheiro (FJP),GOVERNMENT_AGENCY,MG,1,razão social (mantenedora),Publicas estaduais e federais.csv,ESCOLA DE GOVERNO PROFESSOR PAULO NEVES DE CARVALHO (EG),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,,
+Fundação Municipal de Artes de Montenegro (FUNDARTE),OTHER,RS,1,não casou,,,,,,
+Fundação Odontológica de Ribeirão Preto (FUNORP),OTHER,SP,1,não casou,,,,,,
+Fundação Otorrinolaringologia (FO),OTHER,SP,1,não casou,,,,,,
+Fundação Otorrinolaringologia (FORL),OTHER,,1,não casou,,,,,,
+Fundação Sistema Estadual de Análise de Dados,GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+Fundação Universidade do Tocantins (UNITINS),STATE_UNIVERSITY,TO,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO TOCANTINS (UNITINS),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Fundação Universitária Vida Cristã (FUNVIC),OTHER,SP,1,razão social (mantenedora),dados privadas sem fins lucrativos.csv,Centro Universitário FUNVIC (UNIFUNVIC),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Fundação,,
+Fundação de Amparo à Pesquisa do Estado de São Paulo (Fapesp),GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+"Fundação para Pesquisa e Desenvolvimento da Administração, Contabilidade e Economia (Fundace)",OTHER,SP,1,não casou,,,,,,
+Fundo Nacional de Desenvolvimento da Educação (FNDE),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Fórum Brasileiro de Segurança Pública (FBSP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Grupo Paulista de Fitopatologia,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Grupo de Estudos Nietzsche (GEN),SCIENTIFIC_SOCIETY,BA,1,não casou,,,,,,
+Grupo de Estudos Schopenhauer-Nietzsche (Apoena),SCIENTIFIC_SOCIETY,CE,1,não casou,,,,,,
+Grupo de Odontologia Especializada (GOE),OTHER,AP,1,não casou,,,,,,
+Grupo de estudos linguísticos (GEL),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Hospital de Clínicas de Itajubá,OTHER,MG,1,não casou,,,,,,
+Hospital de Clínicas de Passo Fundo,OTHER,RS,1,não casou,,,,,,
+Instituição de Ensino Superior e de Pesquisa (INSPER),PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Instituto Adolfo Lutz,RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto Agronômico de Campinas (IAC),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto Biológico (IB),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto Brasileiro de Ciências Criminais (IBCCRIM),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Instituto Brasileiro de Direito Civil (IBDCivil),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Instituto Brasileiro de Direito Processual Penal (IBRASPP),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Instituto Brasileiro de Estudos e Pesquisas de Gastroenterologia,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Instituto Brasileiro de Neuropsicologia e Comportamento (IBNeC),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Instituto Brasileiro do Concreto (IBRACON),OTHER,,1,não casou,,,,,,
+Instituto Carlos Alexandre Moraes (ICAM),OTHER,PR,1,não casou,,,,,,
+Instituto Enfservic,OTHER,SP,1,não casou,,,,,,
+Instituto Federal de Alagoas (IFAL),FEDERAL_INSTITUTE,AL,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE ALAGOAS (IFAL)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia Fluminense (IFF)",FEDERAL_INSTITUTE,RJ,1,nome exato,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA FLUMINENSE (IF Fluminense)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia Goiano (IF Goiano)",FEDERAL_INSTITUTE,GO,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA GOIANO (IF Goiano)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia Sul-rio-grandense (IFSUL)",FEDERAL_INSTITUTE,RS,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA SUL-RIO-GRANDENSE (IFSul)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia da Bahia (IFBA)",FEDERAL_INSTITUTE,BA,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DA BAHIA (IFBA)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de Brasília (IFB)",FEDERAL_INSTITUTE,DF,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIENCIA E TECNOLOGIA DE BRASILIA (IFB)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco (IFPE)",FEDERAL_INSTITUTE,PE,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE PERNAMBUCO (IFPE)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia de Rondônia (IFRO)",FEDERAL_INSTITUTE,RO,1,sigla+UF,Publicas estaduais e federais.csv,INSTITUTO FEDERAL DE EDUCAÇÃO CIÊNCIA E TECNOLOGIA DE RONDÔNIA (IFRO),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Ceará (IFCE)",FEDERAL_INSTITUTE,CE,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO CEARÁ (IFCE)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Estado de Mato Grosso (IFMT)",FEDERAL_INSTITUTE,MT,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE MATO GROSSO (IFMT)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Maranhão (IFMA)",FEDERAL_INSTITUTE,MA,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO MARANHÃO (IFMA)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Pará (IFPA)",FEDERAL_INSTITUTE,PA,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO PARÁ (IFPA)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte (IFRN)",FEDERAL_INSTITUTE,RN,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO RIO GRANDE DO NORTE (IFRN)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Sul de Minas Gerais (IFSULDEMINAS)",FEDERAL_INSTITUTE,MG,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUL DE MINAS GERAIS (IF SUL DE MINAS)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+"Instituto Federal de Educação, Ciência e Tecnologia do Tocantins (IFTO)",FEDERAL_INSTITUTE,TO,1,sigla+UF,Publicas estaduais e federais.csv,"INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO TOCANTINS (IFTO)",Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_INSTITUTE,True
+Instituto Genética para Todos (IGPT),OTHER,RS,1,não casou,,,,,,
+Instituto Histórico e Geográfico do Rio Grande do Sul (IHGRGS),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Instituto Internacional Despertando Vocações (IIDV),OTHER,PE,1,não casou,,,,,,
+Instituto Israelita de Ensino e Pesquisa Albert Einstein (IIEPAE),OTHER,SP,1,não casou,,,,,,
+Instituto Ivoti,OTHER,RS,1,não casou,,,,,,
+Instituto Lauro de Souza Lima (ILSL),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto Militar de Engenharia (IME),GOVERNMENT_AGENCY,RJ,1,sigla+UF,Publicas estaduais e federais.csv,INSTITUTO MILITAR DE ENGENHARIA (IME),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY | GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE,True
+Instituto Mineiro de Gestão das Águas (Igam),GOVERNMENT_AGENCY,MG,1,não casou,,,,,,
+Instituto Mises Brasil,OTHER,SP,1,não casou,,,,,,
+Instituto Municipal de Urbanismo Pereira Passos (IPP),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Instituto Nacional de Câncer José Alencar Gomes da Silva (INCA),RESEARCH_INSTITUTE,RJ,1,não casou,,,,,,
+Instituto Nacional de Educação de Surdos (Ines),RESEARCH_INSTITUTE,RJ,1,sigla+UF,Publicas estaduais e federais.csv,INSTITUTO NACIONAL DE EDUCAÇÃO DE SURDOS (INES),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY | GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE,True
+"Instituto Nacional de Metrologia, Qualidade e Tecnologia (INMETRO)",RESEARCH_INSTITUTE,RJ,1,não casou,,,,,,
+Instituto Nacional de Pesquisas Espaciais (INPE),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto Nacional de Tecnologia (INT),RESEARCH_INSTITUTE,RJ,1,não casou,,,,,,
+Instituto Nacional de Telecomunicações (INATEL),PRIVATE_UNIVERSITY,MG,1,sigla+UF,dados privadas sem fins lucrativos.csv,INSTITUTO NACIONAL DE TELECOMUNICAÇÕES (INATEL),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Instituto Noos,OTHER,SP,1,não casou,,,,,,
+Instituto Paranaense de Desenvolvimento Econômico e Social (IPARDES),GOVERNMENT_AGENCY,PR,1,não casou,,,,,,
+Instituto Paulista de Ensino (FIPEN),OTHER,SP,1,não casou,,,,,,
+Instituto Paulista de Estudos Bioéticos e Jurídicos (IPEBJ),OTHER,SP,1,não casou,,,,,,
+Instituto Pros,OTHER,RO,1,não casou,,,,,,
+Instituto Superior de Educação Vera Cruz (VeraCruz),PRIVATE_UNIVERSITY,SP,1,nome exato,dados privadas sem fins lucrativos.csv,INSTITUTO SUPERIOR DE EDUCAÇÃO VERA CRUZ (ISE VERA CRUZ),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Instituto Tecnológico de Aeronáutica (ITA),GOVERNMENT_AGENCY,SP,1,sigla+UF,Publicas estaduais e federais.csv,INSTITUTO TECNOLÓGICO DE AERONÁUTICA (ITA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY | GOVERNMENT_AGENCY | LIBRARY | OTHER | RESEARCH_INSTITUTE,True
+Instituto Vianna Júnior (IVJ),OTHER,MG,1,não casou,,,,,,
+Instituto Virtual da Biodiversidade (BIOTA-FAPESP),OTHER,SP,1,não casou,,,,,,
+Instituto de Botânica (IBT),RESEARCH_INSTITUTE,,1,não casou,,,,,,
+Instituto de Direito Constitucional e Cidadania (IDCC),OTHER,PR,1,não casou,,,,,,
+Instituto de Educação Superior de Brasília (IESB),PRIVATE_UNIVERSITY,DF,1,sigla+UF,privadas com fins lucrativos.csv,CENTRO UNIVERSITÁRIO DO INSTITUTO DE EDUCAÇÃO SUPERIOR DE BRASÍLIA - IESB (IESB),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Instituto de Engenharia Nuclear (IEN),RESEARCH_INSTITUTE,RJ,1,não casou,,,,,,
+Instituto de Ensino Superior de Rondônia (IESUR),PRIVATE_UNIVERSITY,RO,1,sigla+UF,dados privadas sem fins lucrativos.csv,INSTITUTO DE ENSINO SUPERIOR DE RONDÔNIA (IESUR),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Instituto de Estudos Brasileiros (IEB),OTHER,SP,1,não casou,,,,,,
+Instituto de Estudos da Religião (ISER),OTHER,RJ,1,não casou,,,,,,
+Instituto de Língua Portuguesa do Liceu Literário Português,OTHER,RJ,1,não casou,,,,,,
+Instituto de Medicina Integral Prof. Fernando Figueira (IMIPFF),OTHER,PE,1,não casou,,,,,,
+Instituto de Medicina Tropical (IMT),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto de Pesquisa Econômica Aplicada (IPEA),RESEARCH_INSTITUTE,DF,1,não casou,,,,,,
+Instituto de Pesquisa Econômica Aplicada (Ipea),RESEARCH_INSTITUTE,DF,1,não casou,,,,,,
+Instituto de Pesquisas Ambientais em Bacias Hidrográficas (IPABHI),RESEARCH_INSTITUTE,,1,não casou,,,,,,
+Instituto de Pesquisas Energéticas e Nucleares (IPEN),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Instituto de Pesquisas Jardim Botânico do Rio de Janeiro (JBRJ),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Instituto de Tecnologia do Paraná (Tecpar),RESEARCH_INSTITUTE,PR,1,não casou,,,,,,
+Instituto de Tecnologia e Educação Galileo da Amazônia (ITEGAM),RESEARCH_INSTITUTE,AM,1,não casou,,,,,,
+Instituto de Teologia e Pastoral (ITEPA),OTHER,RS,1,razão social (mantenedora),dados privadas sem fins lucrativos.csv,FACULDADE DE TEOLOGIA E CIÊNCIAS HUMANAS (ITEPAFACULDADES),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,,
+Instituto do Patrimônio Histórico e Artístico Nacional (IPHAN),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Jardim Botânico de Brasília (JBB),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Justiça Federal - Seção Judiciária do Rio de Janeiro (SJRJ),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Kroton Educacional S.A.,PRIVATE_UNIVERSITY,MG,1,não casou,,,,,,
+Laborjuris – Serviços Jurídicos em Educação,OTHER,BA,1,não casou,,,,,,
+Liga Brasileira de Epilepsia (LBE),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Maritime Law Academy,PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Matéria (Rio de Janeiro. Online),OTHER,RJ,1,não casou,,,,,,
+Mavera Edições Científicas e Técnicas Ltda-ME,PUBLISHER,SP,1,não casou,,,,,,
+Ministério Público da Paraíba (MPPB),GOVERNMENT_AGENCY,PB,1,não casou,,,,,,
+Museu Histórico Nacional,GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Networked Digital Library of Theses and Dissertations (NDLTD),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Núcleo de Tecnologias para Educação (UEMAnet),STATE_UNIVERSITY,MA,1,não casou,,,,,,
+Ordem dos Advogados do Brasil - Seção São Paulo,SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Pontifícia Universidade Católica do Rio de Janeiro (PUC-Rio),PRIVATE_UNIVERSITY,RJ,1,sigla+UF,dados privadas sem fins lucrativos.csv,PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO (PUC-RIO),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Procuradoria Geral do Estado do Rio de Janeiro (PGERJ),GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Pró-Fono Produtos Especializados para Fonoaudiologia Ltda (PFPEF),PUBLISHER,SP,1,não casou,,,,,,
+Publicação Independente,OTHER,SP,1,não casou,,,,,,
+Real Gabinete Português de Leitura (RGPL),LIBRARY,RJ,1,não casou,,,,,,
+Red Latinoamericana de Estudios Epistemológicos en Política Educativa (ReLePe),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Rede Brasileira Direito e Literatura (RDL),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Rede Nacional de Ensino e Pesquisa (RNP),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Rede de Pesquisa Empírica em Direito (REED),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Revista Brasileira de História da Educação (RBHE),OTHER,MG,1,não casou,,,,,,
+Revista Ibero-Americana de Estratégia (RIAE),OTHER,SP,1,não casou,,,,,,
+SBEE,SCIENTIFIC_SOCIETY,PA,1,não casou,,,,,,
+Sapienza Grupo Editorial,PUBLISHER,PR,1,não casou,,,,,,
+Secretaria da Saúde do Estado da Bahia (Sesab),GOVERNMENT_AGENCY,BA,1,não casou,,,,,,
+Secretaria da Saúde do Estado do Ceará,GOVERNMENT_AGENCY,CE,1,não casou,,,,,,
+"Secretaria de Agricultura, Pecuária e Desenvolvimento Rural do Rio Grande do Sul",GOVERNMENT_AGENCY,RS,1,não casou,,,,,,
+Secretaria de Estado da Educação de Goiás (SEDUC GO),GOVERNMENT_AGENCY,GO,1,não casou,,,,,,
+Secretaria de Estado da Saúde de São Paulo (SES-SP),GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+Secretaria de Infraestrutura e Meio Ambiente do Estado de São Paulo,GOVERNMENT_AGENCY,SP,1,não casou,,,,,,
+"Secretaria de Planejamento, Orçamento e Gestão do Estado do Rio Grande do Sul (SEPLAGRS)",GOVERNMENT_AGENCY,RS,1,não casou,,,,,,
+Secretaria de Vigilância em Saúde - Ministério da Saúde do Brasil,GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Serviço Nacional de Aprendizagem Comercial de Santa Catarina (SENACSC),OTHER,SC,1,não casou,,,,,,
+Serviço Nacional de Aprendizagem Comercial do Rio Grande do Sul (SENAC RS),OTHER,RS,1,não casou,,,,,,
+Serviço Nacional de Aprendizagem Industrial Campus Integrado de Manufatura e Tecnologia (SENAI CIMATEC),OTHER,BA,1,não casou,,,,,,
+Serviço Nacional de Aprendizagem Industrial de São Paulo (SENAI SP),OTHER,SP,1,não casou,,,,,,
+Sindicato das Secretárias do Estado de São Paulo (SINSESP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Beneficente Israelita Brasileira Hospital Albert Einstein (SBIBAE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Botânica de São Paulo (SBSP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Botânica do Brasil (SBB),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Sociedade Brasileira De Entomologia (SBE),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Sociedade Brasileira da Ciência das Plantas Daninhas (SBCPD),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Sociedade Brasileira de Anestesiologia (SBA),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Angiologia e de Cirurgia Vascular (SBACV),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Atividade Física e Saúde (SBAFS),SCIENTIFIC_SOCIETY,SC,1,não casou,,,,,,
+Sociedade Brasileira de Automática (SBA),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Bioquímica e Biologia Molecular (SBBq),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Carcinologia (SBCA),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Cefaleia,SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Cirurgia Cardiovascular (SBCCV),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Cirurgia Plástica (SBCP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Ciência do Solo (SBCS),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Sociedade Brasileira de Ciência e Tecnologia de Alimentos (SBCTA),RESEARCH_INSTITUTE,SP,1,não casou,,,,,,
+Sociedade Brasileira de Coloproctologia (SBC),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Coloproctologia (SBCP),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Coluna (SBCO),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Comportamento Motor,SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Sociedade Brasileira de Dermatologia (SBD),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Doenças Sexualmente Transmissíveis,SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Economia e Sociologia Rural (SBESR),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Ecoturismo (SBECotur),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Enfermagem em Feridas e Estética (SOBENFeE),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Estudos Clássicos (SBEC),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Sociedade Brasileira de Estudos Interdisciplinares da Comunicação (INTERCOM),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Estudos Organizacionais (SBEO),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Sociedade Brasileira de Estudos de Cinema e Audiovisual (SOCINE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Estudos e Pesquisa Qualitativos (SE&PQ),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Estudos em Sexualidade Humana (SBRASH),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Farmacognosia (SBFgnosia),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Fitopatologia,SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Sociedade Brasileira de Fitopatologia (SBF),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Sociedade Brasileira de Floricultura e Plantas Ornamentais (SBFPO),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Sociedade Brasileira de Fonoaudiologia (SBFA),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Fruticultura (SBF),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Geofísica (SBG),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Geofísica (SBGf),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Geologia (SBGEO),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Geoquímica (SBGq),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Sociedade Brasileira de Geriatria e Gerontologia,SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Hemodinâmica e Cardiologia Intervencionista (SBHCI),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de História da Ciência (SBHC),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Ictiologia (SBI),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Sociedade Brasileira de Matemática Aplicada e Computacional,SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Matemática Aplicada e Computacional (SBMAC),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Medicina Tropical (SBMT),RESEARCH_INSTITUTE,MG,1,não casou,,,,,,
+Sociedade Brasileira de Medicina de Família e Comunidade (SBMFC),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Medicina do Exercício e do Esporte (SBMEE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Melhoramento de Plantas,SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Meteorologia (SBMET),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Microondas e Optoeletrônica (SBMO),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Nefrologia (SBN),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Neurocirurgia Pediátrica (SBNPed),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Oftalmologia (SBO),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Patologia (SBP),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Pesquisa Odontológica (SBPqO),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Pesquisa Operacional (SOBRAPO),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Planejamento dos Transportes (SBPT),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade Brasileira de Pneumologia e Tisiologia (SBPT),SCIENTIFIC_SOCIETY,DF,1,não casou,,,,,,
+Sociedade Brasileira de Pneumologia e Tisiologia da Universidade de São Paulo (SBPT-USP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Proteção Radiológica (SBPR),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Psicologia (SBP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Psicopatologia Fenômeno-Estrutural (SBPFE),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Reumatologia (SBR),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Brasileira de Urologia (SBU),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade Brasileira de Zootecnia (SBZ),SCIENTIFIC_SOCIETY,MG,1,não casou,,,,,,
+Sociedade Brasileira para o Desenvolvimento da Pesquisa em Cirurgia (SBDPC),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade Entomológica do Brasil,SCIENTIFIC_SOCIETY,AM,1,não casou,,,,,,
+Sociedade Paranaense de Matemática (SPM),SCIENTIFIC_SOCIETY,PR,1,não casou,,,,,,
+Sociedade Rio-Grandense de Bioética (SORBI),SCIENTIFIC_SOCIETY,,1,não casou,,,,,,
+Sociedade de Arqueologia Brasileira (SAB),SCIENTIFIC_SOCIETY,RS,1,não casou,,,,,,
+Sociedade de Medicina Veterinária do Estado do Rio de Janeiro (SOMVERJ),SCIENTIFIC_SOCIETY,RJ,1,não casou,,,,,,
+Sociedade de Pediatria de São Paulo (SPSP),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Sociedade de Pesquisa Qualitativa em Motricidade Humana (SPQMH),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+South American Development Society (SADSJ),SCIENTIFIC_SOCIETY,SP,1,não casou,,,,,,
+Superior Tribunal de Justiça (STJ),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Supremo Tribunal Federal (STF),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+Tribunal Regional Federal da 2ª Região,GOVERNMENT_AGENCY,RJ,1,não casou,,,,,,
+Tribunal Regional do Trabalho da 3ª Região (TRT-3),GOVERNMENT_AGENCY,MG,1,não casou,,,,,,
+Tribunal de Contas do Estado do Ceará (TCCE),GOVERNMENT_AGENCY,CE,1,não casou,,,,,,
+Tribunal de Justiça da Paraíba,GOVERNMENT_AGENCY,PB,1,não casou,,,,,,
+Tribunal de Justiça do Distrito Federal e dos Territórios (TJDFT),GOVERNMENT_AGENCY,DF,1,não casou,,,,,,
+UniGuairacá Centro Universitário,PRIVATE_UNIVERSITY,PR,1,não casou,,,,,,
+Universidade Católica de Salvador (UCSAL),PRIVATE_UNIVERSITY,BA,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CATÓLICA DO SALVADOR (UCSAL),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Cidade de São Paulo (UNICID),PRIVATE_UNIVERSITY,SP,1,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE CIDADE DE SÃO PAULO (UNICID),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Cruzeiro do Sul (UNICSUL),PRIVATE_UNIVERSITY,SP,1,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE CRUZEIRO DO SUL (UNICSUL),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Cândido Mendes (UCAM),PRIVATE_UNIVERSITY,RJ,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE CÂNDIDO MENDES (UCAM),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade Estadual de Roraima (UERR),STATE_UNIVERSITY,RR,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DE RORAIMA (UERR),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Ceará,STATE_UNIVERSITY,CE,1,nome exato,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO CEARÁ (UECE),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Piauí (UESPI),STATE_UNIVERSITY,PI,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO PIAUÍ (UESPI),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Rio Grande do Sul,STATE_UNIVERSITY,RS,1,nome exato,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO RIO GRANDE DO SUL (UERGS),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Rio Grande do Sul (UERGS),STATE_UNIVERSITY,RS,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO RIO GRANDE DO SUL (UERGS),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Estadual do Tocantins (UNITINS),STATE_UNIVERSITY,TO,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE ESTADUAL DO TOCANTINS (UNITINS),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Federal de Alfenas (UNIFAL),FEDERAL_UNIVERSITY,MG,1,nome exato,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE ALFENAS (UNIFAL-MG),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de São Carlos (UFSCAR-DTO),FEDERAL_UNIVERSITY,SP,1,nome exato,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SÃO CARLOS (UFSCAR),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal de São João del Rei (UFSJ),FEDERAL_UNIVERSITY,MG,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DE SÃO JOÃO DEL REI (UFSJ),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Cariri (UFCA),FEDERAL_UNIVERSITY,CE,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO CARIRI (UFCA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Pampa (UNIPAMPA),FEDERAL_UNIVERSITY,RS,1,sigla+UF,Publicas estaduais e federais.csv,FUNDAÇÃO UNIVERSIDADE FEDERAL DO PAMPA - UNIPAMPA (UNIPAMPA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Sul da Bahia (UFSB),FEDERAL_UNIVERSITY,BA,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO SUL DA BAHIA (UFSB),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Federal do Sul e Sudeste do Pará (UNIFESSPA),FEDERAL_UNIVERSITY,PA,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE FEDERAL DO SUL E SUDESTE DO PARÁ (UNIFESSPA),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade Franciscana (UFN),PRIVATE_UNIVERSITY,RS,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE FRANCISCANA (UFN),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade José do Rosário Vellano (UNIFENAS),PRIVATE_UNIVERSITY,MG,1,não casou,,,,,,
+Universidade Metropolitana de Santos (UNIMES),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE METROPOLITANA DE SANTOS (UNIMES),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Paranaense (UNIPAR),PRIVATE_UNIVERSITY,PR,1,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE PARANAENSE (UNIPAR),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Potiguar (UNP),PRIVATE_UNIVERSITY,RN,1,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE POTIGUAR (UNP),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade Regional do Cariri (URCA),STATE_UNIVERSITY,CE,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE REGIONAL DO CARIRI (URCA),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade Salgado de Oliveira (UNIVERSO),PRIVATE_UNIVERSITY,RJ,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE SALGADO DE OLIVEIRA (UNIVERSO),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade da Integração Internacional da Lusofonia Afro-Brasileira (UNILAB),FEDERAL_UNIVERSITY,CE,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DA INTEGRAÇÃO INTERNACIONAL DA LUSOFONIA AFRO-BRASILEIRA (UNILAB),Pública Federal,Pessoa Jurídica de Direito Público - Federal,FEDERAL_UNIVERSITY,True
+Universidade da Região de Joinville (UNIVILLE),PRIVATE_UNIVERSITY,SC,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DA REGIÃO DE JOINVILLE (UNIVILLE),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Sociedade,PRIVATE_UNIVERSITY,True
+Universidade de Araraquara (UNIARA),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE ARARAQUARA (UNIARA),Privada sem fins lucrativos,Pessoa Jurídica de Direito Privado - Sem fins lucrativos - Associação de Utilidade Pública,PRIVATE_UNIVERSITY,True
+Universidade de Fortaleza (UNIFOR) TESTE,PRIVATE_UNIVERSITY,CE,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE FORTALEZA (UNIFOR),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade de Marília (Unimar),PRIVATE_UNIVERSITY,SP,1,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE DE MARÍLIA (UNIMAR),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade de Mogi das Cruzes (UMC),PRIVATE_UNIVERSITY,SP,1,sigla+UF,privadas com fins lucrativos.csv,UNIVERSIDADE DE MOGI DAS CRUZES (UMC),Privada com fins lucrativos,Privada com fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade de Pernambuco (UPE),STATE_UNIVERSITY,PE,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DE PERNAMBUCO (UPE),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade de Sorocaba (UNISO),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DE SOROCABA (UNISO),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Estado do Amazonas (UEA),STATE_UNIVERSITY,AM,1,sigla+UF,Publicas estaduais e federais.csv,UNIVERSIDADE DO ESTADO DO AMAZONAS (UEA),Pública Estadual,Pessoa Jurídica de Direito Público - Estadual,STATE_UNIVERSITY,True
+Universidade do Planalto Catarinense (UNIPLAC),PRIVATE_UNIVERSITY,SC,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO PLANALTO CATARINENSE (UNIPLAC),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Sagrado Coração (USC),PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,
+Universidade do Vale do Paraíba (Univap),PRIVATE_UNIVERSITY,SP,1,sigla+UF,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO VALE DO PARAÍBA (UNIVAP),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Universidade do Vale do Rio dos Sinos (Unisinos),PRIVATE_UNIVERSITY,SP,1,nome exato,dados privadas sem fins lucrativos.csv,UNIVERSIDADE DO VALE DO RIO DOS SINOS (UNISINOS),Privada sem fins lucrativos,Privada sem fins lucrativos,PRIVATE_UNIVERSITY,True
+Ânima Educação,PRIVATE_UNIVERSITY,SP,1,não casou,,,,,,

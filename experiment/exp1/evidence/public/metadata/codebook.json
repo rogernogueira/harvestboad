@@ -1,0 +1,407 @@
+[
+  {
+    "field": "source_observation_id",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "source_id",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": 20
+  },
+  {
+    "field": "oasisbr_source_id",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "source_status not in ['REMOVED_FROM_OASISBR', 'UNKNOWN']",
+    "max_length": 100
+  },
+  {
+    "field": "observed_at",
+    "type": "carimbo",
+    "dtype": "datetime64[us, UTC]",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "source_name_raw",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "source_name_normalized",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "institution_name",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "institution_acronym",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": 30
+  },
+  {
+    "field": "institution_type",
+    "type": "categoria",
+    "dtype": "category[CV01]",
+    "requirement": "O",
+    "vocabulary": "CV01",
+    "condition": null,
+    "max_length": 40
+  },
+  {
+    "field": "FinsLucrativos",
+    "type": "categoria",
+    "dtype": "category[CV14]",
+    "requirement": "O",
+    "vocabulary": "CV14",
+    "condition": null,
+    "max_length": 1
+  },
+  {
+    "field": "Comunitaria",
+    "type": "categoria",
+    "dtype": "category[CV14]",
+    "requirement": "O",
+    "vocabulary": "CV14",
+    "condition": null,
+    "max_length": 1
+  },
+  {
+    "field": "country_code",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "subdivision_code",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": 10
+  },
+  {
+    "field": "source_url",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "harvest_endpoint_url",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "source_status",
+    "type": "categoria",
+    "dtype": "category[CV02]",
+    "requirement": "M",
+    "vocabulary": "CV02",
+    "condition": null,
+    "max_length": 30
+  },
+  {
+    "field": "source_type_macro",
+    "type": "categoria",
+    "dtype": "category[CV03]",
+    "requirement": "M",
+    "vocabulary": "CV03",
+    "condition": null,
+    "max_length": 50
+  },
+  {
+    "field": "source_type_detail",
+    "type": "categoria",
+    "dtype": "category[CV04]",
+    "requirement": "M",
+    "vocabulary": "CV04",
+    "condition": null,
+    "max_length": 60
+  },
+  {
+    "field": "platform_name_raw",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "platform_product in ['OTHER_IDENTIFIED', 'CUSTOM']",
+    "max_length": null
+  },
+  {
+    "field": "platform_product",
+    "type": "categoria",
+    "dtype": "category[CV05]",
+    "requirement": "M",
+    "vocabulary": "CV05",
+    "condition": null,
+    "max_length": 40
+  },
+  {
+    "field": "platform_analysis_group",
+    "type": "categoria",
+    "dtype": "category[CV06]",
+    "requirement": "M",
+    "vocabulary": "CV06",
+    "condition": null,
+    "max_length": 20
+  },
+  {
+    "field": "platform_version_raw",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": 100
+  },
+  {
+    "field": "platform_version",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": 30
+  },
+  {
+    "field": "platform_detection_method",
+    "type": "categoria",
+    "dtype": "category[CV07]",
+    "requirement": "M",
+    "vocabulary": "CV07",
+    "condition": null,
+    "max_length": 50
+  },
+  {
+    "field": "platform_confidence",
+    "type": "categoria",
+    "dtype": "category[CV08]",
+    "requirement": "M",
+    "vocabulary": "CV08",
+    "condition": null,
+    "max_length": 20
+  },
+  {
+    "field": "harvest_protocol",
+    "type": "categoria",
+    "dtype": "category[CV09]",
+    "requirement": "M",
+    "vocabulary": "CV09",
+    "condition": null,
+    "max_length": 30
+  },
+  {
+    "field": "harvest_scope",
+    "type": "categoria",
+    "dtype": "category[CV10]",
+    "requirement": "M",
+    "vocabulary": "CV10",
+    "condition": null,
+    "max_length": 30
+  },
+  {
+    "field": "oai_protocol_version",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": 10
+  },
+  {
+    "field": "oai_repository_name",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": null
+  },
+  {
+    "field": "oai_earliest_datestamp",
+    "type": "carimbo",
+    "dtype": "datetime64[us, UTC]",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": null
+  },
+  {
+    "field": "oai_deleted_record_policy",
+    "type": "categoria",
+    "dtype": "category[CV11]",
+    "requirement": "C",
+    "vocabulary": "CV11",
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": 20
+  },
+  {
+    "field": "oai_granularity",
+    "type": "categoria",
+    "dtype": "category[CV12]",
+    "requirement": "C",
+    "vocabulary": "CV12",
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": 30
+  },
+  {
+    "field": "harvest_metadata_prefix",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": 100
+  },
+  {
+    "field": "metadata_profile",
+    "type": "categoria",
+    "dtype": "category[CV13]",
+    "requirement": "C",
+    "vocabulary": "CV13",
+    "condition": "harvest_protocol == 'OAI_PMH'",
+    "max_length": 30
+  },
+  {
+    "field": "harvest_set_spec",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "snapshot_id",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "snapshot_status != 'SEM_COLETA'",
+    "max_length": 20
+  },
+  {
+    "field": "snapshot_date",
+    "type": "carimbo",
+    "dtype": "datetime64[us, UTC]",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "snapshot_status != 'SEM_COLETA'",
+    "max_length": null
+  },
+  {
+    "field": "snapshot_status",
+    "type": "categoria",
+    "dtype": "category[CV15]",
+    "requirement": "C",
+    "vocabulary": "CV15",
+    "condition": "source_id == source_id",
+    "max_length": 30
+  },
+  {
+    "field": "size",
+    "type": "inteiro",
+    "dtype": "Int64",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "snapshot_status != 'SEM_COLETA'",
+    "max_length": null
+  },
+  {
+    "field": "valid_size",
+    "type": "inteiro",
+    "dtype": "Int64",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "snapshot_status != 'SEM_COLETA'",
+    "max_length": null
+  },
+  {
+    "field": "transformed_size",
+    "type": "inteiro",
+    "dtype": "Int64",
+    "requirement": "C",
+    "vocabulary": null,
+    "condition": "snapshot_status != 'SEM_COLETA'",
+    "max_length": null
+  },
+  {
+    "field": "index_status",
+    "type": "categoria",
+    "dtype": "category[CV16]",
+    "requirement": "C",
+    "vocabulary": "CV16",
+    "condition": "source_id == source_id",
+    "max_length": 20
+  },
+  {
+    "field": "classification_evidence_id",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "M",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "identify_sha256",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  },
+  {
+    "field": "notes",
+    "type": "texto",
+    "dtype": "str",
+    "requirement": "O",
+    "vocabulary": null,
+    "condition": null,
+    "max_length": null
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "fonte": "cache",
+  "geradoEm": "2026-09-20T11:14:59+00:00",
+  "semente": 20260919,
+  "repositorios": [
+    {
+      "id": "esmat",
+      "nome": "Revista ESMAT (TJTO)",
+      "baseUrl": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai",
+      "plataforma": "ojs",
+      "metadataPrefix": "oai_dc",
+      "nota": "caso de origem: o DOI do dc:identifier nunca foi registrado (404)"
+    },
+    {
+      "id": "cache-1",
+      "nome": "repositorio.pgsscogna.com.br",
+      "baseUrl": "https://repositorio.pgsscogna.com.br/oai/request.",
+      "plataforma": "dspace",
+      "metadataPrefix": "xoai"
+    }
+  ]
+}

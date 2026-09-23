@@ -1,0 +1,609 @@
+{
+  "fonte": "re3data",
+  "geradoEm": "2026-09-20T11:01:05+00:00",
+  "semente": 20260919,
+  "repositorios": [
+    {
+      "id": "esmat",
+      "nome": "Revista ESMAT (TJTO)",
+      "baseUrl": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai",
+      "plataforma": "ojs",
+      "metadataPrefix": "oai_dc",
+      "nota": "caso de origem: o DOI do dc:identifier nunca foi registrado (404)"
+    },
+    {
+      "id": "r3d100013550",
+      "nome": "Riga Stradins University  dataverse",
+      "baseUrl": "https://dataverse.rsu.lv/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100010057",
+      "nome": "eCrystals",
+      "baseUrl": "http://ecrystals.chem.soton.ac.uk/cgi/oai2",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013030",
+      "nome": "RiuNet",
+      "baseUrl": "https://riunet.upv.es/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012054",
+      "nome": "CLARIN service center of the Zentrum Sprache at the BBAW",
+      "baseUrl": "https://clarin.bbaw.de:8088/oaiprovider",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014425",
+      "nome": "PolyU Research Data Repository",
+      "baseUrl": "https://researchdata.lib.polyu.edu.hk/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010147",
+      "nome": "Repository SAW Leipzig",
+      "baseUrl": "https://repo.data.saw-leipzig.de/oai-pmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014568",
+      "nome": "Repositorio TECdatos",
+      "baseUrl": "https://dataverse.tec.ac.cr/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100011303",
+      "nome": "Population Services International Dataverse",
+      "baseUrl": "https://dataverse.harvard.edu/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100012496",
+      "nome": "GESIS Data Archive",
+      "baseUrl": "https://dbkapps.gesis.org/dbkoai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011077",
+      "nome": "Inspire-HEP",
+      "baseUrl": "https://inspirehep.net/api/oai2d",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011218",
+      "nome": "LSE Research Online",
+      "baseUrl": "https://researchonline.lse.ac.uk/cgi/oai2",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013900",
+      "nome": "UQAM - Dataverse",
+      "baseUrl": "https://borealisdata.ca/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014886",
+      "nome": "Swinburne Figshare",
+      "baseUrl": "https://api.figshare.com/v2/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013453",
+      "nome": "CLARIN-IS",
+      "baseUrl": "https://centres.clarin.eu/oai_pmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013337",
+      "nome": "Paris Astronomical Data Centre",
+      "baseUrl": "http://voparis-registry.obspm.fr/vo/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012718",
+      "nome": "UvaDOC - Fonda Antiguo",
+      "baseUrl": "https://wiki.lyrasis.org/display/DSDOC5x/OAI",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014273",
+      "nome": "Deposita Dados",
+      "baseUrl": "https://depositadados.ibict.br/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014671",
+      "nome": "ScholarlyCommons",
+      "baseUrl": "https://repository.upenn.edu/server/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100013155",
+      "nome": "ROSA P",
+      "baseUrl": "https://rosap.ntl.bts.gov/fedora/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013134",
+      "nome": "DataSuds",
+      "baseUrl": "https://dataverse.ird.fr/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100012955",
+      "nome": "Research Data Unipd",
+      "baseUrl": "https://researchdata.cab.unipd.it/cgi/oai2",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013456",
+      "nome": "Open Forest Data",
+      "baseUrl": "https://dataverse.openforestdata.pl/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100013382",
+      "nome": "intellectum",
+      "baseUrl": "https://intellectum.unisabana.edu.co/oai/snaac",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013939",
+      "nome": "Repositorio Institucional de la Universidad Distrital Francisco José de Caldas",
+      "baseUrl": "http://repository.udistrital.edu.co/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100013494",
+      "nome": "DATICE",
+      "baseUrl": "https://gagnis.hi.is/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014884",
+      "nome": "TIB AV-Portal",
+      "baseUrl": "https://www.tib.eu/oai/public/repository/open",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012571",
+      "nome": "CIARD Ring",
+      "baseUrl": "https://ring.ciard.info/zh-hans/books/example-get-all-datasets-available-through-oai-pmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012607",
+      "nome": "UPCommons - Research Data",
+      "baseUrl": "https://upcommons.upc.edu/page/about",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012468",
+      "nome": "Digital Collections ULB Düsseldorf",
+      "baseUrl": "https://digital.ub.uni-duesseldorf.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013831",
+      "nome": "UNSWorks",
+      "baseUrl": "https://unsworks.unsw.edu.au/oai/provider",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013537",
+      "nome": "UCREA",
+      "baseUrl": "http://repositorio.unican.es/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100014129",
+      "nome": "edoc server der Berlin-Brandenburgischen Akademie der Wissenschaften",
+      "baseUrl": "https://edoc.bbaw.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014686",
+      "nome": "University of Opole Knowledge Base",
+      "baseUrl": "https://repo.uni.opole.pl/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010699",
+      "nome": "ICRISAT Dataverse",
+      "baseUrl": "https://dataverse.icrisat.org/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100013164",
+      "nome": "Geoscience Data Exchange",
+      "baseUrl": "https://gdex.ucar.edu/jsp/documentation/oai.html",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013746",
+      "nome": "SWISSUbase",
+      "baseUrl": "https://www.swissubase.ch/oai-pmh/v1/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014742",
+      "nome": "Dataverse Telkom University",
+      "baseUrl": "https://dataverse.telkomuniversity.ac.id//oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100012611",
+      "nome": "Materials Cloud Archive",
+      "baseUrl": "https://archive.materialscloud.org/oai2d",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013046",
+      "nome": "PORTULAN CLARIN repository",
+      "baseUrl": "https://portulanclarin.net/repository/oaipmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012866",
+      "nome": "CU Scholar",
+      "baseUrl": "https://scholar.colorado.edu/catalog/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013931",
+      "nome": "Recherche Data Gouv",
+      "baseUrl": "https://entrepot.recherche.data.gouv.fr/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013904",
+      "nome": "Arca Dados",
+      "baseUrl": "https://arcadados.fiocruz.br/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011137",
+      "nome": "Open Science Framework",
+      "baseUrl": "https://share.osf.io/oai-pmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012698",
+      "nome": "Repositorio Institucional UCASAL",
+      "baseUrl": "https://bibliotecas.ucasal.edu.ar/ws/oai2_7",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012281",
+      "nome": "UWE Research Data Repository",
+      "baseUrl": "http://eprints.uwe.ac.uk/cgi/oai2",
+      "plataforma": "eprints"
+    },
+    {
+      "id": "r3d100012889",
+      "nome": "edoc-Server  - Forschungsdaten",
+      "baseUrl": "https://edoc.hu-berlin.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013770",
+      "nome": "Research data repository of the Universität Innsbruck",
+      "baseUrl": "https://researchdata.uibk.ac.at/oai2d",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014660",
+      "nome": "ODISSEI Portal",
+      "baseUrl": "https://portal.odissei.nl/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011086",
+      "nome": "CancerData.org",
+      "baseUrl": "https://www.cancerdata.org/node/38",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013342",
+      "nome": "USTP Phaidra",
+      "baseUrl": "https://services.phaidra.univie.ac.at/api/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014489",
+      "nome": "Repositorio Digital Institucional de Acceso Abierto de la Universidad Nacional de Luján",
+      "baseUrl": "https://ri.unlu.edu.ar/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014208",
+      "nome": "RIUMA",
+      "baseUrl": "https://riuma.uma.es/rest/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013504",
+      "nome": "PSI Open Data Provider",
+      "baseUrl": "https://oai.datacite.org/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011914",
+      "nome": "IDEAS",
+      "baseUrl": "http://oai.repec.org",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010299",
+      "nome": "World Data Center for Climate",
+      "baseUrl": "https://dmoai.cloud.dkrz.de/oai/provider",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013637",
+      "nome": "Addis Ababa University Research Data Repository",
+      "baseUrl": "https://rdr.aau.edu.et/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013722",
+      "nome": "Repositorio Abierto de la Universidad Internacional de Andalucía",
+      "baseUrl": "https://dspace.unia.es/oai",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100012010",
+      "nome": "Australian SuperSite Network Data Portal",
+      "baseUrl": "https://www.supersites.net.au/knb/dataProvider",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010494",
+      "nome": "Quetelet-Progedo",
+      "baseUrl": "https://data.progedo.fr/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010259",
+      "nome": "National Archive of Computerized Data on Aging",
+      "baseUrl": "https://harmonize.icpsr.umich.edu/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100014783",
+      "nome": "Taalmaterialen",
+      "baseUrl": "https://repository.ivdnt.org/oai/provider",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013997",
+      "nome": "Repositori de la Universitat Jaume I",
+      "baseUrl": "https://repositori.uji.es/server/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012330",
+      "nome": "RADAR",
+      "baseUrl": "https://www.radar-service.eu/oai/OAIHandler",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014739",
+      "nome": "Croatian Social Science Data Archive",
+      "baseUrl": "https://data.crossda.hr/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010451",
+      "nome": "Pacific and Regional Archive for Digital Sources in Endangered Cultures",
+      "baseUrl": "https://catalog.paradisec.org.au/oai/item",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012405",
+      "nome": "Research Data at Essex",
+      "baseUrl": "http://researchdata.essex.ac.uk/cgi/oai2",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014691",
+      "nome": "DMPortal BioData.pt",
+      "baseUrl": "https://dmportal.biodata.pt/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012020",
+      "nome": "CLARINO Bergen  Centre",
+      "baseUrl": "https://clarino.uib.no/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011245",
+      "nome": "University of Southampton Institutional Research Repository",
+      "baseUrl": "https://eprints.soton.ac.uk/cgi/oai2",
+      "plataforma": "eprints"
+    },
+    {
+      "id": "r3d100011216",
+      "nome": "KU ScholarWorks",
+      "baseUrl": "https://kuscholarworks.ku.edu/server/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100012860",
+      "nome": "Eurac Research CLARIN Centre",
+      "baseUrl": "http://clarin.eurac.edu/repository/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100010387",
+      "nome": "CLARIN-DK-UCPH Repository",
+      "baseUrl": "https://repository.clarin.dk/repository/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100014844",
+      "nome": "FID4SA@heiDATA",
+      "baseUrl": "https://heidata.uni-heidelberg.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013549",
+      "nome": "MUSE-Wide",
+      "baseUrl": "https://musewide.aip.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013582",
+      "nome": "METIS",
+      "baseUrl": "https://fmi.b2share.csc.fi/api/oai2d",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011352",
+      "nome": "OceanRep GEOMAR Repository",
+      "baseUrl": "https://oceanrep.geomar.de/cgi/oai2",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014099",
+      "nome": "Repository of the Faculty of Science",
+      "baseUrl": "https://dabar.srce.hr/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013047",
+      "nome": "South African Centre for Digital Language Resources",
+      "baseUrl": "https://repo.sadilar.org/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100013029",
+      "nome": "TUdatalib",
+      "baseUrl": "https://tudatalib.ulb.tu-darmstadt.de/server/oai/request",
+      "plataforma": "dspace"
+    },
+    {
+      "id": "r3d100013108",
+      "nome": "Repositorio de Datos de Investigación de la Universidad de Chile",
+      "baseUrl": "https://datos.uchile.cl/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014727",
+      "nome": "OstData",
+      "baseUrl": "https://www.ostdata.osmikon.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013569",
+      "nome": "Social Data Repository (RDS)",
+      "baseUrl": "https://rds.icm.edu.pl/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013118",
+      "nome": "B2SHARE Server Forschungszentrum Jülich",
+      "baseUrl": "https://b2share.fz-juelich.de/api/oai2d",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013891",
+      "nome": "HilReDa",
+      "baseUrl": "https://data.goettingen-research-online.de/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010951",
+      "nome": "Purdue University Research Repository",
+      "baseUrl": "https://purr.purdue.edu/oaipmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011038",
+      "nome": "Qualitative Data Repository",
+      "baseUrl": "https://data.qdr.syr.edu/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014704",
+      "nome": "Micelio, plataforma para la investigación UCA",
+      "baseUrl": "https://apicrai.uca.edu.sv/server/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014218",
+      "nome": "Teesside University Research Data Repository",
+      "baseUrl": "https://data.mendeley.com/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013062",
+      "nome": "Data Univ Gustave Eiffel",
+      "baseUrl": "https://data.univ-gustave-eiffel.fr/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100014104",
+      "nome": "eBiltegia",
+      "baseUrl": "http://ebiltegia.mondragon.edu:8080/oai/driver",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012557",
+      "nome": "ETH Zürich Research Collection",
+      "baseUrl": "http://www.research-collection.ethz.ch/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100010305",
+      "nome": "NOAA National Centers for Environmental Information - World Data Service  for Oceanography",
+      "baseUrl": "http://data.nodc.noaa.gov/cgi-bin/oai-pmh",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011201",
+      "nome": "DataverseNL",
+      "baseUrl": "https://dataverse.nl/oai",
+      "plataforma": "dataverse"
+    },
+    {
+      "id": "r3d100013824",
+      "nome": "KU Leuven RDR",
+      "baseUrl": "https://rdr.kuleuven.be/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013553",
+      "nome": "DNBLab",
+      "baseUrl": "https://www.dnb.de/EN/Professionell/Metadatendienste/Datenbezug/OAI/oai_node.html",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100013827",
+      "nome": "Open-source Scientific Software and Service Repository",
+      "baseUrl": "https://zenodo.org/oai2d",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011345",
+      "nome": "DARIAH-DE Repository",
+      "baseUrl": "https://repository.de.dariah.eu/1.0/oaipmh/oai",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100011852",
+      "nome": "UQ eSpace, Research Data Collections",
+      "baseUrl": "http://espace.library.uq.edu.au/oai.php",
+      "plataforma": "outra"
+    },
+    {
+      "id": "r3d100012407",
+      "nome": "Lincoln repository",
+      "baseUrl": "https://eprints.lincoln.ac.uk/policies.html",
+      "plataforma": "eprints"
+    }
+  ]
+}

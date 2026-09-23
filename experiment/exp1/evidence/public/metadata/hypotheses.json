@@ -1,0 +1,859 @@
+[
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H1",
+    "statement": "A taxa de validade difere entre plataformas",
+    "unidade": "fonte (último snapshot)",
+    "variavel_dependente": "taxa_validade = valid_size / size",
+    "variavel_independente": "platform_analysis_group",
+    "confundidores": [
+      "source_type_detail",
+      "latest_size",
+      "metadata_profile",
+      "operador responsável"
+    ],
+    "inclusao": "fontes com size > 0 (a taxa não existe sem registro coletado)",
+    "exclusao": "plataformas com menos de 10 fontes",
+    "estatistica": {
+      "teste": "Kruskal-Wallis",
+      "H": 247.38,
+      "gl": 3,
+      "p": 2.4067854653137844e-53,
+      "n": 1708,
+      "grupos": 4,
+      "efeito_nome": "epsilon-quadrado",
+      "efeito": 0.1434
+    },
+    "ic95": [
+      0.117,
+      0.1733
+    ],
+    "grupos_rotulos": [
+      "DSPACE",
+      "OJS",
+      "OTHER",
+      "SCIELO"
+    ],
+    "sensibilidade": [
+      {
+        "recorte": "todas as fontes",
+        "n": 1708,
+        "grupos": 4,
+        "efeito": 0.1434,
+        "p": 2.4067854653137844e-53
+      },
+      {
+        "recorte": "sem plataforma UNKNOWN",
+        "n": 1708,
+        "grupos": 4,
+        "efeito": 0.1434,
+        "p": 2.4067854653137844e-53
+      },
+      {
+        "recorte": "sem SCIELO (= sem os endpoints de agregador)",
+        "n": 1698,
+        "grupos": 3,
+        "efeito": 0.1355,
+        "p": 5.135534221743524e-51
+      },
+      {
+        "recorte": "só OJS e DSPACE",
+        "n": 1680,
+        "grupos": 2,
+        "efeito": 0.1352,
+        "p": 1.7299950511165255e-51
+      },
+      {
+        "recorte": "só com 100+ registros",
+        "n": 1618,
+        "grupos": 3,
+        "efeito": 0.1381,
+        "p": 1.3515332750286917e-49
+      }
+    ],
+    "identificacao": "não identificável: das 54 células tipo × plataforma, 25 têm alguma fonte, e duas delas concentram 1848 das 2183 fontes. Plataforma e tipo de fonte não variam independentemente, então o contraste entre plataformas é, com a mesma evidência, um contraste entre tipos de fonte.",
+    "veredito": "not_identifiable",
+    "verdict_label": "não identificável"
+  },
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H2",
+    "statement": "A taxa de transformação difere entre plataformas",
+    "unidade": "fonte (último snapshot)",
+    "variavel_dependente": "taxa_transformacao = transformed_size / size",
+    "variavel_independente": "platform_analysis_group",
+    "confundidores": [
+      "source_type_detail",
+      "metadata_profile"
+    ],
+    "inclusao": "fontes com size > 0",
+    "exclusao": "plataformas com menos de 10 fontes",
+    "estatistica": {
+      "teste": "Kruskal-Wallis",
+      "H": 14.85,
+      "gl": 3,
+      "p": 0.0019487038159310044,
+      "n": 1708,
+      "grupos": 4,
+      "efeito_nome": "epsilon-quadrado",
+      "efeito": 0.007
+    },
+    "ic95": [
+      0.0,
+      0.0288
+    ],
+    "grupos_rotulos": [
+      "DSPACE",
+      "OJS",
+      "OTHER",
+      "SCIELO"
+    ],
+    "medianas": {
+      "DSPACE": 1.0,
+      "OJS": 1.0,
+      "OTHER": 1.0,
+      "SCIELO": 1.0
+    },
+    "sensibilidade": [
+      {
+        "recorte": "todas as fontes",
+        "n": 1708,
+        "grupos": 4,
+        "efeito": 0.007,
+        "p": 0.0019487038159310044
+      },
+      {
+        "recorte": "sem plataforma UNKNOWN",
+        "n": 1708,
+        "grupos": 4,
+        "efeito": 0.007,
+        "p": 0.0019487038159310044
+      },
+      {
+        "recorte": "sem SCIELO (= sem os endpoints de agregador)",
+        "n": 1698,
+        "grupos": 3,
+        "efeito": 0.0074,
+        "p": 0.0006844255283806945
+      },
+      {
+        "recorte": "só OJS e DSPACE",
+        "n": 1680,
+        "grupos": 2,
+        "efeito": 0.0078,
+        "p": 0.00017563763389452771
+      },
+      {
+        "recorte": "só com 100+ registros",
+        "n": 1618,
+        "grupos": 3,
+        "efeito": 0.0078,
+        "p": 0.0006830620686749955
+      }
+    ],
+    "identificacao": "identificável e sem efeito prático: a mediana é 100% em toda plataforma, então não há o que atribuir. O achado é sobre o processo, não sobre a plataforma — a transformação é etapa mecânica que quase não falha, enquanto a validação de perfil rejeita 14,6% dos registros.",
+    "veredito": "null_result",
+    "verdict_label": "resultado nulo"
+  },
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H3",
+    "statement": "O efeito da plataforma depende do tipo de fonte",
+    "unidade": "célula tipo × plataforma",
+    "variavel_dependente": "taxa_validade",
+    "variavel_independente": "platform_analysis_group × source_type_detail",
+    "confundidores": [
+      "as mesmas de H1, mais a esparsidade da matriz"
+    ],
+    "inclusao": "todas as células do cruzamento, inclusive as vazias",
+    "exclusao": "nenhuma — é a ausência que sustenta o argumento",
+    "estatistica": {
+      "teste": "nenhum aplicado",
+      "celulas": 54,
+      "celulas_povoadas": 25,
+      "celulas_com_menos_de_5": 15
+    },
+    "ic95": null,
+    "sensibilidade": [],
+    "identificacao": "não estimável: 25 das 54 células têm alguma fonte e 15 dessas têm menos de cinco. Um modelo com interação roda e devolve coeficientes, mas extrapolando para combinações que mal existem na população.",
+    "veredito": "not_estimable",
+    "verdict_label": "não estimável"
+  },
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H4",
+    "statement": "A atualidade das coletas difere entre grupos",
+    "unidade": "fonte",
+    "variavel_dependente": "days_since_last_harvest (referência 2026-09-20)",
+    "variavel_independente": "platform_analysis_group",
+    "confundidores": [
+      "latest_size",
+      "source_type_detail",
+      "lote manual do operador"
+    ],
+    "inclusao": "fontes com ao menos uma coleta registrada",
+    "exclusao": "plataformas com menos de 10 fontes",
+    "estatistica": {
+      "teste": "Kruskal-Wallis",
+      "H": 411.45,
+      "gl": 5,
+      "p": 1.0075904772457578e-86,
+      "n": 2175,
+      "grupos": 6,
+      "efeito_nome": "epsilon-quadrado",
+      "efeito": 0.1874
+    },
+    "ic95": [
+      0.1643,
+      0.2135
+    ],
+    "grupos_rotulos": [
+      "DATAVERSE",
+      "DSPACE",
+      "OJS",
+      "OTHER",
+      "SCIELO",
+      "UNKNOWN"
+    ],
+    "contraste": {
+      "par": "OJS vs DSPACE",
+      "mediana_a": 254.0,
+      "mediana_b": 92.0,
+      "efeito_nome": "delta de Cliff",
+      "efeito": 0.2225,
+      "ic95": [
+        0.137,
+        0.3048
+      ]
+    },
+    "confundimento": {
+      "nome": "Spearman tamanho × dias",
+      "rho": -0.1839,
+      "p": 1.439845354848373e-14
+    },
+    "sensibilidade": [
+      {
+        "recorte": "todas as fontes",
+        "n": 2175,
+        "grupos": 6,
+        "efeito": 0.1874,
+        "p": 1.0075904772457578e-86
+      },
+      {
+        "recorte": "sem plataforma UNKNOWN",
+        "n": 2156,
+        "grupos": 5,
+        "efeito": 0.1861,
+        "p": 3.36952705627253e-86
+      },
+      {
+        "recorte": "sem SCIELO (= sem os endpoints de agregador)",
+        "n": 1960,
+        "grupos": 5,
+        "efeito": 0.0202,
+        "p": 8.389352363620626e-09
+      },
+      {
+        "recorte": "só OJS e DSPACE",
+        "n": 1909,
+        "grupos": 2,
+        "efeito": 0.0137,
+        "p": 1.874208788583596e-07
+      },
+      {
+        "recorte": "só com 100+ registros",
+        "n": 1618,
+        "grupos": 3,
+        "efeito": 0.0103,
+        "p": 9.346212695282132e-05
+      }
+    ],
+    "identificacao": "o efeito global existe mas não é um gradiente de plataforma: ele é carregado por um grupo só. Com todas as fontes, epsilon-quadrado = 0,187; sem SCIELO cai para 0,020, e no par OJS contra DSPACE sozinho fica em 0,014, com delta de Cliff 0,22 — pequeno, apesar das medianas de 254 e 92 dias. O que a análise de sensibilidade mostra é que as 215 fontes SCIELO, com mediana de 549 dias, são o efeito inteiro; e elas estão assim porque 212 delas apontam para o endpoint desativado old.scielo.br, o que é defeito de cadastro e não propriedade do software. O confundimento com tamanho, medido, é fraco (rho = -0,18). A leitura defensável é que a variável mede a atenção do operador e o estado do cadastro, não a plataforma.",
+    "veredito": "supported_confounded",
+    "verdict_label": "sustentada, com confundimento"
+  },
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H5",
+    "statement": "O tamanho da fonte influencia a probabilidade de falha",
+    "unidade": "fonte",
+    "variavel_dependente": "falha na última coleta",
+    "variavel_independente": "latest_size",
+    "confundidores": [
+      "a própria variável dependente — ver identificação"
+    ],
+    "inclusao": "todas as fontes com coleta registrada",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "nenhum aplicado",
+      "erros": 450,
+      "erros_com_size_zero": 444,
+      "fracao": 0.9867
+    },
+    "ic95": null,
+    "sensibilidade": [],
+    "identificacao": "circular: 444 das 450 fontes em erro têm size = 0, porque uma coleta que falhou reporta zero registros. `size` é o resultado da coleta, não propriedade prévia da fonte. Testar a hipótese exige o tamanho declarado pela origem antes da coleta, que esta base não tem — os 6 casos com registros e erro são os únicos informativos.",
+    "veredito": "partly_tautological",
+    "verdict_label": "em parte tautológica"
+  },
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H6.1",
+    "statement": "As falhas de uma fonte se agrupam",
+    "unidade": "fonte (série de snapshots)",
+    "variavel_dependente": "maior sequência de falhas consecutivas",
+    "variavel_independente": "identidade da fonte",
+    "confundidores": [
+      "número de coletas por fonte",
+      "época da coleta (lotes manuais)"
+    ],
+    "inclusao": "fontes com 4 ou mais snapshots",
+    "exclusao": "fontes com histórico curto demais para julgar",
+    "estatistica": {
+      "teste": "permutação dentro da fonte, 1000 reamostragens",
+      "n": 1527,
+      "sequencia_observada": 1.756,
+      "sequencia_sob_independencia": 1.141,
+      "z": 53.48,
+      "p": 0.000999000999000999,
+      "efeito_nome": "razão observado / nulo",
+      "efeito": 1.54
+    },
+    "ic95": [
+      1.414,
+      1.677
+    ],
+    "sobredispersao": 5.28,
+    "distribuicao": {
+      "persistentes": 180,
+      "nunca_falharam": 1027,
+      "sempre_falharam": 61
+    },
+    "sensibilidade": [],
+    "identificacao": "identificável. A permutação é dentro da própria fonte, então preserva quantas vezes cada uma falhou e destrói só a ordem — o que sobra é agrupamento, que é o que a hipótese afirma. Não diz por que a fonte falha; diz que a falha não é sorteada.",
+    "veredito": "supported",
+    "verdict_label": "sustentada"
+  },
+  {
+    "populacao": "42.358 coletas de 2.183 fontes, de 2017-07-19 a 2026-09-20",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H6.2",
+    "statement": "O agrupamento das falhas é da fonte, não apenas do lote",
+    "unidade": "coleta",
+    "variavel_dependente": "dispersão da taxa de falha entre fontes, e entre dias",
+    "variavel_independente": "identidade da fonte · dia da coleta",
+    "confundidores": [
+      "as duas estruturas se sobrepõem: lote grande cobre muitas fontes de uma vez"
+    ],
+    "inclusao": "coletas com data registrada",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "permutação cruzada, 300 reamostragens por nulo",
+      "n": 42358,
+      "efeito_nome": "razão observado / nulo (dispersão entre fontes)",
+      "efeito": 1.404,
+      "z": 12.6,
+      "p": 0.0033222591362126247
+    },
+    "ic95": null,
+    "contraste": {
+      "par": "fonte além do lote · lote além da fonte",
+      "mediana_a": 1.404,
+      "mediana_b": 1.31,
+      "efeito_nome": "z de cada um",
+      "efeito": 12.6,
+      "ic95": [
+        12.6,
+        4.6
+      ]
+    },
+    "distribuicao": {
+      "pior lote 2020-07-31": "575 coletas, taxa 0.63",
+      "pior lote 2021-09-18": "354 coletas, taxa 0.568",
+      "pior lote 2020-08-01": "413 coletas, taxa 0.479",
+      "melhor lote 2019-01-19": "649 coletas, taxa 0.0",
+      "melhor lote 2019-01-26": "577 coletas, taxa 0.0",
+      "melhor lote 2020-04-11": "361 coletas, taxa 0.0"
+    },
+    "sensibilidade": [],
+    "identificacao": "as duas estruturas são reais, e essa é a correção que H6 precisava. Embaralhando dentro do dia — o que preserva a taxa de cada lote e apaga a fonte — a dispersão entre fontes ainda fica 1.4× acima do nulo, z = 12.6: a fonte importa por si. Mas o inverso também vale, e com força comparável: embaralhando dentro da fonte, a dispersão entre dias fica 1.31× acima, z = 4.6. Há lotes de mais de 300 coletas com taxa de falha zero e lotes do mesmo tamanho acima de 60%. **H6 sozinha atribuía à fonte o que em boa parte é do lote.**",
+    "veredito": "supported_confounded",
+    "verdict_label": "as duas coisas, não uma"
+  },
+  {
+    "populacao": "42.358 coletas de 2.183 fontes, de 2017-07-19 a 2026-09-20",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H6.3",
+    "statement": "Há sinal observável antes do início de uma sequência de falhas",
+    "unidade": "coleta anterior à primeira falha, pareada com a própria fonte",
+    "variavel_dependente": "duração e volume relativos à mediana da fonte",
+    "variavel_independente": "distância até a primeira falha (-3, -2, -1)",
+    "confundidores": [
+      "lotes manuais: a coleta anterior pode ter sido meses antes, em outro contexto",
+      "porte da fonte, neutralizado pelo pareamento"
+    ],
+    "inclusao": "fontes cuja primeira falha ocorre a partir da 4ª coleta, para haver janela",
+    "exclusao": "fontes que nunca falharam ou que falham desde o início",
+    "estatistica": {
+      "teste": "Wilcoxon pareado sobre a razão duração ÷ mediana da fonte",
+      "n": 534,
+      "efeito_nome": "razão de duração na coleta imediatamente anterior",
+      "efeito": 1.064,
+      "p": 1.983721061896732e-06
+    },
+    "ic95": [
+      1.0145,
+      1.1684
+    ],
+    "medianas": {
+      "-3 coleta(s) antes · duração": 0.842,
+      "-2 coleta(s) antes · duração": 1.239,
+      "-1 coleta(s) antes · duração": 1.064,
+      "-3 coleta(s) antes · volume": 1.067,
+      "-2 coleta(s) antes · volume": 1.079,
+      "-1 coleta(s) antes · volume": 1.082
+    },
+    "distribuicao": {
+      "observações em -3": 542,
+      "observações em -2": 542,
+      "observações em -1": 542
+    },
+    "sensibilidade": [],
+    "identificacao": "há sinal, e ele é inútil. A coleta imediatamente anterior à primeira falha dura 6.4% a mais que a mediana da própria fonte, com p = 2e-06 — detectável porque n é grande, não porque o efeito seja grande. E **43.8% dos casos vão na direção oposta**: como preditor, isso é pouco melhor que cara ou coroa. O volume também sobe de leve (1,08), o que não é degradação. Vale como exemplo do que a ficha inteira existe para separar: significância estatística e utilidade prática são coisas diferentes. Um preditor de verdade exigiria série regular, que o agendamento dormente impede.",
+    "veredito": "supported_small",
+    "verdict_label": "sinal real, sem valor preditivo"
+  },
+  {
+    "populacao": "42.358 coletas de 2.183 fontes, de 2017-07-19 a 2026-09-20",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H6.4",
+    "statement": "Fontes que falham voltam, e o custo da volta é mensurável",
+    "unidade": "episódio de falha",
+    "variavel_dependente": "coletas e dias até a próxima coleta bem-sucedida",
+    "variavel_independente": "nenhuma — é a distribuição do tempo de volta",
+    "confundidores": [
+      "o relógio é de lote, não de calendário: 'dias até voltar' mede quando o operador coletou de novo, não quando a fonte se consertou"
+    ],
+    "inclusao": "toda coleta com desfecho de erro",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "distribuição do intervalo até a próxima coleta bem-sucedida",
+      "n": 3469,
+      "efeito_nome": "coletas até voltar (mediana)",
+      "efeito": 1.0
+    },
+    "ic95": null,
+    "medianas": {
+      "coletas até voltar": 1.0,
+      "dias até voltar": 144.0,
+      "dias até voltar (p75)": 567.0
+    },
+    "distribuicao": {
+      "episódios de falha": 3469,
+      "sem volta até o fim da série": 1028,
+      "fontes falhando agora": 448
+    },
+    "sensibilidade": [],
+    "identificacao": "descritiva, com uma ressalva que muda a leitura. A maioria dos episódios termina: a falha é evento, não estado. Mas **'dias até voltar' não mede a fonte se consertando** — mede quando o operador a coletou de novo, e com lotes manuais separados por meses esse número é do calendário de operação, não da recuperação técnica. A medida em número de coletas é a menos contaminada das duas.",
+    "veredito": "supported",
+    "verdict_label": "confirmada, com ressalva de relógio"
+  },
+  {
+    "populacao": "fontes de metadados registradas no Oasisbr (N = 2.183)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H7",
+    "statement": "A completude do metadado difere entre naturezas institucionais",
+    "unidade": "instituição (mediana das fontes dela)",
+    "variavel_dependente": "completude = elementos Dublin Core presentes ÷ 15",
+    "variavel_independente": "institution_type (CV01)",
+    "confundidores": [
+      "plataforma e tipo de fonte (controlados por estrato)",
+      "porte da instituição",
+      "existência de equipe de biblioteca — não observada"
+    ],
+    "inclusao": "instituições com fonte na amostra de registros; categorias com 20 ou mais instituições. Estrato fixo: periódico científico em OJS, para segurar as duas variáveis que H1 não consegue separar",
+    "exclusao": "categorias com menos de 20 instituições (PUBLISHER, MUNICIPAL_UNIVERSITY, LIBRARY). A USP é outlier declarado e sai apenas no recorte de sensibilidade, não da inclusão",
+    "estatistica": {
+      "teste": "Kruskal-Wallis",
+      "H": 19.42,
+      "gl": 6,
+      "p": 0.0035130834939172406,
+      "n": 400,
+      "grupos": 7,
+      "efeito_nome": "epsilon-quadrado",
+      "efeito": 0.0341
+    },
+    "ic95": [
+      0.0087,
+      0.0977
+    ],
+    "grupos_rotulos": [
+      "FEDERAL_INSTITUTE",
+      "FEDERAL_UNIVERSITY",
+      "GOVERNMENT_AGENCY",
+      "OTHER",
+      "PRIVATE_UNIVERSITY",
+      "SCIENTIFIC_SOCIETY",
+      "STATE_UNIVERSITY"
+    ],
+    "medianas": {
+      "OTHER": 0.8437,
+      "STATE_UNIVERSITY": 0.8343,
+      "GOVERNMENT_AGENCY": 0.8302,
+      "FEDERAL_INSTITUTE": 0.8297,
+      "SCIENTIFIC_SOCIETY": 0.8292,
+      "FEDERAL_UNIVERSITY": 0.8131,
+      "PRIVATE_UNIVERSITY": 0.8013
+    },
+    "concentracao": {
+      "instituicoes": 755,
+      "fontes": 2183,
+      "maior": 87,
+      "media": 2.9
+    },
+    "sensibilidade": [
+      {
+        "recorte": "validade, por fonte, sem controle",
+        "n": 1691,
+        "grupos": 8,
+        "efeito": 0.0189,
+        "p": 2.162211508805078e-06
+      },
+      {
+        "recorte": "validade, por instituição",
+        "n": 503,
+        "grupos": 8,
+        "efeito": 0.0396,
+        "p": 0.0003937902825611739
+      },
+      {
+        "recorte": "conformidade, controlado",
+        "n": 400,
+        "grupos": 7,
+        "efeito": 0.0075,
+        "p": 0.17578590534818056
+      },
+      {
+        "recorte": "completude, controlado",
+        "n": 400,
+        "grupos": 7,
+        "efeito": 0.0341,
+        "p": 0.0035130834939172406
+      },
+      {
+        "recorte": "completude, controlado, sem a USP",
+        "n": 399,
+        "grupos": 7,
+        "efeito": 0.0345,
+        "p": 0.0033432122651507997
+      }
+    ],
+    "conflito": "institution_type não vem do cadastro do Harvester — foi inferido por nós dos nomes das instituições e conferido contra quatro exportações do e-MEC (755 classificadas, 289 casadas por sigla+UF, zero divergências). Estamos testando uma variável que construímos, e erro de classificação aqui atenua o efeito em direção ao nulo.",
+    "identificacao": "identificável, ao contrário de H1, e é esse o ganho real da troca: a natureza institucional varia dentro de plataforma e dentro de tipo de fonte, então o teste roda com os dois fixos — 383 instituições só em periódico/OJS. A sequência de controles mostra o resto: sem controle o efeito parece grande e é composição, porque a natureza prediz a plataforma (sociedade científica tende a SCIELO); controlado, a conformidade não distingue nada (ε² = 0,0000) porque está grumosa em 0,75, com todos falhando em dc:rights; sobra a completude, pequena e real. Identificar não é isolar mecanismo: 'universidade federal' não é tratamento, é rótulo de um pacote correlacionado — orçamento, equipe, porte, idade.",
+    "veredito": "supported_small",
+    "verdict_label": "sustentada, efeito pequeno"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H8",
+    "statement": "A amostra de registros não representa a base",
+    "unidade": "fonte",
+    "variavel_dependente": "respondeu ou não ao ListRecords",
+    "variavel_independente": "estado da fonte — atualidade, desfecho da última coleta, plataforma",
+    "confundidores": [
+      "nenhum: a pergunta é descritiva, sobre a própria amostra"
+    ],
+    "inclusao": "todas as 2.183 fontes",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "Mann-Whitney para dias, qui-quadrado para erro",
+      "n": 2175,
+      "efeito_nome": "delta de Cliff (dias)",
+      "efeito": -0.3743,
+      "p": 8.923696646009261e-134,
+      "chi2": 606
+    },
+    "ic95": [
+      -0.4245,
+      -0.3215
+    ],
+    "medianas": {
+      "com amostra": 254.0,
+      "sem amostra": 446.0
+    },
+    "distribuicao": {
+      "com amostra": 1573,
+      "sem amostra": 610,
+      "em erro entre as sem amostra": 335,
+      "SCIELO ausente": 215
+    },
+    "sensibilidade": [],
+    "identificacao": "descritiva e decisiva. Não é efeito de nada: é a constatação de que as 610 fontes ausentes têm mediana de 446 dias contra 254, três vezes mais erro, e incluem as 215 SCIELO inteiras. **Toda medida de H9 a H14 é teto, não média** — vale para as fontes que estão funcionando. Corrigir exigiria coleta nova, que está fora de escopo.",
+    "veredito": "supported",
+    "verdict_label": "confirmada"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H9",
+    "statement": "A conformidade DRIVER é limitada por um único elemento",
+    "unidade": "fonte (taxa sobre os registros dela)",
+    "variavel_dependente": "taxa de conformidade de cada um dos quatro critérios",
+    "variavel_independente": "qual critério",
+    "confundidores": [
+      "nenhum: os quatro incidem sobre os mesmos registros"
+    ],
+    "inclusao": "fontes com amostra de registros",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "proporção de registros com dc:rights em info:eu-repo, IC por bootstrap",
+      "n": 187032,
+      "efeito_nome": "proporção",
+      "efeito": 0.0075,
+      "ic95": [
+        0.0071,
+        0.0078
+      ]
+    },
+    "ic95": [
+      0.0071,
+      0.0078
+    ],
+    "medianas": {
+      "type_eurepo": 1.0,
+      "rights_eurepo": 0.0,
+      "language_iso": 1.0,
+      "date_iso": 1.0
+    },
+    "distribuicao": {
+      "fontes ≥90% em type_eurepo": 1423,
+      "fontes ≥90% em rights_eurepo": 7,
+      "fontes ≥90% em language_iso": 1518,
+      "fontes ≥90% em date_iso": 1561
+    },
+    "sensibilidade": [],
+    "identificacao": "descritiva, e não é questão de grau: é outro regime. Três critérios têm mediana 1,0000 e mais de 1.400 fontes acima de 90%; dc:rights tem mediana 0,0000 e **sete** fontes acima de 90%. O campo está preenchido em mais da metade dos registros, com licença Creative Commons — o que falta é o termo de nível de acesso, que é o que o agregador lê. Corrigir um campo levaria a conformidade total de 2 fontes para 1.237.",
+    "veredito": "supported",
+    "verdict_label": "confirmada"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H10",
+    "statement": "O texto livre em dc:type acompanha o termo eu-repo em vez de substituí-lo",
+    "unidade": "registro",
+    "variavel_dependente": "o registro traz também um termo info:eu-repo",
+    "variavel_independente": "o registro traz dc:type em texto livre",
+    "confundidores": [
+      "plataforma: o OJS emite os dois por padrão"
+    ],
+    "inclusao": "registros com ao menos um dc:type",
+    "exclusao": "registros excluídos",
+    "estatistica": {
+      "teste": "P(tem eu-repo | tem texto livre), IC por bootstrap",
+      "n": 97484,
+      "efeito_nome": "proporção",
+      "efeito": 0.7235,
+      "ic95": [
+        0.7207,
+        0.7266
+      ]
+    },
+    "ic95": [
+      0.7207,
+      0.7266
+    ],
+    "distribuicao": {
+      "com ambos": 70531,
+      "só texto livre": 26953,
+      "só eu-repo": 196624
+    },
+    "sensibilidade": [],
+    "identificacao": "descritiva, e corrige um número que este experimento publicou antes. Contar 'dc:type fora do vocabulário' como defeito superestimava o problema em três vezes: em 72,4% das vezes em que o texto livre aparece, o termo correto está ao lado — é o OJS emitindo os dois. O defeito real são os registros com **apenas** texto livre.",
+    "veredito": "supported",
+    "verdict_label": "confirmada"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H11",
+    "statement": "Elementos fora do esquema concentram-se em poucas fontes e substituem os Dublin Core",
+    "unidade": "fonte",
+    "variavel_dependente": "média de elementos Dublin Core por registro",
+    "variavel_independente": "fração de registros com elemento fora do esquema",
+    "confundidores": [
+      "plataforma: as afetadas são todas UNKNOWN ou OTHER, isto é, software não-padrão"
+    ],
+    "inclusao": "fontes com ao menos um registro vivo na amostra",
+    "exclusao": "fontes cuja amostra é toda de registros excluídos",
+    "estatistica": {
+      "teste": "Spearman entre taxa fora do esquema e campos Dublin Core",
+      "n": 1573,
+      "efeito_nome": "rho de Spearman",
+      "efeito": -0.1283,
+      "p": 3.289714729741556e-07
+    },
+    "ic95": null,
+    "distribuicao": {
+      "fontes afetadas": 9,
+      "registros afetados": 1660,
+      "registros vivos na amostra": 296019
+    },
+    "medianas": {
+      "campos DC nas afetadas": 8.0,
+      "campos DC na base": 12.02
+    },
+    "sensibilidade": [],
+    "identificacao": "a concentração se confirma, a substituição só se vê dentro das afetadas. São **9 fontes**, e em todas elas 100% dos registros — 1.660 dos 296.019 vivos. A correlação na população inteira é fraca (rho = -0,13) justamente porque o fenômeno é raro demais para mover 1.573 fontes; dentro das nove, a mediana de campos Dublin Core cai a 8,0 contra 12,0 da base, e só duas descem abaixo de 5. A substituição existe mas é parcial: elas usam elementos próprios **no lugar** de parte dos Dublin Core. Nove correções resolvem os dois números.",
+    "veredito": "supported_small",
+    "verdict_label": "concentrada, correlação fraca"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H12",
+    "statement": "A taxa de registros excluídos na primeira página é bimodal, não contínua",
+    "unidade": "fonte",
+    "variavel_dependente": "fração da amostra marcada como excluída",
+    "variavel_independente": "nenhuma — é a forma da distribuição que está em teste",
+    "confundidores": [
+      "a ordem em que cada repositório serve os registros, que o protocolo não fixa"
+    ],
+    "inclusao": "fontes com amostra de registros",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "forma da distribuição por faixas",
+      "n": 1573,
+      "efeito_nome": "fontes com amostra 100% excluída",
+      "efeito": 0
+    },
+    "ic95": null,
+    "distribuicao": {
+      "0%": 896,
+      "1 a 25%": 592,
+      "26 a 50%": 65,
+      "51 a 99%": 20,
+      "100%": 0
+    },
+    "sensibilidade": [],
+    "identificacao": "descritiva, e a forma é o achado: 1.004 fontes em zero, um vale de 37 fontes na faixa do meio, e um pico de 48 em exatamente 100%. Processo contínuo não produz pico no extremo. Para o experimento é ruído de amostragem — essas fontes ficam sem medida de completude, e são as mesmas 48 com fields_mean nulo. Para a operação é outra coisa: a primeira página do ListRecords delas não traz documento nenhum, em fontes com acervo de 101 a 1.124 registros.",
+    "veredito": "supported",
+    "verdict_label": "confirmada"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H13",
+    "statement": "A grafia do idioma é configuração da fonte, constante dentro dela",
+    "unidade": "fonte",
+    "variavel_dependente": "número de grafias distintas de dc:language na amostra",
+    "variavel_independente": "nenhuma — é a constância interna que está em teste",
+    "confundidores": [
+      "tamanho da amostra: fonte com mais registros tem mais chance de mostrar variação"
+    ],
+    "inclusao": "fontes com ao menos um dc:language",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "proporção de fontes com uma grafia só, IC por bootstrap",
+      "n": 1567,
+      "efeito_nome": "proporção",
+      "efeito": 0.4359,
+      "ic95": [
+        0.4129,
+        0.4595
+      ]
+    },
+    "ic95": [
+      0.4129,
+      0.4595
+    ],
+    "medianas": {
+      "grafias por fonte (média)": 2.07
+    },
+    "distribuicao": {
+      "uma grafia só": 683,
+      "três ou mais": 449,
+      "fontes": 1567,
+      "valor por": 225897,
+      "valor pt_BR": 44895,
+      "valor eng": 14085,
+      "valor en": 4730
+    },
+    "sensibilidade": [],
+    "identificacao": "**refutada**, e a refutação muda o que fazer. A hipótese era que cada fonte escolhe uma grafia e a repete, o que tornaria a padronização uma correção por fonte. Não é: só 43,6% usam uma grafia só, a média é 2,07 e **449 fontes usam três ou mais**. A variação está dentro da fonte, registro a registro — provavelmente escolha de quem depositou cada artigo. Padronizar exige regra de normalização no agregador, não conserto na origem.",
+    "veredito": "refuted",
+    "verdict_label": "refutada"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H14",
+    "statement": "Existe duplicação de registro entre fontes distintas",
+    "unidade": "valor de dc:identifier",
+    "variavel_dependente": "o identificador aparece em mais de uma fonte",
+    "variavel_independente": "nenhuma",
+    "confundidores": [
+      "a amostra é de uma página por fonte: dois acervos podem se sobrepor fora dela"
+    ],
+    "inclusao": "os 0 valores de dc:identifier de 1573 fontes",
+    "exclusao": "registros excluídos",
+    "estatistica": {
+      "teste": "contagem exata de identificadores compartilhados",
+      "n": 0,
+      "efeito_nome": "identificadores em mais de uma fonte",
+      "efeito": 0
+    },
+    "ic95": null,
+    "distribuicao": {
+      "compartilhados": 0,
+      "valores examinados": 0,
+      "fontes": 1573
+    },
+    "sensibilidade": [],
+    "identificacao": "**resultado nulo, e limpo**: zero. Combinado com a correção dos títulos genéricos — 'Editorial' aparece em 578 revistas e não é duplicata —, isso fecha a dimensão duplicação: não há o mesmo documento entrando duas vezes por fontes diferentes. A ressalva é de alcance, não de método: a amostra é de uma página por fonte, então sobreposição fora dela não seria vista. O que se afirma é que ela não é comum.",
+    "veredito": "null_result",
+    "verdict_label": "resultado nulo"
+  },
+  {
+    "populacao": "1.573 fontes que responderam ao ListRecords; 296.019 registros vivos em oai_dc (318.953 cabeçalhos recebidos, dos quais 22.934 de registros excluídos)",
+    "cobertura_temporal": "coletas de 2017-07-19 a 2026-09-20; cadastro em 2026-09-20",
+    "id": "H15",
+    "statement": "O identificador OAI é globalmente único, como o protocolo exige",
+    "unidade": "valor de oai_identifier",
+    "variavel_dependente": "o identificador aparece em mais de uma fonte",
+    "variavel_independente": "nenhuma — é a unicidade que está em teste",
+    "confundidores": [
+      "nenhum: unicidade é propriedade verificável, não estimada"
+    ],
+    "inclusao": "os 318953 cabeçalhos recebidos, vivos e excluídos",
+    "exclusao": "nenhuma",
+    "estatistica": {
+      "teste": "contagem exata de identificadores compartilhados",
+      "n": 318953,
+      "efeito_nome": "identificadores em mais de uma fonte",
+      "efeito": 14122,
+      "maior_colisao": 60
+    },
+    "ic95": null,
+    "distribuicao": {
+      "identificadores colidindo": 14122,
+      "pares fonte-identificador afetados": 69628,
+      "distintos": 262542,
+      "registros": 318953,
+      "colisões em OJS": 68399,
+      "colisões em DSPACE": 1449,
+      "colisões de dc:identifier": 0
+    },
+    "sensibilidade": [],
+    "identificacao": "**refutada, e é o achado mais sério da amostra.** O OAI-PMH exige identificador globalmente único — é a razão de existir do esquema oai:. Aqui 14.122 identificadores aparecem em mais de uma fonte, afetando 69.628 pares fonte-registro, e oai:ojs.pkp.sfu.ca:article/24 aparece em **60 periódicos diferentes**. A causa é visível no valor: são instalações de OJS que nunca trocaram o namespace padrão da PKP, e 68.399 das colisões estão em OJS. O que esta base **não** consegue dizer é se há perda: isso depende de o agregador chavear registro por identificador OAI, o que exigiria testar o Harvester. Se chavear, registros de revistas distintas se sobrescrevem. Contraste com H14: dc:identifier, que carrega a URL, tem zero colisões — o identificador que o protocolo exige que seja único é justamente o que não é.",
+    "veredito": "refuted",
+    "verdict_label": "refutada"
+  }
+]

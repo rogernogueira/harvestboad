@@ -1,0 +1,4917 @@
+{
+  "rodadoEm": "2026-09-20T11:02:11+00:00",
+  "fonte": "re3data",
+  "itensPorRepositorio": 2,
+  "timeout": 5.0,
+  "resumo": {
+    "repositorios": 100,
+    "repositoriosQueListaram": 59,
+    "registros": 118,
+    "paginaDoItem": {
+      "nova": {
+        "ok": 83,
+        "sem-link": 28,
+        "bloqueado": 5,
+        "rede": 2
+      },
+      "antiga": {
+        "http-4xx": 3,
+        "ok": 79,
+        "sem-link": 22,
+        "bloqueado": 12,
+        "rede": 2
+      }
+    },
+    "oaiPmh": {
+      "ok": 114,
+      "bloqueado": 2,
+      "rede": 1,
+      "http-4xx": 1
+    },
+    "errosDeListagem": {
+      "xml-invalido": 13,
+      "rede": 28
+    },
+    "ganhos": 4,
+    "perdas": 0,
+    "enganosos": {
+      "nova": 0,
+      "antiga": 3
+    }
+  },
+  "repositorios": [
+    {
+      "id": "esmat",
+      "nome": "Revista ESMAT (TJTO)",
+      "baseUrl": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai",
+      "plataforma": "ojs",
+      "metadataPrefix": "oai_dc",
+      "nota": "caso de origem: o DOI do dc:identifier nunca foi registrado (404)",
+      "registros": [
+        {
+          "identifier": "oai:revista.esmat.tjto.jus.br:article/2",
+          "candidates": [
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/2",
+            "https://doi.org/10.34060/reesmat.v6i7.2",
+            "https://doi.org/10.34060/reesmat.v6i7",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/2/1",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/2/2"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/2",
+              "source": "record:ojs",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/2"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34060/reesmat.v6i7.2",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "http-4xx",
+                "status": 404,
+                "final": "https://esmat.tjto.jus.br/publicacoes/index.php/revista_esmat/article/view/2"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F2&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F2&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:revista.esmat.tjto.jus.br:article/3",
+          "candidates": [
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/3",
+            "https://doi.org/10.34060/reesmat.v6i7.3",
+            "https://doi.org/10.34060/reesmat.v6i7",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/3/3",
+            "https://revista.esmat.tjto.jus.br/revista_esmat/article/view/3/4"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/3",
+              "source": "record:ojs",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/article/view/3"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34060/reesmat.v6i7.3",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "http-4xx",
+                "status": 404,
+                "final": "https://esmat.tjto.jus.br/publicacoes/index.php/revista_esmat/article/view/3"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F3&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://revista.esmat.tjto.jus.br/revista_esmat/pt_BR/oai?verb=GetRecord&identifier=oai%3Arevista.esmat.tjto.jus.br%3Aarticle%2F3&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013550",
+      "nome": "Riga Stradins University  dataverse",
+      "baseUrl": "https://dataverse.rsu.lv/oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.25143/FK2/0MQSI9",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.25143/FK2/0MQSI9",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.rsu.lv/dataset.xhtml?persistentId=doi:10.25143/FK2/0MQSI9"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.25143/FK2/0MQSI9",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.rsu.lv/dataset.xhtml?persistentId=doi:10.25143/FK2/0MQSI9"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.rsu.lv/oai?verb=GetRecord&identifier=doi%3A10.25143%2FFK2%2F0MQSI9&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.rsu.lv/oai?verb=GetRecord&identifier=doi%3A10.25143%2FFK2%2F0MQSI9&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.25143/FK2/HNMLHH",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.25143/FK2/HNMLHH",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.rsu.lv/dataset.xhtml?persistentId=doi%3A10.25143%2FFK2%2FHNMLHH"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.25143/FK2/HNMLHH",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.rsu.lv/dataset.xhtml?persistentId=doi%3A10.25143%2FFK2%2FHNMLHH"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.rsu.lv/oai?verb=GetRecord&identifier=doi%3A10.25143%2FFK2%2FHNMLHH&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.rsu.lv/oai?verb=GetRecord&identifier=doi%3A10.25143%2FFK2%2FHNMLHH&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100010057",
+      "nome": "eCrystals",
+      "baseUrl": "http://ecrystals.chem.soton.ac.uk/cgi/oai2",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:ecrystals.chem.soton.ac.uk:65",
+          "candidates": [
+            "http://ecrystals.chem.soton.ac.uk/65/",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831.HKL",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831.CIF",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831.RES",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831_ellipsoid.gif",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831.cml",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831_xl.lst",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831.mol",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01SRC831.htm",
+            "http://ecrystals.chem.soton.ac.uk/65/1/01src831_checkcif.htm"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "http://ecrystals.chem.soton.ac.uk/65/",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "http://ecrystals.chem.soton.ac.uk/65/"
+              }
+            },
+            "antiga": {
+              "link": "http://ecrystals.chem.soton.ac.uk/65/",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "http://ecrystals.chem.soton.ac.uk/65/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://ecrystals.chem.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aecrystals.chem.soton.ac.uk%3A65&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "http://ecrystals.chem.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aecrystals.chem.soton.ac.uk%3A65&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:ecrystals.chem.soton.ac.uk:19",
+          "candidates": [
+            "http://ecrystals.chem.soton.ac.uk/19/",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02sot029.mol",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.htm",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.LST",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.doc",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.CIF",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029_ellipsoid.gif",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.RES",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.PRP",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.HKL",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029_checkcif.htm",
+            "http://ecrystals.chem.soton.ac.uk/19/1/02SOT029.cml"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "http://ecrystals.chem.soton.ac.uk/19/",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "http://ecrystals.chem.soton.ac.uk/19/"
+              }
+            },
+            "antiga": {
+              "link": "http://ecrystals.chem.soton.ac.uk/19/",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "http://ecrystals.chem.soton.ac.uk/19/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://ecrystals.chem.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aecrystals.chem.soton.ac.uk%3A19&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "http://ecrystals.chem.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aecrystals.chem.soton.ac.uk%3A19&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013030",
+      "nome": "RiuNet",
+      "baseUrl": "https://riunet.upv.es/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100012054",
+      "nome": "CLARIN service center of the Zentrum Sprache at the BBAW",
+      "baseUrl": "https://clarin.bbaw.de:8088/oaiprovider",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "WebLichtWebServices:1",
+          "candidates": [
+            "https://hdl.handle.net/21.11120/0000-0008-3175-D"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://clarin.bbaw.de:8088/fedora/objects/WebLichtWebServices:1/datastreams/cmdi/content?asOfDateTime=2021-02-02T13:51:44.177Z",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.bbaw.de:8088/fedora/objects/WebLichtWebServices:1/datastreams/cmdi/content?asOfDateTime=2021-02-02T13:51:44.177Z"
+              }
+            },
+            "antiga": {
+              "link": "https://hdl.handle.net/21.11120/0000-0008-3175-D",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.bbaw.de:8088/fedora/objects/WebLichtWebServices:1/datastreams/cmdi/content?asOfDateTime=2021-02-02T13:51:44.177Z"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://clarin.bbaw.de:8088/oaiprovider?verb=GetRecord&identifier=WebLichtWebServices%3A1&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://clarin.bbaw.de:8088/oaiprovider?verb=GetRecord&identifier=WebLichtWebServices%3A1&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "WebLichtWebServices:10",
+          "candidates": [
+            "https://hdl.handle.net/21.11120/0000-0008-3188-7"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://clarin.bbaw.de:8088/fedora/objects/WebLichtWebServices:10/datastreams/cmdi/content?asOfDateTime=2021-02-02T14:49:34.352Z",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.bbaw.de:8088/fedora/objects/WebLichtWebServices:10/datastreams/cmdi/content?asOfDateTime=2021-02-02T14:49:34.352Z"
+              }
+            },
+            "antiga": {
+              "link": "https://hdl.handle.net/21.11120/0000-0008-3188-7",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.bbaw.de:8088/fedora/objects/WebLichtWebServices:10/datastreams/cmdi/content?asOfDateTime=2021-02-02T14:49:34.352Z"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://clarin.bbaw.de:8088/oaiprovider?verb=GetRecord&identifier=WebLichtWebServices%3A10&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://clarin.bbaw.de:8088/oaiprovider?verb=GetRecord&identifier=WebLichtWebServices%3A10&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014425",
+      "nome": "PolyU Research Data Repository",
+      "baseUrl": "https://researchdata.lib.polyu.edu.hk/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.60933/PRDR/0DLFDG",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.60933/PRDR/0DLFDG",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.lib.polyu.edu.hk/dataset.xhtml?persistentId=doi:10.60933/PRDR/0DLFDG"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.60933/PRDR/0DLFDG",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.lib.polyu.edu.hk/dataset.xhtml?persistentId=doi:10.60933/PRDR/0DLFDG"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchdata.lib.polyu.edu.hk/oai?verb=GetRecord&identifier=doi%3A10.60933%2FPRDR%2F0DLFDG&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.lib.polyu.edu.hk/oai?verb=GetRecord&identifier=doi%3A10.60933%2FPRDR%2F0DLFDG&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.60933/PRDR/4YJ1ZT",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.60933/PRDR/4YJ1ZT",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.lib.polyu.edu.hk/dataset.xhtml?persistentId=doi:10.60933/PRDR/4YJ1ZT"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.60933/PRDR/4YJ1ZT",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.lib.polyu.edu.hk/dataset.xhtml?persistentId=doi:10.60933/PRDR/4YJ1ZT"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchdata.lib.polyu.edu.hk/oai?verb=GetRecord&identifier=doi%3A10.60933%2FPRDR%2F4YJ1ZT&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.lib.polyu.edu.hk/oai?verb=GetRecord&identifier=doi%3A10.60933%2FPRDR%2F4YJ1ZT&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100010147",
+      "nome": "Repository SAW Leipzig",
+      "baseUrl": "https://repo.data.saw-leipzig.de/oai-pmh",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "1102200000007FE45E",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repo.data.saw-leipzig.de/oai-pmh?verb=GetRecord&identifier=1102200000007FE45E&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repo.data.saw-leipzig.de/oai-pmh?verb=GetRecord&identifier=1102200000007FE45E&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "awv-1102200000008007EB",
+          "candidates": [
+            "https://hdl.handle.net/11022/0000-0008-007E-B"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repo.data.saw-leipzig.de/resources/de?identifier=awv/1102200000008007EB",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repo.data.saw-leipzig.de/resources/de?identifier=awv/1102200000008007EB"
+              }
+            },
+            "antiga": {
+              "link": "https://hdl.handle.net/11022/0000-0008-007E-B",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repo.data.saw-leipzig.de/resources/de?identifier=awv/1102200000008007EB"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repo.data.saw-leipzig.de/oai-pmh?verb=GetRecord&identifier=awv-1102200000008007EB&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repo.data.saw-leipzig.de/oai-pmh?verb=GetRecord&identifier=awv-1102200000008007EB&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014568",
+      "nome": "Repositorio TECdatos",
+      "baseUrl": "https://dataverse.tec.ac.cr/oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.18845/RDA/0AEKBH",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.18845/RDA/0AEKBH",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.tec.ac.cr/dataset.xhtml?persistentId=doi:10.18845/RDA/0AEKBH"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.18845/RDA/0AEKBH",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.tec.ac.cr/dataset.xhtml?persistentId=doi:10.18845/RDA/0AEKBH"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.tec.ac.cr/oai?verb=GetRecord&identifier=doi%3A10.18845%2FRDA%2F0AEKBH&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.tec.ac.cr/oai?verb=GetRecord&identifier=doi%3A10.18845%2FRDA%2F0AEKBH&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.18845/RDA/2UTRKT",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.18845/RDA/2UTRKT",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.tec.ac.cr/dataset.xhtml?persistentId=doi:10.18845/RDA/2UTRKT"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.18845/RDA/2UTRKT",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.tec.ac.cr/dataset.xhtml?persistentId=doi:10.18845/RDA/2UTRKT"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.tec.ac.cr/oai?verb=GetRecord&identifier=doi%3A10.18845%2FRDA%2F2UTRKT&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.tec.ac.cr/oai?verb=GetRecord&identifier=doi%3A10.18845%2FRDA%2F2UTRKT&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011303",
+      "nome": "Population Services International Dataverse",
+      "baseUrl": "https://dataverse.harvard.edu/oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.7910/DVN/00234",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.7910/DVN/00234",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/00234"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.7910/DVN/00234",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/00234"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.harvard.edu/oai?verb=GetRecord&identifier=doi%3A10.7910%2FDVN%2F00234&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.harvard.edu/oai?verb=GetRecord&identifier=doi%3A10.7910%2FDVN%2F00234&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.7910/DVN/002RTI",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.7910/DVN/002RTI",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/002RTI"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.7910/DVN/002RTI",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/002RTI"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.harvard.edu/oai?verb=GetRecord&identifier=doi%3A10.7910%2FDVN%2F002RTI&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.harvard.edu/oai?verb=GetRecord&identifier=doi%3A10.7910%2FDVN%2F002RTI&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012496",
+      "nome": "GESIS Data Archive",
+      "baseUrl": "https://dbkapps.gesis.org/dbkoai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:dbk.gesis.org:COL/ZA10000",
+          "candidates": [
+            "https://doi.org/10.4232/5.ZA10000.2.0.0"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-reachable-url"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.4232/5.ZA10000.2.0.0",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://search.gesis.org/research_data/ZA10000?doi=10.4232/5.ZA10000.2.0.0"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dbkapps.gesis.org/dbkoai?verb=GetRecord&identifier=oai%3Adbk.gesis.org%3ACOL%2FZA10000&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dbkapps.gesis.org/dbkoai/?verb=GetRecord&identifier=oai%3Adbk.gesis.org%3ACOL%2FZA10000&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:dbk.gesis.org:COL/ZA10001",
+          "candidates": [
+            "https://doi.org/10.4232/5.ZA10001.1.0.0"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-reachable-url"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.4232/5.ZA10001.1.0.0",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://search.gesis.org/research_data/ZA10001?doi=10.4232/5.ZA10001.1.0.0"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dbkapps.gesis.org/dbkoai?verb=GetRecord&identifier=oai%3Adbk.gesis.org%3ACOL%2FZA10001&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dbkapps.gesis.org/dbkoai/?verb=GetRecord&identifier=oai%3Adbk.gesis.org%3ACOL%2FZA10001&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011077",
+      "nome": "Inspire-HEP",
+      "baseUrl": "https://inspirehep.net/api/oai2d",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100011218",
+      "nome": "LSE Research Online",
+      "baseUrl": "https://researchonline.lse.ac.uk/cgi/oai2",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:researchonline.lse.ac.uk:3",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchonline.lse.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchonline.lse.ac.uk%3A3&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchonline.lse.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchonline.lse.ac.uk%3A3&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:researchonline.lse.ac.uk:4",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchonline.lse.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchonline.lse.ac.uk%3A4&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchonline.lse.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchonline.lse.ac.uk%3A4&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013900",
+      "nome": "UQAM - Dataverse",
+      "baseUrl": "https://borealisdata.ca/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.14285/10219/2301",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.14285/10219/2301",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.14285/10219/2301"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.14285/10219/2301",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.14285/10219/2301"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://borealisdata.ca/oai?verb=GetRecord&identifier=doi%3A10.14285%2F10219%2F2301&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://borealisdata.ca/oai?verb=GetRecord&identifier=doi%3A10.14285%2F10219%2F2301&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.23685/1CTXCD",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.23685/1CTXCD",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.23685/1CTXCD"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.23685/1CTXCD",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://borealisdata.ca/dataset.xhtml?persistentId=doi:10.23685/1CTXCD"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://borealisdata.ca/oai?verb=GetRecord&identifier=doi%3A10.23685%2F1CTXCD&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://borealisdata.ca/oai?verb=GetRecord&identifier=doi%3A10.23685%2F1CTXCD&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014886",
+      "nome": "Swinburne Figshare",
+      "baseUrl": "https://api.figshare.com/v2/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:figshare.com:article/33944887",
+          "candidates": [
+            "https://doi.org/10.6084/m9.figshare.33944887.v1",
+            "https://figshare.com/articles/dataset/Adaptive_marketing_capability_Innovation_capability_and_firm_performance/33944887"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://figshare.com/articles/dataset/Adaptive_marketing_capability_Innovation_capability_and_firm_performance/33944887/1",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://figshare.com/articles/dataset/Adaptive_marketing_capability_Innovation_capability_and_firm_performance/33944887/1"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.6084/m9.figshare.33944887.v1",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://figshare.com/articles/dataset/Adaptive_marketing_capability_Innovation_capability_and_firm_performance/33944887/1"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://api.figshare.com/v2/oai?verb=GetRecord&identifier=oai%3Afigshare.com%3Aarticle%2F33944887&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://api.figshare.com/v2/oai?verb=GetRecord&identifier=oai%3Afigshare.com%3Aarticle%2F33944887&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:figshare.com:article/33944374",
+          "candidates": [
+            "https://doi.org/10.6084/m9.figshare.33944374.v4",
+            "https://figshare.com/articles/dataset/_b_Spatiotemporal_dataset_b_/33944374"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://figshare.com/articles/dataset/_b_Spatiotemporal_dataset_b_/33944374/4",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://figshare.com/articles/dataset/_b_Spatiotemporal_dataset_b_/33944374/4"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.6084/m9.figshare.33944374.v4",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 202,
+                "final": "https://figshare.com/articles/dataset/_b_Spatiotemporal_dataset_b_/33944374/4"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://api.figshare.com/v2/oai?verb=GetRecord&identifier=oai%3Afigshare.com%3Aarticle%2F33944374&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://api.figshare.com/v2/oai?verb=GetRecord&identifier=oai%3Afigshare.com%3Aarticle%2F33944374&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013453",
+      "nome": "CLARIN-IS",
+      "baseUrl": "https://centres.clarin.eu/oai_pmh",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100013337",
+      "nome": "Paris Astronomical Data Centre",
+      "baseUrl": "http://voparis-registry.obspm.fr/vo/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "ivo://vopdc.obspm/lte",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://voparis-registry.obspm.fr/vo/oai?verb=GetRecord&identifier=ivo%3A%2F%2Fvopdc.obspm%2Flte&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "http://voparis-registry.obspm.fr/vo/oai?verb=GetRecord&identifier=ivo%3A%2F%2Fvopdc.obspm%2Flte&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "ivo://vopdc.obspm/lte/miriade",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://voparis-registry.obspm.fr/vo/oai?verb=GetRecord&identifier=ivo%3A%2F%2Fvopdc.obspm%2Flte%2Fmiriade&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "http://voparis-registry.obspm.fr/vo/oai?verb=GetRecord&identifier=ivo%3A%2F%2Fvopdc.obspm%2Flte%2Fmiriade&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012718",
+      "nome": "UvaDOC - Fonda Antiguo",
+      "baseUrl": "https://wiki.lyrasis.org/display/DSDOC5x/OAI",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100014273",
+      "nome": "Deposita Dados",
+      "baseUrl": "https://depositadados.ibict.br/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.48472/deposita/0BYR5E",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.48472/deposita/0BYR5E",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://depositadados.ibict.br/dataset.xhtml?persistentId=doi:10.48472/deposita/0BYR5E"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48472/deposita/0BYR5E",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://depositadados.ibict.br/dataset.xhtml?persistentId=doi:10.48472/deposita/0BYR5E"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://depositadados.ibict.br/oai?verb=GetRecord&identifier=doi%3A10.48472%2Fdeposita%2F0BYR5E&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://depositadados.ibict.br/oai?verb=GetRecord&identifier=doi%3A10.48472%2Fdeposita%2F0BYR5E&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.48472/deposita/1OVIZX",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.48472/deposita/1OVIZX",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://depositadados.ibict.br/dataset.xhtml?persistentId=doi:10.48472/deposita/1OVIZX"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48472/deposita/1OVIZX",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://depositadados.ibict.br/dataset.xhtml?persistentId=doi:10.48472/deposita/1OVIZX"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://depositadados.ibict.br/oai?verb=GetRecord&identifier=doi%3A10.48472%2Fdeposita%2F1OVIZX&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://depositadados.ibict.br/oai?verb=GetRecord&identifier=doi%3A10.48472%2Fdeposita%2F1OVIZX&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014671",
+      "nome": "ScholarlyCommons",
+      "baseUrl": "https://repository.upenn.edu/server/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:repository.upenn.edu:20.500.14332/28879",
+          "candidates": [
+            "https://repository.upenn.edu/handle/20.500.14332/28879"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repository.upenn.edu/handle/20.500.14332/28879",
+              "source": "record:dspace",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.upenn.edu/handle/20.500.14332/28879"
+              }
+            },
+            "antiga": {
+              "link": "https://repository.upenn.edu/handle/20.500.14332/28879",
+              "source": "record:dspace",
+              "regra": "dspace",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.upenn.edu/handle/20.500.14332/28879"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repository.upenn.edu/server/oai/request?verb=GetRecord&identifier=oai%3Arepository.upenn.edu%3A20.500.14332%2F28879&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.upenn.edu/server/oai/request?verb=GetRecord&identifier=oai%3Arepository.upenn.edu%3A20.500.14332%2F28879&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:repository.upenn.edu:20.500.14332/44526",
+          "candidates": [
+            "https://repository.upenn.edu/handle/20.500.14332/44526"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repository.upenn.edu/handle/20.500.14332/44526",
+              "source": "record:dspace",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.upenn.edu/handle/20.500.14332/44526"
+              }
+            },
+            "antiga": {
+              "link": "https://repository.upenn.edu/handle/20.500.14332/44526",
+              "source": "record:dspace",
+              "regra": "dspace",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.upenn.edu/handle/20.500.14332/44526"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repository.upenn.edu/server/oai/request?verb=GetRecord&identifier=oai%3Arepository.upenn.edu%3A20.500.14332%2F44526&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.upenn.edu/server/oai/request?verb=GetRecord&identifier=oai%3Arepository.upenn.edu%3A20.500.14332%2F44526&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013155",
+      "nome": "ROSA P",
+      "baseUrl": "https://rosap.ntl.bts.gov/fedora/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:dot.stacks:dot:88076",
+          "candidates": [
+            "https://rosap.ntl.bts.gov/view/dot/88076",
+            "https://doi.org/10.5281/zenodo.17477702"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-reachable-url"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.5281/zenodo.17477702",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://zenodo.org/doi/10.5281/zenodo.17477702"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://rosap.ntl.bts.gov/fedora/oai?verb=GetRecord&identifier=oai%3Adot.stacks%3Adot%3A88076&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "bloqueado",
+              "status": 403,
+              "final": "https://rosap.ntl.bts.gov/fedora/oai?verb=GetRecord&identifier=oai%3Adot.stacks%3Adot%3A88076&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:dot.stacks:dot:93401",
+          "candidates": [
+            "https://rosap.ntl.bts.gov/view/dot/93401"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-reachable-url"
+              }
+            },
+            "antiga": {
+              "link": "https://rosap.ntl.bts.gov/view/dot/93401",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://rosap.ntl.bts.gov/view/dot/93401"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://rosap.ntl.bts.gov/fedora/oai?verb=GetRecord&identifier=oai%3Adot.stacks%3Adot%3A93401&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "bloqueado",
+              "status": 403,
+              "final": "https://rosap.ntl.bts.gov/fedora/oai?verb=GetRecord&identifier=oai%3Adot.stacks%3Adot%3A93401&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013134",
+      "nome": "DataSuds",
+      "baseUrl": "https://dataverse.ird.fr/oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.13140/RG.2.2.20681.39520",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.13140/RG.2.2.20681.39520",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://www.researchgate.net/doi/10.13140/RG.2.2.20681.39520"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.13140/RG.2.2.20681.39520",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://www.researchgate.net/doi/10.13140/RG.2.2.20681.39520"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.ird.fr/oai?verb=GetRecord&identifier=doi%3A10.13140%2FRG.2.2.20681.39520&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.ird.fr/oai?verb=GetRecord&identifier=doi%3A10.13140%2FRG.2.2.20681.39520&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.23708/02POK6",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.23708/02POK6",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.ird.fr/dataset.xhtml?persistentId=doi:10.23708/02POK6"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.23708/02POK6",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.ird.fr/dataset.xhtml?persistentId=doi:10.23708/02POK6"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.ird.fr/oai?verb=GetRecord&identifier=doi%3A10.23708%2F02POK6&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.ird.fr/oai?verb=GetRecord&identifier=doi%3A10.23708%2F02POK6&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012955",
+      "nome": "Research Data Unipd",
+      "baseUrl": "https://researchdata.cab.unipd.it/cgi/oai2",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:researchdata.cab.unipd.it:41",
+          "candidates": [
+            "https://researchdata.cab.unipd.it/41/",
+            "https://researchdata.cab.unipd.it/41/1/TFF_v4.1.zip",
+            "https://doi.org/10.25430/researchdata.cab.unipd.it.00000041"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://researchdata.cab.unipd.it/41/",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.cab.unipd.it/41/"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.25430/researchdata.cab.unipd.it.00000041",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.cab.unipd.it/41/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchdata.cab.unipd.it/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.cab.unipd.it%3A41&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.cab.unipd.it/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.cab.unipd.it%3A41&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:researchdata.cab.unipd.it:61",
+          "candidates": [
+            "https://researchdata.cab.unipd.it/61/",
+            "https://researchdata.cab.unipd.it/61/1/SUpplemental%20Data_PTHPaper_2019_Jan16.docx",
+            "https://doi.org/10.25430/researchdata.cab.unipd.it.00000061"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://researchdata.cab.unipd.it/61/",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.cab.unipd.it/61/"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.25430/researchdata.cab.unipd.it.00000061",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.cab.unipd.it/61/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchdata.cab.unipd.it/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.cab.unipd.it%3A61&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.cab.unipd.it/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.cab.unipd.it%3A61&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013456",
+      "nome": "Open Forest Data",
+      "baseUrl": "https://dataverse.openforestdata.pl/oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.48370/OFD/0008EH",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.48370/OFD/0008EH",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.openforestdata.pl/dataset.xhtml?persistentId=doi:10.48370/OFD/0008EH"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48370/OFD/0008EH",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.openforestdata.pl/dataset.xhtml?persistentId=doi:10.48370/OFD/0008EH"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.openforestdata.pl/oai?verb=GetRecord&identifier=doi%3A10.48370%2FOFD%2F0008EH&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.openforestdata.pl/oai?verb=GetRecord&identifier=doi%3A10.48370%2FOFD%2F0008EH&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.48370/OFD/001Q42",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.48370/OFD/001Q42",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.openforestdata.pl/dataset.xhtml?persistentId=doi:10.48370/OFD/001Q42"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48370/OFD/001Q42",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.openforestdata.pl/dataset.xhtml?persistentId=doi:10.48370/OFD/001Q42"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.openforestdata.pl/oai?verb=GetRecord&identifier=doi%3A10.48370%2FOFD%2F001Q42&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.openforestdata.pl/oai?verb=GetRecord&identifier=doi%3A10.48370%2FOFD%2F001Q42&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013382",
+      "nome": "intellectum",
+      "baseUrl": "https://intellectum.unisabana.edu.co/oai/snaac",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100013939",
+      "nome": "Repositorio Institucional de la Universidad Distrital Francisco José de Caldas",
+      "baseUrl": "http://repository.udistrital.edu.co/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:repository.udistrital.edu.co:11349/70840",
+          "candidates": [
+            "http://herbario.udistrital.edu.co/herbario/sheet/030064",
+            "http://hdl.handle.net/11349/70840"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repository.udistrital.edu.co/items/0001694f-e0d2-4d05-a121-16fff4b172e9",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.udistrital.edu.co/items/0001694f-e0d2-4d05-a121-16fff4b172e9"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/11349/70840",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.udistrital.edu.co/items/0001694f-e0d2-4d05-a121-16fff4b172e9"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://repository.udistrital.edu.co/oai/request?verb=GetRecord&identifier=oai%3Arepository.udistrital.edu.co%3A11349%2F70840&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.udistrital.edu.co/oai/request?verb=GetRecord&identifier=oai%3Arepository.udistrital.edu.co%3A11349%2F70840&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:repository.udistrital.edu.co:11349/4263",
+          "candidates": [
+            "http://hdl.handle.net/11349/4263"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repository.udistrital.edu.co/items/0002113e-de44-4be7-aa99-d643845ef13b",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.udistrital.edu.co/items/0002113e-de44-4be7-aa99-d643845ef13b"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/11349/4263",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.udistrital.edu.co/items/0002113e-de44-4be7-aa99-d643845ef13b"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://repository.udistrital.edu.co/oai/request?verb=GetRecord&identifier=oai%3Arepository.udistrital.edu.co%3A11349%2F4263&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.udistrital.edu.co/oai/request?verb=GetRecord&identifier=oai%3Arepository.udistrital.edu.co%3A11349%2F4263&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013494",
+      "nome": "DATICE",
+      "baseUrl": "https://gagnis.hi.is/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.34881/0ERQOZ",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34881/0ERQOZ",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://gagnis.hi.is/dataset.xhtml?persistentId=doi:10.34881/0ERQOZ"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34881/0ERQOZ",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://gagnis.hi.is/dataset.xhtml?persistentId=doi:10.34881/0ERQOZ"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://gagnis.hi.is/oai?verb=GetRecord&identifier=doi%3A10.34881%2F0ERQOZ&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://gagnis.hi.is/oai?verb=GetRecord&identifier=doi%3A10.34881%2F0ERQOZ&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.34881/1.00001",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34881/1.00001",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://gagnis.hi.is/dataset.xhtml?persistentId=doi:10.34881/1.00001"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34881/1.00001",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://gagnis.hi.is/dataset.xhtml?persistentId=doi:10.34881/1.00001"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://gagnis.hi.is/oai?verb=GetRecord&identifier=doi%3A10.34881%2F1.00001&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://gagnis.hi.is/oai?verb=GetRecord&identifier=doi%3A10.34881%2F1.00001&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014884",
+      "nome": "TIB AV-Portal",
+      "baseUrl": "https://www.tib.eu/oai/public/repository/open",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100012571",
+      "nome": "CIARD Ring",
+      "baseUrl": "https://ring.ciard.info/zh-hans/books/example-get-all-datasets-available-through-oai-pmh",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:ConnectError"
+    },
+    {
+      "id": "r3d100012607",
+      "nome": "UPCommons - Research Data",
+      "baseUrl": "https://upcommons.upc.edu/page/about",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100012468",
+      "nome": "Digital Collections ULB Düsseldorf",
+      "baseUrl": "https://digital.ub.uni-duesseldorf.de/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:digital.ub.uni-duesseldorf.de:114510",
+          "candidates": [
+            "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2289",
+            "http://nbn-resolving.de/urn:nbn:de:hbz:061:1-2289",
+            "http://digital.ub.uni-duesseldorf.de/periodical/titleinfo/114510"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2289",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2289"
+              }
+            },
+            "antiga": {
+              "link": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2289",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2289"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://digital.ub.uni-duesseldorf.de/oai?verb=GetRecord&identifier=oai%3Adigital.ub.uni-duesseldorf.de%3A114510&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://digital.ulb.hhu.de/oai?verb=GetRecord&identifier=oai%3Adigital.ub.uni-duesseldorf.de%3A114510&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:digital.ub.uni-duesseldorf.de:114542",
+          "candidates": [
+            "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2290",
+            "http://nbn-resolving.de/urn:nbn:de:hbz:061:1-2290",
+            "http://digital.ub.uni-duesseldorf.de/ihd/periodical/titleinfo/114542"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2290",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2290"
+              }
+            },
+            "antiga": {
+              "link": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2290",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://nbn-resolving.org/urn:nbn:de:hbz:061:1-2290"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://digital.ub.uni-duesseldorf.de/oai?verb=GetRecord&identifier=oai%3Adigital.ub.uni-duesseldorf.de%3A114542&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://digital.ulb.hhu.de/oai?verb=GetRecord&identifier=oai%3Adigital.ub.uni-duesseldorf.de%3A114542&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013831",
+      "nome": "UNSWorks",
+      "baseUrl": "https://unsworks.unsw.edu.au/oai/provider",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:ConnectTimeout"
+    },
+    {
+      "id": "r3d100013537",
+      "nome": "UCREA",
+      "baseUrl": "http://repositorio.unican.es/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:repositorio.unican.es:10902/734",
+          "candidates": [
+            "http://hdl.handle.net/10902/734"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "http://hdl.handle.net/10902/734",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectError"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/10902/734",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectError"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://repositorio.unican.es/oai/request?verb=GetRecord&identifier=oai%3Arepositorio.unican.es%3A10902%2F734&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "http://repositorio.unican.es/oai/request?verb=GetRecord&identifier=oai%3Arepositorio.unican.es%3A10902%2F734&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:repositorio.unican.es:10902/5599",
+          "candidates": [
+            "http://hdl.handle.net/10902/5599"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "http://hdl.handle.net/10902/5599",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectError"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/10902/5599",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "rede",
+                "detalhe": "ConnectError"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://repositorio.unican.es/oai/request?verb=GetRecord&identifier=oai%3Arepositorio.unican.es%3A10902%2F5599&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "rede",
+              "detalhe": "RemoteProtocolError"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014129",
+      "nome": "edoc server der Berlin-Brandenburgischen Akademie der Wissenschaften",
+      "baseUrl": "https://edoc.bbaw.de/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100014686",
+      "nome": "University of Opole Knowledge Base",
+      "baseUrl": "https://repo.uni.opole.pl/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:ConnectError"
+    },
+    {
+      "id": "r3d100010699",
+      "nome": "ICRISAT Dataverse",
+      "baseUrl": "https://dataverse.icrisat.org/oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.21421/D2/01WXFG",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.21421/D2/01WXFG",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.icrisat.org/dataset.xhtml?persistentId=doi:10.21421/D2/01WXFG"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.21421/D2/01WXFG",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.icrisat.org/dataset.xhtml?persistentId=doi:10.21421/D2/01WXFG"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.icrisat.org/oai?verb=GetRecord&identifier=doi%3A10.21421%2FD2%2F01WXFG&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.icrisat.org/oai?verb=GetRecord&identifier=doi%3A10.21421%2FD2%2F01WXFG&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.21421/D2/07KHQ9",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.21421/D2/07KHQ9",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.icrisat.org/dataset.xhtml?persistentId=doi:10.21421/D2/07KHQ9"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.21421/D2/07KHQ9",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.icrisat.org/dataset.xhtml?persistentId=doi:10.21421/D2/07KHQ9"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.icrisat.org/oai?verb=GetRecord&identifier=doi%3A10.21421%2FD2%2F07KHQ9&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.icrisat.org/oai?verb=GetRecord&identifier=doi%3A10.21421%2FD2%2F07KHQ9&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013164",
+      "nome": "Geoscience Data Exchange",
+      "baseUrl": "https://gdex.ucar.edu/jsp/documentation/oai.html",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100013746",
+      "nome": "SWISSUbase",
+      "baseUrl": "https://www.swissubase.ch/oai-pmh/v1/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:swissubase.ch:41d06629-9e03-4631-933f-ff783a4d394c",
+          "candidates": [
+            "https://www.swissubase.ch/catalogue/studies/29/15043/datasets/9/26/contract/usage-license",
+            "https://doi.org/10.23662/FORS-DS-9-1"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://www.swissubase.ch/en/catalogue/studies/29/latest/datasets/9/26/overview",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.swissubase.ch/en/catalogue/studies/29/latest/datasets/9/26/overview"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.23662/FORS-DS-9-1",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.swissubase.ch/en/catalogue/studies/29/latest/datasets/9/26/overview"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://www.swissubase.ch/oai-pmh/v1/oai?verb=GetRecord&identifier=oai%3Aswissubase.ch%3A41d06629-9e03-4631-933f-ff783a4d394c&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://www.swissubase.ch/oai-pmh/v1/oai?verb=GetRecord&identifier=oai%3Aswissubase.ch%3A41d06629-9e03-4631-933f-ff783a4d394c&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:swissubase.ch:5c964f60-c646-49a9-a826-f0b257523395",
+          "candidates": [
+            "https://www.swissubase.ch/catalogue/studies/1343/14780/datasets/84/136/contract/usage-license",
+            "https://doi.org/10.23662/FORS-DS-84-1"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://www.swissubase.ch/en/catalogue/studies/1343/latest/datasets/84/136/overview",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.swissubase.ch/en/catalogue/studies/1343/latest/datasets/84/136/overview"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.23662/FORS-DS-84-1",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.swissubase.ch/en/catalogue/studies/1343/latest/datasets/84/136/overview"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://www.swissubase.ch/oai-pmh/v1/oai?verb=GetRecord&identifier=oai%3Aswissubase.ch%3A5c964f60-c646-49a9-a826-f0b257523395&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://www.swissubase.ch/oai-pmh/v1/oai?verb=GetRecord&identifier=oai%3Aswissubase.ch%3A5c964f60-c646-49a9-a826-f0b257523395&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014742",
+      "nome": "Dataverse Telkom University",
+      "baseUrl": "https://dataverse.telkomuniversity.ac.id//oai",
+      "plataforma": "dataverse",
+      "registros": [
+        {
+          "identifier": "doi:10.34820/FK2/06LQEJ",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34820/FK2/06LQEJ",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.telkomuniversity.ac.id/dataset.xhtml?persistentId=doi:10.34820/FK2/06LQEJ"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34820/FK2/06LQEJ",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.telkomuniversity.ac.id/dataset.xhtml?persistentId=doi:10.34820/FK2/06LQEJ"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.telkomuniversity.ac.id//oai?verb=GetRecord&identifier=doi%3A10.34820%2FFK2%2F06LQEJ&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.telkomuniversity.ac.id//oai?verb=GetRecord&identifier=doi%3A10.34820%2FFK2%2F06LQEJ&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.34820/FK2/08AFQK",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34820/FK2/08AFQK",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.telkomuniversity.ac.id/dataset.xhtml?persistentId=doi:10.34820/FK2/08AFQK"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34820/FK2/08AFQK",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dataverse.telkomuniversity.ac.id/dataset.xhtml?persistentId=doi:10.34820/FK2/08AFQK"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dataverse.telkomuniversity.ac.id//oai?verb=GetRecord&identifier=doi%3A10.34820%2FFK2%2F08AFQK&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dataverse.telkomuniversity.ac.id//oai?verb=GetRecord&identifier=doi%3A10.34820%2FFK2%2F08AFQK&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012611",
+      "nome": "Materials Cloud Archive",
+      "baseUrl": "https://archive.materialscloud.org/oai2d",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:materialscloud.org:1219",
+          "candidates": [
+            "https://doi.org/10.24435/materialscloud:1y-q7",
+            "https://arxiv.org/abs/2102.10141",
+            "https://archive.materialscloud.org/communities/mcarchive",
+            "https://doi.org/10.24435/materialscloud:zd-yk"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://archive.materialscloud.org/records/xmfrw-dr103",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://archive.materialscloud.org/records/xmfrw-dr103"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.24435/materialscloud:1y-q7",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://archive.materialscloud.org/records/xmfrw-dr103"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://archive.materialscloud.org/oai2d?verb=GetRecord&identifier=oai%3Amaterialscloud.org%3A1219&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://archive.materialscloud.org/oai2d?verb=GetRecord&identifier=oai%3Amaterialscloud.org%3A1219&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:materialscloud.org:630m0-p7q87",
+          "candidates": [
+            "https://doi.org/10.24435/materialscloud:ze-5h",
+            "https://doi.org/10.1016/j.apsusc.2023.157613",
+            "https://archive.materialscloud.org/communities/mcarchive",
+            "https://doi.org/10.24435/materialscloud:4t-7p"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://archive.materialscloud.org/records/630m0-p7q87",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://archive.materialscloud.org/records/630m0-p7q87"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.24435/materialscloud:ze-5h",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://archive.materialscloud.org/records/630m0-p7q87"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://archive.materialscloud.org/oai2d?verb=GetRecord&identifier=oai%3Amaterialscloud.org%3A630m0-p7q87&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://archive.materialscloud.org/oai2d?verb=GetRecord&identifier=oai%3Amaterialscloud.org%3A630m0-p7q87&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013046",
+      "nome": "PORTULAN CLARIN repository",
+      "baseUrl": "https://portulanclarin.net/repository/oaipmh",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100012866",
+      "nome": "CU Scholar",
+      "baseUrl": "https://scholar.colorado.edu/catalog/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:cuscholar:2f75r859h",
+          "candidates": [
+            "https://scholar.colorado.edu/concern/articles/2f75r859h",
+            "https://scholar.colorado.edu/downloads/8623hz248",
+            "http://dx.doi.org/10.1088/1748-9326/11/10/104002"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://validate.perfdrive.com/fb803c746e9148689b3984a31fccd902/?ssa=db9bb288-d2d7-4ac2-aed7-9a0b5ea7771a&ssb=51109289817&ssc=https%3A%2F%2Fiopscience.iop.org%2Farticle%2F10.1088%2F1748-9326%2F11%2F10%2F104002&ssi=dcc1f0e0-cnvj-43d5-aaed-e20468e03c58&ssk=botmanager_support@radware.com&ssm=20459441312989356109846387257076&ssn=a52b0d9f015ae3937dc2d325d5fc82200f1bfface642-6e7c-4ef3-aefcf3&sso=8e213167-dbc48a7eb78430454a4f73b11eee8ff2cbaa65551305f997&ssp=04647669191789923494178995565791774&ssq=09624010208910104216602089330109821706894&ssr=MjAwLjEzOS4yNy4yMzQ=&sst=Mozilla/5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36&ssu=&ssv=&ssw=&ssx=eyJyZCI6ImlvcC5vcmciLCJfX3V6bWYiOiI3ZjkwMDBmZmFjZTY0Mi02ZTdjLTRlZjMtYTE2Ny1kYmM0OGE3ZWI3ODQxLTE3ODk5MDIwODk2NDAwLTAwNTUxN2UyYWQ0ZmRmZDc1NjIxMCIsInV6bXgiOiI3ZmMwMDBlNDc2YWEzMy1hNmYxLTRjODUtOGIwNi0zMWZmMmM5MjExNjgxLTE3ODk5MDIwODk2NDAwLTAwNWRkZmFiMjViYTI1ZTczODIxMCJ9",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://validate.perfdrive.com/fb803c746e9148689b3984a31fccd902/?ssa=db9bb288-d2d7-4ac2-aed7-9a0b5ea7771a&ssb=51109289817&ssc=https%3A%2F%2Fiopscience.iop.org%2Farticle%2F10.1088%2F1748-9326%2F11%2F10%2F104002&ssi=dcc1f0e0-cnvj-43d5-aaed-e20468e03c58&ssk=botmanager_support@radware.com&ssm=20459441312989356109846387257076&ssn=a52b0d9f015ae3937dc2d325d5fc82200f1bfface642-6e7c-4ef3-aefcf3&sso=8e213167-dbc48a7eb78430454a4f73b11eee8ff2cbaa65551305f997&ssp=04647669191789923494178995565791774&ssq=09624010208910104216602089330109821706894&ssr=MjAwLjEzOS4yNy4yMzQ=&sst=Mozilla/5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36&ssu=&ssv=&ssw=&ssx=eyJyZCI6ImlvcC5vcmciLCJfX3V6bWYiOiI3ZjkwMDBmZmFjZTY0Mi02ZTdjLTRlZjMtYTE2Ny1kYmM0OGE3ZWI3ODQxLTE3ODk5MDIwODk2NDAwLTAwNTUxN2UyYWQ0ZmRmZDc1NjIxMCIsInV6bXgiOiI3ZmMwMDBlNDc2YWEzMy1hNmYxLTRjODUtOGIwNi0zMWZmMmM5MjExNjgxLTE3ODk5MDIwODk2NDAwLTAwNWRkZmFiMjViYTI1ZTczODIxMCJ9"
+              }
+            },
+            "antiga": {
+              "link": "http://dx.doi.org/10.1088/1748-9326/11/10/104002",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://validate.perfdrive.com/fb803c746e9148689b3984a31fccd902/?ssa=e4fd12de-dad0-4fd8-b6e5-0fdca70299e2&ssb=64376271680&ssc=https%3A%2F%2Fiopscience.iop.org%2Farticle%2F10.1088%2F1748-9326%2F11%2F10%2F104002&ssi=b7a595cd-cnvj-411b-b587-024540461c8c&ssk=botmanager_support@radware.com&ssm=97815349040094336107932859154119&ssn=1a287931a3ba1d01cb6efcdb3c100df4f0b2320d7e76-4b10-494b-a2049b&sso=a0f97991-8177785524f29c27a7737e946b940f5cea7fd006adfaba5b&ssp=60937724631789925692178997756816990&ssq=04189340209174343736702091978607742069581&ssr=MjAwLjEzOS4yNy4yMzQ=&sst=Mozilla/5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36&ssu=&ssv=&ssw=&ssx=eyJfX3V6bWYiOiI3ZjkwMDAzMjBkN2U3Ni00YjEwLTQ5NGItYTk5MS04MTc3Nzg1NTI0ZjIxLTE3ODk5MDIwOTE1ODkwLTAwNWQzOTlkNWUyNjBjNjRjZmMxMCIsInJkIjoiaW9wLm9yZyIsInV6bXgiOiI3ZmMwMDAwZjQ1MDUyOC02NjJiLTQwMWEtOWRkOS1hNjFhNzQyMGIyZjcxLTE3ODk5MDIwOTE1ODkwLTAwNTkwYTU4MmMxMDc5MWUxYzQxMCJ9"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://scholar.colorado.edu/catalog/oai?verb=GetRecord&identifier=oai%3Acuscholar%3A2f75r859h&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://scholar.colorado.edu/catalog/oai?verb=GetRecord&identifier=oai%3Acuscholar%3A2f75r859h&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:cuscholar:sq87bv18c",
+          "candidates": [
+            "https://scholar.colorado.edu/concern/articles/sq87bv18c",
+            "https://scholar.colorado.edu/downloads/2f75r8608",
+            "http://dx.doi.org/10.1051/swsc/2017009"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://scholar.colorado.edu/concern/articles/sq87bv18c",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://scholar.colorado.edu/concern/articles/sq87bv18c"
+              }
+            },
+            "antiga": {
+              "link": "http://dx.doi.org/10.1051/swsc/2017009",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://www.swsc-journal.org/10.1051/swsc/2017009"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://scholar.colorado.edu/catalog/oai?verb=GetRecord&identifier=oai%3Acuscholar%3Asq87bv18c&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://scholar.colorado.edu/catalog/oai?verb=GetRecord&identifier=oai%3Acuscholar%3Asq87bv18c&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013931",
+      "nome": "Recherche Data Gouv",
+      "baseUrl": "https://entrepot.recherche.data.gouv.fr/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.12763/2CZWJP",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.12763/2CZWJP",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi:10.12763/2CZWJP"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.12763/2CZWJP",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi:10.12763/2CZWJP"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://entrepot.recherche.data.gouv.fr/oai?verb=GetRecord&identifier=doi%3A10.12763%2F2CZWJP&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://entrepot.recherche.data.gouv.fr/oai?verb=GetRecord&identifier=doi%3A10.12763%2F2CZWJP&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.12763/6VN9YO",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.12763/6VN9YO",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi:10.12763/6VN9YO"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.12763/6VN9YO",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://entrepot.recherche.data.gouv.fr/dataset.xhtml?persistentId=doi:10.12763/6VN9YO"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://entrepot.recherche.data.gouv.fr/oai?verb=GetRecord&identifier=doi%3A10.12763%2F6VN9YO&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://entrepot.recherche.data.gouv.fr/oai?verb=GetRecord&identifier=doi%3A10.12763%2F6VN9YO&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013904",
+      "nome": "Arca Dados",
+      "baseUrl": "https://arcadados.fiocruz.br/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100011137",
+      "nome": "Open Science Framework",
+      "baseUrl": "https://share.osf.io/oai-pmh",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:share.osf.io:f6c41a45-dc8c-4fa2-93b5-61b979b5fecd",
+          "candidates": [
+            "https://osf.io/fe6mu"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://osf.io/fe6mu",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://osf.io/fe6mu"
+              }
+            },
+            "antiga": {
+              "link": "https://osf.io/fe6mu",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://osf.io/fe6mu"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://share.osf.io/oai-pmh?verb=GetRecord&identifier=oai%3Ashare.osf.io%3Af6c41a45-dc8c-4fa2-93b5-61b979b5fecd&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://share.osf.io/oai-pmh/?verb=GetRecord&identifier=oai%3Ashare.osf.io%3Af6c41a45-dc8c-4fa2-93b5-61b979b5fecd&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:share.osf.io:71111a4b-38ed-435d-828e-50269ab7355d",
+          "candidates": [
+            "https://doi.org/10.31219/osf.io/22hq2",
+            "https://osf.io/22hq2",
+            "https://osf.io/5a5fu"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://osf.io/22hq2_v1",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://osf.io/22hq2_v1"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.31219/osf.io/22hq2",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://osf.io/22hq2_v1"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://share.osf.io/oai-pmh?verb=GetRecord&identifier=oai%3Ashare.osf.io%3A71111a4b-38ed-435d-828e-50269ab7355d&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://share.osf.io/oai-pmh/?verb=GetRecord&identifier=oai%3Ashare.osf.io%3A71111a4b-38ed-435d-828e-50269ab7355d&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012698",
+      "nome": "Repositorio Institucional UCASAL",
+      "baseUrl": "https://bibliotecas.ucasal.edu.ar/ws/oai2_7",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:bibliotecas.ucasal.edu.ar:60059",
+          "candidates": [
+            "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60059",
+            "https://bibliotecas.ucasal.edu.ar/ark:/49597/nt9nng9p93",
+            "https://n2t.net/ark:/49597/nt9nng9p93"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60059",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60059"
+              }
+            },
+            "antiga": {
+              "link": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60059",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60059"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://bibliotecas.ucasal.edu.ar/ws/oai2_7?verb=GetRecord&identifier=oai%3Abibliotecas.ucasal.edu.ar%3A60059&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://bibliotecas.ucasal.edu.ar/ws/oai2_7?verb=GetRecord&identifier=oai%3Abibliotecas.ucasal.edu.ar%3A60059&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:bibliotecas.ucasal.edu.ar:60060",
+          "candidates": [
+            "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60060",
+            "https://bibliotecas.ucasal.edu.ar/ark:/49597/nt11p4fg74",
+            "https://n2t.net/ark:/49597/nt11p4fg74"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60060",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60060"
+              }
+            },
+            "antiga": {
+              "link": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60060",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://bibliotecas.ucasal.edu.ar/opac_css/index.php?lvl=cmspage&pageid=24&id_notice=60060"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://bibliotecas.ucasal.edu.ar/ws/oai2_7?verb=GetRecord&identifier=oai%3Abibliotecas.ucasal.edu.ar%3A60060&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://bibliotecas.ucasal.edu.ar/ws/oai2_7?verb=GetRecord&identifier=oai%3Abibliotecas.ucasal.edu.ar%3A60060&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012281",
+      "nome": "UWE Research Data Repository",
+      "baseUrl": "http://eprints.uwe.ac.uk/cgi/oai2",
+      "plataforma": "eprints",
+      "registros": [],
+      "erro": "rede:ConnectError"
+    },
+    {
+      "id": "r3d100012889",
+      "nome": "edoc-Server  - Forschungsdaten",
+      "baseUrl": "https://edoc.hu-berlin.de/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100013770",
+      "nome": "Research data repository of the Universität Innsbruck",
+      "baseUrl": "https://researchdata.uibk.ac.at/oai2d",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:innvenio-:qc6vn-nr176",
+          "candidates": [
+            "https://doi.org/10.48323/qc6vn-nr176",
+            "https://doi.org/10.48323/w01jz-8xw57"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-reachable-url"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48323/qc6vn-nr176",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "http-4xx",
+                "status": 404,
+                "final": "https://doi.org/10.48323/qc6vn-nr176"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchdata.uibk.ac.at/oai2d?verb=GetRecord&identifier=oai%3Ainnvenio-%3Aqc6vn-nr176&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.uibk.ac.at/oai2d?verb=GetRecord&identifier=oai%3Ainnvenio-%3Aqc6vn-nr176&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:innvenio-:48pqj-mwp51",
+          "candidates": [
+            "https://doi.org/10.36950/2024.4ciss010"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://ciss-journal.org/article/view/11527",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://ciss-journal.org/article/view/11527"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.36950/2024.4ciss010",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://ciss-journal.org/article/view/11527"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://researchdata.uibk.ac.at/oai2d?verb=GetRecord&identifier=oai%3Ainnvenio-%3A48pqj-mwp51&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.uibk.ac.at/oai2d?verb=GetRecord&identifier=oai%3Ainnvenio-%3A48pqj-mwp51&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014660",
+      "nome": "ODISSEI Portal",
+      "baseUrl": "https://portal.odissei.nl/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100011086",
+      "nome": "CancerData.org",
+      "baseUrl": "https://www.cancerdata.org/node/38",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100013342",
+      "nome": "USTP Phaidra",
+      "baseUrl": "https://services.phaidra.univie.ac.at/api/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100014489",
+      "nome": "Repositorio Digital Institucional de Acceso Abierto de la Universidad Nacional de Luján",
+      "baseUrl": "https://ri.unlu.edu.ar/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100014208",
+      "nome": "RIUMA",
+      "baseUrl": "https://riuma.uma.es/rest/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100013504",
+      "nome": "PSI Open Data Provider",
+      "baseUrl": "https://oai.datacite.org/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.5284/1000389",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.5284/1000389",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://archaeologydataservice.ac.uk/archives/view/bartonhumber_eh_2010/"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.5284/1000389",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://archaeologydataservice.ac.uk/archives/view/bartonhumber_eh_2010/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://oai.datacite.org/oai?verb=GetRecord&identifier=doi%3A10.5284%2F1000389&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://oai.datacite.org/oai?verb=GetRecord&identifier=doi%3A10.5284%2F1000389&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.5284/1000140",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.5284/1000140",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://archaeologydataservice.ac.uk/archives/view/londonback_eh_2011/"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.5284/1000140",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://archaeologydataservice.ac.uk/archives/view/londonback_eh_2011/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://oai.datacite.org/oai?verb=GetRecord&identifier=doi%3A10.5284%2F1000140&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://oai.datacite.org/oai?verb=GetRecord&identifier=doi%3A10.5284%2F1000140&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011914",
+      "nome": "IDEAS",
+      "baseUrl": "http://oai.repec.org",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100010299",
+      "nome": "World Data Center for Climate",
+      "baseUrl": "https://dmoai.cloud.dkrz.de/oai/provider",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:wdcc.dkrz.de:dc_2230044",
+          "candidates": [
+            "https://www.wdc-climate.de/ui/entry?acronym=cops_ado_data",
+            "https://doi.org/10.1594/WDCC/cops_ado_data"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://www.wdc-climate.de/ui/entry?acronym=cops_ado_data",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.wdc-climate.de/ui/entry?acronym=cops_ado_data"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.1594/WDCC/cops_ado_data",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.wdc-climate.de/ui/entry?acronym=cops_ado_data"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dmoai.cloud.dkrz.de/oai/provider?verb=GetRecord&identifier=oai%3Awdcc.dkrz.de%3Adc_2230044&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dmoai.cloud.dkrz.de/oai/provider?verb=GetRecord&identifier=oai%3Awdcc.dkrz.de%3Adc_2230044&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:wdcc.dkrz.de:dc_2230050",
+          "candidates": [
+            "https://www.wdc-climate.de/ui/entry?acronym=cops_nebt_mf_flux",
+            "https://doi.org/10.1594/WDCC/cops_nebt_mf_flux"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://www.wdc-climate.de/ui/entry?acronym=cops_nebt_mf_flux",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.wdc-climate.de/ui/entry?acronym=cops_nebt_mf_flux"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.1594/WDCC/cops_nebt_mf_flux",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.wdc-climate.de/ui/entry?acronym=cops_nebt_mf_flux"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dmoai.cloud.dkrz.de/oai/provider?verb=GetRecord&identifier=oai%3Awdcc.dkrz.de%3Adc_2230050&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dmoai.cloud.dkrz.de/oai/provider?verb=GetRecord&identifier=oai%3Awdcc.dkrz.de%3Adc_2230050&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013637",
+      "nome": "Addis Ababa University Research Data Repository",
+      "baseUrl": "https://rdr.aau.edu.et/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.20372/aau_rdm/06FW8P",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.20372/aau_rdm/06FW8P",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.aau.edu.et/dataset.xhtml?persistentId=doi:10.20372/aau_rdm/06FW8P"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.20372/aau_rdm/06FW8P",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.aau.edu.et/dataset.xhtml?persistentId=doi:10.20372/aau_rdm/06FW8P"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://rdr.aau.edu.et/oai?verb=GetRecord&identifier=doi%3A10.20372%2Faau_rdm%2F06FW8P&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://rdr.aau.edu.et/oai?verb=GetRecord&identifier=doi%3A10.20372%2Faau_rdm%2F06FW8P&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.20372/aau_rdm/0A5ZFM",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.20372/aau_rdm/0A5ZFM",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.aau.edu.et/dataset.xhtml?persistentId=doi:10.20372/aau_rdm/0A5ZFM"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.20372/aau_rdm/0A5ZFM",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.aau.edu.et/dataset.xhtml?persistentId=doi:10.20372/aau_rdm/0A5ZFM"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://rdr.aau.edu.et/oai?verb=GetRecord&identifier=doi%3A10.20372%2Faau_rdm%2F0A5ZFM&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://rdr.aau.edu.et/oai?verb=GetRecord&identifier=doi%3A10.20372%2Faau_rdm%2F0A5ZFM&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013722",
+      "nome": "Repositorio Abierto de la Universidad Internacional de Andalucía",
+      "baseUrl": "https://dspace.unia.es/oai",
+      "plataforma": "dspace",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100012010",
+      "nome": "Australian SuperSite Network Data Portal",
+      "baseUrl": "https://www.supersites.net.au/knb/dataProvider",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100010494",
+      "nome": "Quetelet-Progedo",
+      "baseUrl": "https://data.progedo.fr/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.13144/lil-0990",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.13144/lil-0990",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.progedo.fr/studies/doi/10.13144/lil-0990"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.13144/lil-0990",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.progedo.fr/studies/doi/10.13144/lil-0990"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.progedo.fr/oai?verb=GetRecord&identifier=doi%3A10.13144%2Flil-0990&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.progedo.fr/oai?verb=GetRecord&identifier=doi%3A10.13144%2Flil-0990&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.13144/lil-1442",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.13144/lil-1442",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.progedo.fr/studies/doi/10.13144/lil-1442"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.13144/lil-1442",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.progedo.fr/studies/doi/10.13144/lil-1442"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.progedo.fr/oai?verb=GetRecord&identifier=doi%3A10.13144%2Flil-1442&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.progedo.fr/oai?verb=GetRecord&identifier=doi%3A10.13144%2Flil-1442&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100010259",
+      "nome": "National Archive of Computerized Data on Aging",
+      "baseUrl": "https://harmonize.icpsr.umich.edu/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "urn:ddi:int.example:ff8fe408-38bd-4c42-a4fc-255f848308e5:1",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://harmonize.icpsr.umich.edu/oai/request?verb=GetRecord&identifier=urn%3Addi%3Aint.example%3Aff8fe408-38bd-4c42-a4fc-255f848308e5%3A1&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://harmonize.icpsr.umich.edu/oai/request?verb=GetRecord&identifier=urn%3Addi%3Aint.example%3Aff8fe408-38bd-4c42-a4fc-255f848308e5%3A1&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "urn:ddi:int.example:0c8766c3-e090-43ea-af32-5ac99813ef1d:1",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://harmonize.icpsr.umich.edu/oai/request?verb=GetRecord&identifier=urn%3Addi%3Aint.example%3A0c8766c3-e090-43ea-af32-5ac99813ef1d%3A1&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://harmonize.icpsr.umich.edu/oai/request?verb=GetRecord&identifier=urn%3Addi%3Aint.example%3A0c8766c3-e090-43ea-af32-5ac99813ef1d%3A1&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014783",
+      "nome": "Taalmaterialen",
+      "baseUrl": "https://repository.ivdnt.org/oai/provider",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "3aa9c824f9e17c284b2f683f7f22cdef",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repository.ivdnt.org/oai/provider?verb=GetRecord&identifier=3aa9c824f9e17c284b2f683f7f22cdef&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.ivdnt.org/oai/provider?verb=GetRecord&identifier=3aa9c824f9e17c284b2f683f7f22cdef&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "3d5e2c54770b87d5e27d762ba31502e5",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repository.ivdnt.org/oai/provider?verb=GetRecord&identifier=3d5e2c54770b87d5e27d762ba31502e5&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.ivdnt.org/oai/provider?verb=GetRecord&identifier=3d5e2c54770b87d5e27d762ba31502e5&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013997",
+      "nome": "Repositori de la Universitat Jaume I",
+      "baseUrl": "https://repositori.uji.es/server/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100012330",
+      "nome": "RADAR",
+      "baseUrl": "https://www.radar-service.eu/oai/OAIHandler",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "RADAR/323",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://www.radar-service.eu/oai/OAIHandler?verb=GetRecord&identifier=RADAR%2F323&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://www.radar-service.eu/oai/OAIHandler?verb=GetRecord&identifier=RADAR%2F323&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "RADAR/71",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://www.radar-service.eu/oai/OAIHandler?verb=GetRecord&identifier=RADAR%2F71&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://www.radar-service.eu/oai/OAIHandler?verb=GetRecord&identifier=RADAR%2F71&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014739",
+      "nome": "Croatian Social Science Data Archive",
+      "baseUrl": "https://data.crossda.hr/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.23669/18WAHG",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.23669/18WAHG",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.crossda.hr/dataset.xhtml?persistentId=doi:10.23669/18WAHG"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.23669/18WAHG",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.crossda.hr/dataset.xhtml?persistentId=doi:10.23669/18WAHG"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.crossda.hr/oai?verb=GetRecord&identifier=doi%3A10.23669%2F18WAHG&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.crossda.hr/oai?verb=GetRecord&identifier=doi%3A10.23669%2F18WAHG&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.23669/1ZTELP",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.23669/1ZTELP",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.crossda.hr/dataset.xhtml?persistentId=doi:10.23669/1ZTELP"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.23669/1ZTELP",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.crossda.hr/dataset.xhtml?persistentId=doi:10.23669/1ZTELP"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.crossda.hr/oai?verb=GetRecord&identifier=doi%3A10.23669%2F1ZTELP&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.crossda.hr/oai?verb=GetRecord&identifier=doi%3A10.23669%2F1ZTELP&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100010451",
+      "nome": "Pacific and Regional Archive for Digital Sources in Endangered Cultures",
+      "baseUrl": "https://catalog.paradisec.org.au/oai/item",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:paradisec.org.au:AA1-001",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://catalog.paradisec.org.au/oai/item?verb=GetRecord&identifier=oai%3Aparadisec.org.au%3AAA1-001&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://catalog.paradisec.org.au/oai/item?verb=GetRecord&identifier=oai%3Aparadisec.org.au%3AAA1-001&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:paradisec.org.au:AA1-002",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://catalog.paradisec.org.au/oai/item?verb=GetRecord&identifier=oai%3Aparadisec.org.au%3AAA1-002&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://catalog.paradisec.org.au/oai/item?verb=GetRecord&identifier=oai%3Aparadisec.org.au%3AAA1-002&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012405",
+      "nome": "Research Data at Essex",
+      "baseUrl": "http://researchdata.essex.ac.uk/cgi/oai2",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:researchdata.essex.ac.uk:3",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "oai-error:idDoesNotExist"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://researchdata.essex.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.essex.ac.uk%3A3&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.essex.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.essex.ac.uk%3A3&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:researchdata.essex.ac.uk:15",
+          "candidates": [
+            "https://researchdata.essex.ac.uk/15/",
+            "https://researchdata.essex.ac.uk/15/1/Study%201.sav",
+            "https://researchdata.essex.ac.uk/15/2/Study2.sav",
+            "https://researchdata.essex.ac.uk/15/3/Study3.sav",
+            "https://doi.org/10.5526/ERDR-00000015"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://researchdata.essex.ac.uk/15/",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.essex.ac.uk/15/"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.5526/ERDR-00000015",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://researchdata.essex.ac.uk/15/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://researchdata.essex.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.essex.ac.uk%3A15&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://researchdata.essex.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aresearchdata.essex.ac.uk%3A15&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014691",
+      "nome": "DMPortal BioData.pt",
+      "baseUrl": "https://dmportal.biodata.pt/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.34636/DMPortal/14N7WM",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34636/DMPortal/14N7WM",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dmportal.biodata.pt/dataset.xhtml?persistentId=doi:10.34636/DMPortal/14N7WM"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34636/DMPortal/14N7WM",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dmportal.biodata.pt/dataset.xhtml?persistentId=doi:10.34636/DMPortal/14N7WM"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dmportal.biodata.pt/oai?verb=GetRecord&identifier=doi%3A10.34636%2FDMPortal%2F14N7WM&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dmportal.biodata.pt/oai?verb=GetRecord&identifier=doi%3A10.34636%2FDMPortal%2F14N7WM&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.34636/DMPortal/2FOCBV",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34636/DMPortal/2FOCBV",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dmportal.biodata.pt/dataset.xhtml?persistentId=doi:10.34636/DMPortal/2FOCBV"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34636/DMPortal/2FOCBV",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://dmportal.biodata.pt/dataset.xhtml?persistentId=doi:10.34636/DMPortal/2FOCBV"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dmportal.biodata.pt/oai?verb=GetRecord&identifier=doi%3A10.34636%2FDMPortal%2F2FOCBV&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dmportal.biodata.pt/oai?verb=GetRecord&identifier=doi%3A10.34636%2FDMPortal%2F2FOCBV&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012020",
+      "nome": "CLARINO Bergen  Centre",
+      "baseUrl": "https://clarino.uib.no/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:clarino.uib.no:ace",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://clarino.uib.no/oai?verb=GetRecord&identifier=oai%3Aclarino.uib.no%3Aace&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://clarino.uib.no/oai?verb=GetRecord&identifier=oai%3Aclarino.uib.no%3Aace&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:clarino.uib.no:ang-aels-dep",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://clarino.uib.no/oai?verb=GetRecord&identifier=oai%3Aclarino.uib.no%3Aang-aels-dep&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://clarino.uib.no/oai?verb=GetRecord&identifier=oai%3Aclarino.uib.no%3Aang-aels-dep&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011245",
+      "nome": "University of Southampton Institutional Research Repository",
+      "baseUrl": "https://eprints.soton.ac.uk/cgi/oai2",
+      "plataforma": "eprints",
+      "registros": [
+        {
+          "identifier": "oai:eprints.soton.ac.uk:35997",
+          "candidates": [
+            "https://eprints.soton.ac.uk/id/eprint/35997/"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-reachable-url"
+              }
+            },
+            "antiga": {
+              "link": "https://eprints.soton.ac.uk/id/eprint/35997/",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 401,
+                "final": "https://eprints.soton.ac.uk/id/eprint/35997/"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aeprints.soton.ac.uk%3A35997&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aeprints.soton.ac.uk%3A35997&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:eprints.soton.ac.uk:4",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aeprints.soton.ac.uk%3A4&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://eprints.soton.ac.uk/cgi/oai2?verb=GetRecord&identifier=oai%3Aeprints.soton.ac.uk%3A4&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011216",
+      "nome": "KU ScholarWorks",
+      "baseUrl": "https://kuscholarworks.ku.edu/server/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:kuscholarworks.ku.edu:1808/21818",
+          "candidates": [
+            "http://hdl.handle.net/1808/21818",
+            "https://doi.org/10.1002/advs.201500122"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://kuscholarworks.ku.edu/handle/1808/21818",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://kuscholarworks.ku.edu/handle/1808/21818"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.1002/advs.201500122",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 403,
+                "final": "https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.201500122"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://kuscholarworks.ku.edu/server/oai/request?verb=GetRecord&identifier=oai%3Akuscholarworks.ku.edu%3A1808%2F21818&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://kuscholarworks.ku.edu/server/oai/request?verb=GetRecord&identifier=oai%3Akuscholarworks.ku.edu%3A1808%2F21818&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:kuscholarworks.ku.edu:1808/34571",
+          "candidates": [
+            "https://hdl.handle.net/1808/34571",
+            "https://doi.org/10.3389/fimmu.2023.1137069"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1137069/full",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1137069/full"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.3389/fimmu.2023.1137069",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1137069/full"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://kuscholarworks.ku.edu/server/oai/request?verb=GetRecord&identifier=oai%3Akuscholarworks.ku.edu%3A1808%2F34571&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://kuscholarworks.ku.edu/server/oai/request?verb=GetRecord&identifier=oai%3Akuscholarworks.ku.edu%3A1808%2F34571&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100012860",
+      "nome": "Eurac Research CLARIN Centre",
+      "baseUrl": "http://clarin.eurac.edu/repository/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:clarin.eurac.edu:20.500.12124/3",
+          "candidates": [
+            "http://hdl.handle.net/20.500.12124/3",
+            "http://aclweb.org/anthology/W14-0406",
+            "http://www.corpusitaliano.it"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://clarin.eurac.edu/repository/xmlui/handle/20.500.12124/3",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.eurac.edu/repository/xmlui/handle/20.500.12124/3"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/20.500.12124/3",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.eurac.edu/repository/xmlui/handle/20.500.12124/3"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://clarin.eurac.edu/repository/oai/request?verb=GetRecord&identifier=oai%3Aclarin.eurac.edu%3A20.500.12124%2F3&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://clarin.eurac.edu/repository/oai/request?verb=GetRecord&identifier=oai%3Aclarin.eurac.edu%3A20.500.12124%2F3&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:clarin.eurac.edu:20.500.12124/7",
+          "candidates": [
+            "http://hdl.handle.net/20.500.12124/7",
+            "https://gitlab.inf.unibz.it/commul/didi/data-bundle/-/tags/v1.0.0",
+            "http://www.eurac.edu/en/research/autonomies/commul/Documents/DiDi/NLP4CMC-2015_DiDi_paper.pdf",
+            "http://www.eurac.edu/en/research/autonomies/commul/Documents/DiDi/didi_clic-it2016_FINAL.pdf",
+            "https://gitlab.inf.unibz.it/commul/var/eurac-licenses/-/raw/v1.0/EULA-CLARIN-ACA-BY-NC-NORED.md",
+            "http://www.eurac.edu/didi"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://clarin.eurac.edu/repository/xmlui/handle/20.500.12124/7",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.eurac.edu/repository/xmlui/handle/20.500.12124/7"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/20.500.12124/7",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://clarin.eurac.edu/repository/xmlui/handle/20.500.12124/7"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "http://clarin.eurac.edu/repository/oai/request?verb=GetRecord&identifier=oai%3Aclarin.eurac.edu%3A20.500.12124%2F7&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://clarin.eurac.edu/repository/oai/request?verb=GetRecord&identifier=oai%3Aclarin.eurac.edu%3A20.500.12124%2F7&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100010387",
+      "nome": "CLARIN-DK-UCPH Repository",
+      "baseUrl": "https://repository.clarin.dk/repository/oai/request",
+      "plataforma": "dspace",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100014844",
+      "nome": "FID4SA@heiDATA",
+      "baseUrl": "https://heidata.uni-heidelberg.de/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100013549",
+      "nome": "MUSE-Wide",
+      "baseUrl": "https://musewide.aip.de/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "ivo://musewide.aip.de/datalink",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://musewide.aip.de/oai?verb=GetRecord&identifier=ivo%3A%2F%2Fmusewide.aip.de%2Fdatalink&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://musewide.aip.de/oai/?verb=GetRecord&identifier=ivo%3A%2F%2Fmusewide.aip.de%2Fdatalink&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "ivo://musewide.aip.de/registry",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://musewide.aip.de/oai?verb=GetRecord&identifier=ivo%3A%2F%2Fmusewide.aip.de%2Fregistry&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://musewide.aip.de/oai/?verb=GetRecord&identifier=ivo%3A%2F%2Fmusewide.aip.de%2Fregistry&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013582",
+      "nome": "METIS",
+      "baseUrl": "https://fmi.b2share.csc.fi/api/oai2d",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:b2share-:tm6ps-80222",
+          "candidates": [
+            "https://etsin.fairdata.fi/dataset/8612f56a-0f6c-4323-b39a-ccc91491c0a2",
+            "http://ssrn.com/abstract=4177973",
+            "https://fmi.b2share.csc.fi/communities/fmi/"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://etsin.fairdata.fi/dataset/8612f56a-0f6c-4323-b39a-ccc91491c0a2",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://etsin.fairdata.fi/dataset/8612f56a-0f6c-4323-b39a-ccc91491c0a2"
+              }
+            },
+            "antiga": {
+              "link": "https://etsin.fairdata.fi/dataset/8612f56a-0f6c-4323-b39a-ccc91491c0a2",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://etsin.fairdata.fi/dataset/8612f56a-0f6c-4323-b39a-ccc91491c0a2"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://fmi.b2share.csc.fi/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share-%3Atm6ps-80222&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://fmi.b2share.csc.fi/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share-%3Atm6ps-80222&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:b2share-:z1sz4-6xg33",
+          "candidates": [
+            "https://etsin.fairdata.fi/dataset/9fd7ec6a-22e9-4195-95b6-be41f40a734e",
+            "https://fmi.b2share.csc.fi/communities/fmi/"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://etsin.fairdata.fi/dataset/9fd7ec6a-22e9-4195-95b6-be41f40a734e",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://etsin.fairdata.fi/dataset/9fd7ec6a-22e9-4195-95b6-be41f40a734e"
+              }
+            },
+            "antiga": {
+              "link": "https://etsin.fairdata.fi/dataset/9fd7ec6a-22e9-4195-95b6-be41f40a734e",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://etsin.fairdata.fi/dataset/9fd7ec6a-22e9-4195-95b6-be41f40a734e"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://fmi.b2share.csc.fi/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share-%3Az1sz4-6xg33&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://fmi.b2share.csc.fi/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share-%3Az1sz4-6xg33&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011352",
+      "nome": "OceanRep GEOMAR Repository",
+      "baseUrl": "https://oceanrep.geomar.de/cgi/oai2",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100014099",
+      "nome": "Repository of the Faculty of Science",
+      "baseUrl": "https://dabar.srce.hr/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:dabar.srce.hr:mef_1",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dabar.srce.hr/oai?verb=GetRecord&identifier=oai%3Adabar.srce.hr%3Amef_1&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dabar.srce.hr/oai/?verb=GetRecord&identifier=oai%3Adabar.srce.hr%3Amef_1&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:dabar.srce.hr:mef_2",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "no-usable-url"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://dabar.srce.hr/oai?verb=GetRecord&identifier=oai%3Adabar.srce.hr%3Amef_2&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://dabar.srce.hr/oai/?verb=GetRecord&identifier=oai%3Adabar.srce.hr%3Amef_2&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013047",
+      "nome": "South African Centre for Digital Language Resources",
+      "baseUrl": "https://repo.sadilar.org/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:repo.sadilar.org:20.500.12185/459",
+          "candidates": [
+            "https://hdl.handle.net/20.500.12185/459"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repo.sadilar.org/handle/20.500.12185/459",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repo.sadilar.org/handle/20.500.12185/459"
+              }
+            },
+            "antiga": {
+              "link": "https://hdl.handle.net/20.500.12185/459",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repo.sadilar.org/handle/20.500.12185/459"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repo.sadilar.org/oai/request?verb=GetRecord&identifier=oai%3Arepo.sadilar.org%3A20.500.12185%2F459&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repo.sadilar.org/oai/request?verb=GetRecord&identifier=oai%3Arepo.sadilar.org%3A20.500.12185%2F459&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:repo.sadilar.org:20.500.12185/186",
+          "candidates": [
+            "https://hdl.handle.net/20.500.12185/186"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repo.sadilar.org/handle/20.500.12185/186",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repo.sadilar.org/handle/20.500.12185/186"
+              }
+            },
+            "antiga": {
+              "link": "https://hdl.handle.net/20.500.12185/186",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repo.sadilar.org/handle/20.500.12185/186"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repo.sadilar.org/oai/request?verb=GetRecord&identifier=oai%3Arepo.sadilar.org%3A20.500.12185%2F186&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repo.sadilar.org/oai/request?verb=GetRecord&identifier=oai%3Arepo.sadilar.org%3A20.500.12185%2F186&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013029",
+      "nome": "TUdatalib",
+      "baseUrl": "https://tudatalib.ulb.tu-darmstadt.de/server/oai/request",
+      "plataforma": "dspace",
+      "registros": [
+        {
+          "identifier": "oai:tudatalib.ulb.tu-darmstadt.de:tudatalib/3277",
+          "candidates": [
+            "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/3277"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/3277",
+              "source": "record:dspace",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/3277"
+              }
+            },
+            "antiga": {
+              "link": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/3277",
+              "source": "record:dspace",
+              "regra": "dspace",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/3277"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://tudatalib.ulb.tu-darmstadt.de/server/oai/request?verb=GetRecord&identifier=oai%3Atudatalib.ulb.tu-darmstadt.de%3Atudatalib%2F3277&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://tudatalib.ulb.tu-darmstadt.de/server/oai/request?verb=GetRecord&identifier=oai%3Atudatalib.ulb.tu-darmstadt.de%3Atudatalib%2F3277&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:tudatalib.ulb.tu-darmstadt.de:tudatalib/2022",
+          "candidates": [
+            "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2022",
+            "https://doi.org/10.25534/tudatalib-62"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2022",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2022"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.25534/tudatalib-62",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2022"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://tudatalib.ulb.tu-darmstadt.de/server/oai/request?verb=GetRecord&identifier=oai%3Atudatalib.ulb.tu-darmstadt.de%3Atudatalib%2F2022&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://tudatalib.ulb.tu-darmstadt.de/server/oai/request?verb=GetRecord&identifier=oai%3Atudatalib.ulb.tu-darmstadt.de%3Atudatalib%2F2022&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013108",
+      "nome": "Repositorio de Datos de Investigación de la Universidad de Chile",
+      "baseUrl": "https://datos.uchile.cl/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.34691/FK2/1GQBHK",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34691/FK2/1GQBHK",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://datos.uchile.cl/dataset.xhtml?persistentId=doi:10.34691/FK2/1GQBHK"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34691/FK2/1GQBHK",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://datos.uchile.cl/dataset.xhtml?persistentId=doi:10.34691/FK2/1GQBHK"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://datos.uchile.cl/oai?verb=GetRecord&identifier=doi%3A10.34691%2FFK2%2F1GQBHK&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://datos.uchile.cl/oai?verb=GetRecord&identifier=doi%3A10.34691%2FFK2%2F1GQBHK&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.34691/FK2/2HEIB1",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.34691/FK2/2HEIB1",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://datos.uchile.cl/dataset.xhtml?persistentId=doi:10.34691/FK2/2HEIB1"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.34691/FK2/2HEIB1",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://datos.uchile.cl/dataset.xhtml?persistentId=doi:10.34691/FK2/2HEIB1"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://datos.uchile.cl/oai?verb=GetRecord&identifier=doi%3A10.34691%2FFK2%2F2HEIB1&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://datos.uchile.cl/oai?verb=GetRecord&identifier=doi%3A10.34691%2FFK2%2F2HEIB1&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014727",
+      "nome": "OstData",
+      "baseUrl": "https://www.ostdata.osmikon.de/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100013569",
+      "nome": "Social Data Repository (RDS)",
+      "baseUrl": "https://rds.icm.edu.pl/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100013118",
+      "nome": "B2SHARE Server Forschungszentrum Jülich",
+      "baseUrl": "https://b2share.fz-juelich.de/api/oai2d",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:b2share.fz-juelich.de:b2rec/9159b7c3a7c3466480d8d3221ed080fb",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": null,
+              "source": null,
+              "abertura": {
+                "desfecho": "sem-link",
+                "detalhe": "unreachable"
+              }
+            },
+            "antiga": {
+              "link": null,
+              "source": null,
+              "regra": "",
+              "abertura": {
+                "desfecho": "sem-link"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://b2share.fz-juelich.de/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share.fz-juelich.de%3Ab2rec%2F9159b7c3a7c3466480d8d3221ed080fb&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "http-4xx",
+              "status": 422,
+              "final": "https://b2share.fz-juelich.de/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share.fz-juelich.de%3Ab2rec%2F9159b7c3a7c3466480d8d3221ed080fb&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:b2share.fz-juelich.de:b2rec/990ed4b5ade94d11bba388d36a920b02",
+          "candidates": [
+            "http://hdl.handle.net/11097/f24bf039-a0d8-44a3-afad-5db0d64c38fe",
+            "https://b2share.fz-juelich.de/api/records/990ed4b5ade94d11bba388d36a920b02"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://b2share.fz-juelich.de/records/990ed4b5ade94d11bba388d36a920b02",
+              "source": "record:handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://b2share.fz-juelich.de/records/990ed4b5ade94d11bba388d36a920b02"
+              }
+            },
+            "antiga": {
+              "link": "http://hdl.handle.net/11097/f24bf039-a0d8-44a3-afad-5db0d64c38fe",
+              "source": "record:handle",
+              "regra": "handle",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://b2share.fz-juelich.de/records/990ed4b5ade94d11bba388d36a920b02"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://b2share.fz-juelich.de/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share.fz-juelich.de%3Ab2rec%2F990ed4b5ade94d11bba388d36a920b02&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://b2share.fz-juelich.de/api/oai2d?verb=GetRecord&identifier=oai%3Ab2share.fz-juelich.de%3Ab2rec%2F990ed4b5ade94d11bba388d36a920b02&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013891",
+      "nome": "HilReDa",
+      "baseUrl": "https://data.goettingen-research-online.de/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100010951",
+      "nome": "Purdue University Research Repository",
+      "baseUrl": "https://purr.purdue.edu/oaipmh",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "https://doi.org/10.4231/D3251FJ7S",
+          "candidates": [
+            "https://doi.org/10.4231/D3251FJ7S",
+            "https://doi.org/10.4231/PPKB-VK18"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://purr.purdue.edu/publications/1004/1",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://purr.purdue.edu/publications/1004/1"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.4231/D3251FJ7S",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://purr.purdue.edu/publications/1004/1"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://purr.purdue.edu/oaipmh?verb=GetRecord&identifier=https%3A%2F%2Fdoi.org%2F10.4231%2FD3251FJ7S&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://purr.purdue.edu/oaipmh?verb=GetRecord&identifier=https%3A%2F%2Fdoi.org%2F10.4231%2FD3251FJ7S&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "https://doi.org/10.4231/D39P2W550",
+          "candidates": [
+            "https://doi.org/10.4231/D39P2W550"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://purr.purdue.edu/publications/1002/2",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://purr.purdue.edu/publications/1002/2"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.4231/D39P2W550",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://purr.purdue.edu/publications/1002/2"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://purr.purdue.edu/oaipmh?verb=GetRecord&identifier=https%3A%2F%2Fdoi.org%2F10.4231%2FD39P2W550&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://purr.purdue.edu/oaipmh?verb=GetRecord&identifier=https%3A%2F%2Fdoi.org%2F10.4231%2FD39P2W550&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011038",
+      "nome": "Qualitative Data Repository",
+      "baseUrl": "https://data.qdr.syr.edu/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.5064/F600CMLO",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.5064/F600CMLO",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 405,
+                "final": "https://data.qdr.syr.edu/citation?persistentId=doi:10.5064/F600CMLO"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.5064/F600CMLO",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 405,
+                "final": "https://data.qdr.syr.edu/citation?persistentId=doi:10.5064/F600CMLO"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.qdr.syr.edu/oai?verb=GetRecord&identifier=doi%3A10.5064%2FF600CMLO&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.qdr.syr.edu/oai?verb=GetRecord&identifier=doi%3A10.5064%2FF600CMLO&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.5064/F60VEORO",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.5064/F60VEORO",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 405,
+                "final": "https://data.qdr.syr.edu/citation?persistentId=doi:10.5064/F60VEORO"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.5064/F60VEORO",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "bloqueado",
+                "status": 405,
+                "final": "https://data.qdr.syr.edu/citation?persistentId=doi:10.5064/F60VEORO"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.qdr.syr.edu/oai?verb=GetRecord&identifier=doi%3A10.5064%2FF60VEORO&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.qdr.syr.edu/oai?verb=GetRecord&identifier=doi%3A10.5064%2FF60VEORO&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100014704",
+      "nome": "Micelio, plataforma para la investigación UCA",
+      "baseUrl": "https://apicrai.uca.edu.sv/server/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100014218",
+      "nome": "Teesside University Research Data Repository",
+      "baseUrl": "https://data.mendeley.com/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "oai:data.mendeley.com/jxj8bn2vyf.3",
+          "candidates": [
+            "https://data.mendeley.com/datasets/jxj8bn2vyf"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://data.mendeley.com/datasets/jxj8bn2vyf/3",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.mendeley.com/datasets/jxj8bn2vyf/3"
+              }
+            },
+            "antiga": {
+              "link": "https://data.mendeley.com/datasets/jxj8bn2vyf",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.mendeley.com/datasets/jxj8bn2vyf/3"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.mendeley.com/oai?verb=GetRecord&identifier=oai%3Adata.mendeley.com%2Fjxj8bn2vyf.3&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.mendeley.com/oai?verb=GetRecord&identifier=oai%3Adata.mendeley.com%2Fjxj8bn2vyf.3&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "oai:data.mendeley.com/74d8vrszn7.1",
+          "candidates": [
+            "https://data.mendeley.com/datasets/74d8vrszn7"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://data.mendeley.com/datasets/74d8vrszn7/1",
+              "source": "record:primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.mendeley.com/datasets/74d8vrszn7/1"
+              }
+            },
+            "antiga": {
+              "link": "https://data.mendeley.com/datasets/74d8vrszn7",
+              "source": "record:primeira",
+              "regra": "primeira",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://data.mendeley.com/datasets/74d8vrszn7/1"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://data.mendeley.com/oai?verb=GetRecord&identifier=oai%3Adata.mendeley.com%2F74d8vrszn7.1&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://data.mendeley.com/oai?verb=GetRecord&identifier=oai%3Adata.mendeley.com%2F74d8vrszn7.1&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013062",
+      "nome": "Data Univ Gustave Eiffel",
+      "baseUrl": "https://data.univ-gustave-eiffel.fr/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:ConnectError"
+    },
+    {
+      "id": "r3d100014104",
+      "nome": "eBiltegia",
+      "baseUrl": "http://ebiltegia.mondragon.edu:8080/oai/driver",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:ConnectTimeout"
+    },
+    {
+      "id": "r3d100012557",
+      "nome": "ETH Zürich Research Collection",
+      "baseUrl": "http://www.research-collection.ethz.ch/oai",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100010305",
+      "nome": "NOAA National Centers for Environmental Information - World Data Service  for Oceanography",
+      "baseUrl": "http://data.nodc.noaa.gov/cgi-bin/oai-pmh",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:ReadTimeout"
+    },
+    {
+      "id": "r3d100011201",
+      "nome": "DataverseNL",
+      "baseUrl": "https://dataverse.nl/oai",
+      "plataforma": "dataverse",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100013824",
+      "nome": "KU Leuven RDR",
+      "baseUrl": "https://rdr.kuleuven.be/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "doi:10.48804/063ELJ",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.48804/063ELJ",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.kuleuven.be/dataset.xhtml?persistentId=doi:10.48804/063ELJ"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48804/063ELJ",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.kuleuven.be/dataset.xhtml?persistentId=doi:10.48804/063ELJ"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://rdr.kuleuven.be/oai?verb=GetRecord&identifier=doi%3A10.48804%2F063ELJ&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://rdr.kuleuven.be/oai?verb=GetRecord&identifier=doi%3A10.48804%2F063ELJ&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "doi:10.48804/07SS6R",
+          "candidates": [],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://doi.org/10.48804/07SS6R",
+              "source": "identifier",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.kuleuven.be/dataset.xhtml?persistentId=doi:10.48804/07SS6R"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.48804/07SS6R",
+              "source": "identifier",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://rdr.kuleuven.be/dataset.xhtml?persistentId=doi:10.48804/07SS6R"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://rdr.kuleuven.be/oai?verb=GetRecord&identifier=doi%3A10.48804%2F07SS6R&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://rdr.kuleuven.be/oai?verb=GetRecord&identifier=doi%3A10.48804%2F07SS6R&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100013553",
+      "nome": "DNBLab",
+      "baseUrl": "https://www.dnb.de/EN/Professionell/Metadatendienste/Datenbezug/OAI/oai_node.html",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "xml-invalido"
+    },
+    {
+      "id": "r3d100013827",
+      "nome": "Open-source Scientific Software and Service Repository",
+      "baseUrl": "https://zenodo.org/oai2d",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100011345",
+      "nome": "DARIAH-DE Repository",
+      "baseUrl": "https://repository.de.dariah.eu/1.0/oaipmh/oai",
+      "plataforma": "outra",
+      "registros": [
+        {
+          "identifier": "hdl:21.11113/0000-000C-D92E-D",
+          "candidates": [
+            "http://viaf.org/viaf/77109993",
+            "https://hdl.handle.net/21.11113/0000-000C-D92E-D",
+            "https://doi.org/10.20375/0000-000C-D92E-D"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repository.de.dariah.eu/1.0/dhcrud/21.11113/0000-000C-D92E-D",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.de.dariah.eu/1.0/dhcrud/21.11113/0000-000C-D92E-D"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.20375/0000-000C-D92E-D",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.de.dariah.eu/1.0/dhcrud/21.11113/0000-000C-D92E-D"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repository.de.dariah.eu/1.0/oaipmh/oai?verb=GetRecord&identifier=hdl%3A21.11113%2F0000-000C-D92E-D&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.de.dariah.eu/1.0/oaipmh/oai?verb=GetRecord&identifier=hdl%3A21.11113%2F0000-000C-D92E-D&metadataPrefix=oai_dc"
+            }
+          }
+        },
+        {
+          "identifier": "hdl:21.11113/0000-000B-CADF-7",
+          "candidates": [
+            "https://doi.org/10.20375/0000-000B-CADF-7",
+            "https://hdl.handle.net/21.11113/0000-000B-CADF-7"
+          ],
+          "paginaDoItem": {
+            "nova": {
+              "link": "https://repository.de.dariah.eu/1.0/dhcrud/21.11113/0000-000B-CADF-7",
+              "source": "record:doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.de.dariah.eu/1.0/dhcrud/21.11113/0000-000B-CADF-7"
+              }
+            },
+            "antiga": {
+              "link": "https://doi.org/10.20375/0000-000B-CADF-7",
+              "source": "record:doi",
+              "regra": "doi",
+              "abertura": {
+                "desfecho": "ok",
+                "status": 200,
+                "final": "https://repository.de.dariah.eu/1.0/dhcrud/21.11113/0000-000B-CADF-7"
+              }
+            }
+          },
+          "oaiPmh": {
+            "link": "https://repository.de.dariah.eu/1.0/oaipmh/oai?verb=GetRecord&identifier=hdl%3A21.11113%2F0000-000B-CADF-7&metadataPrefix=oai_dc",
+            "abertura": {
+              "desfecho": "ok",
+              "status": 200,
+              "final": "https://repository.de.dariah.eu/1.0/oaipmh/oai?verb=GetRecord&identifier=hdl%3A21.11113%2F0000-000B-CADF-7&metadataPrefix=oai_dc"
+            }
+          }
+        }
+      ],
+      "erro": null
+    },
+    {
+      "id": "r3d100011852",
+      "nome": "UQ eSpace, Research Data Collections",
+      "baseUrl": "http://espace.library.uq.edu.au/oai.php",
+      "plataforma": "outra",
+      "registros": [],
+      "erro": "rede:HTTPStatusError"
+    },
+    {
+      "id": "r3d100012407",
+      "nome": "Lincoln repository",
+      "baseUrl": "https://eprints.lincoln.ac.uk/policies.html",
+      "plataforma": "eprints",
+      "registros": [],
+      "erro": "xml-invalido"
+    }
+  ]
+}

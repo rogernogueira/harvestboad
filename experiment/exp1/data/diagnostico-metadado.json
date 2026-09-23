@@ -1,0 +1,4109 @@
+{
+  "diagnosticadoEm": "2026-09-21T03:37:15.546249+00:00",
+  "origens": [
+    {
+      "id": "15",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "16",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 50,
+      "removidos": 0,
+      "id_uri": 0,
+      "tipo_total": 50,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "PARTE DE MONOGRAFIA/LIVRO",
+        "ARTIGO DE PERIODICO",
+        "TEXTO NA WEB"
+      ],
+      "idioma_total": 50,
+      "idioma_codigo": 0,
+      "idioma_exemplos": [
+        "Português",
+        "Inglês"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "40",
+      "desfecho": "http-502",
+      "detalhe": ""
+    },
+    {
+      "id": "99",
+      "desfecho": "http-522",
+      "detalhe": ""
+    },
+    {
+      "id": "122",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "123",
+      "desfecho": "oai-error",
+      "detalhe": "cannotDisseminateFormat"
+    },
+    {
+      "id": "129",
+      "desfecho": "nao-xml",
+      "detalhe": "application/xml"
+    },
+    {
+      "id": "138",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 4,
+      "id_uri": 96,
+      "tipo_total": 96,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "TCC",
+        "Artigo",
+        "Dissertação"
+      ],
+      "idioma_total": 96,
+      "idioma_codigo": 96,
+      "idioma_exemplos": [
+        "pt_BR",
+        "por",
+        "es"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "143",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "166",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "167",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "168",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "177",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "179",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "184",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "189",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "190",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "197",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "209",
+      "desfecho": "rede",
+      "detalhe": "RemoteProtocolError"
+    },
+    {
+      "id": "216",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "247",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Dissertação",
+        "Tese",
+        "TCC"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 152,
+      "vazio": false
+    },
+    {
+      "id": "249",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "250",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 81,
+      "tipo_eurepo": 4,
+      "tipo_exemplos": [
+        "Dissertação (Mestrado)",
+        "TCCgrad",
+        "video"
+      ],
+      "idioma_total": 77,
+      "idioma_codigo": 77,
+      "idioma_exemplos": [
+        "por",
+        "mul",
+        "bzs"
+      ],
+      "direitos": 12,
+      "vazio": false
+    },
+    {
+      "id": "286",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "288",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "289",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "291",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "292",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "294",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "296",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "301",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "307",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 4,
+      "id_uri": 96,
+      "tipo_total": 197,
+      "tipo_eurepo": 192,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo de convidado"
+      ],
+      "idioma_total": 96,
+      "idioma_codigo": 96,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 15,
+      "vazio": false
+    },
+    {
+      "id": "335",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 32,
+      "removidos": 1,
+      "id_uri": 31,
+      "tipo_total": 92,
+      "tipo_eurepo": 62,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 30,
+      "idioma_codigo": 30,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 61,
+      "vazio": false
+    },
+    {
+      "id": "336",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "338",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "339",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 101,
+      "idioma_codigo": 101,
+      "idioma_exemplos": [
+        "por",
+        "fra",
+        "eng"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "340",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 198,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 79,
+      "vazio": false
+    },
+    {
+      "id": "346",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "347",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "350",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "359",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "361",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Dissertação de mestrado",
+        "Tese de doutorado",
+        "Artigo de periódico"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 60,
+      "idioma_exemplos": [
+        "por",
+        "Português",
+        "eng"
+      ],
+      "direitos": 120,
+      "vazio": false
+    },
+    {
+      "id": "362",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 85,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 40,
+      "idioma_codigo": 40,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 40,
+      "vazio": false
+    },
+    {
+      "id": "363",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 176,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "texto",
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 40,
+      "idioma_codigo": 40,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "365",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 226,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Avaliado por Pares"
+      ],
+      "idioma_total": 48,
+      "idioma_codigo": 48,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 80,
+      "vazio": false
+    },
+    {
+      "id": "366",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "368",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "369",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 91,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos pares"
+      ],
+      "idioma_total": 35,
+      "idioma_codigo": 35,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 40,
+      "vazio": false
+    },
+    {
+      "id": "370",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 80,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 40,
+      "idioma_codigo": 40,
+      "idioma_exemplos": [
+        "por",
+        "spa",
+        "eng"
+      ],
+      "direitos": 55,
+      "vazio": false
+    },
+    {
+      "id": "371",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 96,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Pesquisa Científica"
+      ],
+      "idioma_total": 43,
+      "idioma_codigo": 43,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 40,
+      "vazio": false
+    },
+    {
+      "id": "373",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 60,
+      "id_uri": 40,
+      "tipo_total": 120,
+      "tipo_eurepo": 80,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 40,
+      "idioma_codigo": 40,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 71,
+      "vazio": false
+    },
+    {
+      "id": "380",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "400",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "415",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "420",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "421",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 258,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Pesquisa descritiva"
+      ],
+      "idioma_total": 92,
+      "idioma_codigo": 92,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "423",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "424",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "427",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "435",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Trabalho de Conclusão de Curso",
+        "Dissertação",
+        "Tese"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "437",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "465",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "474",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "475",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 198,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 99,
+      "vazio": false
+    },
+    {
+      "id": "476",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 16,
+      "id_uri": 84,
+      "tipo_total": 252,
+      "tipo_eurepo": 168,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 82,
+      "idioma_codigo": 82,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 84,
+      "vazio": false
+    },
+    {
+      "id": "478",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 104,
+      "idioma_codigo": 104,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "479",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 219,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Pesquisa Bibliográfica"
+      ],
+      "idioma_total": 126,
+      "idioma_codigo": 126,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "fra"
+      ],
+      "direitos": 200,
+      "vazio": false
+    },
+    {
+      "id": "480",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 201,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "pesquisa bibliográfica"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "481",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 209,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Estudo Transversal"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "482",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 101,
+      "idioma_codigo": 101,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "483",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 207,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "dessorção; adsorção"
+      ],
+      "idioma_total": 101,
+      "idioma_codigo": 101,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "484",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 201,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "pesquisa de campo"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "501",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "502",
+      "desfecho": "oai-error",
+      "detalhe": "noRecordsMatch"
+    },
+    {
+      "id": "504",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "pt"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "509",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "512",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Monografia"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "517",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "518",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "519",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "520",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "521",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "523",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "524",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "525",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "526",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "527",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "528",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "529",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "530",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "531",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "532",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "533",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "535",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "536",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "537",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "538",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "539",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "540",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "541",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "542",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "544",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "545",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "546",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "547",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "548",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "549",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "550",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "551",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "552",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "553",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "554",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "555",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "556",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "558",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "559",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "560",
+      "desfecho": "rede",
+      "detalhe": "ReadTimeout"
+    },
+    {
+      "id": "561",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "562",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "563",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "564",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "565",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "567",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "568",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "569",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "570",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "571",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "572",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "573",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "575",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "576",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "577",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "579",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "584",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 220,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "resenha"
+      ],
+      "idioma_total": 105,
+      "idioma_codigo": 105,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "585",
+      "desfecho": "http-468",
+      "detalhe": ""
+    },
+    {
+      "id": "606",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "607",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "608",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 269,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Estudo teórico"
+      ],
+      "idioma_total": 198,
+      "idioma_codigo": 198,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "623",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "624",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "625",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "636",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "637",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "638",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "639",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "643",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "650",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "653",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "656",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "657",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "658",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "663",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 78,
+      "removidos": 2,
+      "id_uri": 76,
+      "tipo_total": 152,
+      "tipo_eurepo": 152,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 76,
+      "idioma_codigo": 76,
+      "idioma_exemplos": [
+        "por",
+        "pt"
+      ],
+      "direitos": 74,
+      "vazio": false
+    },
+    {
+      "id": "666",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "669",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 288,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Scientific research"
+      ],
+      "idioma_total": 153,
+      "idioma_codigo": 153,
+      "idioma_exemplos": [
+        "en",
+        "pt_BR"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "670",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 50,
+      "id_uri": 50,
+      "tipo_total": 142,
+      "tipo_eurepo": 100,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Double blind peer review"
+      ],
+      "idioma_total": 50,
+      "idioma_codigo": 48,
+      "idioma_exemplos": [
+        "por",
+        "pt."
+      ],
+      "direitos": 50,
+      "vazio": false
+    },
+    {
+      "id": "672",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "673",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "674",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "675",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "678",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "682",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "683",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "686",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "688",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 300,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Avaliado pelos pares"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "691",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "701",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "702",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "706",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "707",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "710",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "715",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "720",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "721",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "723",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "724",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "736",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "739",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "743",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "745",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "746",
+      "desfecho": "http-410",
+      "detalhe": ""
+    },
+    {
+      "id": "747",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "760",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "767",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "779",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "780",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "781",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "789",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "791",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "794",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "795",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 200,
+      "removidos": 6,
+      "id_uri": 194,
+      "tipo_total": 388,
+      "tipo_eurepo": 388,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 203,
+      "idioma_codigo": 203,
+      "idioma_exemplos": [
+        "eng",
+        "por",
+        "spa"
+      ],
+      "direitos": 286,
+      "vazio": false
+    },
+    {
+      "id": "796",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "797",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "798",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "799",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "801",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "803",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "804",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "805",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "806",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "808",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "809",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "810",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "811",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "812",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "813",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "817",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "818",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "822",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "823",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "824",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "825",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "832",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "833",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "834",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "835",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "836",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "837",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "838",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "839",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "840",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "842",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "843",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "844",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "845",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "847",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "848",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "849",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "850",
+      "desfecho": "oai-error",
+      "detalhe": "noRecordsMatch"
+    },
+    {
+      "id": "851",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "852",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "853",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "854",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "855",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "858",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "859",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "860",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "861",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "863",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "864",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "865",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1006",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "1029",
+      "desfecho": "http-429",
+      "detalhe": ""
+    },
+    {
+      "id": "1034",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "1037",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1040",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1046",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1055",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 98,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Dissertação",
+        "Outro",
+        "Trabalho de Conclusão de Curso"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 98,
+      "vazio": false
+    },
+    {
+      "id": "1068",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "1077",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 104,
+      "idioma_codigo": 104,
+      "idioma_exemplos": [
+        "pt_BR",
+        "en"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1092",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "1100",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "1108",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 239,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos pares"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "1112",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1114",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "1126",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1130",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "1142",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1143",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1144",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1187",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "1189",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1190",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1220",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "1235",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 15,
+      "id_uri": 85,
+      "tipo_total": 170,
+      "tipo_eurepo": 170,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 85,
+      "idioma_codigo": 85,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 169,
+      "vazio": false
+    },
+    {
+      "id": "1242",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 15,
+      "id_uri": 85,
+      "tipo_total": 216,
+      "tipo_eurepo": 170,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 85,
+      "idioma_codigo": 85,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 33,
+      "vazio": false
+    },
+    {
+      "id": "1247",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 28,
+      "id_uri": 72,
+      "tipo_total": 144,
+      "tipo_eurepo": 144,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 72,
+      "idioma_codigo": 72,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 16,
+      "vazio": false
+    },
+    {
+      "id": "1256",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "1269",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1312",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "1320",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 8,
+      "id_uri": 92,
+      "tipo_total": 276,
+      "tipo_eurepo": 184,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo Avaliado pelos Pares"
+      ],
+      "idioma_total": 92,
+      "idioma_codigo": 92,
+      "idioma_exemplos": [
+        "por",
+        "pt"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1330",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html"
+    },
+    {
+      "id": "1331",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1336",
+      "desfecho": "oai-error",
+      "detalhe": "cannotDisseminateFormat"
+    },
+    {
+      "id": "1338",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "1340",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 253,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "avaliado pelos pares"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 42,
+      "vazio": false
+    },
+    {
+      "id": "1350",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1358",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 30,
+      "id_uri": 70,
+      "tipo_total": 350,
+      "tipo_eurepo": 140,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Peer-Reviewed"
+      ],
+      "idioma_total": 70,
+      "idioma_codigo": 70,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 72,
+      "vazio": false
+    },
+    {
+      "id": "1394",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "1395",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "1402",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1403",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1405",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1406",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1407",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 209,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Estudo Transversal"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1408",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1409",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1410",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1411",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1415",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1416",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1417",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1420",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1421",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1424",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1425",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1426",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1429",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1430",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1431",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1432",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1434",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1435",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1437",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1440",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1441",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1443",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1444",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1445",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1446",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1448",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1449",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1450",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1451",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1452",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1454",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1455",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1456",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1458",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1460",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1462",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1475",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1478",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1479",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1480",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1481",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1482",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1523",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 216,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "relato de pesquisa"
+      ],
+      "idioma_total": 101,
+      "idioma_codigo": 101,
+      "idioma_exemplos": [
+        "por",
+        "spa"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1532",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1538",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "1554",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Relatório de Pesquisa"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "1569",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "1591",
+      "desfecho": "oai-error",
+      "detalhe": "cannotDisseminateFormat"
+    },
+    {
+      "id": "1592",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html;charset=UTF-8"
+    },
+    {
+      "id": "1605",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html"
+    },
+    {
+      "id": "1624",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 393,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Peer-reviewed article"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por",
+        "spa",
+        "fra"
+      ],
+      "direitos": 184,
+      "vazio": false
+    },
+    {
+      "id": "1634",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1694",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 4,
+      "id_uri": 96,
+      "tipo_total": 193,
+      "tipo_eurepo": 192,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "texto"
+      ],
+      "idioma_total": 96,
+      "idioma_codigo": 96,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 4,
+      "vazio": false
+    },
+    {
+      "id": "1696",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 75,
+      "vazio": false
+    },
+    {
+      "id": "1697",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 75,
+      "id_uri": 25,
+      "tipo_total": 54,
+      "tipo_eurepo": 50,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Article not peer-reviewed"
+      ],
+      "idioma_total": 25,
+      "idioma_codigo": 25,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1701",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 196,
+      "tipo_eurepo": 196,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 196,
+      "vazio": false
+    },
+    {
+      "id": "1711",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 113,
+      "idioma_codigo": 113,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1712",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 100,
+      "vazio": true
+    },
+    {
+      "id": "1714",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 75,
+      "id_uri": 25,
+      "tipo_total": 50,
+      "tipo_eurepo": 50,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 25,
+      "idioma_codigo": 25,
+      "idioma_exemplos": [
+        "por",
+        "pt"
+      ],
+      "direitos": 25,
+      "vazio": false
+    },
+    {
+      "id": "1722",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1730",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 683,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos pares"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 198,
+      "vazio": false
+    },
+    {
+      "id": "1750",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "1765",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "1771",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "1772",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 75,
+      "id_uri": 25,
+      "tipo_total": 50,
+      "tipo_eurepo": 50,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 25,
+      "idioma_codigo": 25,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 30,
+      "vazio": false
+    },
+    {
+      "id": "1789",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 75,
+      "id_uri": 25,
+      "tipo_total": 50,
+      "tipo_eurepo": 50,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 25,
+      "idioma_codigo": 25,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 25,
+      "vazio": false
+    },
+    {
+      "id": "1813",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1816",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 51,
+      "id_uri": 49,
+      "tipo_total": 104,
+      "tipo_eurepo": 98,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Relato de Caso"
+      ],
+      "idioma_total": 49,
+      "idioma_codigo": 49,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 49,
+      "vazio": false
+    },
+    {
+      "id": "1817",
+      "desfecho": "nao-xml",
+      "detalhe": "text/xml;charset=UTF-8"
+    },
+    {
+      "id": "1838",
+      "desfecho": "rede",
+      "detalhe": "ReadTimeout"
+    },
+    {
+      "id": "1848",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "1850",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 0,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "book"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1855",
+      "desfecho": "ok",
+      "prefixo": "oai_datacite",
+      "registros": 10,
+      "removidos": 0,
+      "id_uri": 0,
+      "tipo_total": 0,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [],
+      "idioma_total": 0,
+      "idioma_codigo": 0,
+      "idioma_exemplos": [],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1867",
+      "desfecho": "rede",
+      "detalhe": "ReadError"
+    },
+    {
+      "id": "1874",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "1895",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "1911",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "1942",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 212,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo não avaliado por pares"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "1968",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "1993",
+      "desfecho": "http-503",
+      "detalhe": ""
+    },
+    {
+      "id": "1998",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 5,
+      "id_uri": 95,
+      "tipo_total": 190,
+      "tipo_eurepo": 190,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 95,
+      "idioma_codigo": 95,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 64,
+      "vazio": false
+    },
+    {
+      "id": "2012",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html"
+    },
+    {
+      "id": "2015",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt_BR"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2056",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 18,
+      "id_uri": 82,
+      "tipo_total": 164,
+      "tipo_eurepo": 164,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 82,
+      "idioma_codigo": 82,
+      "idioma_exemplos": [
+        "en"
+      ],
+      "direitos": 164,
+      "vazio": false
+    },
+    {
+      "id": "2059",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 270,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Avaliado pelos pares"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 17,
+      "vazio": false
+    },
+    {
+      "id": "2075",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 99,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Trabalho de Conclusão de Curso",
+        "Artigo de Periódico",
+        "Outro"
+      ],
+      "idioma_total": 30,
+      "idioma_codigo": 30,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 90,
+      "vazio": false
+    },
+    {
+      "id": "2132",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2201",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "2207",
+      "desfecho": "nao-xml",
+      "detalhe": "text/xml;charset=UTF-8"
+    },
+    {
+      "id": "2220",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2247",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2253",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 273,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado por revisores"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "pt"
+      ],
+      "direitos": 200,
+      "vazio": false
+    },
+    {
+      "id": "2256",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "2263",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 100,
+      "vazio": true
+    },
+    {
+      "id": "2264",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 100,
+      "vazio": true
+    },
+    {
+      "id": "2268",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2269",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 276,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2270",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "2272",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 50,
+      "removidos": 50,
+      "vazio": true
+    },
+    {
+      "id": "2285",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 198,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 7,
+      "vazio": false
+    },
+    {
+      "id": "2308",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2340",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 116,
+      "idioma_codigo": 116,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 184,
+      "vazio": false
+    },
+    {
+      "id": "2402",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html"
+    },
+    {
+      "id": "2405",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2408",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2413",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 250,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por",
+        "spa",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2429",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "2438",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 196,
+      "tipo_eurepo": 196,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 97,
+      "idioma_codigo": 97,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2441",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2448",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Livro",
+        "Revista",
+        "Atlas"
+      ],
+      "idioma_total": 103,
+      "idioma_codigo": 102,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "Titulo original em inglês: Goodman and Gilman's The pharmacological basis of therapeutics"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2449",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2450",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2451",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2452",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2462",
+      "desfecho": "oai-error",
+      "detalhe": "badVerb"
+    },
+    {
+      "id": "2491",
+      "desfecho": "http-404",
+      "detalhe": ""
+    },
+    {
+      "id": "2500",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 198,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "pt_BR",
+        "en",
+        "es"
+      ],
+      "direitos": 110,
+      "vazio": false
+    },
+    {
+      "id": "2503",
+      "desfecho": "nao-xml",
+      "detalhe": "text/xml;charset=utf-8"
+    },
+    {
+      "id": "2504",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "2505",
+      "desfecho": "nao-xml",
+      "detalhe": "text/xml;charset=UTF-8"
+    },
+    {
+      "id": "2515",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 4,
+      "id_uri": 96,
+      "tipo_total": 204,
+      "tipo_eurepo": 192,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Texto"
+      ],
+      "idioma_total": 96,
+      "idioma_codigo": 96,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 188,
+      "vazio": false
+    },
+    {
+      "id": "2516",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2517",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2525",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "2541",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 1,
+      "removidos": 0,
+      "id_uri": 1,
+      "tipo_total": 2,
+      "tipo_eurepo": 2,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 1,
+      "idioma_codigo": 1,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 2,
+      "vazio": false
+    },
+    {
+      "id": "2603",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2604",
+      "desfecho": "rede",
+      "detalhe": "ConnectError"
+    },
+    {
+      "id": "2660",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "2676",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 196,
+      "tipo_eurepo": 196,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 107,
+      "vazio": false
+    },
+    {
+      "id": "2677",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "pt",
+        "en"
+      ],
+      "direitos": 100,
+      "vazio": false
+    },
+    {
+      "id": "2678",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 17,
+      "id_uri": 83,
+      "tipo_total": 166,
+      "tipo_eurepo": 166,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 83,
+      "idioma_codigo": 83,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 156,
+      "vazio": false
+    },
+    {
+      "id": "2679",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 10,
+      "vazio": false
+    },
+    {
+      "id": "2680",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 1,
+      "id_uri": 99,
+      "tipo_total": 293,
+      "tipo_eurepo": 198,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Avaliado por pares"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 99,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 11,
+      "vazio": false
+    },
+    {
+      "id": "2681",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 338,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "\"Avaliado por Pares\""
+      ],
+      "idioma_total": 103,
+      "idioma_codigo": 103,
+      "idioma_exemplos": [
+        "por",
+        "spa"
+      ],
+      "direitos": 24,
+      "vazio": false
+    },
+    {
+      "id": "2682",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "2683",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "2686",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "2719",
+      "desfecho": "rede",
+      "detalhe": "ReadTimeout"
+    },
+    {
+      "id": "2730",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 196,
+      "tipo_eurepo": 196,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por",
+        "spa"
+      ],
+      "direitos": 79,
+      "vazio": false
+    },
+    {
+      "id": "2731",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 259,
+      "tipo_eurepo": 196,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigos de demanda contínua"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 191,
+      "vazio": false
+    },
+    {
+      "id": "2740",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 104,
+      "idioma_codigo": 104,
+      "idioma_exemplos": [
+        "por",
+        "spa",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2741",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "pt"
+      ],
+      "direitos": 13,
+      "vazio": false
+    },
+    {
+      "id": "2742",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 206,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "pesquisa de campo"
+      ],
+      "idioma_total": 102,
+      "idioma_codigo": 102,
+      "idioma_exemplos": [
+        "por",
+        "eng"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2743",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 200,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 101,
+      "idioma_codigo": 101,
+      "idioma_exemplos": [
+        "por",
+        "spa"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2744",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 207,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Pesquisa descritiva"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2745",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 296,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Avaliado pelos pares"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 200,
+      "vazio": false
+    },
+    {
+      "id": "2746",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 300,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Avaliado pelos pares"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 200,
+      "vazio": false
+    },
+    {
+      "id": "2747",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 100,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Dissertação",
+        "Tese",
+        "Artigo de periódico"
+      ],
+      "idioma_total": 99,
+      "idioma_codigo": 0,
+      "idioma_exemplos": [
+        "Português",
+        "Inglês"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2750",
+      "desfecho": "oai-error",
+      "detalhe": "noRecordsMatch"
+    },
+    {
+      "id": "2778",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 0,
+      "id_uri": 100,
+      "tipo_total": 421,
+      "tipo_eurepo": 200,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Texto"
+      ],
+      "idioma_total": 100,
+      "idioma_codigo": 100,
+      "idioma_exemplos": [
+        "por",
+        "eng",
+        "spa"
+      ],
+      "direitos": 200,
+      "vazio": false
+    },
+    {
+      "id": "2785",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "2786",
+      "desfecho": "rede",
+      "detalhe": "ConnectTimeout"
+    },
+    {
+      "id": "2802",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 2,
+      "id_uri": 98,
+      "tipo_total": 207,
+      "tipo_eurepo": 196,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion",
+        "Artigo avaliado pelos Pares"
+      ],
+      "idioma_total": 98,
+      "idioma_codigo": 98,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 0,
+      "vazio": false
+    },
+    {
+      "id": "2803",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 3,
+      "id_uri": 97,
+      "tipo_total": 194,
+      "tipo_eurepo": 194,
+      "tipo_exemplos": [
+        "info:eu-repo/semantics/article",
+        "info:eu-repo/semantics/publishedVersion"
+      ],
+      "idioma_total": 97,
+      "idioma_codigo": 97,
+      "idioma_exemplos": [
+        "por"
+      ],
+      "direitos": 194,
+      "vazio": false
+    },
+    {
+      "id": "2813",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 0,
+      "removidos": 0,
+      "vazio": true
+    },
+    {
+      "id": "2817",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "2823",
+      "desfecho": "http-403",
+      "detalhe": ""
+    },
+    {
+      "id": "2829",
+      "desfecho": "nao-xml",
+      "detalhe": "text/html; charset=utf-8"
+    },
+    {
+      "id": "2835",
+      "desfecho": "ok",
+      "prefixo": "xoai",
+      "registros": 100,
+      "removidos": 3,
+      "id_uri": 97,
+      "tipo_total": 99,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [
+        "Trabalho de conclusão de curso",
+        "Dissertação de mestrado",
+        "Trabalho de Conclusão de Curso de Graduação"
+      ],
+      "idioma_total": 97,
+      "idioma_codigo": 97,
+      "idioma_exemplos": [
+        "pt_BR",
+        "por",
+        "pt"
+      ],
+      "direitos": 115,
+      "vazio": false
+    },
+    {
+      "id": "2837",
+      "desfecho": "ok",
+      "prefixo": "oai_dc",
+      "registros": 100,
+      "removidos": 5,
+      "id_uri": 95,
+      "tipo_total": 0,
+      "tipo_eurepo": 0,
+      "tipo_exemplos": [],
+      "idioma_total": 0,
+      "idioma_codigo": 0,
+      "idioma_exemplos": [],
+      "direitos": 5,
+      "vazio": false
+    },
+    {
+      "id": "2839",
+      "desfecho": "http-500",
+      "detalhe": ""
+    },
+    {
+      "id": "2866",
+      "desfecho": "http-400",
+      "detalhe": ""
+    }
+  ]
+}
