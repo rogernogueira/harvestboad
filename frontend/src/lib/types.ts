@@ -208,6 +208,30 @@ export interface HarvestList {
   results: Harvest[]
 }
 
+/** Coleta com o repositório a que pertence, na listagem de vários vínculos. */
+export interface HarvestWithRepository extends Harvest {
+  repository: {
+    harvesterRepositoryId: string
+    /** Sigla do vínculo; nula quando o ADMIN pede um repositório sem vínculo. */
+    acronym: string | null
+  }
+}
+
+/** Repositório consultado pela seção Coleta. */
+export interface LinkedHarvestsRepository {
+  harvesterRepositoryId: string
+  acronym: string | null
+  /** O Harvester não respondeu por este repositório nesta requisição. */
+  unavailable: boolean
+}
+
+/** Coletas de todos os vínculos, da mais recente para a mais antiga. */
+export interface LinkedHarvests {
+  count: number
+  repositories: LinkedHarvestsRepository[]
+  results: HarvestWithRepository[]
+}
+
 export interface FacetValue {
   value: string
   valueCount: number

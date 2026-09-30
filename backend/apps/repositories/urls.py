@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
+    LinkedHarvestsView,
     MyRepositoriesSummaryView,
     RepositoryAccessViewSet,
     RepositoryDetailView,
@@ -19,6 +20,7 @@ router.register("accesses", RepositoryAccessViewSet, basename="repository-access
 urlpatterns = [
     path("", include(router.urls)),
     path("summary/", MyRepositoriesSummaryView.as_view(), name="summary"),
+    path("harvests/", LinkedHarvestsView.as_view(), name="linked-harvests"),
     path("<int:repository_id>", RepositoryDetailView.as_view(), name="detail"),
     path("<int:repository_id>/harvests", RepositoryHarvestsView.as_view(), name="harvests"),
     path("<int:repository_id>/managers", RepositoryManagersView.as_view(), name="managers"),

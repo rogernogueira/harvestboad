@@ -35,6 +35,14 @@ export const router = createBrowserRouter([
                 path: 'acessos',
                 lazy: lazyPage(() => import('@/pages/AccessPage'), 'AccessPage'),
               },
+              {
+                // A seção Coleta: últimas coletas e histórico dos vínculos,
+                // para o administrador acompanhar o acervo. As telas de uma
+                // coleta (`coletas/:snapshotId`) ficam fora do guarda: o gestor
+                // as abre a partir do próprio repositório.
+                path: 'coletas',
+                lazy: lazyPage(() => import('@/pages/HarvestsPage'), 'HarvestsPage'),
+              },
             ],
           },
           {

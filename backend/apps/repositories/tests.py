@@ -384,6 +384,109 @@ class RepositoryDetailAPITests(TestCase):
         self.assertIsNone(linha["name"])
 
 
+class LinkedHarvestsAPITests(TestCase):
+    """Coletas de todos os vínculos numa resposta só, para a seção Coleta."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="adm", email="adm@uft.edu.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="ges", email="ges@uft.edu.br", password="x", profile=Profile.GESTOR
+        )
+        cls.outro = User.objects.create_user(
+            username="out", email="out@uft.edu.br", password="x", profile=Profile.GESTOR
+        )
+        RepositoryAccess.objects.create(
+            user=cls.gestor, harvester_repository_id="1", acronym="VERACRUZ-0"
+        )
+        # O mesmo repositório em dois gestores: o ADMIN vê os dois vínculos e
+        # ainda assim o histórico tem de sair uma vez só.
+        RepositoryAccess.objects.create(
+            user=cls.outro, harvester_repository_id="1", acronym="VERACRUZ-0"
+        )
+        RepositoryAccess.objects.create(user=cls.outro, harvester_repository_id="5", acronym="UTFPR")
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().get(f"{REPOS}/harvests/").status_code, 401)
+
+    @patch(SERVICES_CLIENT, lambda *a, **k: fake_services_client())
+    def test_gestor_recebe_403_mesmo_com_vinculo(self) -> None:
+        # A seção é do administrador; o gestor tem o histórico na página do
+        # próprio repositório.
+        self.assertEqual(self.api(self.gestor).get(f"{REPOS}/harvests/").status_code, 403)
+        self.assertEqual(
+            self.api(self.gestor).get(f"{REPOS}/harvests/?repository=1").status_code, 403
+        )
+
+    @patch(SERVICES_CLIENT, lambda *a, **k: fake_services_client())
+    def test_admin_recebe_cada_repositorio_uma_vez(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/harvests/")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            sorted(r["harvesterRepositoryId"] for r in response.data["repositories"]), ["1", "5"]
+        )
+        # Dois repositórios com dois snapshots cada no duplo.
+        self.assertEqual(response.data["count"], 4)
+        # Os dois repositórios do duplo têm a mesma coleta mais recente, então
+        # só o snapshot é garantido em primeiro; o repositório é qualquer um.
+        primeira = response.data["results"][0]
+        self.assertEqual(primeira["snapshotId"], "98768")
+        self.assertIn(primeira["repository"]["harvesterRepositoryId"], {"1", "5"})
+
+    @patch(SERVICES_CLIENT, lambda *a, **k: fake_services_client())
+    def test_ordem_e_da_mais_recente_para_a_mais_antiga(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/harvests/")
+        inicios = [c.get("startTime") for c in response.data["results"]]
+        # As sem início ficam no fim; as datadas vêm em ordem decrescente.
+        self.assertEqual(inicios[-2:], [None, None])
+        self.assertEqual(inicios[:2], sorted(inicios[:2], reverse=True))
+
+    @patch(SERVICES_CLIENT, lambda *a, **k: fake_services_client())
+    def test_filtro_por_repositorio_restringe_a_um(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/harvests/?repository=1")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            [r["harvesterRepositoryId"] for r in response.data["repositories"]], ["1"]
+        )
+        self.assertEqual(response.data["count"], 2)
+
+    @patch(SERVICES_CLIENT, lambda *a, **k: fake_services_client())
+    def test_admin_alcanca_repositorio_sem_vinculo_pelo_filtro(self) -> None:
+        response = self.api(self.admin).get(f"{REPOS}/harvests/?repository=99")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.data["repositories"],
+            [{"harvesterRepositoryId": "99", "acronym": None, "unavailable": False}],
+        )
+        self.assertEqual(response.data["count"], 2)
+
+    def test_falha_em_um_repositorio_nao_derruba_os_outros(self) -> None:
+        class _UmFora:
+            def list_snapshots(self, repository_id):
+                if str(repository_id) == "5":
+                    raise HarvesterError("sem rota")
+                return SNAPSHOTS_PAYLOAD
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _UmFora()):
+            response = self.api(self.admin).get(f"{REPOS}/harvests/")
+
+        self.assertEqual(response.status_code, 200)
+        por_id = {r["harvesterRepositoryId"]: r for r in response.data["repositories"]}
+        self.assertFalse(por_id["1"]["unavailable"])
+        self.assertTrue(por_id["5"]["unavailable"])
+        self.assertEqual(response.data["count"], 2)
+
+
 class SyncAcronymsCommandTests(TestCase):
     """Comando de ressincronização das siglas gravadas."""
 

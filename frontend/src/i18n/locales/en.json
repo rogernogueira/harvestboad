@@ -178,6 +178,53 @@
       "seconds": "s"
     }
   },
+  "harvestsPage": {
+    "title": "Harvests",
+    "description": "Latest harvests and history of the repositories linked to managers.",
+    "tabs": {
+      "latest": "Latest",
+      "history": "History"
+    },
+    "repositoryFilter": "Repository",
+    "allRepositories": "All repositories",
+    "noRepositories": "No linked repository.",
+    "empty": "No harvests in the selected repositories.",
+    "unavailableTitle": "Harvester did not respond",
+    "unavailableBody": "The Harvester did not respond for: {{list}}. Harvests of those repositories are not shown here.",
+    "latest": {
+      "stats": {
+        "withHarvest": "Repositories with a harvest",
+        "errors": "Last harvest with error",
+        "running": "Not finished",
+        "never": "Never harvested"
+      }
+    },
+    "history": {
+      "stats": {
+        "harvests": "Harvests",
+        "repositoriesHint": "across {{count}} of {{total}} repositories",
+        "failures": "With error",
+        "failureRate": "Error rate",
+        "medianDuration": "Median duration"
+      },
+      "chart": {
+        "title": "Harvests per month and error rate",
+        "harvests": "Harvests",
+        "failures": "With error",
+        "rate": "Error rate"
+      }
+    },
+    "columns": {
+      "repository": "Repository",
+      "index": "Indexing",
+      "duration": "Duration"
+    },
+    "columnHints": {
+      "repository": "The repository's acronym in the link. Opens its page.",
+      "index": "Whether the harvest was indexed. Only an indexed one has a diagnosis and records.",
+      "duration": "End minus start. Without an end, the harvest has not finished yet."
+    }
+  },
   "diagnosis": {
     "size": "Records",
     "valid": "Valid",
@@ -339,7 +386,8 @@
     "toggleMenu": "Open or close the menu",
     "notifications": "Notifications",
     "admin": "Administration",
-    "demands": "Requests"
+    "demands": "Requests",
+    "harvests": "Harvests"
   },
   "access": {
     "eyebrow": "Administration",

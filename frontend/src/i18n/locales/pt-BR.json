@@ -179,6 +179,53 @@
       "seconds": "s"
     }
   },
+  "harvestsPage": {
+    "title": "Coleta",
+    "description": "Últimas coletas e histórico dos repositórios vinculados a gestores.",
+    "tabs": {
+      "latest": "Últimas",
+      "history": "Histórico"
+    },
+    "repositoryFilter": "Repositório",
+    "allRepositories": "Todos os repositórios",
+    "noRepositories": "Nenhum repositório vinculado.",
+    "empty": "Nenhuma coleta nos repositórios selecionados.",
+    "unavailableTitle": "Harvester sem resposta",
+    "unavailableBody": "O Harvester não respondeu por: {{list}}. As coletas desses repositórios não aparecem aqui.",
+    "latest": {
+      "stats": {
+        "withHarvest": "Repositórios com coleta",
+        "errors": "Última coleta com erro",
+        "running": "Sem término",
+        "never": "Sem nenhuma coleta"
+      }
+    },
+    "history": {
+      "stats": {
+        "harvests": "Coletas",
+        "repositoriesHint": "em {{count}} de {{total}} repositórios",
+        "failures": "Com erro",
+        "failureRate": "Taxa de erro",
+        "medianDuration": "Duração mediana"
+      },
+      "chart": {
+        "title": "Coletas por mês e taxa de erro",
+        "harvests": "Coletas",
+        "failures": "Com erro",
+        "rate": "Taxa de erro"
+      }
+    },
+    "columns": {
+      "repository": "Repositório",
+      "index": "Indexação",
+      "duration": "Duração"
+    },
+    "columnHints": {
+      "repository": "Sigla do repositório no vínculo. Abre a página dele.",
+      "index": "Se a coleta foi indexada. Só a indexada tem diagnóstico e registros.",
+      "duration": "Término menos início. Sem término, a coleta ainda não acabou."
+    }
+  },
   "diagnosis": {
     "size": "Registros",
     "valid": "Válidos",
@@ -343,7 +390,8 @@
     "toggleMenu": "Abrir ou fechar o menu",
     "notifications": "Notificações",
     "admin": "Administração",
-    "demands": "Solicitações"
+    "demands": "Solicitações",
+    "harvests": "Coleta"
   },
   "access": {
     "eyebrow": "Administração",

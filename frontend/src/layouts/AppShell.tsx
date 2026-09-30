@@ -25,6 +25,10 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'nav.repositories', icon: 'fas fa-database', end: true },
   { to: '/acessos', label: 'nav.access', icon: 'fas fa-users', end: false, adminOnly: true },
+  // `end: false` de propósito: as telas de uma coleta (`/coletas/:id`) são
+  // desta seção, e o item fica aceso enquanto o administrador está nelas. O
+  // gestor não vê o item, mas continua abrindo `/coletas/:id` pelo repositório.
+  { to: '/coletas', label: 'nav.harvests', icon: 'fas fa-sync-alt', end: false, adminOnly: true },
   { to: '/demandas', label: 'nav.demands', icon: 'fas fa-inbox', end: false },
   // Sem `adminOnly`: a seção tem caixa de entrada para todo mundo, e as abas
   // de envio e catálogo só aparecem para o administrador.

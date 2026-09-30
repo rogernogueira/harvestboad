@@ -288,6 +288,52 @@ class MyRepositoriesSummaryView(HarvesterBackedAPIView):
         return Response({"count": len(resumos), "results": resumos})
 
 
+class LinkedHarvestsView(HarvesterBackedAPIView):
+    """Coletas de todos os repositórios vinculados, para a seção Coleta.
+
+    **Exclusiva do ADMIN**: a seção é de acompanhamento do acervo, não do
+    repositório de um gestor — este já tem o histórico na página do próprio
+    repositório. O guarda `AdminRoute` do frontend só esconde a rota; quem
+    recusa de fato é o 403 daqui.
+
+    O escopo é o dos **vínculos**, e não o acervo inteiro. "Todos" seriam os
+    2.181 repositórios do Harvester, e cada um custa uma ida à origem — o
+    painel inicial já limita o administrador aos vínculos pelo mesmo motivo
+    (`MyRepositoriesSummaryView`). Com `repository`, alcança qualquer
+    repositório, vinculado ou não: é a regra do `None` como "todos".
+    """
+
+    permission_classes = [permissions.IsAuthenticated, IsAdminProfile]
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter("repository", str, description="Restringe a um repositório."),
+        ],
+        description=(
+            "Coletas dos repositórios vinculados, da mais recente para a mais antiga, "
+            "cada uma com o repositório a que pertence. Repositório que o Harvester não "
+            "respondeu sai marcado como indisponível. Exclusivo do perfil ADMIN."
+        ),
+    )
+    def get(self, request: Request) -> Response:
+        queryset = RepositoryAccess.objects.order_by("acronym", "pk")
+
+        repository = request.query_params.get("repository")
+        if repository:
+            queryset = queryset.filter(harvester_repository_id=repository)
+
+        # Um repositório aparece uma vez, mesmo que vários gestores o
+        # compartilhem: são todos os vínculos, e sem isto o mesmo histórico
+        # seria pedido duas vezes.
+        vinculos: dict[str, str | None] = {}
+        for repository_id, acronym in queryset.values_list("harvester_repository_id", "acronym"):
+            vinculos.setdefault(repository_id, acronym)
+        if repository and repository not in vinculos:
+            vinculos[repository] = None
+
+        return Response(services.linked_harvests(list(vinculos.items())))
+
+
 class RepositoryDetailView(HarvesterBackedAPIView):
     """Visão geral do repositório: dados cadastrais vindos do Harvester."""
 

@@ -8,6 +8,7 @@ import type {
   Diagnosis,
   HarvestDetail,
   HarvestList,
+  LinkedHarvests,
   NotificationCategoryItem,
   NotificationItem,
   NotificationTemplateItem,
@@ -137,6 +138,20 @@ export const repositoryHarvestsQuery = (id: string) =>
     queryKey: ['repository', id, 'harvests'],
     queryFn: () => apiGet<HarvestList>(`/repositories/${id}/harvests`),
   })
+
+/**
+ * Coletas de todos os repositórios vinculados, para a seção Coleta.
+ *
+ * Vem inteira, sem filtro de repositório: as duas abas e o seletor de
+ * repositório recortam no navegador. Um gestor tem poucos repositórios, e
+ * cada um custa uma ida ao Harvester no backend — pedir de novo a cada troca
+ * de seletor repetiria essa espera por um recorte que já está em memória.
+ */
+export const linkedHarvestsQuery = queryOptions({
+  queryKey: ['repositories', 'harvests'],
+  queryFn: () => apiGet<LinkedHarvests>('/repositories/harvests/'),
+  staleTime: 5 * 60_000,
+})
 
 export const harvestQuery = (snapshotId: string) =>
   queryOptions({

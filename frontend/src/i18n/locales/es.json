@@ -179,6 +179,53 @@
       "seconds": "s"
     }
   },
+  "harvestsPage": {
+    "title": "Recolección",
+    "description": "Últimas recolecciones e historial de los repositorios vinculados a gestores.",
+    "tabs": {
+      "latest": "Últimas",
+      "history": "Historial"
+    },
+    "repositoryFilter": "Repositorio",
+    "allRepositories": "Todos los repositorios",
+    "noRepositories": "Ningún repositorio vinculado.",
+    "empty": "Ninguna recolección en los repositorios seleccionados.",
+    "unavailableTitle": "Harvester sin respuesta",
+    "unavailableBody": "El Harvester no respondió por: {{list}}. Las recolecciones de esos repositorios no aparecen aquí.",
+    "latest": {
+      "stats": {
+        "withHarvest": "Repositorios con recolección",
+        "errors": "Última recolección con error",
+        "running": "Sin finalización",
+        "never": "Sin ninguna recolección"
+      }
+    },
+    "history": {
+      "stats": {
+        "harvests": "Recolecciones",
+        "repositoriesHint": "en {{count}} de {{total}} repositorios",
+        "failures": "Con error",
+        "failureRate": "Tasa de error",
+        "medianDuration": "Duración mediana"
+      },
+      "chart": {
+        "title": "Recolecciones por mes y tasa de error",
+        "harvests": "Recolecciones",
+        "failures": "Con error",
+        "rate": "Tasa de error"
+      }
+    },
+    "columns": {
+      "repository": "Repositorio",
+      "index": "Indexación",
+      "duration": "Duración"
+    },
+    "columnHints": {
+      "repository": "Sigla del repositorio en el vínculo. Abre su página.",
+      "index": "Si la recolección fue indexada. Solo la indexada tiene diagnóstico y registros.",
+      "duration": "Finalización menos inicio. Sin finalización, la recolección aún no terminó."
+    }
+  },
   "diagnosis": {
     "size": "Registros",
     "valid": "Válidos",
@@ -343,7 +390,8 @@
     "toggleMenu": "Abrir o cerrar el menú",
     "notifications": "Notificaciones",
     "admin": "Administración",
-    "demands": "Solicitudes"
+    "demands": "Solicitudes",
+    "harvests": "Recolección"
   },
   "access": {
     "eyebrow": "Administración",

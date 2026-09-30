@@ -107,6 +107,49 @@ def repository_harvests(repository_id: str, client: HarvesterClient | None = Non
     }
 
 
+def linked_harvests(
+    vinculos: list[tuple[str, str | None]], client: HarvesterClient | None = None
+) -> dict:
+    """Coletas de vários repositórios num histórico só, da mais recente para a
+    mais antiga.
+
+    Alimenta a seção Coleta: a aba "Últimas" fica com a primeira coleta de cada
+    repositório e a "Histórico" agrega o resto por mês. As duas saem da mesma
+    resposta porque o insumo é o mesmo — o `list_snapshots` de cada vínculo,
+    que `repository_harvests` já mantém em cache.
+
+    `vinculos` são pares (id no Harvester, sigla). A sigla vem do vínculo, e
+    não do cadastro na origem, de propósito: pedir o cadastro custaria uma
+    segunda ida ao Harvester por repositório só para um rótulo que o vínculo
+    já tem.
+
+    Cada repositório é independente: falha do Harvester em um marca a linha
+    como indisponível e os demais continuam sendo devolvidos, como em
+    `access_summaries`.
+    """
+    client = client or HarvesterClient()
+    repositorios = []
+    coletas = []
+
+    for repository_id, acronym in vinculos:
+        linha = {"harvesterRepositoryId": repository_id, "acronym": acronym, "unavailable": False}
+        try:
+            historico = repository_harvests(repository_id, client)["results"]
+        except HarvesterError:
+            linha["unavailable"] = True
+            historico = []
+        repositorios.append(linha)
+        coletas.extend(
+            {**coleta, "repository": {"harvesterRepositoryId": repository_id, "acronym": acronym}}
+            for coleta in historico
+        )
+
+    # As datas chegam como "2024-06-25 11:51:37", que ordena bem como texto.
+    # Coleta sem início vai para o fim: sem data não há onde a colocar.
+    coletas.sort(key=lambda c: c.get("startTime") or "", reverse=True)
+    return {"count": len(coletas), "repositories": repositorios, "results": coletas}
+
+
 def _latest_finished(snapshots: list[dict]) -> dict | None:
     """Coleta mais recente que efetivamente terminou.
 
