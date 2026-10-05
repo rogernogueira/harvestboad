@@ -1,30 +1,79 @@
 import { BrSelectStandard } from '@govbr-ds/react-components'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  createColumnHelper,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  filterFns,
+  rowPaginationFeature,
+  rowSortingFeature,
+  sortFns,
+  tableFeatures,
+  useTable,
+} from '@tanstack/react-table'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
 
 import { HarvestStatusBadge } from '@/components/Badges'
+import { ColumnFilterSelect } from '@/components/ColumnFilterSelect'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
 import { Grafico } from '@/components/Grafico'
 import { PageHeader } from '@/components/PageHeader'
+import { Pagination } from '@/components/Pagination'
 import { StatCard } from '@/components/StatCard'
 import { Tabs } from '@/components/Tabs'
 import type { Aba } from '@/components/Tabs'
 import { dicaDeColuna } from '@/lib/columnHints'
+import { baixarCsv } from '@/lib/csv'
 import type { Paleta } from '@/lib/grafico'
 import { harvestTone } from '@/lib/harvestStatus'
+import { TUDO } from '@/lib/pagination'
 import { harvestHistoryQuery, refreshHarvestHistory, repositoryIndexQuery } from '@/lib/queries'
 import type { HarvestHistoryMonth, RepositoryHit } from '@/lib/types'
+
+/**
+ * Tabela "Coletas por Fontes": ordena, filtra e pagina as ~2.184 linhas do
+ * índice **no navegador**, com TanStack Table — o mesmo tratamento da tabela de
+ * administração (`AdminRepositoriesPage`), que roda sobre o mesmo conjunto já em
+ * memória. É o oposto da tabela de registros, que pagina no servidor por causa
+ * das dezenas de milhares de linhas.
+ */
+const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  rowSortingFeature,
+  rowPaginationFeature,
+  filterFns,
+  sortFns,
+  filteredRowModel: createFilteredRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+})
+const columnHelper = createColumnHelper<typeof features, RepositoryHit>()
+
+const POR_PAGINA_COLETAS = 25
+const TAMANHOS_COLETAS = [25, 100, 1000, TUDO] as const
+
+/** Recorta texto longo em duas linhas (nome da fonte, instituição). */
+const RECORTE_DUAS_LINHAS = {
+  display: '-webkit-box',
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: 'vertical' as const,
+  overflow: 'hidden',
+}
 
 /**
  * Seção Coleta: diagnóstico das coletas de TODO o acervo do Harvester.
  *
  * Duas abas reproduzem o experimento (`exp1/evidence`):
  * - "Estado atual" (como `secoes/Coleta.tsx`) olha a última coleta de cada
- *   fonte — distribuições de situação, índice e atualidade, mais as fontes mais
- *   desatualizadas. Vem do índice do acervo (`repositoryIndexQuery`), que o
- *   backend já mantém em cache; filtrar é no navegador.
+ *   fonte — distribuições de situação, índice e atualidade, mais a tabela
+ *   "Coletas por Fontes". Vem do índice do acervo (`repositoryIndexQuery`), que o
+ *   backend já mantém em cache; ordenar, filtrar e paginar é no navegador.
  * - "Histórico" (como `secoes/Historico.tsx`) olha todas as coletas ao longo do
  *   tempo. Vem de um agregado global que o comando `warm_harvest_history`
  *   aquece — a rota só lê cache, nunca varre o Harvester numa requisição.
@@ -211,14 +260,6 @@ function EstadoAtual() {
     tom: TOM_BANDA[chave],
   })).filter((item) => item.valor > 0)
 
-  const desatualizadas = [...recorte]
-    .filter((f) => f.lastSnapshotDate)
-    .sort(
-      (a, b) =>
-        (diasDesde(b.lastSnapshotDate, agora) ?? 0) - (diasDesde(a.lastSnapshotDate, agora) ?? 0),
-    )
-    .slice(0, 15)
-
   const selects: {
     campo: string
     rotulo: string
@@ -369,11 +410,7 @@ function EstadoAtual() {
             />
           </div>
 
-          <TabelaDesatualizadas
-            id="harvests-page-overview-outdated"
-            fontes={desatualizadas}
-            agora={agora}
-          />
+          <TabelaColetasPorFonte id="harvests-page-overview-table" fontes={recorte} agora={agora} />
         </>
       )}
     </div>
@@ -523,11 +560,15 @@ function Distribuicao({
 }
 
 /**
- * Fontes mais desatualizadas: top 15 por dias desde a última coleta. A linha
- * abre a página do repositório, como o `aoAbrirFonte` do experimento. Sem a
- * coluna Plataforma — o Harvester não a serve.
+ * Tabela "Coletas por Fontes": uma linha por fonte com a última coleta de cada,
+ * sobre o recorte dos filtros do topo. Ordena, filtra por coluna e pagina no
+ * navegador (TanStack Table), e exporta o recorte em CSV — os mesmos recursos da
+ * tabela de registros, aqui sobre as linhas já em memória. Sem a coluna
+ * Plataforma, que o Harvester não serve.
  */
-function TabelaDesatualizadas({
+const COLUNAS_NUMERICAS = ['dias', 'registros', 'validos', 'invalidos']
+
+function TabelaColetasPorFonte({
   id,
   fontes,
   agora,
@@ -542,115 +583,347 @@ function TabelaDesatualizadas({
     [i18n.resolvedLanguage],
   )
 
-  const colunas: { chave: string; rotulo: string; dica: string }[] = [
-    {
-      chave: 'source',
-      rotulo: t('harvestsPage.overview.outdated.columns.source'),
-      dica: t('harvestsPage.overview.outdated.hints.source'),
+  const rotuloStatus = useCallback(
+    (valor: string | null): string => {
+      if (!valor) return '—'
+      const chave = `harvestStatus.${valor.toLowerCase()}`
+      return i18n.exists(chave) ? t(chave) : valor
     },
-    {
-      chave: 'institution',
-      rotulo: t('harvestsPage.overview.outdated.columns.institution'),
-      dica: t('harvestsPage.overview.outdated.hints.institution'),
+    [t, i18n],
+  )
+
+  // Valores distintos para os selects de filtro por coluna, do conjunto inteiro.
+  const statusDistintos = useMemo(
+    () => [...new Set(fontes.map((f) => f.lastSnapshotStatus).filter(Boolean) as string[])].sort(),
+    [fontes],
+  )
+  const indicesDistintos = useMemo(
+    () => [...new Set(fontes.map((f) => f.lastIndexStatus).filter(Boolean) as string[])].sort(),
+    [fontes],
+  )
+
+  const numerica = (valor: number) => (valor < 0 ? '—' : numero.format(valor))
+
+  // Colunas sem `useMemo`: recriá-las a cada render é barato (só a página visível
+  // é desenhada) e evita o alerta de memoização do compilador; o estado de
+  // ordenação e de filtro vive por `id` de coluna, não pela identidade do objeto.
+  const colunas = columnHelper.columns([
+    columnHelper.accessor((f) => [f.acronym, f.name].filter(Boolean).join(' '), {
+      id: 'fonte',
+      header: t('harvestsPage.overview.table.columns.source'),
+      filterFn: 'includesString',
+      cell: (info) => {
+        const f = info.row.original
+        return (
+          <>
+            <Link
+              to={`/repositorios/${f.harvesterRepositoryId}`}
+              className="text-blue-warm-vivid-80"
+            >
+              {f.acronym ?? f.harvesterRepositoryId}
+            </Link>
+            {f.name ? (
+              <span className="d-block text-down-02 text-gray-70" style={RECORTE_DUAS_LINHAS}>
+                {f.name}
+              </span>
+            ) : null}
+          </>
+        )
+      },
+    }),
+    columnHelper.accessor((f) => f.institutionName ?? '', {
+      id: 'instituicao',
+      header: t('harvestsPage.overview.table.columns.institution'),
+      filterFn: 'includesString',
+      cell: (info) => (
+        <span className="text-gray-70" style={RECORTE_DUAS_LINHAS}>
+          {info.row.original.institutionName ?? '—'}
+        </span>
+      ),
+    }),
+    columnHelper.accessor((f) => f.lastSnapshotStatus ?? '', {
+      id: 'estado',
+      header: t('harvestsPage.overview.table.columns.status'),
+      filterFn: 'equalsString',
+      cell: (info) =>
+        info.row.original.lastSnapshotStatus ? (
+          <HarvestStatusBadge
+            id={`${id}-row-${info.row.original.harvesterRepositoryId}-status-badge`}
+            status={info.row.original.lastSnapshotStatus}
+          />
+        ) : (
+          '—'
+        ),
+    }),
+    columnHelper.accessor((f) => f.lastIndexStatus ?? '', {
+      id: 'indexacao',
+      header: t('harvestsPage.overview.table.columns.index'),
+      filterFn: 'equalsString',
+      cell: (info) => rotuloStatus(info.row.original.lastIndexStatus),
+    }),
+    columnHelper.accessor((f) => f.lastSnapshotDate ?? '', {
+      id: 'ultima',
+      header: t('harvestsPage.overview.table.columns.lastHarvest'),
+      enableColumnFilter: false,
+      cell: (info) => info.getValue().slice(0, 10) || '—',
+    }),
+    columnHelper.accessor((f) => diasDesde(f.lastSnapshotDate, agora) ?? -1, {
+      id: 'dias',
+      header: t('harvestsPage.overview.table.columns.days'),
+      enableColumnFilter: false,
+      cell: (info) => numerica(info.getValue()),
+    }),
+    columnHelper.accessor((f) => f.lastSize ?? -1, {
+      id: 'registros',
+      header: t('harvestsPage.overview.table.columns.records'),
+      enableColumnFilter: false,
+      cell: (info) => numerica(info.getValue()),
+    }),
+    columnHelper.accessor((f) => f.lastValidSize ?? -1, {
+      id: 'validos',
+      header: t('harvestsPage.overview.table.columns.valid'),
+      enableColumnFilter: false,
+      cell: (info) => numerica(info.getValue()),
+    }),
+    columnHelper.accessor((f) => f.invalidSize ?? -1, {
+      id: 'invalidos',
+      header: t('harvestsPage.overview.table.columns.invalid'),
+      enableColumnFilter: false,
+      cell: (info) => numerica(info.getValue()),
+    }),
+  ])
+
+  const table = useTable({
+    features,
+    columns: colunas,
+    data: fontes,
+    initialState: {
+      pagination: { pageIndex: 0, pageSize: POR_PAGINA_COLETAS },
+      // Abre pelas mais desatualizadas, como fazia a tabela anterior.
+      sorting: [{ id: 'dias', desc: true }],
     },
-    {
-      chave: 'status',
-      rotulo: t('harvestsPage.overview.outdated.columns.status'),
-      dica: t('harvestsPage.overview.outdated.hints.status'),
-    },
-    {
-      chave: 'days',
-      rotulo: t('harvestsPage.overview.outdated.columns.days'),
-      dica: t('harvestsPage.overview.outdated.hints.days'),
-    },
-    {
-      chave: 'records',
-      rotulo: t('harvestsPage.overview.outdated.columns.records'),
-      dica: t('harvestsPage.overview.outdated.hints.records'),
-    },
-  ]
+  })
+
+  const visiveis = table.getRowModel().rows
+  const filtradas = table.getFilteredRowModel().rows.length
+
+  const filtroDe = (coluna: string) => (table.getColumn(coluna)?.getFilterValue() as string) ?? ''
+  const mudarFiltro = (coluna: string, valor: string) =>
+    table.getColumn(coluna)?.setFilterValue(valor || undefined)
+
+  const exportar = () => {
+    const linhas = table.getSortedRowModel().rows.map((row) => {
+      const f = row.original
+      return [
+        f.acronym ?? f.harvesterRepositoryId,
+        f.name ?? '',
+        f.institutionName ?? '',
+        f.lastSnapshotStatus ?? '',
+        f.lastIndexStatus ?? '',
+        f.lastSnapshotDate ? f.lastSnapshotDate.slice(0, 10) : '',
+        diasDesde(f.lastSnapshotDate, agora) ?? '',
+        f.lastSize ?? '',
+        f.lastValidSize ?? '',
+        f.invalidSize ?? '',
+      ]
+    })
+    baixarCsv(
+      'coletas-por-fonte.csv',
+      [
+        t('harvestsPage.overview.table.columns.source'),
+        t('harvestsPage.overview.table.csv.name'),
+        t('harvestsPage.overview.table.columns.institution'),
+        t('harvestsPage.overview.table.columns.status'),
+        t('harvestsPage.overview.table.columns.index'),
+        t('harvestsPage.overview.table.columns.lastHarvest'),
+        t('harvestsPage.overview.table.columns.days'),
+        t('harvestsPage.overview.table.columns.records'),
+        t('harvestsPage.overview.table.columns.valid'),
+        t('harvestsPage.overview.table.columns.invalid'),
+      ],
+      linhas,
+    )
+  }
 
   return (
-    <figure id={id} className="mb-0">
-      <figcaption id={`${id}-title`} className="text-up-01 text-bold mb-2">
-        {t('harvestsPage.overview.outdated.title')}
-      </figcaption>
+    <figure id={id} className="mb-0 d-flex flex-column gap-3">
+      <div
+        id={`${id}-toolbar`}
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 'var(--spacing-scale-2x)',
+        }}
+      >
+        <figcaption id={`${id}-title`} className="text-up-01 text-bold mb-0">
+          {t('harvestsPage.overview.table.title')}
+        </figcaption>
+        <button
+          id={`${id}-export`}
+          type="button"
+          className="br-button secondary small"
+          onClick={exportar}
+          disabled={filtradas === 0}
+        >
+          <i className="fas fa-download" aria-hidden="true" />
+          <span className="ml-1">{t('harvestsPage.overview.table.export')}</span>
+        </button>
+      </div>
+
+      <p id={`${id}-count`} className="text-down-01 text-gray-70 mb-0">
+        {t('harvestsPage.overview.table.showing', { shown: filtradas, count: fontes.length })}
+      </p>
+
       <div id={`${id}-wrapper`} className="br-table" style={{ overflowX: 'auto' }}>
-        <table id={`${id}-table`}>
+        <table id={`${id}-table`} style={{ tableLayout: 'fixed', minWidth: '60rem' }}>
+          <colgroup>
+            <col style={{ width: '16%' }} />
+            <col style={{ width: '18%' }} />
+            <col style={{ width: '12%' }} />
+            <col style={{ width: '10%' }} />
+            <col style={{ width: '11%' }} />
+            <col style={{ width: '7%' }} />
+            <col style={{ width: '9%' }} />
+            <col style={{ width: '9%' }} />
+            <col style={{ width: '8%' }} />
+          </colgroup>
           <thead id={`${id}-head`}>
-            <tr id={`${id}-head-row`} className="bg-gray-2 text-left">
-              {colunas.map((coluna) => (
-                <th
-                  id={`${id}-column-${coluna.chave}`}
-                  key={coluna.chave}
-                  className="px-3 py-2 text-down-01 text-bold"
-                  {...dicaDeColuna(coluna.dica)}
-                >
-                  {coluna.rotulo}
-                </th>
-              ))}
+            {table.getHeaderGroups().map((grupo) => (
+              <tr id={`${id}-header-group-${grupo.id}`} key={grupo.id} className="bg-gray-2">
+                {grupo.headers.map((header) => {
+                  const direcao = header.column.getIsSorted()
+                  const numericaCol = COLUNAS_NUMERICAS.includes(header.column.id)
+                  return (
+                    <th
+                      id={`${id}-header-${header.column.id}`}
+                      key={header.id}
+                      scope="col"
+                      className={numericaCol ? 'text-right' : 'text-left'}
+                      {...dicaDeColuna(t(`harvestsPage.overview.table.hints.${header.column.id}`))}
+                    >
+                      <button
+                        id={`${id}-sort-${header.column.id}`}
+                        type="button"
+                        onClick={header.column.getToggleSortingHandler()}
+                        className={`d-flex align-items-center gap-half ${numericaCol ? 'ml-auto' : ''}`}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                      >
+                        <table.FlexRender header={header} />
+                        <span aria-hidden="true" className="text-gray-70">
+                          {direcao === 'asc' ? '↑' : direcao === 'desc' ? '↓' : '↕'}
+                        </span>
+                      </button>
+                    </th>
+                  )
+                })}
+              </tr>
+            ))}
+            {/*
+              Linha de filtros por coluna, como na tabela de registros: fonte e
+              instituição por texto; estado e indexação por seleção dos valores
+              presentes. `<td>`, não `<th>`, para o leitor de tela não anunciar o
+              campo como cabeçalho de coluna.
+            */}
+            <tr id={`${id}-filter-row`} className="bg-gray-2">
+              <td id={`${id}-filter-fonte`} className="px-2 pb-2">
+                <input
+                  id={`${id}-filter-fonte-input`}
+                  type="search"
+                  aria-label={t('harvestsPage.overview.table.filters.source')}
+                  value={filtroDe('fonte')}
+                  onChange={(evento) => mudarFiltro('fonte', evento.target.value)}
+                  className="bg-pure-0 px-2 py-1 text-down-01"
+                  style={{ width: '100%' }}
+                />
+              </td>
+              <td id={`${id}-filter-instituicao`} className="px-2 pb-2">
+                <input
+                  id={`${id}-filter-instituicao-input`}
+                  type="search"
+                  aria-label={t('harvestsPage.overview.table.filters.institution')}
+                  value={filtroDe('instituicao')}
+                  onChange={(evento) => mudarFiltro('instituicao', evento.target.value)}
+                  className="bg-pure-0 px-2 py-1 text-down-01"
+                  style={{ width: '100%' }}
+                />
+              </td>
+              <td id={`${id}-filter-estado`} className="px-2 pb-2">
+                <ColumnFilterSelect
+                  id={`${id}-filter-estado-select`}
+                  rotulo={t('harvestsPage.overview.table.filters.status')}
+                  valor={filtroDe('estado')}
+                  onMudar={(valor) => mudarFiltro('estado', valor)}
+                  opcoes={[
+                    { label: t('harvestsPage.overview.filters.all'), value: '' },
+                    ...statusDistintos.map((s) => ({ label: rotuloStatus(s), value: s })),
+                  ]}
+                />
+              </td>
+              <td id={`${id}-filter-indexacao`} className="px-2 pb-2">
+                <ColumnFilterSelect
+                  id={`${id}-filter-indexacao-select`}
+                  rotulo={t('harvestsPage.overview.table.filters.index')}
+                  valor={filtroDe('indexacao')}
+                  onMudar={(valor) => mudarFiltro('indexacao', valor)}
+                  opcoes={[
+                    { label: t('harvestsPage.overview.filters.all'), value: '' },
+                    ...indicesDistintos.map((s) => ({ label: rotuloStatus(s), value: s })),
+                  ]}
+                />
+              </td>
+              <td id={`${id}-filter-ultima`} />
+              <td id={`${id}-filter-dias`} />
+              <td id={`${id}-filter-registros`} />
+              <td id={`${id}-filter-validos`} />
+              <td id={`${id}-filter-invalidos`} />
             </tr>
           </thead>
           <tbody id={`${id}-body`}>
-            {fontes.map((f) => {
-              const linha = `${id}-row-${f.harvesterRepositoryId}`
-              const dias = diasDesde(f.lastSnapshotDate, agora)
-              return (
-                <tr id={linha} key={f.harvesterRepositoryId}>
-                  <td id={`${linha}-source`} className="px-3 py-2">
-                    <Link
-                      id={`${linha}-source-link`}
-                      to={`/repositorios/${f.harvesterRepositoryId}`}
-                      className="text-blue-warm-vivid-80"
+            {visiveis.map((row) => (
+              <tr id={`${id}-row-${row.original.harvesterRepositoryId}`} key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  const numericaCol = COLUNAS_NUMERICAS.includes(cell.column.id)
+                  return (
+                    <td
+                      id={`${id}-row-${row.original.harvesterRepositoryId}-${cell.column.id}`}
+                      key={cell.id}
+                      className={`px-3 py-2 ${numericaCol ? 'text-right' : ''}`}
+                      style={{
+                        verticalAlign: 'top',
+                        ...(numericaCol ? { fontVariantNumeric: 'tabular-nums' } : {}),
+                      }}
                     >
-                      {f.acronym ?? f.harvesterRepositoryId}
-                    </Link>
-                    {f.name ? (
-                      <span
-                        id={`${linha}-source-name`}
-                        className="d-block text-down-02 text-gray-70"
-                      >
-                        {f.name}
-                      </span>
-                    ) : null}
-                  </td>
-                  <td id={`${linha}-institution`} className="px-3 py-2 text-gray-70">
-                    {f.institutionName ?? '—'}
-                  </td>
-                  <td id={`${linha}-status`} className="px-3 py-2">
-                    {f.lastSnapshotStatus ? (
-                      <HarvestStatusBadge
-                        id={`${linha}-status-badge`}
-                        status={f.lastSnapshotStatus}
-                      />
-                    ) : (
-                      '—'
-                    )}
-                  </td>
-                  <td
-                    id={`${linha}-days`}
-                    className="px-3 py-2"
-                    style={{ fontVariantNumeric: 'tabular-nums' }}
-                  >
-                    {dias === null ? '—' : numero.format(dias)}
-                  </td>
-                  <td
-                    id={`${linha}-records`}
-                    className="px-3 py-2"
-                    style={{ fontVariantNumeric: 'tabular-nums' }}
-                  >
-                    {f.lastSize === null ? '—' : numero.format(f.lastSize)}
-                  </td>
-                </tr>
-              )
-            })}
+                      <table.FlexRender cell={cell} />
+                    </td>
+                  )
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
+
+      {filtradas === 0 ? (
+        <Empty id={`${id}-empty`} label={t('harvestsPage.overview.table.empty')} />
+      ) : null}
+
+      <Pagination
+        id={`${id}-pagination`}
+        page={table.state.pagination.pageIndex + 1}
+        totalPages={table.getPageCount()}
+        onChange={(destino) => table.setPageIndex(destino - 1)}
+        tamanho={table.state.pagination.pageSize}
+        tamanhos={TAMANHOS_COLETAS}
+        onTamanho={(novo) => {
+          table.setPageSize(novo)
+          table.setPageIndex(0)
+        }}
+      />
     </figure>
   )
 }
-
 // --- Histórico --------------------------------------------------------------
 
 /**

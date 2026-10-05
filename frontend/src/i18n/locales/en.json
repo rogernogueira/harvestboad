@@ -216,21 +216,41 @@
       "clickHint": "Click a bar to filter the whole panel by it.",
       "none": "no harvest",
       "empty": "No sources in view.",
-      "outdated": {
-        "title": "Most outdated sources",
+      "table": {
+        "title": "Collections by Source",
+        "export": "Export CSV",
+        "showing": "{{shown}} of {{count}} sources",
+        "empty": "No sources in view.",
         "columns": {
           "source": "Source",
           "institution": "Institution",
           "status": "State",
+          "index": "Indexing",
+          "lastHarvest": "Last harvest",
           "days": "Days",
-          "records": "Records"
+          "records": "Records",
+          "valid": "Valid",
+          "invalid": "Invalid"
         },
         "hints": {
-          "source": "Source acronym and name. Opens the repository page.",
-          "institution": "Institution the source belongs to.",
-          "status": "Status of the last harvest.",
-          "days": "Days since the last harvest.",
-          "records": "Records in the last harvest."
+          "fonte": "Source acronym and name. Opens the repository page.",
+          "instituicao": "Institution the source belongs to.",
+          "estado": "Status of the last harvest.",
+          "indexacao": "Index status; only INDEXED has a diagnosis.",
+          "ultima": "Date of the last harvest.",
+          "dias": "Days since the last harvest.",
+          "registros": "Total records in the last harvest.",
+          "validos": "Valid records in the last harvest.",
+          "invalidos": "Invalid records in the last harvest."
+        },
+        "filters": {
+          "source": "Filter by source",
+          "institution": "Filter by institution",
+          "status": "Filter by state",
+          "index": "Filter by indexing"
+        },
+        "csv": {
+          "name": "Name"
         }
       }
     },

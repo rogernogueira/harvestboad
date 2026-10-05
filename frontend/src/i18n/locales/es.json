@@ -217,21 +217,41 @@
       "clickHint": "Haga clic en una barra para filtrar todo el panel por ella.",
       "none": "sin recolección",
       "empty": "Ninguna fuente en el recorte.",
-      "outdated": {
-        "title": "Fuentes más desactualizadas",
+      "table": {
+        "title": "Recolecciones por Fuentes",
+        "export": "Exportar CSV",
+        "showing": "{{shown}} de {{count}} fuentes",
+        "empty": "Ninguna fuente en el recorte.",
         "columns": {
           "source": "Fuente",
           "institution": "Institución",
           "status": "Estado",
+          "index": "Indexación",
+          "lastHarvest": "Última recolección",
           "days": "Días",
-          "records": "Registros"
+          "records": "Registros",
+          "valid": "Válidos",
+          "invalid": "Inválidos"
         },
         "hints": {
-          "source": "Sigla y nombre de la fuente. Abre la página del repositorio.",
-          "institution": "Institución a la que pertenece la fuente.",
-          "status": "Situación de la última recolección.",
-          "days": "Días desde la última recolección.",
-          "records": "Registros de la última recolección."
+          "fonte": "Sigla y nombre de la fuente. Abre la página del repositorio.",
+          "instituicao": "Institución a la que pertenece la fuente.",
+          "estado": "Situación de la última recolección.",
+          "indexacao": "Situación en el índice; solo INDEXED tiene diagnóstico.",
+          "ultima": "Fecha de la última recolección.",
+          "dias": "Días desde la última recolección.",
+          "registros": "Total de registros de la última recolección.",
+          "validos": "Registros válidos de la última recolección.",
+          "invalidos": "Registros inválidos de la última recolección."
+        },
+        "filters": {
+          "source": "Filtrar por fuente",
+          "institution": "Filtrar por institución",
+          "status": "Filtrar por estado",
+          "index": "Filtrar por indexación"
+        },
+        "csv": {
+          "name": "Nombre"
         }
       }
     },

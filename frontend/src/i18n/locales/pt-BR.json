@@ -217,21 +217,41 @@
       "clickHint": "Clique numa barra para filtrar o painel inteiro por ela.",
       "none": "sem coleta",
       "empty": "Nenhuma fonte no recorte.",
-      "outdated": {
-        "title": "Fontes mais desatualizadas",
+      "table": {
+        "title": "Coletas por Fontes",
+        "export": "Exportar CSV",
+        "showing": "{{shown}} de {{count}} fontes",
+        "empty": "Nenhuma fonte no recorte.",
         "columns": {
           "source": "Fonte",
           "institution": "Instituição",
           "status": "Estado",
+          "index": "Indexação",
+          "lastHarvest": "Última coleta",
           "days": "Dias",
-          "records": "Registros"
+          "records": "Registros",
+          "valid": "Válidos",
+          "invalid": "Inválidos"
         },
         "hints": {
-          "source": "Sigla e nome da fonte. Abre a página do repositório.",
-          "institution": "Instituição à qual a fonte pertence.",
-          "status": "Situação da última coleta.",
-          "days": "Dias desde a última coleta.",
-          "records": "Registros da última coleta."
+          "fonte": "Sigla e nome da fonte. Abre a página do repositório.",
+          "instituicao": "Instituição à qual a fonte pertence.",
+          "estado": "Situação da última coleta.",
+          "indexacao": "Situação no índice; só INDEXED tem diagnóstico.",
+          "ultima": "Data da última coleta.",
+          "dias": "Dias desde a última coleta.",
+          "registros": "Total de registros da última coleta.",
+          "validos": "Registros válidos da última coleta.",
+          "invalidos": "Registros inválidos da última coleta."
+        },
+        "filters": {
+          "source": "Filtrar por fonte",
+          "institution": "Filtrar por instituição",
+          "status": "Filtrar por estado",
+          "index": "Filtrar por indexação"
+        },
+        "csv": {
+          "name": "Nome"
         }
       }
     },
