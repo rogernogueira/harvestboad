@@ -1,27 +1,18 @@
 import { BrSelectStandard } from '@govbr-ds/react-components'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
-import {
-  Bar,
-  CartesianGrid,
-  ComposedChart,
-  Legend,
-  Line,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
 
 import { HarvestStatusBadge } from '@/components/Badges'
 import { Empty, ErrorState, Loading } from '@/components/Feedback'
+import { Grafico } from '@/components/Grafico'
 import { PageHeader } from '@/components/PageHeader'
 import { StatCard } from '@/components/StatCard'
 import { Tabs } from '@/components/Tabs'
 import type { Aba } from '@/components/Tabs'
 import { dicaDeColuna } from '@/lib/columnHints'
+import type { Paleta } from '@/lib/grafico'
 import { harvestTone } from '@/lib/harvestStatus'
 import { harvestHistoryQuery, repositoryIndexQuery } from '@/lib/queries'
 import type { HarvestHistoryMonth, RepositoryHit } from '@/lib/types'
@@ -780,9 +771,7 @@ function Historico() {
         </p>
       ) : null}
 
-      {data.months.length > 1 ? (
-        <GraficoMeses meses={data.months} numero={numero} percentual={percentual} />
-      ) : null}
+      {data.months.length > 1 ? <GraficoMeses meses={data.months} percentual={percentual} /> : null}
 
       <section id="harvests-page-history-peaks">
         <h2 id="harvests-page-history-peaks-title" className="text-up-01 text-bold mb-2">
@@ -834,90 +823,93 @@ function Historico() {
 }
 
 /**
- * Coletas e falhas por mês (barras) com a taxa de falha como linha no eixo
- * direito — o gráfico do experimento (`secoes/Historico.tsx`), com o recharts
- * que o projeto já usa.
+ * Coletas por mês (barras) com a taxa de falha como linha no eixo direito — o
+ * mesmo gráfico do experimento (`secoes/Historico.tsx`), agora com o componente
+ * `Grafico` (ECharts) trazido de lá, e não mais com o recharts.
+ *
+ * `opcao` fica em `useCallback` porque o `Grafico` redesenha quando ela muda: uma
+ * função nova a cada render reinicializaria o canvas à toa.
  */
 function GraficoMeses({
   meses,
-  numero,
   percentual,
 }: {
   meses: HarvestHistoryMonth[]
-  numero: Intl.NumberFormat
   percentual: Intl.NumberFormat
 }) {
   const { t } = useTranslation()
+
+  const opcao = useCallback(
+    (p: Paleta) => ({
+      grid: { left: 54, right: 54, top: 34, bottom: 28 },
+      legend: {
+        show: true,
+        top: 0,
+        right: 0,
+        textStyle: { color: p.conteudoFraco, fontSize: 10.5 },
+        itemHeight: 8,
+      },
+      xAxis: {
+        type: 'category',
+        data: meses.map((m) => m.month),
+        axisLine: { lineStyle: { color: p.borda } },
+        axisTick: { show: false },
+        axisLabel: {
+          color: p.conteudoFraco,
+          interval: Math.max(1, Math.floor(meses.length / 10)),
+        },
+      },
+      yAxis: [
+        {
+          type: 'value',
+          splitLine: { lineStyle: { color: p.borda } },
+          axisLabel: { color: p.conteudoFraco },
+        },
+        {
+          type: 'value',
+          max: 1,
+          splitLine: { show: false },
+          axisLabel: { color: p.conteudoFraco, formatter: (v: number) => percentual.format(v) },
+        },
+      ],
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: p.superficie,
+        borderColor: p.borda,
+        textStyle: { color: p.conteudo, fontSize: 12 },
+      },
+      series: [
+        {
+          name: t('harvestsPage.history.chart.harvests'),
+          type: 'bar',
+          data: meses.map((m) => m.harvests),
+          itemStyle: { color: p.marca },
+        },
+        {
+          name: t('harvestsPage.history.chart.rate'),
+          type: 'line',
+          yAxisIndex: 1,
+          data: meses.map((m) => m.rate),
+          smooth: false,
+          symbol: 'none',
+          lineStyle: { color: p.down, width: 1.5 },
+        },
+      ],
+    }),
+    [meses, percentual, t],
+  )
+
   return (
     <figure id="harvests-page-history-chart" className="br-card p-3 mb-0">
       <figcaption id="harvests-page-history-chart-caption" className="text-down-01 text-bold mb-2">
         {t('harvestsPage.history.chart.title')}
       </figcaption>
-      <div id="harvests-page-history-chart-area" style={{ height: '18rem' }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={meses} margin={{ top: 8, right: 8, bottom: 0, left: -12 }}>
-            <CartesianGrid stroke="var(--color-border-subtle)" vertical={false} />
-            <XAxis
-              dataKey="month"
-              stroke="var(--color-content-muted)"
-              tickLine={false}
-              fontSize={11}
-            />
-            <YAxis
-              yAxisId="contagem"
-              allowDecimals={false}
-              stroke="var(--color-content-muted)"
-              tickLine={false}
-              fontSize={11}
-              width={56}
-            />
-            <YAxis
-              yAxisId="taxa"
-              orientation="right"
-              domain={[0, 1]}
-              tickFormatter={(valor) => percentual.format(Number(valor))}
-              stroke="var(--color-content-muted)"
-              tickLine={false}
-              fontSize={11}
-              width={56}
-            />
-            <Tooltip
-              contentStyle={{
-                borderRadius: '0.5rem',
-                border: '1px solid var(--color-border-subtle)',
-                fontSize: '0.8rem',
-              }}
-              formatter={(valor, nome) =>
-                nome === t('harvestsPage.history.chart.rate')
-                  ? percentual.format(Number(valor))
-                  : numero.format(Number(valor))
-              }
-            />
-            <Legend wrapperStyle={{ fontSize: '0.8rem' }} />
-            <Bar
-              yAxisId="contagem"
-              dataKey="harvests"
-              name={t('harvestsPage.history.chart.harvests')}
-              fill="var(--color-brand)"
-            />
-            <Bar
-              yAxisId="contagem"
-              dataKey="failures"
-              name={t('harvestsPage.history.chart.failures')}
-              fill="var(--color-down)"
-            />
-            <Line
-              yAxisId="taxa"
-              type="monotone"
-              dataKey="rate"
-              name={t('harvestsPage.history.chart.rate')}
-              stroke="var(--color-content)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </div>
+      <Grafico
+        id="harvests-page-history-chart-area"
+        opcao={opcao}
+        altura={288}
+        rotulo={t('harvestsPage.history.chart.title')}
+      />
     </figure>
   )
 }
