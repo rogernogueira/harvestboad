@@ -253,6 +253,13 @@
         "csv": {
           "name": "Nombre"
         }
+      },
+      "records": {
+        "title": "Registros en el recorte",
+        "records": "Registros",
+        "valid": "Válidos",
+        "invalid": "Inválidos",
+        "transformed": "Transformados"
       }
     },
     "history": {

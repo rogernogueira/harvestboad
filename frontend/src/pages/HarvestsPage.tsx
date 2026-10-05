@@ -176,6 +176,11 @@ function EstadoAtual() {
     () => new Intl.NumberFormat(i18n.resolvedLanguage),
     [i18n.resolvedLanguage],
   )
+  const percentual = useMemo(
+    () =>
+      new Intl.NumberFormat(i18n.resolvedLanguage, { style: 'percent', maximumFractionDigits: 1 }),
+    [i18n.resolvedLanguage],
+  )
   // Referência única e estável: todas as faixas de atualidade usam o mesmo
   // "agora", senão fontes iguais cairiam em faixas diferentes por milissegundos.
   // Inicializador de `useState` em vez de `Date.now()` no render — o relógio é
@@ -240,6 +245,19 @@ function EstadoAtual() {
     (f) => f.lastSnapshotStatus && harvestTone(f.lastSnapshotStatus) === 'down',
   ).length
   const semColeta = recorte.length - comColeta
+
+  // Totais de registros no recorte — complementam, somados, os números que a
+  // tabela mostra por fonte. Inválidos e transformados só existem na coleta
+  // avaliada (INDEXED): o backend já devolve `invalidSize` nulo fora disso, e
+  // somar nulo como zero não inventa registro.
+  const somar = (campo: (f: RepositoryHit) => number | null | undefined) =>
+    recorte.reduce((soma, f) => soma + (campo(f) ?? 0), 0)
+  const registrosTotal = somar((f) => f.lastSize)
+  const validosTotal = somar((f) => f.lastValidSize)
+  const invalidosTotal = somar((f) => f.invalidSize)
+  const transformadosTotal = somar((f) => f.lastTransformedSize)
+  const fracao = (parte: number) =>
+    registrosTotal > 0 ? percentual.format(parte / registrosTotal) : undefined
 
   const distSnapshot = contar(recorte, (f) => f.lastSnapshotStatus).map(([chave, valor]) => ({
     chave,
@@ -369,6 +387,58 @@ function EstadoAtual() {
             />
           </div>
         ))}
+      </section>
+
+      <section id="harvests-page-overview-records">
+        <h2 id="harvests-page-overview-records-title" className="text-up-01 text-bold mb-2">
+          {t('harvestsPage.overview.records.title')}
+        </h2>
+        <div id="harvests-page-overview-records-row" className="row">
+          {[
+            {
+              chave: 'records',
+              rotulo: t('harvestsPage.overview.records.records'),
+              valor: registrosTotal,
+              dica: undefined as string | undefined,
+              tom: undefined as 'down' | 'ok' | undefined,
+            },
+            {
+              chave: 'valid',
+              rotulo: t('harvestsPage.overview.records.valid'),
+              valor: validosTotal,
+              dica: fracao(validosTotal),
+              tom: 'ok' as const,
+            },
+            {
+              chave: 'invalid',
+              rotulo: t('harvestsPage.overview.records.invalid'),
+              valor: invalidosTotal,
+              dica: fracao(invalidosTotal),
+              tom: invalidosTotal > 0 ? ('down' as const) : undefined,
+            },
+            {
+              chave: 'transformed',
+              rotulo: t('harvestsPage.overview.records.transformed'),
+              valor: transformadosTotal,
+              dica: fracao(transformadosTotal),
+              tom: undefined,
+            },
+          ].map((c) => (
+            <div
+              id={`harvests-page-overview-record-${c.chave}-col`}
+              key={c.chave}
+              className="col-sm-6 col-lg-3 mb-2"
+            >
+              <StatCard
+                id={`harvests-page-overview-record-${c.chave}`}
+                label={c.rotulo}
+                value={numero.format(c.valor)}
+                hint={c.dica}
+                tone={c.tom}
+              />
+            </div>
+          ))}
+        </div>
       </section>
 
       {recorte.length === 0 ? (

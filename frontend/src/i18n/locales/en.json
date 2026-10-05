@@ -252,6 +252,13 @@
         "csv": {
           "name": "Name"
         }
+      },
+      "records": {
+        "title": "Records in view",
+        "records": "Records",
+        "valid": "Valid",
+        "invalid": "Invalid",
+        "transformed": "Transformed"
       }
     },
     "history": {
