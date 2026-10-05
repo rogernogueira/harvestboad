@@ -261,6 +261,8 @@ export interface HarvestHistory {
   warmed: boolean
   /** Quando a varredura que gerou o agregado terminou (ISO). Nulo se frio. */
   generatedAt?: string | null
+  /** Há uma atualização (varredura) em andamento no servidor. */
+  refreshing?: boolean
   months: HarvestHistoryMonth[]
   totals: HarvestHistoryTotals | null
   peaks: { day: string; harvests: number }[]

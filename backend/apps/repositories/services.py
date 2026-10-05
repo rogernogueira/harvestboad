@@ -788,58 +788,43 @@ def build_harvest_history(client: HarvesterClient | None = None) -> dict:
 
 
 def store_harvest_history(agregado: dict) -> None:
-    """Guarda o agregado sem expiração: ele é substituído por uma renovação, não
-    descartado pelo relógio. A idade quem decide é `generatedAt`, não o TTL —
-    assim o dado velho continua servindo enquanto a próxima varredura roda."""
+    """Guarda o agregado sem expiração: ele só é substituído por uma atualização,
+    nunca descartado pelo relógio. O `generatedAt` dentro dele é a data do cache
+    que a tela mostra no gráfico."""
     cache.set(HARVEST_HISTORY_KEY, agregado, None)
 
 
-def _history_is_stale(agregado: dict | None) -> bool:
-    """Passou de `HISTORY_REFRESH` desde a última varredura? Sem agregado ou sem
-    carimbo, conta como velho — há o que renovar."""
-    if not agregado:
-        return True
-    carimbo = agregado.get("generatedAt")
-    if not carimbo:
-        return True
-    try:
-        quando = datetime.fromisoformat(carimbo)
-    except ValueError:
-        return True
-    idade = (datetime.now(timezone.utc) - quando).total_seconds()
-    return idade >= settings.HARVESTER["HISTORY_REFRESH"]
+def is_harvest_history_refreshing() -> bool:
+    """Há uma varredura do histórico em andamento? (a trava está tomada)."""
+    return cache.get(HARVEST_HISTORY_LOCK) is not None
 
 
-def ensure_harvest_history_fresh() -> None:
-    """Dispara, em segundo plano, a varredura do histórico quando o cache está
-    frio ou velho — sem nunca segurar a requisição.
+def start_harvest_history_refresh() -> bool:
+    """Dispara, em segundo plano, a varredura que regenera o histórico.
 
-    É o que mantém a série atualizada **sozinha**, sem comando: a cada acesso à
-    seção Coleta, se o agregado passou da idade de renovação, um worker pega a
-    trava e varre em uma thread; os demais acessos (deste ou de outro worker)
-    veem a trava e não duplicam o trabalho. Quem pediu recebe o agregado atual
-    na hora (ou o estado frio), e a próxima visita já vê o renovado.
+    É o que o botão "Atualizar histórico" aciona. A consulta ao Harvester é cara
+    (~2.184 fontes, minutos) e não pode segurar a requisição, então roda numa
+    thread e grava o agregado ao terminar; o cache só muda aqui, nunca numa
+    leitura. A trava atômica (`cache.add`) garante uma varredura por vez —
+    clicar de novo enquanto roda não duplica o trabalho, e ela expira sozinha se
+    o worker cair.
 
-    Roda no processo do backend, isto é, dentro do `harvestboard_api`, que é de
-    onde o Harvester responde. Desligado nos testes por `HISTORY_AUTO_REFRESH`.
+    Roda no processo do backend (`harvestboard_api`), de onde o Harvester
+    responde. Devolve True se iniciou, False se já havia uma em andamento.
     """
-    if not settings.HARVESTER["HISTORY_AUTO_REFRESH"]:
-        return
-    if not _history_is_stale(cache.get(HARVEST_HISTORY_KEY)):
-        return
-    # Trava atômica: só o primeiro a chegar varre; expira sozinha se o worker cair.
     if not cache.add(HARVEST_HISTORY_LOCK, "1", settings.HARVESTER["HISTORY_LOCK_TTL"]):
-        return
+        return False
 
     def tarefa() -> None:
         try:
             store_harvest_history(build_harvest_history())
         except Exception:  # noqa: BLE001 — thread de fundo não derruba ninguém
-            logger.exception("Falha ao renovar o histórico de coletas")
+            logger.exception("Falha ao atualizar o histórico de coletas")
         finally:
             cache.delete(HARVEST_HISTORY_LOCK)
 
     _run_in_background(tarefa)
+    return True
 
 
 def _run_in_background(target) -> None:
@@ -849,14 +834,15 @@ def _run_in_background(target) -> None:
     síncrona sem tocar no `ThreadPoolExecutor` de `build_harvest_history` — que
     também cria `threading.Thread` e quebraria se a classe fosse trocada.
     """
-    threading.Thread(target=target, name="warm-harvest-history", daemon=True).start()
+    threading.Thread(target=target, name="refresh-harvest-history", daemon=True).start()
 
 
 def global_harvest_history() -> dict:
     """Agregado do histórico global, do cache; estado frio se ainda não houver.
 
-    Só lê. A varredura que enche o cache roda em segundo plano, disparada por
-    `ensure_harvest_history_fresh` — nunca dentro desta leitura, porque ela é
-    cara e o Harvester é inacessível fora do `harvestboard_api`.
+    Só lê. A varredura que enche o cache roda em segundo plano, disparada pelo
+    botão "Atualizar histórico" (`start_harvest_history_refresh`) — nunca dentro
+    desta leitura, porque é cara e o Harvester é inacessível fora do
+    `harvestboard_api`.
     """
     return cache.get(HARVEST_HISTORY_KEY) or HARVEST_HISTORY_COLD

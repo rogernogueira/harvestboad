@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import { apiGet, apiGetText } from './api'
+import { apiGet, apiGetText, apiPost } from './api'
 import { filtersToParams, type RecordFilters } from './filters'
 import type {
   HarvestRequestItem,
@@ -158,15 +158,27 @@ export const linkedHarvestsQuery = queryOptions({
  * Histórico global de coletas de TODO o acervo, para a aba Histórico da seção
  * Coleta. Exclusivo do ADMIN.
  *
- * O backend só lê o agregado que o comando `warm_harvest_history` deixou no
- * cache — nunca varre o Harvester numa requisição. Vem `warmed:false` enquanto
- * não houver aquecimento.
+ * O `GET` só lê o agregado do cache — nunca varre o Harvester. Vem
+ * `warmed:false` enquanto ninguém atualizou, e `refreshing:true` enquanto uma
+ * varredura roda; nesse intervalo a query repete sozinha até a série chegar.
  */
 export const harvestHistoryQuery = queryOptions({
   queryKey: ['repositories', 'harvests', 'history'],
   queryFn: () => apiGet<HarvestHistory>('/repositories/harvests/history/'),
   staleTime: 30 * 60_000,
+  // Enquanto o servidor varre, repete para trocar o "atualizando…" pela série
+  // assim que ela fica pronta. Fora disso, não fica repetindo.
+  refetchInterval: (query) => (query.state.data?.refreshing ? 3000 : false),
 })
+
+/**
+ * Aciona a atualização do histórico (o botão "Atualizar histórico"). Dispara a
+ * varredura em segundo plano no servidor e volta na hora; `started:false`
+ * quando já havia uma em andamento.
+ */
+export function refreshHarvestHistory() {
+  return apiPost<{ started: boolean; refreshing: boolean }>('/repositories/harvests/history/', {})
+}
 
 export const harvestQuery = (snapshotId: string) =>
   queryOptions({

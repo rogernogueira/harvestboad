@@ -255,10 +255,16 @@
       },
       "unavailable": "{{count}} fuentes no respondieron en el último barrido.",
       "cold": {
-        "title": "Histórico siendo armado",
-        "body": "La serie de todas las recolecciones se está recopilando en segundo plano. Actualice la página en unos minutos."
+        "title": "Histórico aún no armado",
+        "body": "Haga clic en Actualizar histórico para barrer todas las recolecciones y armar la serie."
       },
-      "updatedAt": "actualizado el {{date}}"
+      "updatedAt": "actualizado el {{date}}",
+      "refresh": "Actualizar histórico",
+      "refreshing": "Actualizando…",
+      "building": {
+        "title": "Armando el histórico",
+        "body": "El barrido de todas las recolecciones se está ejecutando en segundo plano. Toma unos minutos."
+      }
     }
   },
   "diagnosis": {

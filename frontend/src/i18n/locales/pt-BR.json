@@ -255,10 +255,16 @@
       },
       "unavailable": "{{count}} fontes não responderam na última varredura.",
       "cold": {
-        "title": "Histórico sendo montado",
-        "body": "A série de todas as coletas está sendo coletada em segundo plano. Atualize a página em alguns minutos."
+        "title": "Histórico ainda não montado",
+        "body": "Clique em Atualizar histórico para varrer todas as coletas e montar a série."
       },
-      "updatedAt": "atualizado em {{date}}"
+      "updatedAt": "atualizado em {{date}}",
+      "refresh": "Atualizar histórico",
+      "refreshing": "Atualizando…",
+      "building": {
+        "title": "Montando o histórico",
+        "body": "A varredura de todas as coletas está rodando em segundo plano. Leva alguns minutos."
+      }
     }
   },
   "diagnosis": {

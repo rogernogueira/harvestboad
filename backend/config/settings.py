@@ -244,17 +244,12 @@ HARVESTER = {
     # Índice completo dos repositórios: ~40 s e 2,9 MB por busca. TTL longo
     # porque o cadastro muda pouco e o custo de refazer é alto.
     "CACHE_TTL_INDEX": int(os.getenv("HARVESTER_CACHE_TTL_INDEX", str(12 * 60 * 60))),
-    # Histórico global de coletas: varre as ~2.181 fontes uma a uma. Guardado
-    # sem expiração e renovado sozinho — a rota serve sempre do cache e, quando o
-    # agregado passa de `HISTORY_REFRESH` de idade (ou está frio), dispara a
-    # varredura em segundo plano. `HISTORY_LOCK_TTL` é a trava que garante um
-    # único varredor por vez entre os workers; folgada o bastante para cobrir a
-    # varredura inteira e, se um worker morrer no meio, liberar sozinha depois.
-    "HISTORY_REFRESH": int(os.getenv("HARVESTER_HISTORY_REFRESH", str(12 * 60 * 60))),
+    # Histórico global de coletas: varre as ~2.181 fontes uma a uma, guardado
+    # sem expiração e atualizado só pelo botão "Atualizar histórico".
+    # `HISTORY_LOCK_TTL` é a trava que garante um único varredor por vez entre os
+    # workers; folgada o bastante para cobrir a varredura inteira e, se um worker
+    # morrer no meio, liberar sozinha depois.
     "HISTORY_LOCK_TTL": int(os.getenv("HARVESTER_HISTORY_LOCK_TTL", str(20 * 60))),
-    # Desligado nos testes: a suíte não pode disparar varredura nem threads.
-    "HISTORY_AUTO_REFRESH": os.getenv("HARVESTER_HISTORY_AUTO_REFRESH", "").lower() != "false"
-    and "test" not in sys.argv,
     "USER": os.getenv("HARVESTER_USER", ""),
     "PASSWORD": os.getenv("HARVESTER_PASSWORD", ""),
     "TIMEOUT": float(os.getenv("HARVESTER_TIMEOUT", "10")),

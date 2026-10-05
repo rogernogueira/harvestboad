@@ -254,10 +254,16 @@
       },
       "unavailable": "{{count}} sources did not respond in the last sweep.",
       "cold": {
-        "title": "History is being built",
-        "body": "The full harvest series is being collected in the background. Refresh in a few minutes."
+        "title": "History not built yet",
+        "body": "Click Refresh history to sweep all harvests and build the series."
       },
-      "updatedAt": "updated on {{date}}"
+      "updatedAt": "updated on {{date}}",
+      "refresh": "Refresh history",
+      "refreshing": "Refreshing…",
+      "building": {
+        "title": "Building the history",
+        "body": "The sweep of all harvests is running in the background. It takes a few minutes."
+      }
     }
   },
   "diagnosis": {

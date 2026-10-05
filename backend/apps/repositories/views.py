@@ -337,11 +337,15 @@ class LinkedHarvestsView(HarvesterBackedAPIView):
 class HarvestHistoryView(HarvesterBackedAPIView):
     """Histórico global de coletas de TODO o acervo, para a seção Coleta.
 
-    **Exclusiva do ADMIN**, como a seção. Só lê o agregado que o comando
-    `warm_harvest_history` deixou no cache — nunca varre o Harvester, porque a
-    varredura das ~2.181 fontes é cara e a origem só responde de dentro do
-    `harvestboard_api`. Enquanto o cache estiver frio devolve `warmed:false`, e
-    a tela orienta a rodar o comando; não é erro, é "ainda não aquecido".
+    **Exclusiva do ADMIN**, como a seção.
+
+    - `GET` só **lê** o agregado do cache; nunca varre o Harvester. Enquanto o
+      cache estiver frio devolve `warmed:false`, e a tela mostra o botão para
+      montar a série. `refreshing` diz se há uma varredura em andamento.
+    - `POST` **aciona** a atualização: dispara a varredura em segundo plano (a
+      consulta às ~2.184 fontes é cara e a origem só responde de dentro do
+      `harvestboard_api`) e devolve na hora, sem segurar a requisição. O cache
+      só muda por aqui — é o botão "Atualizar histórico".
     """
 
     permission_classes = [permissions.IsAuthenticated, IsAdminProfile]
@@ -349,16 +353,31 @@ class HarvestHistoryView(HarvesterBackedAPIView):
     @extend_schema(
         description=(
             "Série de coletas por mês, totais, duração mediana e dias de maior "
-            "concentração — de todas as fontes, não só as vinculadas. Vem do "
-            "cache aquecido por `warm_harvest_history`; `warmed:false` enquanto "
-            "não houver aquecimento. Exclusivo do perfil ADMIN."
+            "concentração — de todas as fontes, não só as vinculadas. Só lê o "
+            "cache: `warmed:false` enquanto não houver atualização, e "
+            "`refreshing:true` enquanto uma varredura roda. Exclusivo do ADMIN."
         ),
     )
     def get(self, request: Request) -> Response:
-        # Mantém a série atualizada sozinha: se o agregado envelheceu, dispara a
-        # varredura em segundo plano e segue servindo o que já há — sem esperar.
-        services.ensure_harvest_history_fresh()
-        return Response(services.global_harvest_history())
+        payload = dict(services.global_harvest_history())
+        payload["refreshing"] = services.is_harvest_history_refreshing()
+        return Response(payload)
+
+    @extend_schema(
+        request=None,
+        responses={202: None},
+        description=(
+            "Dispara a atualização do histórico em segundo plano e devolve na "
+            "hora. `started:false` quando já havia uma varredura em andamento. "
+            "Exclusivo do ADMIN."
+        ),
+    )
+    def post(self, request: Request) -> Response:
+        iniciou = services.start_harvest_history_refresh()
+        return Response(
+            {"started": iniciou, "refreshing": True},
+            status=status.HTTP_202_ACCEPTED,
+        )
 
 
 class RepositoryDetailView(HarvesterBackedAPIView):

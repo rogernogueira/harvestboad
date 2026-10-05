@@ -1,5 +1,5 @@
 import { BrSelectStandard } from '@govbr-ds/react-components'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useSearchParams } from 'react-router'
@@ -14,7 +14,7 @@ import type { Aba } from '@/components/Tabs'
 import { dicaDeColuna } from '@/lib/columnHints'
 import type { Paleta } from '@/lib/grafico'
 import { harvestTone } from '@/lib/harvestStatus'
-import { harvestHistoryQuery, repositoryIndexQuery } from '@/lib/queries'
+import { harvestHistoryQuery, refreshHarvestHistory, repositoryIndexQuery } from '@/lib/queries'
 import type { HarvestHistoryMonth, RepositoryHit } from '@/lib/types'
 
 /**
@@ -660,6 +660,7 @@ function TabelaDesatualizadas({
  */
 function Historico() {
   const { t, i18n } = useTranslation()
+  const queryClient = useQueryClient()
   const { data, isPending, isError, error, refetch } = useQuery(harvestHistoryQuery)
 
   const numero = useMemo(
@@ -677,22 +678,60 @@ function Historico() {
     [i18n.resolvedLanguage],
   )
 
+  // O botão "Atualizar histórico" dispara a varredura no servidor; ao voltar,
+  // revalida a query para pegar `refreshing:true` e começar a repetir até a
+  // série nova chegar.
+  const atualizar = useMutation({
+    mutationFn: refreshHarvestHistory,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: harvestHistoryQuery.queryKey }),
+  })
+
   if (isPending) return <Loading id="harvests-page-history-loading" />
   if (isError)
     return (
       <ErrorState id="harvests-page-history-error" error={error} onRetry={() => void refetch()} />
     )
 
+  const atualizando = Boolean(data.refreshing) || atualizar.isPending
+  const dataCache = data.generatedAt
+    ? t('harvestsPage.history.updatedAt', { date: dataHora.format(new Date(data.generatedAt)) })
+    : null
+
+  const botaoAtualizar = (
+    <button
+      id="harvests-page-history-refresh"
+      type="button"
+      className="br-button secondary small"
+      onClick={() => atualizar.mutate()}
+      disabled={atualizando}
+    >
+      <i className={`fas fa-sync-alt ${atualizando ? 'fa-spin' : ''}`} aria-hidden="true" />
+      <span className="ml-1">
+        {atualizando ? t('harvestsPage.history.refreshing') : t('harvestsPage.history.refresh')}
+      </span>
+    </button>
+  )
+
   if (!data.warmed || !data.totals) {
     return (
       <div id="harvests-page-history-cold" className="br-card">
-        <div id="harvests-page-history-cold-body" className="card-content text-center py-5">
-          <p id="harvests-page-history-cold-title" className="text-bold mb-1">
-            {t('harvestsPage.history.cold.title')}
-          </p>
-          <p id="harvests-page-history-cold-text" className="text-gray-70 mb-0">
-            {t('harvestsPage.history.cold.body')}
-          </p>
+        <div
+          id="harvests-page-history-cold-body"
+          className="card-content text-center py-5 d-flex flex-column align-items-center gap-3"
+        >
+          <div>
+            <p id="harvests-page-history-cold-title" className="text-bold mb-1">
+              {atualizando
+                ? t('harvestsPage.history.building.title')
+                : t('harvestsPage.history.cold.title')}
+            </p>
+            <p id="harvests-page-history-cold-text" className="text-gray-70 mb-0">
+              {atualizando
+                ? t('harvestsPage.history.building.body')
+                : t('harvestsPage.history.cold.body')}
+            </p>
+          </div>
+          {botaoAtualizar}
         </div>
       </div>
     )
@@ -703,6 +742,22 @@ function Historico() {
 
   return (
     <div id="harvests-page-history" className="d-flex flex-column gap-4">
+      <div
+        id="harvests-page-history-toolbar"
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 'var(--spacing-scale-2x)',
+        }}
+      >
+        <p id="harvests-page-history-updated" className="text-down-01 text-gray-70 mb-0">
+          {dataCache}
+        </p>
+        {botaoAtualizar}
+      </div>
+
       {data.unavailableSources > 0 ? (
         <div id="harvests-page-history-unavailable" className="br-message warning" role="status">
           <div id="harvests-page-history-unavailable-icon" className="icon">
@@ -763,15 +818,9 @@ function Historico() {
         </div>
       </section>
 
-      {data.generatedAt ? (
-        <p id="harvests-page-history-updated" className="text-down-01 text-gray-70 mb-0">
-          {t('harvestsPage.history.updatedAt', {
-            date: dataHora.format(new Date(data.generatedAt)),
-          })}
-        </p>
+      {data.months.length > 1 ? (
+        <GraficoMeses meses={data.months} percentual={percentual} dataCache={dataCache} />
       ) : null}
-
-      {data.months.length > 1 ? <GraficoMeses meses={data.months} percentual={percentual} /> : null}
 
       <section id="harvests-page-history-peaks">
         <h2 id="harvests-page-history-peaks-title" className="text-up-01 text-bold mb-2">
@@ -833,9 +882,11 @@ function Historico() {
 function GraficoMeses({
   meses,
   percentual,
+  dataCache,
 }: {
   meses: HarvestHistoryMonth[]
   percentual: Intl.NumberFormat
+  dataCache: string | null
 }) {
   const { t } = useTranslation()
 
@@ -901,8 +952,14 @@ function GraficoMeses({
 
   return (
     <figure id="harvests-page-history-chart" className="br-card p-3 mb-0">
-      <figcaption id="harvests-page-history-chart-caption" className="text-down-01 text-bold mb-2">
-        {t('harvestsPage.history.chart.title')}
+      <figcaption id="harvests-page-history-chart-caption" className="text-down-01 mb-2">
+        <span className="text-bold">{t('harvestsPage.history.chart.title')}</span>
+        {dataCache ? (
+          <span id="harvests-page-history-chart-updated" className="text-gray-70">
+            {' · '}
+            {dataCache}
+          </span>
+        ) : null}
       </figcaption>
       <Grafico
         id="harvests-page-history-chart-area"
