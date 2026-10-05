@@ -181,49 +181,84 @@
   },
   "harvestsPage": {
     "title": "Recolección",
-    "description": "Últimas recolecciones e historial de los repositorios vinculados a gestores.",
+    "description": "Diagnóstico de las recolecciones de todo el acervo del Harvester.",
     "tabs": {
-      "latest": "Últimas",
-      "history": "Historial"
+      "current": "Estado actual",
+      "history": "Histórico"
     },
-    "repositoryFilter": "Repositorio",
-    "allRepositories": "Todos los repositorios",
-    "noRepositories": "Ningún repositorio vinculado.",
-    "empty": "Ninguna recolección en los repositorios seleccionados.",
-    "unavailableTitle": "Harvester sin respuesta",
-    "unavailableBody": "El Harvester no respondió por: {{list}}. Las recolecciones de esos repositorios no aparecen aquí.",
-    "latest": {
+    "overview": {
+      "filters": {
+        "all": "Todas",
+        "snapshotStatus": "Situación de la recolección",
+        "indexStatus": "Indexación",
+        "freshness": "Actualidad",
+        "institution": "Institución"
+      },
+      "bands": {
+        "0-30": "hasta 30 días",
+        "31-90": "31 a 90 días",
+        "91-180": "91 a 180 días",
+        "181-365": "181 a 365 días",
+        "1-2a": "1 a 2 años",
+        "2a+": "más de 2 años",
+        "nunca": "nunca recolectada"
+      },
       "stats": {
-        "withHarvest": "Repositorios con recolección",
-        "errors": "Última recolección con error",
-        "running": "Sin finalización",
-        "never": "Sin ninguna recolección"
+        "sources": "Fuentes en el recorte",
+        "withHarvest": "Con recolección",
+        "errors": "Última con error",
+        "never": "Nunca recolectada"
+      },
+      "panels": {
+        "snapshotStatus": "Situación de la última recolección",
+        "indexStatus": "Situación en el índice",
+        "freshness": "Actualidad — días desde la última recolección"
+      },
+      "clickHint": "Haga clic en una barra para filtrar todo el panel por ella.",
+      "none": "sin recolección",
+      "empty": "Ninguna fuente en el recorte.",
+      "outdated": {
+        "title": "Fuentes más desactualizadas",
+        "columns": {
+          "source": "Fuente",
+          "institution": "Institución",
+          "status": "Estado",
+          "days": "Días",
+          "records": "Registros"
+        },
+        "hints": {
+          "source": "Sigla y nombre de la fuente. Abre la página del repositorio.",
+          "institution": "Institución a la que pertenece la fuente.",
+          "status": "Situación de la última recolección.",
+          "days": "Días desde la última recolección.",
+          "records": "Registros de la última recolección."
+        }
       }
     },
     "history": {
       "stats": {
         "harvests": "Recolecciones",
-        "repositoriesHint": "en {{count}} de {{total}} repositorios",
+        "sourcesHint": "en {{count}} fuentes",
         "failures": "Con error",
-        "failureRate": "Tasa de error",
-        "medianDuration": "Duración mediana"
+        "first": "Primera recolección",
+        "medianDuration": "Duración mediana",
+        "lastHint": "última en {{date}}"
       },
       "chart": {
         "title": "Recolecciones por mes y tasa de error",
         "harvests": "Recolecciones",
         "failures": "Con error",
         "rate": "Tasa de error"
-      }
-    },
-    "columns": {
-      "repository": "Repositorio",
-      "index": "Indexación",
-      "duration": "Duración"
-    },
-    "columnHints": {
-      "repository": "Sigla del repositorio en el vínculo. Abre su página.",
-      "index": "Si la recolección fue indexada. Solo la indexada tiene diagnóstico y registros.",
-      "duration": "Finalización menos inicio. Sin finalización, la recolección aún no terminó."
+      },
+      "peaks": {
+        "title": "Días de mayor concentración"
+      },
+      "unavailable": "{{count}} fuentes no respondieron en el último barrido.",
+      "cold": {
+        "title": "Histórico siendo armado",
+        "body": "La serie de todas las recolecciones se está recopilando en segundo plano. Actualice la página en unos minutos."
+      },
+      "updatedAt": "actualizado el {{date}}"
     }
   },
   "diagnosis": {

@@ -5,9 +5,16 @@ cadastrais do repositório e o histórico de coletas vivem no Harvester, e são
 lidos aqui — sempre com cache, porque a origem é lenta e instável.
 """
 
+import logging
+import threading
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
+from statistics import median
 from typing import Any
 
 from django.conf import settings
+from django.core.cache import cache
 from django.db.models import Count
 
 from apps.integrations.cache import cached
@@ -624,3 +631,232 @@ def search_repositories(
             return montar(payload, campo)
 
     return montar({}, None)
+
+
+# --------------------------------------------------- histórico global de coletas
+#
+# A seção Coleta mostra o histórico de TODAS as fontes — não só as vinculadas.
+# As ~42.358 coletas não vêm de `/private/networks` (que só traz a última de
+# cada fonte); exigem varrer fonte a fonte o `findByNetworkIdOrdered`, como o
+# experimento fez em `exp1/coletar_historico.py`. Isso é caro e o Harvester só
+# responde de dentro do `harvestboard_api`, então quem varre é o comando
+# `warm_harvest_history`; a view só lê o agregado já cacheado.
+
+logger = logging.getLogger(__name__)
+
+HARVEST_HISTORY_KEY = f"{CACHE_PREFIX}:harvest-history"
+# Trava da renovação: só um worker varre por vez. `cache.add` é atômico (SET NX
+# no Redis), então quem pega a trava primeiro é o único que dispara a varredura.
+HARVEST_HISTORY_LOCK = f"{CACHE_PREFIX}:harvest-history:lock"
+
+# Falha de coleta, pelo status do snapshot — a mesma regra do experimento
+# (`exp1/congelar.py`): é o único status que conta como erro na série.
+HARVEST_FAILURE_STATUS = "HARVESTING_FINISHED_ERROR"
+
+# Varredura: 6 trabalhadores equilibram pressa e a rede instável do Harvester,
+# como em `coletar_historico.py`. `size` grande traz o histórico inteiro de
+# cada fonte numa ida — sem ele o Spring Data REST corta em 20.
+HARVEST_HISTORY_WORKERS = 6
+HARVEST_HISTORY_PAGE = 500
+
+# Estado de cache frio: a varredura nunca roda numa requisição, então a view
+# devolve isto até o comando aquecer o cache pela primeira vez.
+HARVEST_HISTORY_COLD = {
+    "warmed": False,
+    "generatedAt": None,
+    "months": [],
+    "totals": None,
+    "peaks": [],
+    "unavailableSources": 0,
+}
+
+
+def _parse_harvest_time(value: str | None) -> datetime | None:
+    """Converte "2024-06-25 11:51:37" em datetime; None no que não casar."""
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace(" ", "T"))
+    except ValueError:
+        return None
+
+
+def _harvest_rows(repository_id: str, client: HarvesterClient) -> list[dict]:
+    """Uma linha por coleta de uma fonte, já com mês, dia, falha e duração.
+
+    Coleta sem início fica de fora: sem o carimbo não há onde colocá-la na série
+    nem como contá-la por mês — é o mesmo descarte do experimento.
+    """
+    payload = client.list_snapshots(repository_id, size=HARVEST_HISTORY_PAGE) or {}
+    snapshots = (payload.get("_embedded") or {}).get("snapshot") or []
+    linhas = []
+    for snap in snapshots:
+        inicio = _parse_harvest_time(snap.get("startTime"))
+        if inicio is None:
+            continue
+        fim = _parse_harvest_time(snap.get("endTime"))
+        linhas.append(
+            {
+                "month": inicio.strftime("%Y-%m"),
+                "day": inicio.strftime("%Y-%m-%d"),
+                "start": inicio,
+                "failure": snap.get("status") == HARVEST_FAILURE_STATUS,
+                "duration": (fim - inicio).total_seconds() if fim else None,
+            }
+        )
+    return linhas
+
+
+def build_harvest_history(client: HarvesterClient | None = None) -> dict:
+    """Agrega o histórico de coletas de todas as fontes numa estrutura compacta.
+
+    Varre o acervo inteiro fonte a fonte e devolve a série por mês, os totais,
+    a mediana de duração e os dias de maior concentração — tudo calculado aqui,
+    no aquecimento, para a view entregar pronto. **Não grava**: quem persiste é
+    o comando `warm_harvest_history`.
+
+    Cada fonte é independente: a que o Harvester não responder é pulada e
+    contada em `unavailableSources`, sem derrubar o agregado — como em
+    `linked_harvests`.
+    """
+    client = client or HarvesterClient()
+    ids = [
+        linha["harvesterRepositoryId"]
+        for linha in full_network_index(client)
+        if linha.get("harvesterRepositoryId")
+    ]
+
+    por_mes: dict[str, list[int]] = {}
+    por_dia: Counter = Counter()
+    duracoes: list[float] = []
+    fontes_com_coleta: set[str] = set()
+    total = falhas = indisponiveis = 0
+    primeiro: datetime | None = None
+    ultimo: datetime | None = None
+
+    def coletar(repository_id: str):
+        try:
+            return repository_id, _harvest_rows(repository_id, client)
+        except HarvesterError:
+            return repository_id, None
+
+    with ThreadPoolExecutor(max_workers=HARVEST_HISTORY_WORKERS) as piscina:
+        futuros = [piscina.submit(coletar, rid) for rid in ids]
+        for futuro in as_completed(futuros):
+            repository_id, linhas = futuro.result()
+            if linhas is None:
+                indisponiveis += 1
+                continue
+            if linhas:
+                fontes_com_coleta.add(repository_id)
+            for linha in linhas:
+                total += 1
+                mes = por_mes.setdefault(linha["month"], [0, 0])
+                mes[0] += 1
+                if linha["failure"]:
+                    mes[1] += 1
+                    falhas += 1
+                por_dia[linha["day"]] += 1
+                if linha["duration"] is not None:
+                    duracoes.append(linha["duration"])
+                inicio = linha["start"]
+                if primeiro is None or inicio < primeiro:
+                    primeiro = inicio
+                if ultimo is None or inicio > ultimo:
+                    ultimo = inicio
+
+    return {
+        "warmed": True,
+        # Quando a varredura terminou — é o que a renovação usa para decidir se o
+        # agregado envelheceu, e o que a tela mostra como "atualizado em".
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "months": [
+            {"month": mes, "harvests": h, "failures": f, "rate": (f / h) if h else 0.0}
+            for mes, (h, f) in sorted(por_mes.items())
+        ],
+        "totals": {
+            "snapshots": total,
+            "sources": len(fontes_com_coleta),
+            "failures": falhas,
+            "first": primeiro.strftime("%Y-%m-%d") if primeiro else None,
+            "last": ultimo.strftime("%Y-%m-%d") if ultimo else None,
+            "medianDurationSeconds": round(median(duracoes), 1) if duracoes else None,
+        },
+        "peaks": [{"day": dia, "harvests": qtd} for dia, qtd in por_dia.most_common(10)],
+        "unavailableSources": indisponiveis,
+    }
+
+
+def store_harvest_history(agregado: dict) -> None:
+    """Guarda o agregado sem expiração: ele é substituído por uma renovação, não
+    descartado pelo relógio. A idade quem decide é `generatedAt`, não o TTL —
+    assim o dado velho continua servindo enquanto a próxima varredura roda."""
+    cache.set(HARVEST_HISTORY_KEY, agregado, None)
+
+
+def _history_is_stale(agregado: dict | None) -> bool:
+    """Passou de `HISTORY_REFRESH` desde a última varredura? Sem agregado ou sem
+    carimbo, conta como velho — há o que renovar."""
+    if not agregado:
+        return True
+    carimbo = agregado.get("generatedAt")
+    if not carimbo:
+        return True
+    try:
+        quando = datetime.fromisoformat(carimbo)
+    except ValueError:
+        return True
+    idade = (datetime.now(timezone.utc) - quando).total_seconds()
+    return idade >= settings.HARVESTER["HISTORY_REFRESH"]
+
+
+def ensure_harvest_history_fresh() -> None:
+    """Dispara, em segundo plano, a varredura do histórico quando o cache está
+    frio ou velho — sem nunca segurar a requisição.
+
+    É o que mantém a série atualizada **sozinha**, sem comando: a cada acesso à
+    seção Coleta, se o agregado passou da idade de renovação, um worker pega a
+    trava e varre em uma thread; os demais acessos (deste ou de outro worker)
+    veem a trava e não duplicam o trabalho. Quem pediu recebe o agregado atual
+    na hora (ou o estado frio), e a próxima visita já vê o renovado.
+
+    Roda no processo do backend, isto é, dentro do `harvestboard_api`, que é de
+    onde o Harvester responde. Desligado nos testes por `HISTORY_AUTO_REFRESH`.
+    """
+    if not settings.HARVESTER["HISTORY_AUTO_REFRESH"]:
+        return
+    if not _history_is_stale(cache.get(HARVEST_HISTORY_KEY)):
+        return
+    # Trava atômica: só o primeiro a chegar varre; expira sozinha se o worker cair.
+    if not cache.add(HARVEST_HISTORY_LOCK, "1", settings.HARVESTER["HISTORY_LOCK_TTL"]):
+        return
+
+    def tarefa() -> None:
+        try:
+            store_harvest_history(build_harvest_history())
+        except Exception:  # noqa: BLE001 — thread de fundo não derruba ninguém
+            logger.exception("Falha ao renovar o histórico de coletas")
+        finally:
+            cache.delete(HARVEST_HISTORY_LOCK)
+
+    _run_in_background(tarefa)
+
+
+def _run_in_background(target) -> None:
+    """Dispara `target` numa thread de fundo, à parte do pool da varredura.
+
+    Isolado numa função só por isto: o teste a substitui por uma execução
+    síncrona sem tocar no `ThreadPoolExecutor` de `build_harvest_history` — que
+    também cria `threading.Thread` e quebraria se a classe fosse trocada.
+    """
+    threading.Thread(target=target, name="warm-harvest-history", daemon=True).start()
+
+
+def global_harvest_history() -> dict:
+    """Agregado do histórico global, do cache; estado frio se ainda não houver.
+
+    Só lê. A varredura que enche o cache roda em segundo plano, disparada por
+    `ensure_harvest_history_fresh` — nunca dentro desta leitura, porque ela é
+    cara e o Harvester é inacessível fora do `harvestboard_api`.
+    """
+    return cache.get(HARVEST_HISTORY_KEY) or HARVEST_HISTORY_COLD

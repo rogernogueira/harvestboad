@@ -4,11 +4,13 @@ O Harvester é substituído por um duplo em todos os casos: a rede real é
 intermitente e não deve decidir se a suíte passa.
 """
 
+from datetime import datetime, timedelta, timezone
 from io import StringIO
 from unittest.mock import patch
 
 from django.core.management import call_command
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.test import TestCase
@@ -17,6 +19,7 @@ from rest_framework.test import APIClient
 from apps.accounts.models import Profile
 from apps.audit.models import AuditLog
 from apps.integrations.harvester import HarvesterError
+from apps.repositories import services
 
 from .models import RepositoryAccess
 
@@ -1572,3 +1575,237 @@ class InvalidRatioIndexStatusTests(TestCase):
             }
         self.assertEqual(por_sigla["FALHOU"]["lastIndexStatus"], "UNKNOWN")
         self.assertEqual(por_sigla["RUIM"]["lastIndexStatus"], "INDEXED")
+
+
+def _snap(start, end, status="HARVESTING_FINISHED"):
+    """Snapshot cru do Harvester, só com o que o histórico lê."""
+    return {"startTime": start, "endTime": end, "status": status}
+
+
+class HarvestHistoryBuildTests(TestCase):
+    """Agregação do histórico global de coletas de todas as fontes."""
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def cliente(self, por_fonte: dict, registro=None):
+        """Dublê: lista as redes do `full_network_index` e os snapshots de cada."""
+        redes = [{"networkID": int(i)} for i in por_fonte]
+
+        class _Fake:
+            def list_networks(self, page=1, count=25, **kw):
+                return {"networks": redes, "totalElements": len(redes)}
+
+            def list_snapshots(self, repository_id, size=None):
+                if registro is not None:
+                    registro.append((str(repository_id), size))
+                return {"_embedded": {"snapshot": por_fonte[str(repository_id)]}}
+
+        return _Fake()
+
+    def acervo(self):
+        return {
+            "1": [
+                _snap("2024-06-25 10:00:00", "2024-06-25 10:00:10", "HARVESTING_FINISHED"),
+                _snap("2024-06-25 12:00:00", "2024-06-25 12:00:30", "HARVESTING_FINISHED_ERROR"),
+                _snap("2020-02-29 09:00:00", "2020-02-29 09:00:20", "HARVESTING_FINISHED"),
+            ],
+            "5": [
+                _snap("2024-06-25 14:00:00", None, "HARVESTING"),
+                _snap("2024-07-01 00:00:00", "2024-07-01 00:01:00", "HARVESTING_FINISHED"),
+                _snap(None, None, "HARVESTING_FINISHED"),  # sem início: fica de fora
+            ],
+        }
+
+    def test_series_por_mes_totais_mediana_e_picos(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            agregado = services.build_harvest_history()
+
+        self.assertTrue(agregado["warmed"])
+
+        meses = {m["month"]: m for m in agregado["months"]}
+        # A sem-início não conta; a em andamento conta (tem início).
+        self.assertEqual([m["month"] for m in agregado["months"]], ["2020-02", "2024-06", "2024-07"])
+        self.assertEqual(meses["2024-06"]["harvests"], 3)
+        self.assertEqual(meses["2024-06"]["failures"], 1)
+        self.assertAlmostEqual(meses["2024-06"]["rate"], 1 / 3)
+
+        totais = agregado["totals"]
+        self.assertEqual(totais["snapshots"], 5)
+        self.assertEqual(totais["sources"], 2)
+        self.assertEqual(totais["failures"], 1)
+        self.assertEqual(totais["first"], "2020-02-29")
+        self.assertEqual(totais["last"], "2024-07-01")
+        # Durações 10, 20, 30, 60 (a em andamento não tem) → mediana 25.
+        self.assertEqual(totais["medianDurationSeconds"], 25.0)
+
+        self.assertEqual(agregado["peaks"][0], {"day": "2024-06-25", "harvests": 3})
+        self.assertEqual(agregado["unavailableSources"], 0)
+
+    def test_pede_o_historico_inteiro_sem_truncar(self) -> None:
+        registro: list = []
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo(), registro)):
+            services.build_harvest_history()
+
+        # Toda fonte é pedida com size grande — sem ele o Spring corta em 20.
+        self.assertTrue(all(tamanho == services.HARVEST_HISTORY_PAGE for _, tamanho in registro))
+        self.assertEqual({fonte for fonte, _ in registro}, {"1", "5"})
+
+    def test_fonte_indisponivel_nao_derruba_o_agregado(self) -> None:
+        acervo = self.acervo()
+
+        class _UmFora:
+            def list_networks(self, page=1, count=25, **kw):
+                return {"networks": [{"networkID": 1}, {"networkID": 5}], "totalElements": 2}
+
+            def list_snapshots(self, repository_id, size=None):
+                if str(repository_id) == "5":
+                    raise HarvesterError("sem rota")
+                return {"_embedded": {"snapshot": acervo["1"]}}
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _UmFora()):
+            agregado = services.build_harvest_history()
+
+        self.assertEqual(agregado["unavailableSources"], 1)
+        self.assertEqual(agregado["totals"]["sources"], 1)
+        self.assertEqual(agregado["totals"]["snapshots"], 3)
+
+    def test_comando_grava_o_agregado_no_cache(self) -> None:
+        saida = StringIO()
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente(self.acervo())):
+            call_command("warm_harvest_history", stdout=saida)
+
+        guardado = cache.get(services.HARVEST_HISTORY_KEY)
+        self.assertIsNotNone(guardado)
+        self.assertTrue(guardado["warmed"])
+        self.assertEqual(guardado["totals"]["snapshots"], 5)
+
+
+class HarvestHistoryAPITests(TestCase):
+    """A rota admin só lê o agregado cacheado; nunca varre o Harvester."""
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.admin = User.objects.create_user(
+            username="admh", email="admh@ibict.br", password="x", profile=Profile.ADMIN
+        )
+        cls.gestor = User.objects.create_user(
+            username="gesh", email="gesh@uft.edu.br", password="x", profile=Profile.GESTOR
+        )
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def api(self, user) -> APIClient:
+        client = APIClient()
+        client.force_authenticate(user=user)
+        return client
+
+    def test_sem_autenticacao_401(self) -> None:
+        self.assertEqual(APIClient().get(f"{REPOS}/harvests/history/").status_code, 401)
+
+    def test_gestor_recebe_403(self) -> None:
+        self.assertEqual(
+            self.api(self.gestor).get(f"{REPOS}/harvests/history/").status_code, 403
+        )
+
+    def test_cache_frio_responde_nao_aquecido(self) -> None:
+        d = self.api(self.admin).get(f"{REPOS}/harvests/history/").data
+        self.assertEqual(d["warmed"], False)
+        self.assertEqual(d["months"], [])
+        self.assertIsNone(d["totals"])
+
+    def test_cache_quente_devolve_o_agregado(self) -> None:
+        agregado = {
+            "warmed": True,
+            "months": [{"month": "2024-06", "harvests": 3, "failures": 1, "rate": 1 / 3}],
+            "totals": {
+                "snapshots": 5, "sources": 2, "failures": 1,
+                "first": "2020-02-29", "last": "2024-07-01", "medianDurationSeconds": 25.0,
+            },
+            "peaks": [{"day": "2024-06-25", "harvests": 3}],
+            "unavailableSources": 0,
+        }
+        cache.set(services.HARVEST_HISTORY_KEY, agregado, 60)
+
+        d = self.api(self.admin).get(f"{REPOS}/harvests/history/").data
+        self.assertEqual(d["warmed"], True)
+        self.assertEqual(d["totals"]["snapshots"], 5)
+        self.assertEqual(d["peaks"][0]["harvests"], 3)
+
+
+
+class HarvestHistoryAutoRefreshTests(TestCase):
+    """A série se renova sozinha no cache, sem comando — stale-while-revalidate."""
+
+    def setUp(self) -> None:
+        cache.clear()
+
+    def cliente(self):
+        redes = [{"networkID": 1}, {"networkID": 5}]
+        acervo = {
+            "1": [_snap("2024-06-25 10:00:00", "2024-06-25 10:00:10")],
+            "5": [_snap("2024-07-01 00:00:00", "2024-07-01 00:01:00")],
+        }
+
+        class _Fake:
+            def list_networks(self, page=1, count=25, **kw):
+                return {"networks": redes, "totalElements": len(redes)}
+
+            def list_snapshots(self, repository_id, size=None):
+                return {"_embedded": {"snapshot": acervo[str(repository_id)]}}
+
+        return _Fake()
+
+    def test_detecta_agregado_velho_e_fresco(self) -> None:
+        agora = datetime.now(timezone.utc)
+        fresco = {"generatedAt": agora.isoformat()}
+        velho = {"generatedAt": (agora - timedelta(hours=48)).isoformat()}
+        self.assertFalse(services._history_is_stale(fresco))
+        self.assertTrue(services._history_is_stale(velho))
+        self.assertTrue(services._history_is_stale(None))
+        self.assertTrue(services._history_is_stale({}))
+
+    @patch.dict(settings.HARVESTER, {"HISTORY_AUTO_REFRESH": True})
+    @patch("apps.repositories.services._run_in_background", lambda alvo: alvo())
+    def test_cache_frio_dispara_varredura_e_preenche(self) -> None:
+        with patch(SERVICES_CLIENT, lambda *a, **k: self.cliente()):
+            services.ensure_harvest_history_fresh()
+
+        guardado = cache.get(services.HARVEST_HISTORY_KEY)
+        self.assertIsNotNone(guardado)
+        self.assertTrue(guardado["warmed"])
+        self.assertEqual(guardado["totals"]["snapshots"], 2)
+        self.assertIn("generatedAt", guardado)
+        # A trava é liberada ao fim, para a próxima renovação poder rodar.
+        self.assertIsNone(cache.get(services.HARVEST_HISTORY_LOCK))
+
+    @patch.dict(settings.HARVESTER, {"HISTORY_AUTO_REFRESH": True})
+    @patch("apps.repositories.services._run_in_background", lambda alvo: alvo())
+    def test_agregado_fresco_nao_dispara_varredura(self) -> None:
+        cache.set(
+            services.HARVEST_HISTORY_KEY,
+            {"warmed": True, "generatedAt": datetime.now(timezone.utc).isoformat(), "totals": {"snapshots": 99}},
+            None,
+        )
+        with patch("apps.repositories.services.build_harvest_history") as construtor:
+            services.ensure_harvest_history_fresh()
+            construtor.assert_not_called()
+
+    @patch.dict(settings.HARVESTER, {"HISTORY_AUTO_REFRESH": True})
+    @patch("apps.repositories.services._run_in_background", lambda alvo: alvo())
+    def test_trava_impede_varredura_concorrente(self) -> None:
+        # Outro worker já está varrendo: a trava existe, então este acesso não
+        # duplica o trabalho mesmo com o cache velho.
+        cache.add(services.HARVEST_HISTORY_LOCK, "1", 60)
+        with patch("apps.repositories.services.build_harvest_history") as construtor:
+            services.ensure_harvest_history_fresh()
+            construtor.assert_not_called()
+
+    @patch.dict(settings.HARVESTER, {"HISTORY_AUTO_REFRESH": False})
+    @patch("apps.repositories.services._run_in_background", lambda alvo: alvo())
+    def test_desligado_nao_dispara_nada(self) -> None:
+        with patch("apps.repositories.services.build_harvest_history") as construtor:
+            services.ensure_harvest_history_fresh()
+            construtor.assert_not_called()
+        self.assertIsNone(cache.get(services.HARVEST_HISTORY_KEY))

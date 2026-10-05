@@ -7,6 +7,7 @@ import type {
   AvailableRepositoryPage,
   Diagnosis,
   HarvestDetail,
+  HarvestHistory,
   HarvestList,
   LinkedHarvests,
   NotificationCategoryItem,
@@ -151,6 +152,20 @@ export const linkedHarvestsQuery = queryOptions({
   queryKey: ['repositories', 'harvests'],
   queryFn: () => apiGet<LinkedHarvests>('/repositories/harvests/'),
   staleTime: 5 * 60_000,
+})
+
+/**
+ * Histórico global de coletas de TODO o acervo, para a aba Histórico da seção
+ * Coleta. Exclusivo do ADMIN.
+ *
+ * O backend só lê o agregado que o comando `warm_harvest_history` deixou no
+ * cache — nunca varre o Harvester numa requisição. Vem `warmed:false` enquanto
+ * não houver aquecimento.
+ */
+export const harvestHistoryQuery = queryOptions({
+  queryKey: ['repositories', 'harvests', 'history'],
+  queryFn: () => apiGet<HarvestHistory>('/repositories/harvests/history/'),
+  staleTime: 30 * 60_000,
 })
 
 export const harvestQuery = (snapshotId: string) =>

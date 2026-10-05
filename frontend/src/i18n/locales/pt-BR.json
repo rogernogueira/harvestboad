@@ -181,49 +181,84 @@
   },
   "harvestsPage": {
     "title": "Coleta",
-    "description": "Últimas coletas e histórico dos repositórios vinculados a gestores.",
+    "description": "Diagnóstico das coletas de todo o acervo do Harvester.",
     "tabs": {
-      "latest": "Últimas",
+      "current": "Estado atual",
       "history": "Histórico"
     },
-    "repositoryFilter": "Repositório",
-    "allRepositories": "Todos os repositórios",
-    "noRepositories": "Nenhum repositório vinculado.",
-    "empty": "Nenhuma coleta nos repositórios selecionados.",
-    "unavailableTitle": "Harvester sem resposta",
-    "unavailableBody": "O Harvester não respondeu por: {{list}}. As coletas desses repositórios não aparecem aqui.",
-    "latest": {
+    "overview": {
+      "filters": {
+        "all": "Todas",
+        "snapshotStatus": "Situação da coleta",
+        "indexStatus": "Indexação",
+        "freshness": "Atualidade",
+        "institution": "Instituição"
+      },
+      "bands": {
+        "0-30": "até 30 dias",
+        "31-90": "31 a 90 dias",
+        "91-180": "91 a 180 dias",
+        "181-365": "181 a 365 dias",
+        "1-2a": "1 a 2 anos",
+        "2a+": "mais de 2 anos",
+        "nunca": "nunca coletada"
+      },
       "stats": {
-        "withHarvest": "Repositórios com coleta",
-        "errors": "Última coleta com erro",
-        "running": "Sem término",
-        "never": "Sem nenhuma coleta"
+        "sources": "Fontes no recorte",
+        "withHarvest": "Com coleta",
+        "errors": "Última com erro",
+        "never": "Nunca coletada"
+      },
+      "panels": {
+        "snapshotStatus": "Situação da última coleta",
+        "indexStatus": "Situação no índice",
+        "freshness": "Atualidade — dias desde a última coleta"
+      },
+      "clickHint": "Clique numa barra para filtrar o painel inteiro por ela.",
+      "none": "sem coleta",
+      "empty": "Nenhuma fonte no recorte.",
+      "outdated": {
+        "title": "Fontes mais desatualizadas",
+        "columns": {
+          "source": "Fonte",
+          "institution": "Instituição",
+          "status": "Estado",
+          "days": "Dias",
+          "records": "Registros"
+        },
+        "hints": {
+          "source": "Sigla e nome da fonte. Abre a página do repositório.",
+          "institution": "Instituição à qual a fonte pertence.",
+          "status": "Situação da última coleta.",
+          "days": "Dias desde a última coleta.",
+          "records": "Registros da última coleta."
+        }
       }
     },
     "history": {
       "stats": {
         "harvests": "Coletas",
-        "repositoriesHint": "em {{count}} de {{total}} repositórios",
+        "sourcesHint": "em {{count}} fontes",
         "failures": "Com erro",
-        "failureRate": "Taxa de erro",
-        "medianDuration": "Duração mediana"
+        "first": "Primeira coleta",
+        "medianDuration": "Duração mediana",
+        "lastHint": "última em {{date}}"
       },
       "chart": {
         "title": "Coletas por mês e taxa de erro",
         "harvests": "Coletas",
         "failures": "Com erro",
         "rate": "Taxa de erro"
-      }
-    },
-    "columns": {
-      "repository": "Repositório",
-      "index": "Indexação",
-      "duration": "Duração"
-    },
-    "columnHints": {
-      "repository": "Sigla do repositório no vínculo. Abre a página dele.",
-      "index": "Se a coleta foi indexada. Só a indexada tem diagnóstico e registros.",
-      "duration": "Término menos início. Sem término, a coleta ainda não acabou."
+      },
+      "peaks": {
+        "title": "Dias de maior concentração"
+      },
+      "unavailable": "{{count}} fontes não responderam na última varredura.",
+      "cold": {
+        "title": "Histórico sendo montado",
+        "body": "A série de todas as coletas está sendo coletada em segundo plano. Atualize a página em alguns minutos."
+      },
+      "updatedAt": "atualizado em {{date}}"
     }
   },
   "diagnosis": {

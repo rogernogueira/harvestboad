@@ -232,6 +232,42 @@ export interface LinkedHarvests {
   results: HarvestWithRepository[]
 }
 
+/** Um mês da série histórica de coletas. */
+export interface HarvestHistoryMonth {
+  month: string
+  harvests: number
+  failures: number
+  /** Fração de falhas no mês, entre 0 e 1. */
+  rate: number
+}
+
+/** Totais de toda a série histórica de coletas. */
+export interface HarvestHistoryTotals {
+  snapshots: number
+  sources: number
+  failures: number
+  first: string | null
+  last: string | null
+  medianDurationSeconds: number | null
+}
+
+/**
+ * Histórico global de coletas de TODO o acervo, para a seção Coleta.
+ *
+ * Vem do cache aquecido pelo comando `warm_harvest_history`. `warmed` é false
+ * enquanto não houver aquecimento — aí `totals` é nulo e as listas vêm vazias.
+ */
+export interface HarvestHistory {
+  warmed: boolean
+  /** Quando a varredura que gerou o agregado terminou (ISO). Nulo se frio. */
+  generatedAt?: string | null
+  months: HarvestHistoryMonth[]
+  totals: HarvestHistoryTotals | null
+  peaks: { day: string; harvests: number }[]
+  /** Fontes que o Harvester não respondeu na varredura do aquecimento. */
+  unavailableSources: number
+}
+
 export interface FacetValue {
   value: string
   valueCount: number

@@ -168,14 +168,22 @@ class HarvesterClient:
         """Dados cadastrais do repositório. GET /rest/network/{networkID}"""
         return self.get_json(f"/rest/network/{quote(str(network_id))}")
 
-    def list_snapshots(self, network_id: str | int) -> Any:
+    def list_snapshots(self, network_id: str | int, size: int | None = None) -> Any:
         """Histórico de coletas.
 
         GET /rest/snapshot/search/findByNetworkIdOrdered?network_id={id}
+
+        Sem `size`, o Spring Data REST pagina em 20 e corta o histórico sem
+        avisar: para a USP devolve 20 de 42. Quem precisa da série inteira numa
+        ida — como a varredura do `warm_harvest_history` — passa `size` grande
+        o bastante para cobrir o maior histórico da base (500 cobre com folga).
         """
+        params: dict[str, Any] = {"network_id": str(network_id)}
+        if size is not None:
+            params["size"] = str(size)
         return self.get_json(
             "/rest/snapshot/search/findByNetworkIdOrdered",
-            params={"network_id": str(network_id)},
+            params=params,
         )
 
     def get_diagnose(self, snapshot_id: str | int) -> Any:

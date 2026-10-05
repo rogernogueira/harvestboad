@@ -334,6 +334,33 @@ class LinkedHarvestsView(HarvesterBackedAPIView):
         return Response(services.linked_harvests(list(vinculos.items())))
 
 
+class HarvestHistoryView(HarvesterBackedAPIView):
+    """Histórico global de coletas de TODO o acervo, para a seção Coleta.
+
+    **Exclusiva do ADMIN**, como a seção. Só lê o agregado que o comando
+    `warm_harvest_history` deixou no cache — nunca varre o Harvester, porque a
+    varredura das ~2.181 fontes é cara e a origem só responde de dentro do
+    `harvestboard_api`. Enquanto o cache estiver frio devolve `warmed:false`, e
+    a tela orienta a rodar o comando; não é erro, é "ainda não aquecido".
+    """
+
+    permission_classes = [permissions.IsAuthenticated, IsAdminProfile]
+
+    @extend_schema(
+        description=(
+            "Série de coletas por mês, totais, duração mediana e dias de maior "
+            "concentração — de todas as fontes, não só as vinculadas. Vem do "
+            "cache aquecido por `warm_harvest_history`; `warmed:false` enquanto "
+            "não houver aquecimento. Exclusivo do perfil ADMIN."
+        ),
+    )
+    def get(self, request: Request) -> Response:
+        # Mantém a série atualizada sozinha: se o agregado envelheceu, dispara a
+        # varredura em segundo plano e segue servindo o que já há — sem esperar.
+        services.ensure_harvest_history_fresh()
+        return Response(services.global_harvest_history())
+
+
 class RepositoryDetailView(HarvesterBackedAPIView):
     """Visão geral do repositório: dados cadastrais vindos do Harvester."""
 

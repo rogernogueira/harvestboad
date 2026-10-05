@@ -180,49 +180,84 @@
   },
   "harvestsPage": {
     "title": "Harvests",
-    "description": "Latest harvests and history of the repositories linked to managers.",
+    "description": "Diagnostic of harvests across the Harvester's entire collection.",
     "tabs": {
-      "latest": "Latest",
+      "current": "Current state",
       "history": "History"
     },
-    "repositoryFilter": "Repository",
-    "allRepositories": "All repositories",
-    "noRepositories": "No linked repository.",
-    "empty": "No harvests in the selected repositories.",
-    "unavailableTitle": "Harvester did not respond",
-    "unavailableBody": "The Harvester did not respond for: {{list}}. Harvests of those repositories are not shown here.",
-    "latest": {
+    "overview": {
+      "filters": {
+        "all": "All",
+        "snapshotStatus": "Harvest status",
+        "indexStatus": "Indexing",
+        "freshness": "Freshness",
+        "institution": "Institution"
+      },
+      "bands": {
+        "0-30": "up to 30 days",
+        "31-90": "31 to 90 days",
+        "91-180": "91 to 180 days",
+        "181-365": "181 to 365 days",
+        "1-2a": "1 to 2 years",
+        "2a+": "more than 2 years",
+        "nunca": "never harvested"
+      },
       "stats": {
-        "withHarvest": "Repositories with a harvest",
-        "errors": "Last harvest with error",
-        "running": "Not finished",
+        "sources": "Sources in view",
+        "withHarvest": "With a harvest",
+        "errors": "Last one failed",
         "never": "Never harvested"
+      },
+      "panels": {
+        "snapshotStatus": "Last harvest status",
+        "indexStatus": "Index status",
+        "freshness": "Freshness — days since last harvest"
+      },
+      "clickHint": "Click a bar to filter the whole panel by it.",
+      "none": "no harvest",
+      "empty": "No sources in view.",
+      "outdated": {
+        "title": "Most outdated sources",
+        "columns": {
+          "source": "Source",
+          "institution": "Institution",
+          "status": "State",
+          "days": "Days",
+          "records": "Records"
+        },
+        "hints": {
+          "source": "Source acronym and name. Opens the repository page.",
+          "institution": "Institution the source belongs to.",
+          "status": "Status of the last harvest.",
+          "days": "Days since the last harvest.",
+          "records": "Records in the last harvest."
+        }
       }
     },
     "history": {
       "stats": {
         "harvests": "Harvests",
-        "repositoriesHint": "across {{count}} of {{total}} repositories",
-        "failures": "With error",
-        "failureRate": "Error rate",
-        "medianDuration": "Median duration"
+        "sourcesHint": "across {{count}} sources",
+        "failures": "Failed",
+        "first": "First harvest",
+        "medianDuration": "Median duration",
+        "lastHint": "last on {{date}}"
       },
       "chart": {
-        "title": "Harvests per month and error rate",
+        "title": "Harvests per month and failure rate",
         "harvests": "Harvests",
-        "failures": "With error",
-        "rate": "Error rate"
-      }
-    },
-    "columns": {
-      "repository": "Repository",
-      "index": "Indexing",
-      "duration": "Duration"
-    },
-    "columnHints": {
-      "repository": "The repository's acronym in the link. Opens its page.",
-      "index": "Whether the harvest was indexed. Only an indexed one has a diagnosis and records.",
-      "duration": "End minus start. Without an end, the harvest has not finished yet."
+        "failures": "Failed",
+        "rate": "Failure rate"
+      },
+      "peaks": {
+        "title": "Days of highest concentration"
+      },
+      "unavailable": "{{count}} sources did not respond in the last sweep.",
+      "cold": {
+        "title": "History is being built",
+        "body": "The full harvest series is being collected in the background. Refresh in a few minutes."
+      },
+      "updatedAt": "updated on {{date}}"
     }
   },
   "diagnosis": {
