@@ -659,6 +659,13 @@ HARVEST_FAILURE_STATUS = "HARVESTING_FINISHED_ERROR"
 HARVEST_HISTORY_WORKERS = 6
 HARVEST_HISTORY_PAGE = 500
 
+# Rodadas da varredura (1 principal + repetições). A rede do Harvester perde
+# conexões ao acaso, então a fonte que falha numa rodada é tentada de novo nas
+# seguintes, só sobre o conjunto que ainda resta. É o que fecha o buraco entre
+# o que uma varredura reúne e o total real: cada rodada recupera quase todas as
+# que a anterior perdeu, e no fim sobra pouca ou nenhuma indisponível.
+HARVEST_HISTORY_ROUNDS = 5
+
 # Estado de cache frio: a varredura nunca roda numa requisição, então a view
 # devolve isto até o comando aquecer o cache pela primeira vez.
 HARVEST_HISTORY_COLD = {
@@ -715,9 +722,9 @@ def build_harvest_history(client: HarvesterClient | None = None) -> dict:
     no aquecimento, para a view entregar pronto. **Não grava**: quem persiste é
     o comando `warm_harvest_history`.
 
-    Cada fonte é independente: a que o Harvester não responder é pulada e
-    contada em `unavailableSources`, sem derrubar o agregado — como em
-    `linked_harvests`.
+    Cada fonte é independente: a que o Harvester não responder após todas as
+    rodadas de repetição é pulada e contada em `unavailableSources`, sem derrubar
+    o agregado — como em `linked_harvests`.
     """
     client = client or HarvesterClient()
     ids = [
@@ -726,44 +733,60 @@ def build_harvest_history(client: HarvesterClient | None = None) -> dict:
         if linha.get("harvesterRepositoryId")
     ]
 
-    por_mes: dict[str, list[int]] = {}
-    por_dia: Counter = Counter()
-    duracoes: list[float] = []
-    fontes_com_coleta: set[str] = set()
-    total = falhas = indisponiveis = 0
-    primeiro: datetime | None = None
-    ultimo: datetime | None = None
-
     def coletar(repository_id: str):
         try:
             return repository_id, _harvest_rows(repository_id, client)
         except HarvesterError:
             return repository_id, None
 
-    with ThreadPoolExecutor(max_workers=HARVEST_HISTORY_WORKERS) as piscina:
-        futuros = [piscina.submit(coletar, rid) for rid in ids]
-        for futuro in as_completed(futuros):
-            repository_id, linhas = futuro.result()
-            if linhas is None:
-                indisponiveis += 1
-                continue
-            if linhas:
-                fontes_com_coleta.add(repository_id)
-            for linha in linhas:
-                total += 1
-                mes = por_mes.setdefault(linha["month"], [0, 0])
-                mes[0] += 1
-                if linha["failure"]:
-                    mes[1] += 1
-                    falhas += 1
-                por_dia[linha["day"]] += 1
-                if linha["duration"] is not None:
-                    duracoes.append(linha["duration"])
-                inicio = linha["start"]
-                if primeiro is None or inicio < primeiro:
-                    primeiro = inicio
-                if ultimo is None or inicio > ultimo:
-                    ultimo = inicio
+    # Rodadas de repetição: a fonte que falha é tentada de novo, só sobre o que
+    # ainda resta, até `HARVEST_HISTORY_ROUNDS`. Como as falhas são de rede e
+    # aleatórias, o conjunto pendente encolhe a cada volta e sobra pouca ou
+    # nenhuma indisponível — é o que faz uma varredura reunir o total real, e
+    # não um recorte dele.
+    resultados: dict[str, list[dict]] = {}
+    pendentes = ids
+    for _ in range(HARVEST_HISTORY_ROUNDS):
+        if not pendentes:
+            break
+        ainda_falham: list[str] = []
+        with ThreadPoolExecutor(max_workers=HARVEST_HISTORY_WORKERS) as piscina:
+            futuros = [piscina.submit(coletar, rid) for rid in pendentes]
+            for futuro in as_completed(futuros):
+                repository_id, linhas = futuro.result()
+                if linhas is None:
+                    ainda_falham.append(repository_id)
+                else:
+                    resultados[repository_id] = linhas
+        pendentes = ainda_falham
+
+    por_mes: dict[str, list[int]] = {}
+    por_dia: Counter = Counter()
+    duracoes: list[float] = []
+    fontes_com_coleta: set[str] = set()
+    total = falhas = 0
+    primeiro: datetime | None = None
+    ultimo: datetime | None = None
+    indisponiveis = len(pendentes)
+
+    for repository_id, linhas in resultados.items():
+        if linhas:
+            fontes_com_coleta.add(repository_id)
+        for linha in linhas:
+            total += 1
+            mes = por_mes.setdefault(linha["month"], [0, 0])
+            mes[0] += 1
+            if linha["failure"]:
+                mes[1] += 1
+                falhas += 1
+            por_dia[linha["day"]] += 1
+            if linha["duration"] is not None:
+                duracoes.append(linha["duration"])
+            inicio = linha["start"]
+            if primeiro is None or inicio < primeiro:
+                primeiro = inicio
+            if ultimo is None or inicio > ultimo:
+                ultimo = inicio
 
     return {
         "warmed": True,

@@ -1668,6 +1668,30 @@ class HarvestHistoryBuildTests(TestCase):
         self.assertEqual(agregado["totals"]["sources"], 1)
         self.assertEqual(agregado["totals"]["snapshots"], 3)
 
+    def test_repete_a_fonte_que_falha_e_a_recupera(self) -> None:
+        # A fonte "5" falha nas duas primeiras tentativas e responde na terceira:
+        # as rodadas de repetição a recuperam, e nada fica como indisponível.
+        tentativas = {"5": 0}
+
+        class _Intermitente:
+            def list_networks(self, page=1, count=25, **kw):
+                return {"networks": [{"networkID": 1}, {"networkID": 5}], "totalElements": 2}
+
+            def list_snapshots(self, repository_id, size=None):
+                if str(repository_id) == "5":
+                    tentativas["5"] += 1
+                    if tentativas["5"] < 3:
+                        raise HarvesterError("sem rota")
+                    return {"_embedded": {"snapshot": [_snap("2024-07-01 00:00:00", "2024-07-01 00:01:00")]}}
+                return {"_embedded": {"snapshot": [_snap("2024-06-25 10:00:00", "2024-06-25 10:00:10")]}}
+
+        with patch(SERVICES_CLIENT, lambda *a, **k: _Intermitente()):
+            agregado = services.build_harvest_history()
+
+        self.assertEqual(agregado["unavailableSources"], 0)
+        self.assertEqual(agregado["totals"]["sources"], 2)
+        self.assertEqual(agregado["totals"]["snapshots"], 2)
+
 
 class HarvestHistoryAPITests(TestCase):
     """A rota admin: GET lê o cache, POST aciona a atualização (nunca o GET)."""
